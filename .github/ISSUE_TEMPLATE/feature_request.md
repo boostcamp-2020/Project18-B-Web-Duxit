@@ -3,7 +3,7 @@ name: Feature request
 about: 기능 요구사항
 title: ''
 labels: ''
-assignees: sbyeol3, jinhyukoo, ramram1048, Front-line-dev
+assignees: Front-line-dev, jinhyukoo, ramram1048, sbyeol3
 
 ---
 
