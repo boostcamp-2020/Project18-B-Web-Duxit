@@ -18,15 +18,14 @@ module.exports = (webpackEnv) => {
       filename: '[name].bundle.js',
     },
     plugins: [
-      new HtmlWebpackPlugin(
-        {
-          template: path.resolve(__dirname, './resources/index.html'),
-        },
-      ),
-      isEnvProduction && new CleanWebpackPlugin(),
-      isEnvProduction && new MiniCssExtractPlugin({
-        filename: '[name].css',
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, './resources/index.html'),
       }),
+      isEnvProduction && new CleanWebpackPlugin(),
+      isEnvProduction &&
+        new MiniCssExtractPlugin({
+          filename: '[name].css',
+        }),
     ].filter(Boolean),
     module: {
       rules: [
@@ -46,32 +45,38 @@ module.exports = (webpackEnv) => {
             // Translates CSS into CommonJS
             {
               loader: 'css-loader',
-              ...(isEnvDevelopment ? {
-                options: {
-                  sourceMap: true,
-                },
-              } : {}),
+              ...(isEnvDevelopment
+                ? {
+                    options: {
+                      sourceMap: true,
+                    },
+                  }
+                : {}),
             },
             // Compiles Sass to CSS
             {
               loader: 'sass-loader',
-              ...(isEnvDevelopment ? {
-                options: {
-                  sourceMap: true,
-                },
-              } : {}),
+              ...(isEnvDevelopment
+                ? {
+                    options: {
+                      sourceMap: true,
+                    },
+                  }
+                : {}),
             },
           ],
         },
       ],
     },
-    ...(isEnvDevelopment ? {
-      devtool: 'source-map',
-      devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 9000,
-      },
-    } : {}),
+    ...(isEnvDevelopment
+      ? {
+          devtool: 'source-map',
+          devServer: {
+            contentBase: path.join(__dirname, 'dist'),
+            compress: true,
+            port: 9000,
+          },
+        }
+      : {}),
   };
 };
