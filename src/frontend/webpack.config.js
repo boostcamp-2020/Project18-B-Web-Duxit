@@ -1,6 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const babelConfig = require('./babel.config.js');
 
 module.exports = (webpackEnv) => {
   const isEnvDevelopment = !!webpackEnv.development;
@@ -23,6 +24,18 @@ module.exports = (webpackEnv) => {
       ),
       isEnvProduction && new CleanWebpackPlugin(),
     ].filter(Boolean),
+    module: {
+      rules: [
+        {
+          test: /\.(js|mjs|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: babelConfig,
+          },
+        },
+      ],
+    },
     ...(isEnvDevelopment ? {
       devServer: {
         contentBase: path.join(__dirname, 'dist'),
