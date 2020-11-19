@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "lint": "npx eslint --fix ."
   },
   "dependencies": {
     "debug": "~2.6.9",
