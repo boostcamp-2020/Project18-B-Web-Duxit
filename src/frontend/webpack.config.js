@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const babelConfig = require('./babel.config.js');
 
@@ -23,6 +24,9 @@ module.exports = (webpackEnv) => {
         },
       ),
       isEnvProduction && new CleanWebpackPlugin(),
+      isEnvProduction && new MiniCssExtractPlugin({
+        filename: '[name].css',
+      }),
     ].filter(Boolean),
     module: {
       rules: [
@@ -34,9 +38,35 @@ module.exports = (webpackEnv) => {
             options: babelConfig,
           },
         },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            // Creates `style` nodes from JS strings
+            isEnvProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            // Translates CSS into CommonJS
+            {
+              loader: 'css-loader',
+              ...(isEnvDevelopment ? {
+                options: {
+                  sourceMap: true,
+                },
+              } : {}),
+            },
+            // Compiles Sass to CSS
+            {
+              loader: 'sass-loader',
+              ...(isEnvDevelopment ? {
+                options: {
+                  sourceMap: true,
+                },
+              } : {}),
+            },
+          ],
+        },
       ],
     },
     ...(isEnvDevelopment ? {
+      devtool: 'source-map',
       devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
