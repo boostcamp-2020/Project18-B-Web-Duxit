@@ -1,14 +1,17 @@
-const express = require('express');
-const logger = require('morgan');
+import express from 'express';
+import logger from 'morgan';
 
-const indexRouter = require('./routes/index');
+import indexRouter from './routes/index';
 
-const app = express();
+const createApplication = () => {
+  const app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+  app.use(logger('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
 
-app.use('/', indexRouter);
+  app.use('/', indexRouter);
+  return app;
+};
 
-module.exports = app;
+export default createApplication;
