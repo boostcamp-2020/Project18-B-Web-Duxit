@@ -27,7 +27,7 @@ module.exports = (webpackEnv) => {
         chunks: ['main'],
       }),
       new HtmlWebpackPlugin({
-        filename: 'game.html',
+        filename: 'game/index.html',
         template: path.resolve(__dirname, './resources/game.html'),
         chunks: ['game'],
       }),
