@@ -1,4 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -18,6 +19,7 @@ module.exports = (webpackEnv) => {
       filename: '[name].bundle.js',
     },
     plugins: [
+      new DotenvWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, './resources/index.html'),
       }),
