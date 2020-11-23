@@ -12,6 +12,7 @@ module.exports = (webpackEnv) => {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     entry: {
       main: path.resolve(__dirname, './index.js'),
+      game: path.resolve(__dirname, './game.js'),
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -19,7 +20,14 @@ module.exports = (webpackEnv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
+        filename: 'index.html',
         template: path.resolve(__dirname, './resources/index.html'),
+        chunks: ['main'],
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'game.html',
+        template: path.resolve(__dirname, './resources/game.html'),
+        chunks: ['game'],
       }),
       isEnvProduction && new CleanWebpackPlugin(),
       isEnvProduction &&
