@@ -12,7 +12,7 @@ module.exports = (webpackEnv) => {
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     entry: {
-      main: path.resolve(__dirname, './index.js'),
+      main: path.resolve(__dirname, './main/index.js'),
       game: path.resolve(__dirname, './game.js'),
     },
     output: {
@@ -23,7 +23,7 @@ module.exports = (webpackEnv) => {
       new DotenvWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: path.resolve(__dirname, './resources/index.html'),
+        template: path.resolve(__dirname, './main/index.html'),
         chunks: ['main'],
       }),
       new HtmlWebpackPlugin({
