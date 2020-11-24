@@ -8,6 +8,7 @@ button {
 }
 $main-color: #ffd600;
 $white-color: #fff;
+$red-color: #ff1744;
 $button-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
 
 html {
@@ -35,7 +36,8 @@ input:not(:checked) ~ form {
   align-items: center;
   justify-content: flex-end;
   margin: auto;
-  background-image: url('../resources/duxit.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url('../resources/duxit.png');
   background-position: center top;
   background-size: cover;
 }
@@ -58,6 +60,7 @@ input:not(:checked) ~ form {
 }
 
 .code-form {
+  text-align: center;
   .code-input {
     width: 16em;
     padding: 1em 2em;
@@ -68,5 +71,12 @@ input:not(:checked) ~ form {
   }
   .enter {
     width: 6em;
+  }
+  .error {
+    display: none;
+    padding: 0.5em;
+    margin: 0 auto;
+    border-radius: 5px;
+    color: $red-color;
   }
 }

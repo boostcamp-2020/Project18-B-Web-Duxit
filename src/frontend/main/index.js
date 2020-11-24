@@ -18,6 +18,10 @@ const requestEnterRoom = async (e) => {
   const config = { method: 'GET', uri: `/rooms/${code}` };
   const { ok } = await request(config);
   if (ok) redirectToGameRoom(code);
+  else {
+    const error = document.getElementById('code-error');
+    error.style.display = 'inline';
+  }
 };
 
 const initialize = () => {
