@@ -68,6 +68,7 @@ input:not(:checked) ~ form {
     background-color: $white-color;
     border-radius: 2em;
     box-shadow: $button-shadow;
+    text-align: left;
   }
   .enter {
     width: 6em;
