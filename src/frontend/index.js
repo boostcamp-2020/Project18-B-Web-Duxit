@@ -1,4 +1,4 @@
-import './style.scss';
+import './index.scss';
 
-document.getElementById('root').innerText = 'Hello duxit!';
+// document.getElementById('root').innerText = 'Hello duxit!';
 console.log('Hello duxit!');
