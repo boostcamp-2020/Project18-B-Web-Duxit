@@ -13,11 +13,11 @@ const generateRandomString = () => {
 export default class Game {
   constructor() {
     this.roomID = generateRandomString();
-    this.Users = new Map();
+    this.users = new Map();
     this.status = {
-      isGaming: false,
+      isPlaying: false,
       unusedCards: [],
-      topic: 'null',
+      topic: '',
       turn: 0,
     };
   }
@@ -26,7 +26,7 @@ export default class Game {
     return this.roomID;
   }
 
-  getIsGaming() {
+  IsPlaying() {
     return this.status.isGaming;
   }
 }

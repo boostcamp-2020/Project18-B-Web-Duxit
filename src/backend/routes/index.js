@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/rooms/:roomID', (req, res) => {
   const { roomID } = req.params;
   const game = Games.get(roomID);
-  if (game && !game.getIsGaming()) {
+  if (game && !game.IsPlaying()) {
     res.status(200).end();
     return;
   }
