@@ -26,6 +26,5 @@ module.exports = {
       },
     ],
     'import/no-unresolved': 'off',
-    // 'prettier/prettier': 'error',
   },
 };
