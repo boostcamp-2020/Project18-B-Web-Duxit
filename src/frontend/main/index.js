@@ -1,5 +1,5 @@
 import './index.scss';
-import request from '../utils/requestHandler';
+import requestHandler from '../utils/requestHandler';
 
 const redirectToGameRoom = (roomCode) => {
   window.location.href = `/game?room=${roomCode}`;
@@ -8,7 +8,7 @@ const redirectToGameRoom = (roomCode) => {
 const requestMakeRoom = async (e) => {
   e.preventDefault();
   const config = { method: 'POST', uri: '/rooms' };
-  const { success, roomCode } = await request(config);
+  const { success, roomCode } = await requestHandler(config);
   if (success) redirectToGameRoom(roomCode);
 };
 
@@ -16,7 +16,7 @@ const requestEnterRoom = async (e) => {
   e.preventDefault();
   const roomCode = e.target['code-input'].value;
   const config = { method: 'GET', uri: `/rooms/${roomCode}` };
-  const { success } = await request(config);
+  const { success } = await requestHandler(config);
   if (success) redirectToGameRoom(roomCode);
   else {
     const error = document.getElementById('code-error');
