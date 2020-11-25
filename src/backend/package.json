@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node dist/bin/www",
-    "dev": "npx webpack --watch --mode=development",
-    "build": "npx webpack --mode=production",
+    "dev": "npx webpack --watch",
+    "build": "npx webpack --mode=production"
   },
   "dependencies": {
     "debug": "~2.6.9",
