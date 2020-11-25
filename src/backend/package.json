@@ -4,10 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node dist/bin/www",
-    "dev": "npx nodemon dist/bin/www",
-    "lint": "npx eslint --fix .",
-    "build": "npx webpack --config=webpack.config.js --mode=production",
-    "watch": "npx webpack --watch --config=webpack.config.js --mode=development"
+    "dev": "npx webpack --watch --mode=development",
+    "build": "npx webpack --mode=production",
   },
   "dependencies": {
     "debug": "~2.6.9",
