@@ -1,12 +1,13 @@
 import './waitingRoom.scss';
-import ButtonObject from '../engine/ButtonObject';
-import GameObject from '../engine/GameObject';
-import TextObject from '../engine/TextObject';
-import InputObject from '../engine/InputObject';
-import SvgObject from '../engine/SvgObject';
-import Svg from '../utils/svg';
+import ButtonObject from '../../engine/ButtonObject';
+import GameObject from '../../engine/GameObject';
+import TextObject from '../../engine/TextObject';
+import InputObject from '../../engine/InputObject';
+import SvgObject from '../../engine/SvgObject';
+import Svg from '../../utils/svg';
+import { copyGameCode, redirectToLobby } from './events';
 
-const waitingRoom = (roomCode = '') => {
+const setupGameLayout = (roomCode) => {
   const Header = new GameObject();
   Header.toggleClass('waiting-header');
   Header.attachToRoot();
@@ -40,6 +41,7 @@ const waitingRoom = (roomCode = '') => {
   ButtonReturnToLobby.setContent('로비로 돌아가기');
   ButtonReturnToLobby.setClass('button-cancel');
   ButtonReturnToLobby.attachToObject(ActionWrapper);
+  ButtonReturnToLobby.addClickHandler(redirectToLobby);
 
   const ButtonReady = new ButtonObject();
   ButtonReady.setContent('준비 완료');
@@ -49,6 +51,7 @@ const waitingRoom = (roomCode = '') => {
   const GameCodeWrapper = new ButtonObject();
   GameCodeWrapper.setClass('waiting-game-code-wrapper');
   GameCodeWrapper.attachToRoot();
+  GameCodeWrapper.addClickHandler(copyGameCode);
 
   const GameCodeText = new TextObject();
   GameCodeText.setContent(`#${roomCode}`);
@@ -61,6 +64,10 @@ const waitingRoom = (roomCode = '') => {
   const CopyIcon = new SvgObject();
   CopyIcon.setInnerHtml(Svg.copy);
   CopyIcon.attachToObject(GameCodeCopyButton);
+};
+
+const waitingRoom = (roomCode = '') => {
+  setupGameLayout(roomCode);
 };
 
 export default waitingRoom;
