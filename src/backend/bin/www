@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
@@ -86,3 +84,4 @@ const server = http.createServer(app);
 server.listen(normalizedPort);
 server.on('error', (error) => onError(error, normalizedPort));
 server.on('listening', () => onListening(server));
+console.log(`Back end server Listening on port ${normalizedPort}`);
