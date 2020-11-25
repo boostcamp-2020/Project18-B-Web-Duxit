@@ -1,7 +1,6 @@
 import express from 'express';
 import logger from 'morgan';
 import dotenv from 'dotenv';
-
 import indexRouter from './routes/index';
 
 const createApplication = () => {

@@ -6,6 +6,12 @@ const babelConfig = require('./babel.config.js');
 
 module.exports = {
   target: 'node',
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      '@game': path.resolve(__dirname, 'game'),
+    },
+  },
   entry: [path.resolve(__dirname, 'app.js')],
   output: {
     path: path.resolve(__dirname, 'dist'),
