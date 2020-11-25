@@ -1,3 +1,4 @@
+import './game.scss';
 import waitingRoom from '../scenes/waitingRoom';
 
 const urlParams = new URLSearchParams(window.location.search);
