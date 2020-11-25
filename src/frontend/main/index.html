@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Page Title</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
-</head>
-<body>
-  <div class='main-wrapper'>
-    <div class='button-wrapper'>
-      <button id='create-room' class='main-button'>게임 방 만들기</button>
-      <input class="hide" type="checkbox" name="input-code" id="input-code">
-      <label class="label" for="input-code">
-        <div class='main-button'>대기실 코드 입력하기</div>
-      </label>
-      <form class='code-form' id='enter-room'>
-        <div>
-          <input name='code-input' class='code-input' required="true" type='text' placeholder="공유받은 코드를 입력해주세요." />
-        <button type="submit" class='main-button enter'>입장</button>
-        </div>
-        <span id='code-error' class='error'>잘못된 코드입니다. 코드를 다시 확인해주세요.</span>
-      </form>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="button-wrapper">
+        <button id="create-room" class="main-button">게임 방 만들기</button>
+        <input class="hide" type="checkbox" name="input-code" id="input-code" />
+        <label for="input-code" class="main-button">대기실 코드 입력하기</label>
+        <form class="code-form" id="enter-room">
+          <div>
+            <input
+              name="code-input"
+              class="code-input"
+              required="true"
+              type="text"
+              placeholder="공유받은 코드를 입력해주세요."
+            />
+            <button type="submit" class="main-button enter">입장</button>
+          </div>
+          <span id="code-error" class="error"
+            >잘못된 코드입니다. 코드를 다시 확인해주세요.</span
+          >
+        </form>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
