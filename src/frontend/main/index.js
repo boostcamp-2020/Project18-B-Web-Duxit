@@ -1,30 +1,30 @@
 import './index.scss';
 import request from '../utils/requestHandler';
 
-const redirectToGameRoom = (code) => {
-  window.location.href = `/game?room=${code}`;
+const redirectToGameRoom = (roomCode) => {
+  window.location.href = `/game?room=${roomCode}`;
 };
 
 const requestMakeRoom = async (e) => {
   e.preventDefault();
   const config = { method: 'POST', uri: '/rooms' };
-  const { ok, code } = await request(config);
-  if (ok) redirectToGameRoom(code);
+  const { success, roomCode } = await request(config);
+  if (success) redirectToGameRoom(roomCode);
 };
 
 const requestEnterRoom = async (e) => {
   e.preventDefault();
-  const code = e.target['code-input'].value;
-  const config = { method: 'GET', uri: `/rooms/${code}` };
-  const { ok } = await request(config);
-  if (ok) redirectToGameRoom(code);
+  const roomCode = e.target['code-input'].value;
+  const config = { method: 'GET', uri: `/rooms/${roomCode}` };
+  const { success } = await request(config);
+  if (success) redirectToGameRoom(roomCode);
   else {
     const error = document.getElementById('code-error');
     error.style.display = 'inline';
   }
 };
 
-const initialize = () => {
+const initializeOnEvents = () => {
   const makeRoomButton = document.getElementById('create-room');
   const enterRoomForm = document.getElementById('enter-room');
 
@@ -32,4 +32,4 @@ const initialize = () => {
   enterRoomForm.addEventListener('submit', requestEnterRoom);
 };
 
-initialize();
+initializeOnEvents();

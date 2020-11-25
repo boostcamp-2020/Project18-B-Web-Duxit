@@ -1,13 +1,13 @@
 const getHandler = async (config) => {
   const { url } = config;
   const result = await fetch(url, { ...config });
-  return { status: result.status, ok: result.ok, ...result.json() };
+  return { status: result.status, success: result.ok, ...result.json() };
 };
 
 const postHandler = async (config) => {
   const { url } = config;
   const result = await fetch(url, { ...config });
-  return { status: result.status, ok: result.ok, ...result.json() };
+  return { status: result.status, success: result.ok, ...result.json() };
 };
 
 const requestHandler = (config) => {
