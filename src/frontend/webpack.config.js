@@ -90,6 +90,7 @@ module.exports = (webpackEnv) => {
       ? {
           devtool: 'source-map',
           devServer: {
+            hot: true,
             contentBase: path.join(__dirname, 'dist'),
             compress: true,
             port: 9000,
