@@ -11,9 +11,13 @@ button {
 * {
   box-sizing: border-box;
 }
+button:not(:disabled) {
+  cursor: pointer;
+}
 
 $main-color: #ffd600;
 $white-color: #fff;
+$gray-color: #ddd;
 $red-color: #ff1744;
 $button-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
 
@@ -24,4 +28,21 @@ html {
 
 .hide {
   display: none;
+}
+
+.button-primary {
+  padding: 1em 2em;
+  background-color: $main-color;
+  border-radius: 2em;
+  box-shadow: $button-shadow;
+  font-size: large;
+  text-align: center;
+}
+.button-cancel {
+  padding: 1em 2em;
+  background-color: $gray-color;
+  border-radius: 2em;
+  box-shadow: $button-shadow;
+  font-size: large;
+  text-align: center;
 }

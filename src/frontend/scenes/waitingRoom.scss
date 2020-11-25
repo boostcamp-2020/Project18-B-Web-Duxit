@@ -1,14 +1,20 @@
-@import '../utils/common';
+@import '../game/game';
 
 .waiting-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  transform: translateX(-50%);
 }
 
 .waiting-nickname-help {
   font-size: large;
+  font-weight: 600;
+  user-select: none;
 }
 
 .waiting-input-wrapper {
@@ -43,4 +49,41 @@
     width: 1.7rem;
     height: 1.7rem;
   }
+}
+
+.waiting-action-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-50%);
+  > * {
+    margin: 0.5em 0;
+  }
+}
+
+.waiting-game-code-wrapper {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: x-large;
+  > * {
+    margin: 0 0.5rem;
+  }
+}
+
+.waiting-code-icon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  background-color: $main-color;
+  border-radius: 100%;
+  box-shadow: $button-shadow;
+  cursor: pointer;
 }

@@ -1,0 +1,28 @@
+@import '../utils/common';
+
+$left-size: 200px;
+$right-size: 330px;
+
+.game-layout {
+  display: flex;
+
+  .left-tab {
+    height: 100vh;
+    flex-basis: $left-size;
+    flex-shrink: 0;
+    background-color: #abc;
+  }
+
+  .right-tab {
+    height: 100vh;
+    flex-basis: $right-size;
+    flex-shrink: 0;
+    margin-left: auto;
+    background-color: #3f3;
+  }
+
+  .main {
+    position: relative;
+    width: 100%;
+  }
+}
