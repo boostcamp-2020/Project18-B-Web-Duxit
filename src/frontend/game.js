@@ -1,4 +1,3 @@
-import './style.scss';
+import waitingRoom from './scenes/waitingRoom';
 
-document.getElementById('root').innerText = 'This is game page!';
-console.log('This is game page!');
+waitingRoom();
