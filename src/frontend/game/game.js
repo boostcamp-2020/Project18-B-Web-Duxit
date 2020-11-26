@@ -1,6 +1,7 @@
 import './game.scss';
 import { renderWaitingRoom, setupWaitingRoomSocket } from '@scenes/waitingRoom';
 import socket from '@utils/socket';
+import requestHandler from '@utils/requestHandler';
 
 const scrollToBottom = (component) => {
   const scrollOption = {
@@ -61,9 +62,16 @@ const initializeLayout = () => {
   socket.on('send chat', getMessageFromServer);
 };
 
-const initialize = () => {
+const initialize = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomID = urlParams.get('room');
+  const config = { method: 'GET', uri: `/rooms/${roomID}` };
+  const { success } = await requestHandler(config);
+  if (!success) {
+    window.alert('올바르지 않은 코드입니다.');
+    window.location.href = '/';
+    return;
+  }
   socket.emit('join player', { roomID });
 
   initializeLayout();
