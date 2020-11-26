@@ -1,3 +1,5 @@
+import { $create, $id } from '@utils/dom';
+
 const GameObject = class {
   constructor(data = {}) {
     const { id, name, position, depth, size, cssClass } = data;
@@ -17,11 +19,11 @@ const GameObject = class {
   }
 
   attachToRoot() {
-    document.getElementById('root').appendChild(this.instance);
+    $id('root').appendChild(this.instance);
   }
 
   createElement() {
-    const element = document.createElement('div');
+    const element = $create('div');
     this.setElement(element);
   }
 

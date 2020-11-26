@@ -1,5 +1,6 @@
 import './index.scss';
 import requestHandler from '@utils/requestHandler';
+import { $id } from '@utils/dom';
 
 const redirectToGameRoom = (roomCode) => {
   window.location.href = `/game?room=${roomCode}`;
@@ -19,14 +20,14 @@ const requestEnterRoom = async (e) => {
   const { success } = await requestHandler(config);
   if (success) redirectToGameRoom(roomCode);
   else {
-    const error = document.getElementById('code-error');
+    const error = $id('code-error');
     error.style.display = 'inline';
   }
 };
 
 const initializeOnEvents = () => {
-  const makeRoomButton = document.getElementById('create-room');
-  const enterRoomForm = document.getElementById('enter-room');
+  const makeRoomButton = $id('create-room');
+  const enterRoomForm = $id('enter-room');
 
   makeRoomButton.addEventListener('click', requestMakeRoom);
   enterRoomForm.addEventListener('submit', requestEnterRoom);
