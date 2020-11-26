@@ -1,8 +1,9 @@
+import { $create } from '@utils/dom';
 import GameObject from './GameObject';
 
 const InputObject = class extends GameObject {
   createElement() {
-    const element = document.createElement('input');
+    const element = $create('input');
     this.setElement(element);
   }
 
