@@ -1,24 +1,25 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const NodemonPlugin = require('nodemon-webpack-plugin');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const babelConfig = require('./babel.config.js');
 
 module.exports = {
   target: 'node',
-  entry: [path.resolve(__dirname, 'app.js')],
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      '@game': path.resolve(__dirname, 'game'),
+      '@utils': path.resolve(__dirname, 'utils'),
+    },
+  },
+  entry: [path.resolve(__dirname, 'server.js')],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'app.js',
     libraryTarget: 'commonjs2',
   },
   externals: [nodeExternals()],
-  plugins: [
-    new CleanWebpackPlugin(),
-    new CopyWebpackPlugin({
-      patterns: [{ from: 'bin', to: 'bin' }],
-    }),
-  ],
+  plugins: [new NodemonPlugin()],
   module: {
     rules: [
       {

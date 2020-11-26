@@ -1,0 +1,83 @@
+@import '../utils/common';
+
+$left-size: 200px;
+$right-size: 330px;
+
+.game-layout {
+  display: flex;
+
+  .left-tab {
+    height: 100vh;
+    flex-basis: $left-size;
+    flex-shrink: 0;
+    background-color: #abc;
+  }
+
+  .right-tab {
+    display: flex;
+    height: 100vh;
+    flex-basis: $right-size;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-left: auto;
+    background-color: $white-color;
+  }
+
+  .main {
+    position: relative;
+    width: 100%;
+  }
+}
+
+.chat-send-button {
+  padding: 0.5em !important;
+}
+
+.chat-message-log {
+  flex-grow: 1;
+  background-color: #eee;
+  overflow-y: scroll;
+}
+
+.chat-input {
+  flex-grow: 1;
+  background-color: $white-color;
+}
+
+.chat-form {
+  display: flex;
+  margin: 0.5rem;
+}
+
+.chat-other-player {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0.5rem 2rem 0.5rem 1rem;
+
+  .chat-message {
+    background-color: $white-color;
+  }
+}
+
+.chat-mine {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0.5rem 1rem 0.5rem 2rem;
+
+  .chat-message {
+    background-color: $main-color;
+  }
+}
+
+.chat-nickname {
+  padding-bottom: 0.5em;
+}
+
+.chat-message {
+  padding: 0.3em;
+  border-radius: 0.5em;
+  font-size: larger;
+  word-break: break-word;
+}
