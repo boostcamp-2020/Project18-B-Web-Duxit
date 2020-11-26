@@ -8,8 +8,8 @@ const redirectToGameRoom = (roomCode) => {
 const requestMakeRoom = async (e) => {
   e.preventDefault();
   const config = { method: 'POST', uri: '/rooms' };
-  const { success, roomCode } = await requestHandler(config);
-  if (success) redirectToGameRoom(roomCode);
+  const { success, roomID } = await requestHandler(config);
+  if (success) redirectToGameRoom(roomID);
 };
 
 const requestEnterRoom = async (e) => {

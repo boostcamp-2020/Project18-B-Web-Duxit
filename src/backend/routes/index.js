@@ -10,11 +10,11 @@ router.get('/rooms/:roomID', (req, res) => {
   const { roomID } = req.params;
   const game = Games.get(roomID);
   if (game && !game.IsPlaying()) {
-    res.status(200).end();
+    res.status(200).json({});
     return;
   }
 
-  res.status(403).end();
+  res.status(403).json({});
 });
 
 // 새로운 게임을 만드는 로직
