@@ -8,6 +8,7 @@
     "build": "npx webpack --mode=production"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
