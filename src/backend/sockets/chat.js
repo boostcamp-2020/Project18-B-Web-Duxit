@@ -1,9 +1,9 @@
-import { findRoomID } from '@utils/socket';
+import Games from '@game/Games';
 
 export const onSendChat = (socket, { message }) => {
-  const roomID = findRoomID(socket);
+  const roomID = Games.findRoomID(socket.id);
   if (!roomID) return;
 
-  socket.in(roomID).emit('send chat', { message });
-  // socket.emit('send chat', { message });
+  const { nickname } = Games.findUserInfo(socket.id);
+  socket.in(roomID).emit('send chat', { message, nickname });
 };
