@@ -1,4 +1,4 @@
-@import '../utils/common';
+@import '@utils/common';
 
 input:checked ~ label {
   display: none;
@@ -17,7 +17,7 @@ input:not(:checked) ~ form {
   justify-content: flex-end;
   margin: auto;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url('../resources/duxit.png');
+    url('@resources/duxit.png');
   background-position: center top;
   background-size: cover;
 }

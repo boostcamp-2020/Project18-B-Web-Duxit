@@ -1,5 +1,5 @@
 import './index.scss';
-import requestHandler from '../utils/requestHandler';
+import requestHandler from '@utils/requestHandler';
 
 const redirectToGameRoom = (roomCode) => {
   window.location.href = `/game?room=${roomCode}`;

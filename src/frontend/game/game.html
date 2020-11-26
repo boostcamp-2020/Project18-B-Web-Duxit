@@ -10,7 +10,21 @@
     <div class="game-layout">
       <div id="left-tab" class="left-tab"></div>
       <div id="root" class="main"></div>
-      <div id="right-tab" class="right-tab"></div>
+      <div id="right-tab" class="right-tab">
+        <div id="chat-message-log" class="chat-message-log"></div>
+        <form id="chat-form" class="chat-form">
+          <input
+          name="message"
+          class="chat-input"
+          maxlength="250"
+          autocomplete="off"
+          placeholder="메시지를 입력하세요."
+          >
+          <button class="chat-send-button button-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
