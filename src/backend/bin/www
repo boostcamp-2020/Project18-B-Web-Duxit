@@ -2,11 +2,15 @@
  * Module dependencies.
  */
 
-import { socketIO } from '../sockets';
+import socketIO from '../sockets';
+import dotenv from 'dotenv';
 
 const debug = require('debug')('backend:server');
 const http = require('http');
 const { default: createApplication } = require('../app.js');
+
+// dotenv
+dotenv.config();
 
 /**
  * Normalize a port into a number, string, or false.
@@ -81,9 +85,6 @@ const server = http.createServer(app);
 socketIO.attach(server, {
   cors: {
     origin: ['http://localhost:9000', 'http://127.0.0.1:9000'],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['my-custom-header'],
-    credentials: true,
   },
 });
 
