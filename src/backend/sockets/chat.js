@@ -5,5 +5,5 @@ export const onSendChat = (socket, { message }) => {
   if (!roomID) return;
 
   socket.in(roomID).emit('send chat', { message });
-  socket.emit('send chat', { message });
+  // socket.emit('send chat', { message });
 };
