@@ -9,6 +9,7 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       '@game': path.resolve(__dirname, 'game'),
+      '@utils': path.resolve(__dirname, 'utils'),
     },
   },
   entry: [path.resolve(__dirname, 'bin/www')],
