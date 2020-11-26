@@ -1,6 +1,7 @@
 import Games from '@game/Games';
 
-export const onJoinPlayer = (socket, { roomID }) => {
+function onJoinPlayer({ roomID }) {
+  const socket = this;
   if (!roomID || !Games.isEnterableRoom(roomID)) return;
 
   Games.enterUser({ socketID: socket.id, roomID });
@@ -11,4 +12,8 @@ export const onJoinPlayer = (socket, { roomID }) => {
     roomID,
     players: [],
   });
-};
+}
+
+export default function onWaitingRoom(socket) {
+  socket.on('join player', onJoinPlayer);
+}
