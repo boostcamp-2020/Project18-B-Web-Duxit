@@ -3,10 +3,10 @@ export const redirectToLobby = () => {
 };
 
 export const copyGameCode = (e) => {
-  const gamecodeInput2 = e.currentTarget.firstChild;
+  const roomID = e.currentTarget.firstChild;
   navigator.permissions.query({ name: 'clipboard-write' }).then(({ state }) => {
     if (state === 'granted' || state === 'prompt') {
-      navigator.clipboard.writeText(gamecodeInput2.innerText);
+      navigator.clipboard.writeText(roomID.innerText);
     }
   });
 };
