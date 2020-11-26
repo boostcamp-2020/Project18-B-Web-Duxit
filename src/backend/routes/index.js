@@ -1,7 +1,6 @@
 import express from 'express';
 import Game from '@game/Game';
-
-const Games = new Map();
+import Games from '@game/Games';
 
 const router = express.Router();
 

@@ -82,7 +82,6 @@ app.set('port', normalizedPort);
 /**
  * Create HTTP server.
  */
-
 const server = http.createServer(app);
 socketIO.attach(server, {
   cors: {

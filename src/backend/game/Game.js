@@ -29,4 +29,8 @@ export default class Game {
   IsPlaying() {
     return this.status.isGaming;
   }
+
+  addUser(socketID) {
+    this.users.set(socketID, socketID);
+  }
 }
