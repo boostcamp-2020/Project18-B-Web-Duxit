@@ -48,3 +48,35 @@ $right-size: 330px;
   display: flex;
   margin: 0.5rem;
 }
+
+.chat-other-player {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0.5rem 2rem 0.5rem 1rem;
+
+  .chat-message {
+    background-color: $white-color;
+  }
+}
+
+.chat-mine {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0.5rem 1rem 0.5rem 2rem;
+
+  .chat-message {
+    background-color: $main-color;
+  }
+}
+
+.chat-nickname {
+  padding-bottom: 0.5em;
+}
+
+.chat-message {
+  padding: 0.3em;
+  border-radius: 0.5em;
+  font-size: larger;
+}
