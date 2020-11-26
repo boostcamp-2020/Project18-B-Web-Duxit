@@ -1,18 +1,8 @@
-const randomStrings = new Set();
-
-// 5개의 알파벳을 랜덤으로 생성. 이미 생성된 문자열일경우 다시 생성
-const generateRandomString = () => {
-  const randomString = Math.random().toString(36).substr(2, 5).toUpperCase();
-
-  if (randomStrings.has(randomString)) return generateRandomString();
-
-  randomStrings.add(randomString);
-  return randomString;
-};
+import User from './User';
 
 export default class Game {
-  constructor() {
-    this.roomID = generateRandomString();
+  constructor(roomID) {
+    this.roomID = roomID;
     this.users = new Map();
     this.status = {
       isPlaying: false,
@@ -26,11 +16,21 @@ export default class Game {
     return this.roomID;
   }
 
-  IsPlaying() {
-    return this.status.isGaming;
+  isPlaying() {
+    return this.status.isPlaying;
   }
 
-  addUser(socketID) {
-    this.users.set(socketID, socketID);
+  addUser({ socketID, nickname, color }) {
+    const user = new User({ socketID, nickname, color });
+    this.users.set(socketID, user);
+  }
+
+  findUserInfo(socketID) {
+    const user = this.users.get(socketID);
+    return user ? user.getUserProfile() : false;
+  }
+
+  findUserInfoAll(socketID) {
+    return this.users.get(socketID).getUserInfo() || null;
   }
 }
