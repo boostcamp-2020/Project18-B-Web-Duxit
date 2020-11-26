@@ -7,7 +7,7 @@ import SvgObject from '../../engine/SvgObject';
 import Svg from '../../utils/svg';
 import { copyGameCode, redirectToLobby } from './events';
 
-const setupGameLayout = (roomCode) => {
+const setupGameLayout = (roomID) => {
   const Header = new GameObject();
   Header.toggleClass('waiting-header');
   Header.attachToRoot();
@@ -18,7 +18,7 @@ const setupGameLayout = (roomCode) => {
   NicknameHelpText.attachToObject(Header);
 
   const InputWrapper = new GameObject();
-  InputWrapper.toggleClass('waiting-input-wrapper');
+  InputWrapper.setClass('waiting-input-wrapper');
   InputWrapper.attachToObject(Header);
 
   const NicknameInput = new InputObject();
@@ -54,7 +54,7 @@ const setupGameLayout = (roomCode) => {
   GameCodeWrapper.addClickHandler(copyGameCode);
 
   const GameCodeText = new TextObject();
-  GameCodeText.setContent(`#${roomCode}`);
+  GameCodeText.setContent(roomID);
   GameCodeText.attachToObject(GameCodeWrapper);
 
   const GameCodeCopyButton = new GameObject();
@@ -66,8 +66,8 @@ const setupGameLayout = (roomCode) => {
   CopyIcon.attachToObject(GameCodeCopyButton);
 };
 
-const waitingRoom = (roomCode = '') => {
-  setupGameLayout(roomCode);
+const waitingRoom = (roomID = '') => {
+  setupGameLayout(roomID);
 };
 
 export default waitingRoom;
