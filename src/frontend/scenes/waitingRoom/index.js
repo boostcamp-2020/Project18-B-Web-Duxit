@@ -5,9 +5,10 @@ import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
 import Svg from '@utils/svg';
+import socket from '@utils/socket';
 import { copyGameCode, redirectToLobby } from './events';
 
-const setupGameLayout = (roomID) => {
+export const renderWaitingRoom = (roomID = '') => {
   const Header = new GameObject();
   Header.toggleClass('waiting-header');
   Header.attachToRoot();
@@ -64,10 +65,10 @@ const setupGameLayout = (roomID) => {
   const CopyIcon = new SvgObject();
   CopyIcon.setInnerHtml(Svg.copy);
   CopyIcon.attachToObject(GameCodeCopyButton);
+
+  return {
+    NicknameInput,
+  };
 };
 
-const waitingRoom = (roomID = '') => {
-  setupGameLayout(roomID);
-};
-
-export default waitingRoom;
+export const setupWaitingRoomSocket = () => {};
