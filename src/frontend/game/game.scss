@@ -14,15 +14,37 @@ $right-size: 330px;
   }
 
   .right-tab {
+    display: flex;
     height: 100vh;
     flex-basis: $right-size;
+    flex-direction: column;
     flex-shrink: 0;
     margin-left: auto;
-    background-color: #3f3;
+    background-color: $white-color;
   }
 
   .main {
     position: relative;
     width: 100%;
   }
+}
+
+.chat-send-button {
+  padding: 0.5em !important;
+}
+
+.chat-message-log {
+  flex-grow: 1;
+  background-color: #eee;
+  overflow-y: scroll;
+}
+
+.chat-input {
+  flex-grow: 1;
+  background-color: $white-color;
+}
+
+.chat-form {
+  display: flex;
+  margin: 0.5rem;
 }

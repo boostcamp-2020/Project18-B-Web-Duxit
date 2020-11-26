@@ -31,6 +31,9 @@ html {
 }
 
 .button-primary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding: 1em 2em;
   background-color: $main-color;
   border-radius: 2em;
