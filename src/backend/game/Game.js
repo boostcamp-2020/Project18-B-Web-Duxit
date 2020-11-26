@@ -26,9 +26,7 @@ export default class Game {
   }
 
   findUserInfo(socketID) {
-    console.log(socketID);
     const user = this.users.get(socketID);
-    console.log('user', user, this.users);
     return user ? user.getUserProfile() : false;
   }
 

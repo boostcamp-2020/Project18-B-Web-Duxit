@@ -9,7 +9,6 @@ class Games {
 
   isEnterableRoom(roomID) {
     const game = this.roomGameMap.get(roomID);
-    console.log(roomID, this.roomGameMap);
     if (!game) return false;
     if (game.isPlaying()) return false;
     return true;
