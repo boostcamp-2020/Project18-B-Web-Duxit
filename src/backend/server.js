@@ -2,12 +2,13 @@
  * Module dependencies.
  */
 
-import socketIO from '../sockets';
 import dotenv from 'dotenv';
+import debugModule from 'debug';
+import http from 'http';
+import socketIO from './sockets';
+import createApplication from './app';
 
-const debug = require('debug')('backend:server');
-const http = require('http');
-const { default: createApplication } = require('../app.js');
+const debug = debugModule('backend:server');
 
 // dotenv
 dotenv.config();
@@ -66,6 +67,7 @@ const onListening = (server) => {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
+  console.log(`Back end server Listening on port ${addr.port}`);
 };
 
 /**
@@ -84,7 +86,7 @@ app.set('port', normalizedPort);
 const server = http.createServer(app);
 socketIO.attach(server, {
   cors: {
-    origin: ['http://localhost:9000', 'http://127.0.0.1:9000'],
+    origin: [process.env.FRONTEND_ORIGIN],
   },
 });
 
@@ -94,5 +96,4 @@ socketIO.attach(server, {
 
 server.listen(normalizedPort);
 server.on('error', (error) => onError(error, normalizedPort));
-server.on('listening', () => onListening(server));
-console.log(`Back end server Listening on port ${normalizedPort}`);
+server.on('listening', () => onListening(server, normalizedPort));

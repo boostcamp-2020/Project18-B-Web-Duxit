@@ -12,7 +12,7 @@ module.exports = {
       '@utils': path.resolve(__dirname, 'utils'),
     },
   },
-  entry: [path.resolve(__dirname, 'bin/www')],
+  entry: [path.resolve(__dirname, 'server.js')],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'app.js',
