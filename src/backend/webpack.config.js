@@ -11,7 +11,7 @@ module.exports = {
       '@game': path.resolve(__dirname, 'game'),
     },
   },
-  entry: [path.resolve(__dirname, 'bin/www')],
+  entry: [path.resolve(__dirname, 'server.js')],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'app.js',

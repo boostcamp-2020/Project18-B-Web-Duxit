@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node dist/bin/www",
-    "dev": "npx webpack --watch",
+    "start": "npx webpack --watch",
+    "dev": "npm start",
     "build": "npx webpack --mode=production"
   },
   "dependencies": {
