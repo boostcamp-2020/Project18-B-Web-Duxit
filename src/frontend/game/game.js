@@ -1,6 +1,6 @@
 import './game.scss';
-import renderWaitingRoom from '../scenes/waitingRoom';
-import socket from '../utils/socket';
+import renderWaitingRoom from '@scenes/waitingRoom';
+import socket from '@utils/socket';
 
 const initializeLayout = () => {
   const chatMessageLog = document.getElementById('chat-message-log');

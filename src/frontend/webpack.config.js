@@ -15,6 +15,15 @@ module.exports = (webpackEnv) => {
       main: path.resolve(__dirname, './main/index.js'),
       game: path.resolve(__dirname, './game/game.js'),
     },
+    resolve: {
+      extensions: ['.js'],
+      alias: {
+        '@engine': path.resolve(__dirname, 'engine'),
+        '@scenes': path.resolve(__dirname, 'scenes'),
+        '@resources': path.resolve(__dirname, 'resources'),
+        '@utils': path.resolve(__dirname, 'utils'),
+      },
+    },
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].bundle.js',

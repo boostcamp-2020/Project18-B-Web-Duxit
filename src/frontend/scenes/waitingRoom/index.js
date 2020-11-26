@@ -1,10 +1,10 @@
 import './waitingRoom.scss';
-import ButtonObject from '../../engine/ButtonObject';
-import GameObject from '../../engine/GameObject';
-import TextObject from '../../engine/TextObject';
-import InputObject from '../../engine/InputObject';
-import SvgObject from '../../engine/SvgObject';
-import Svg from '../../utils/svg';
+import ButtonObject from '@engine/ButtonObject';
+import GameObject from '@engine/GameObject';
+import TextObject from '@engine/TextObject';
+import InputObject from '@engine/InputObject';
+import SvgObject from '@engine/SvgObject';
+import Svg from '@utils/svg';
 import { copyGameCode, redirectToLobby } from './events';
 
 const setupGameLayout = (roomID) => {
