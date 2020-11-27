@@ -1,6 +1,7 @@
 import './game.scss';
 import { renderWaitingRoom, setupWaitingRoomSocket } from '@scenes/waitingRoom';
 import socket from '@utils/socket';
+import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
 
 const scrollToBottom = (component) => {
@@ -11,19 +12,19 @@ const scrollToBottom = (component) => {
 };
 
 const initializeLayout = () => {
-  const chatMessageLog = document.getElementById('chat-message-log');
-  const chatForm = document.getElementById('chat-form');
+  const chatMessageLog = $id('chat-message-log');
+  const chatForm = $id('chat-form');
 
   chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const message = e.target.message.value;
-    if (!message.length) return;
+    if (!message.trim().length) return;
     e.target.message.value = '';
 
     // TODO: initialize에서 분리하기
     const sendMessageToServer = () => {
-      const messageWrapper = document.createElement('div');
-      const messageBox = document.createElement('div');
+      const messageWrapper = $create('div');
+      const messageBox = $create('div');
 
       messageWrapper.classList.add('chat-mine');
       messageWrapper.appendChild(messageBox);
@@ -41,9 +42,9 @@ const initializeLayout = () => {
 
   // TODO: initialize에서 분리하기
   const getMessageFromServer = ({ nickname, message }) => {
-    const messageWrapper = document.createElement('div');
-    const nicknameBox = document.createElement('div');
-    const messageBox = document.createElement('div');
+    const messageWrapper = $create('div');
+    const nicknameBox = $create('div');
+    const messageBox = $create('div');
 
     messageWrapper.classList.add('chat-other-player');
     messageWrapper.appendChild(nicknameBox);
