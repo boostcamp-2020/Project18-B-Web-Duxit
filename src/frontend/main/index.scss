@@ -1,0 +1,63 @@
+@import '@utils/common';
+
+input:checked ~ label {
+  display: none;
+}
+
+input:not(:checked) ~ form {
+  display: none;
+}
+
+.main-wrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin: auto;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url('@resources/duxit.png');
+  background-position: center top;
+  background-size: cover;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4em;
+  .main-button {
+    width: 22em;
+    padding: 1em;
+    margin: 1em;
+    background-color: $main-color;
+    border-radius: 2em;
+    box-shadow: $button-shadow;
+    cursor: pointer;
+    text-align: center;
+  }
+}
+
+.code-form {
+  text-align: center;
+  .code-input {
+    width: 16em;
+    padding: 1em 2em;
+    border: 0;
+    background-color: $white-color;
+    border-radius: 2em;
+    box-shadow: $button-shadow;
+    text-align: left;
+  }
+  .enter {
+    width: 6em;
+  }
+  .error {
+    display: none;
+    padding: 0.5em;
+    margin: 0 auto;
+    border-radius: 5px;
+    color: $red-color;
+  }
+}

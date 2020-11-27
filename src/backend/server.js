@@ -1,12 +1,17 @@
-#!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
 
-const debug = require('debug')('backend:server');
-const http = require('http');
-const { default: createApplication } = require('../app.js');
+import dotenv from 'dotenv';
+import debugModule from 'debug';
+import http from 'http';
+import socketIO from './sockets';
+import createApplication from './app';
+
+const debug = debugModule('backend:server');
+
+// dotenv
+dotenv.config();
 
 /**
  * Normalize a port into a number, string, or false.
@@ -62,6 +67,7 @@ const onListening = (server) => {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
+  console.log(`Back end server Listening on port ${addr.port}`);
 };
 
 /**
@@ -76,8 +82,12 @@ app.set('port', normalizedPort);
 /**
  * Create HTTP server.
  */
-
 const server = http.createServer(app);
+socketIO.attach(server, {
+  cors: {
+    origin: [process.env.FRONTEND_ORIGIN],
+  },
+});
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -85,4 +95,4 @@ const server = http.createServer(app);
 
 server.listen(normalizedPort);
 server.on('error', (error) => onError(error, normalizedPort));
-server.on('listening', () => onListening(server));
+server.on('listening', () => onListening(server, normalizedPort));

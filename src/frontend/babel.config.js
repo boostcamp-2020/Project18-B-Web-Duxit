@@ -5,11 +5,9 @@ module.exports = {
       {
         targets: {
           chrome: 60,
-          safari: 9,
+          safari: 13,
           firefox: 54,
         },
-        // useBuiltIns: 'usage',
-        // corejs: 3,
       },
     ],
   ],

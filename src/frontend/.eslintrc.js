@@ -14,6 +14,12 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+    'import/no-unresolved': 'off',
   },
 };
