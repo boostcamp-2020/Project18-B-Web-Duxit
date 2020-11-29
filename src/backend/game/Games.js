@@ -3,45 +3,38 @@ import Game from '@game/Game';
 
 class Games {
   constructor() {
-    this.roomGameMap = new Map();
-    this.userRoomMap = new Map();
+    // roomID -> game
+    // socketID -> game
+    this.games = new Map();
   }
 
-  isEnterableRoom(roomID) {
-    const game = this.roomGameMap.get(roomID);
-    if (!game) return false;
-    if (game.isPlaying()) return false;
-    return true;
+  addID(ID, game) {
+    this.games.set(ID, game);
+  }
+
+  removeID(ID) {
+    this.games.delete(ID);
   }
 
   createGame() {
-    const game = new Game();
-    const roomID = generateRandom.code();
-    this.roomGameMap.set(roomID, game);
+    const roomID = generateRandom.roomID();
+    const game = new Game(roomID);
+    this.addID(roomID, game);
     return roomID;
   }
 
-  enterUser({ socketID, roomID }) {
-    const nickname = generateRandom.nickname();
-    const color = generateRandom.color();
-    this.userRoomMap.set(socketID, roomID);
-    this.roomGameMap.get(roomID).addUser({ socketID, roomID, nickname, color });
+  getGame(ID) {
+    const game = this.games.get(ID);
+    if (!game) {
+      console.log(`Game.findGame: can not find ${ID}`);
+      return null;
+    }
+
+    return this.games.get(ID);
   }
 
-  findRoomID(socketID) {
-    return this.userRoomMap.get(socketID) || null;
-  }
-
-  findGameBySocketID(socketID) {
-    const roomID = this.userRoomMap.get(socketID);
-    return this.roomGameMap.get(roomID) || false;
-  }
-
-  findUserInfo(socketID) {
-    const roomID = this.userRoomMap.get(socketID);
-    if (!roomID) return false;
-    const game = this.roomGameMap.get(roomID);
-    return game.findUserInfo(socketID);
+  hasGame(roomID) {
+    return this.games.has(roomID);
   }
 }
 

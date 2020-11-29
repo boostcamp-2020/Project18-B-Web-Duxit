@@ -5,7 +5,8 @@ const router = express.Router();
 
 const getRoomsRouter = (req, res) => {
   const { roomID } = req.params;
-  if (Games.isEnterableRoom(roomID)) {
+  const game = Games.getGame(roomID);
+  if (game && game.isEnterable(roomID)) {
     return res.status(200).json({});
   }
 
