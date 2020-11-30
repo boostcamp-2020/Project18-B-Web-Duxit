@@ -43,11 +43,15 @@ export default class Game {
     return this.users.get(socketID);
   }
 
-  getOtherUsersProfile(mySocketID) {
-    return [...this.users.keys()]
-      .map((socketID) => {
-        return { ...this.users.get(socketID).getProfile(), socketID };
-      })
-      .filter((userProfile) => userProfile.socketID !== mySocketID);
+  getUsersProfile() {
+    return [...this.users.keys()].map((socketID) => {
+      return { ...this.users.get(socketID).getProfile(), socketID };
+    });
+  }
+
+  updateUserProfile({ socketID, nickname, color }) {
+    const user = this.users.get(socketID);
+    user.setColor(color);
+    user.setNickname(nickname);
   }
 }
