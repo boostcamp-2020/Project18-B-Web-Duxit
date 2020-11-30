@@ -1,17 +1,23 @@
-import Games from '@game/Games';
+import GameList from '@game/GameList';
 
 function onJoinPlayer({ roomID }) {
   const socket = this;
-  if (!roomID || !Games.isEnterableRoom(roomID)) return;
+  const game = GameList.getGame(roomID);
+  if (!game || !game.isEnterable(roomID)) return;
 
-  Games.enterUser({ socketID: socket.id, roomID });
-  const userInfo = Games.findUserInfo(socket.id);
+  // User enter the room
+  socket.game = game;
+  const user = game.addUser({ socketID: socket.id, roomID });
   socket.join(roomID);
+
+  // only sending to the client
   socket.emit('enter room', {
-    ...userInfo,
+    ...user.getProfile(),
     roomID,
     players: [],
   });
+
+  // TODO send 'update player' to other players in the room
 }
 
 export default function onWaitingRoom(socket) {

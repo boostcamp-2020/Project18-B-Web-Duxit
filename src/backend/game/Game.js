@@ -1,4 +1,8 @@
+import generateRandom from '@utils/generateRandom';
+import GameList from '@game/GameList';
 import User from './User';
+
+const MAX_PLAYER = 6;
 
 export default class Game {
   constructor(roomID) {
@@ -12,25 +16,34 @@ export default class Game {
     };
   }
 
-  getRoomID() {
-    return this.roomID;
+  isEnterable() {
+    if (this.status.isPlaying || this.users.size >= MAX_PLAYER) return false;
+    return true;
   }
 
-  isPlaying() {
-    return this.status.isPlaying;
-  }
-
-  addUser({ socketID, nickname, color }) {
+  addUser({ socketID }) {
+    const nickname = generateRandom.nickname();
+    const color = generateRandom.color();
     const user = new User({ socketID, nickname, color });
+    GameList.addID(socketID, this);
     this.users.set(socketID, user);
+    return user;
   }
 
-  findUserInfo(socketID) {
-    const user = this.users.get(socketID);
-    return user ? user.getUserProfile() : false;
+  removeUser({ socketID }) {
+    this.users.delete(socketID);
+    GameList.removeID(socketID);
+    if (this.users.size < 1) {
+      GameList.removeID(this.roomID);
+    }
   }
 
-  findUserInfoAll(socketID) {
-    return this.users.get(socketID).getUserInfo() || null;
+  getUser(socketID) {
+    if (!this.users.has(socketID)) {
+      console.log(`getUser: socketID ${socketID} does not exist`);
+      return null;
+    }
+
+    return this.users.get(socketID);
   }
 }
