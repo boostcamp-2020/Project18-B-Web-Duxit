@@ -12,7 +12,7 @@ $right-size: 330px;
     flex-basis: $left-size;
     flex-direction: column;
     flex-shrink: 0;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     border-right: 1px solid $gray-color;
   }
 
@@ -30,38 +30,6 @@ $right-size: 330px;
     position: relative;
     width: 100%;
   }
-}
-
-.left-title-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  .left-title-text {
-    margin-right: 5px;
-    font-size: larger;
-    font-weight: 800;
-  }
-  .left-title-number {
-    display: flex;
-    width: 1.6rem;
-    height: 1.6rem;
-    align-items: center;
-    justify-content: center;
-    background-color: $main-color;
-    border-radius: 100%;
-  }
-}
-
-.microphone-controller {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem;
-  margin-top: auto;
-  background-color: $green-color;
-  cursor: pointer;
-  font-weight: 700;
 }
 
 .chat-message-log {
