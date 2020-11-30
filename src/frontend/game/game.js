@@ -89,6 +89,4 @@ const initialize = async () => {
   });
 };
 
-const duckComponent = '<div></div>';
-
 initialize();
