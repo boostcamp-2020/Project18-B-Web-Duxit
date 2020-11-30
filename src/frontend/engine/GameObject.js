@@ -32,7 +32,7 @@ const GameObject = class {
     // this.childList = [...this.childList, object];
   }
 
-  setClass(className) {
+  addClass(className) {
     this.instance.classList.add(className);
   }
 
