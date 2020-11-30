@@ -49,7 +49,7 @@ class User {
     };
   }
 
-  getUserProfile() {
+  getProfile() {
     const { nickname, color } = this;
     return {
       nickname,
