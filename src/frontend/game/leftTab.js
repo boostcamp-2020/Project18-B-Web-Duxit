@@ -20,9 +20,9 @@ class LeftTab {
   createDuck(duckInfo) {
     const { socketID, color, nickname } = duckInfo;
     const duck = new DuckObject({ type: 'left', socketID });
-    duck.createElement();
     duck.setNickname(nickname);
     duck.setColor(color);
+    duck.createElement();
     return duck;
   }
 
@@ -30,7 +30,6 @@ class LeftTab {
     const updatedPlayer = this.players.find(
       (player) => player.socketID === playerInfo.socketID,
     );
-    console.log('업데이트된 녀석', updatedPlayer);
     if (updatedPlayer) updatedPlayer.update(playerInfo);
     else this.addPlayer(playerInfo);
   }
@@ -39,7 +38,7 @@ class LeftTab {
     const duck = this.createDuck(playerInfo);
     const playerWrapper = $id('participants-wrapper');
     this.players = [...this.players, duck];
-    playerWrapper.innerHTML += duck.getComponent();
+    playerWrapper.appendChild(duck.instance);
     this.renderCount();
   }
 
@@ -51,10 +50,7 @@ class LeftTab {
   render() {
     this.renderCount();
     const playerWrapper = $id('participants-wrapper');
-    const duckComponents = this.players.reduce((prev, player) => {
-      return prev + player.getComponent();
-    }, '');
-    playerWrapper.innerHTML = duckComponents;
+    this.players.map((player) => playerWrapper.appendChild(player.instance));
   }
 }
 

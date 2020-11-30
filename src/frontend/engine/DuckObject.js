@@ -1,3 +1,4 @@
+import { $id, $create } from '@utils/dom';
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
@@ -27,16 +28,21 @@ const DuckObject = class extends ImageObject {
     this.microphone = microphone;
   }
 
+  createElement() {
+    const element = $create('div');
+    this.setElement(element);
+    this.instance.classList.add('left-duck-wrapper');
+    this.instance.innerHTML = this.getComponent();
+  }
+
   getComponent() {
     const { nickname, color, score, hat } = this;
     return `
-      <div class="left-duck-wrapper">
         <div class="duck-image" color=${color}>
           ${hat ? '<span class="duck-hat">hat</span>' : ''}
           <span class="duck-score">${score}</span>
         </div>
         <span class="duck-nickname">${nickname}</span>
-      </div>
     `;
   }
 
@@ -44,6 +50,13 @@ const DuckObject = class extends ImageObject {
     if (this.nickname === nickname && this.color === color) return;
     this.setNickname(nickname);
     this.setColor(color);
+    this.render();
+  }
+
+  render() {
+    const { instance } = this;
+    const nicknameElement = instance.children.item(1);
+    nicknameElement.innerText = this.nickname;
   }
 };
 
