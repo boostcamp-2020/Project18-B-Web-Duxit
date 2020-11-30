@@ -9,7 +9,7 @@ function onJoinPlayer({ roomID }) {
   socket.game = game;
   const user = game.addUser({ socketID: socket.id, roomID });
   socket.join(roomID);
-
+  console.log('user enter', socket.game);
   // only sending to the client
   socket.emit('enter room', {
     ...user.getProfile(),

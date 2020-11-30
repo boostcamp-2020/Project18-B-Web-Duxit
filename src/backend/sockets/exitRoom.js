@@ -1,6 +1,6 @@
 function exitRoom() {
   const socket = this;
-  socket.game?.removeUser(socket.id);
+  socket.game?.removeUser({ socketID: socket.id });
   console.log(`user disconnected ${socket.id}`);
 }
 
