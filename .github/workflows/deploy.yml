@@ -5,11 +5,7 @@ name: Deploy master branch
 
 on:
   push:
-    branches: [main]
-# release를 이용해서 배포할수도 있을듯요~
-#   release:
-#     types:
-#       - created
+    branches: [master]
 
 jobs:
   Deploy:
