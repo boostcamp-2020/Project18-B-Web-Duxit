@@ -4,9 +4,12 @@ import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
+import CardObject from '@engine/CardObject';
 import Svg from '@utils/svg';
 import socket from '@utils/socket';
 import { copyGameCode, redirectToLobby } from './events';
+
+import frontImage from '../../resources/front.png';
 
 export const renderWaitingRoom = (roomID = '') => {
   const Header = new GameObject();
@@ -65,6 +68,31 @@ export const renderWaitingRoom = (roomID = '') => {
   const CopyIcon = new SvgObject();
   CopyIcon.setInnerHtml(Svg.copy);
   CopyIcon.attachToObject(GameCodeCopyButton);
+
+  const Card1 = new CardObject();
+  Card1.attachToRoot();
+  Card1.move('10%', '22%', 0);
+
+  const Card2 = new CardObject({
+    imagePath: frontImage,
+    facingUp: false,
+    position: ['50%', '50%'],
+  });
+  Card2.attachToRoot();
+
+  const randomizeCard = (card) => {
+    const randomX = Math.random() * 100;
+    const randomY = Math.random() * 100;
+    const angle = Math.random() * 360 - 180;
+    card.move(`${randomX}%`, `${randomY}%`, 1);
+    card.rotate(`${angle}deg`);
+    card.animateFlip();
+  };
+
+  document.addEventListener('click', () => {
+    randomizeCard(Card1);
+    randomizeCard(Card2);
+  });
 
   return {
     NicknameInput,
