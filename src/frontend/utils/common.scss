@@ -16,6 +16,7 @@ button:not(:disabled) {
 }
 
 $main-color: #ffd600;
+$main-clicked-color: #FFAB00;
 $white-color: #fff;
 $gray-color: #ddd;
 $red-color: #ff1744;
@@ -30,23 +31,28 @@ html {
   display: none;
 }
 
-.button-primary {
+@mixin button {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 1em 2em;
-  background-color: $main-color;
   border-radius: 2em;
   box-shadow: $button-shadow;
   font-size: large;
   text-align: center;
 }
+.button-primary {
+  @include button;
+  background-color: $main-color;
+}
+.button-primary-clicked {
+  @include button;
+  font-weight: 600;
+  background-color: $main-clicked-color;
+}
+
 .button-cancel {
-  padding: 1em 2em;
+  @include button;
   background-color: $gray-color;
-  border-radius: 2em;
-  box-shadow: $button-shadow;
-  font-size: large;
-  text-align: center;
 }

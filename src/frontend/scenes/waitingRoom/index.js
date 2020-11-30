@@ -66,6 +66,12 @@ export const renderWaitingRoom = (roomID = '') => {
   CopyIcon.setSvg(Svg.copy);
   CopyIcon.attachToObject(GameCodeCopyButton);
 
+  const toggleReady = ({ target }) => {
+    target.classList.toggle('button-primary');
+    target.classList.toggle('button-primary-clicked');
+  };
+  ButtonReady.addClickHandler(toggleReady);
+
   return {
     NicknameInput,
   };
