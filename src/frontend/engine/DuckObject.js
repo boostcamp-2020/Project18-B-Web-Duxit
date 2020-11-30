@@ -1,4 +1,4 @@
-import { $id, $create } from '@utils/dom';
+import { $create } from '@utils/dom';
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
