@@ -16,38 +16,46 @@ jobs:
     steps:
       - name: Make deploy script
         run: |
-          cat << EOF > $DEPLOY_SCRIPT
+          cat << EOF > $DEPLOY_SCRIPT          
           echo "=== pull master branch ==="
           cd ${{ secrets.SSH_WORKING_DIRECTORY }}/src
           git checkout master
           git fetch origin master
-          BE_DIFF=$(git diff HEAD..origin/master --name-only -- src/backend | wc -l)
-          FE_DIFF=$(git diff HEAD..origin/master --name-only -- src/frontend | wc -l)
+          BE_DIFF=\$(git diff HEAD..origin/master --name-only -- ./backend | wc -l)
+          FE_DIFF=\$(git diff HEAD..origin/master --name-only -- ./frontend | wc -l)
           git pull origin master
-
-          if [ $BE_DIFF -ne 0 ] ; then
-            echo "=== build backend ==="
+          
+          echo "::group::Build & run backend application"
+          if [ \$BE_DIFF -ne 0 ] ; then
+            echo -e "\n=== build backend ==="
             cd backend
             npm ci || exit 1
             npm run build || exit 1
-            echo "=== restart backend server ==="
+            echo -e "\n=== restart backend server ==="
             forever stopall
             forever start ./dist/app.js
             cd ..
+          else
+            echo "- Backend code not changed; step skipped."
           fi
-
-          if [ $FE_DIFF -ne 0 ] ; then
-            echo "=== build frontend ==="
+          echo "::endgroup::"
+          
+          echo "::group::Build & run frontend application"
+          if [ \$FE_DIFF -ne 0 ] ; then
+            echo -e "\n=== build frontend ==="
             cd frontend
             npm ci || exit 1
             npm run build || exit 1
-            echo "=== update nginx serve files ==="
+            echo -e "\n=== update nginx serve files ==="
             # rm -rf ${{ secrets.NGINX_DIRECTORY }}
             sudo cp ./dist/* ${{ secrets.NGINX_DIRECTORY }}
             cd ..
+          else
+            echo "- Frontend code not changed; step skipped."
           fi
+          echo "::endgroup::"
           
-          echo "=== All done🚀 ==="
+          echo -e "\n=== All done🚀 ==="
           EOF
 
       - name: Setting ssh agent and key
