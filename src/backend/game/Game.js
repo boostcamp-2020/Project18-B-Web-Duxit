@@ -2,7 +2,7 @@ import generateRandom from '@utils/generateRandom';
 import Games from '@game/Games';
 import User from './User';
 
-const MAX_PLAYER = 8;
+const MAX_PLAYER = 6;
 
 export default class Game {
   constructor(roomID) {
@@ -35,6 +35,7 @@ export default class Game {
     Games.removeID(socketID);
     if (this.users.size === 0) {
       Games.removeID(this.roomID);
+    if (this.users.size < 1) {
     }
   }
 
