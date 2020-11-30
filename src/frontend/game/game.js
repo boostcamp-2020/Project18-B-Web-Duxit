@@ -83,6 +83,7 @@ const initialize = async () => {
 
   socket.on('enter room', ({ nickname, color, players }) => {
     NicknameInput.setValue(nickname);
+    console.log(players);
     // NicknameInput.instance.style.backgroundColor = color;
     // PlayerList.setListItems(players);
   });

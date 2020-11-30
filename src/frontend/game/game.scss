@@ -7,10 +7,13 @@ $right-size: 330px;
   display: flex;
 
   .left-tab {
+    display: flex;
     height: 100vh;
     flex-basis: $left-size;
+    flex-direction: column;
     flex-shrink: 0;
-    background-color: #abc;
+    padding: 1rem;
+    border-right: 1px solid $gray-color;
   }
 
   .right-tab {
@@ -29,8 +32,36 @@ $right-size: 330px;
   }
 }
 
-.chat-send-button {
-  padding: 0.5em !important;
+.left-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  .left-title-text {
+    margin-right: 5px;
+    font-size: larger;
+    font-weight: 800;
+  }
+  .left-title-number {
+    display: flex;
+    width: 1.6rem;
+    height: 1.6rem;
+    align-items: center;
+    justify-content: center;
+    background-color: $main-color;
+    border-radius: 100%;
+  }
+}
+
+.microphone-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  margin-top: auto;
+  background-color: $green-color;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .chat-message-log {
@@ -80,4 +111,8 @@ $right-size: 330px;
   border-radius: 0.5em;
   font-size: medium;
   word-break: break-word;
+}
+
+.chat-send-button {
+  padding: 0.5em !important;
 }
