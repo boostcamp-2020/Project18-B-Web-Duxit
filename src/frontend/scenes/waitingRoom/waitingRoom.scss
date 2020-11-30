@@ -87,3 +87,13 @@
   box-shadow: $button-shadow;
   cursor: pointer;
 }
+
+.waiting-text-all-ready {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  font-size: xx-large;
+  font-weight: bolder;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
