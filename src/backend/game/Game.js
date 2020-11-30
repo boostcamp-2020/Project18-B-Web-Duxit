@@ -1,5 +1,5 @@
 import generateRandom from '@utils/generateRandom';
-import Games from '@game/Games';
+import GameList from '@game/GameList';
 import User from './User';
 
 const MAX_PLAYER = 6;
@@ -25,17 +25,16 @@ export default class Game {
     const nickname = generateRandom.nickname();
     const color = generateRandom.color();
     const user = new User({ socketID, nickname, color });
-    Games.addID(socketID, this);
+    GameList.addID(socketID, this);
     this.users.set(socketID, user);
     return user;
   }
 
   removeUser({ socketID }) {
     this.users.delete(socketID);
-    Games.removeID(socketID);
-    if (this.users.size === 0) {
-      Games.removeID(this.roomID);
+    GameList.removeID(socketID);
     if (this.users.size < 1) {
+      GameList.removeID(this.roomID);
     }
   }
 

@@ -1,8 +1,8 @@
-import Games from '@game/Games';
+import GameList from '@game/GameList';
 
 function onJoinPlayer({ roomID }) {
   const socket = this;
-  const game = Games.getGame(roomID);
+  const game = GameList.getGame(roomID);
   if (!game || !game.isEnterable(roomID)) return;
 
   // User enter the room

@@ -1,4 +1,4 @@
-import Games from '@game/Games';
+import GameList from '@game/GameList';
 import nickname from './nickname.json';
 
 const generateRandomString = () =>
@@ -14,7 +14,7 @@ const randomFunctions = {
   color: () => '#222222',
   roomID: () => {
     const randomString = generateRandomString();
-    if (Games.hasGame(randomString)) return randomFunctions.roomID();
+    if (GameList.hasGame(randomString)) return randomFunctions.roomID();
     return randomString;
   },
 };

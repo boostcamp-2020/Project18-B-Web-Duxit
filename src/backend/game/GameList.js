@@ -1,7 +1,7 @@
 import generateRandom from '@utils/generateRandom';
 import Game from '@game/Game';
 
-class Games {
+class GameList {
   constructor() {
     // roomID -> game
     // socketID -> game
@@ -38,4 +38,4 @@ class Games {
   }
 }
 
-export default new Games();
+export default new GameList();
