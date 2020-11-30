@@ -9,6 +9,11 @@ class User {
     this.isTeller = null;
     this.cards = [];
     this.score = 0;
+    this.isReady = false;
+  }
+
+  toggleReady(isReady) {
+    this.isReady = isReady;
   }
 
   submitCard(cardID) {
@@ -34,6 +39,7 @@ class User {
       isTeller,
       cards,
       score,
+      isReady,
     } = this;
 
     return {
@@ -46,6 +52,7 @@ class User {
       isTeller,
       cards,
       score,
+      isReady,
     };
   }
 
