@@ -50,10 +50,11 @@ class User {
   }
 
   getProfile() {
-    const { nickname, color } = this;
+    const { nickname, color, score } = this;
     return {
       nickname,
       color,
+      score,
     };
   }
 }

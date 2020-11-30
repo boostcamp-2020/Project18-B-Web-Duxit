@@ -39,11 +39,15 @@ export default class Game {
   }
 
   getUser(socketID) {
-    if (!this.users.has(socketID)) {
-      console.log(`getUser: socketID ${socketID} does not exist`);
-      return null;
-    }
-
+    if (!this.users.has(socketID)) return null;
     return this.users.get(socketID);
+  }
+
+  getOtherUsersProfile(mySocketID) {
+    return [...this.users.keys()]
+      .map((socketID) => {
+        return { ...this.users.get(socketID).getProfile(), socketID };
+      })
+      .filter((userProfile) => userProfile.socketID !== mySocketID);
   }
 }

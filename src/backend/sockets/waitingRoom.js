@@ -14,7 +14,7 @@ function onJoinPlayer({ roomID }) {
   socket.emit('enter room', {
     ...user.getProfile(),
     roomID,
-    players: [],
+    players: game.getOtherUsersProfile(socket.id),
   });
 
   // TODO send 'update player' to other players in the room
