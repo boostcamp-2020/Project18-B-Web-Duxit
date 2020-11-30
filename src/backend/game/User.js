@@ -28,7 +28,7 @@ class User {
     this.cards = [...this.cards, cardID];
   }
 
-  getUserInfo() {
+  getState() {
     const {
       socketID,
       nickname,
