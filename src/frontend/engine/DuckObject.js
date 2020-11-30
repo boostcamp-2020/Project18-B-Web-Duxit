@@ -1,12 +1,13 @@
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
-  constructor({ type, ...rest }) {
+  constructor({ socketID, type, ...rest }) {
     super(rest);
+    this.socketID = socketID;
     this.nickname = null;
     this.score = 0;
     this.type = type;
-    this.hat = true;
+    this.hat = false;
     this.microphone = false;
   }
 
@@ -37,6 +38,12 @@ const DuckObject = class extends ImageObject {
         <span class="duck-nickname">${nickname}</span>
       </div>
     `;
+  }
+
+  update({ nickname, color }) {
+    if (this.nickname === nickname && this.color === color) return;
+    this.setNickname(nickname);
+    this.setColor(color);
   }
 };
 

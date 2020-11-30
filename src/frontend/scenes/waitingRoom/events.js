@@ -1,3 +1,5 @@
+import socket from '@utils/socket';
+
 export const redirectToLobby = () => {
   window.location.href = '/';
 };
@@ -9,4 +11,9 @@ export const copyGameCode = (e) => {
       navigator.clipboard.writeText(roomID.innerText);
     }
   });
+};
+
+export const changeNickname = (NicknameInput) => {
+  const newNickname = NicknameInput.instance.value;
+  socket.emit('update player', { nickname: newNickname, color: '#578' });
 };

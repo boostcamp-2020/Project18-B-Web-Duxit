@@ -79,13 +79,15 @@ const initialize = async () => {
   initializeLayout();
 
   const { NicknameInput } = renderWaitingRoom(roomID);
-  // const { PlayerList } = renderLeftTab();
   setupWaitingRoomSocket();
 
-  socket.on('enter room', ({ nickname, color, players }) => {
+  socket.on('enter room', ({ nickname, players }) => {
     NicknameInput.setValue(nickname);
     LeftTab.initializePlayers(players);
-    // NicknameInput.instance.style.backgroundColor = color;
+  });
+
+  socket.on('update player', (playerInfo) => {
+    LeftTab.updatePlayer(playerInfo);
   });
 };
 
