@@ -2,7 +2,8 @@ import { $create, $id } from '@utils/dom';
 
 // https://easings.net/#easeInOutCubic
 const easeOutCubic = (x) => 1 - (1 - x) ** 4;
-const replacePercent = (str) => Number.parseFloat(str.replace('%', ''));
+const makeUnitString = (numericValue, unit) => `${numericValue}${unit}`;
+const makeFloat = (unitValue) => parseFloat(unitValue);
 
 const GameObject = class {
   constructor({
@@ -75,8 +76,8 @@ const GameObject = class {
   }
 
   setOrigin(x = '50%', y = '50%') {
-    const numberY = replacePercent(y);
-    const numberX = replacePercent(x);
+    const numberY = makeFloat(y);
+    const numberX = makeFloat(x);
     this.originStyle = `translate(-${x}, -${y})`;
     this.instance.style.transformOrigin = `${50 - numberX}% ${50 - numberY}%`;
     this.transform();
@@ -92,8 +93,8 @@ const GameObject = class {
 
   move(x = 0, y = 0, duration = 0.5) {
     this.position = [x, y];
-    const xString = `${x}%`;
-    const yString = `${y}%`;
+    const xString = makeUnitString(x, '%');
+    const yString = makeUnitString(y, '%');
 
     if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
     if (!xString && !yString) {
@@ -105,8 +106,8 @@ const GameObject = class {
       this.instance.style.left = xString;
       return;
     }
-    const initialY = replacePercent(this.instance.style.top) || 0;
-    const initialX = replacePercent(this.instance.style.left) || 0;
+    const initialY = makeFloat(this.instance.style.top) || 0;
+    const initialX = makeFloat(this.instance.style.left) || 0;
     const targetY = y;
     const targetX = x;
 
@@ -127,8 +128,8 @@ const GameObject = class {
         initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
       // this.position = [newX, newY];
 
-      this.instance.style.top = `${newY}%`;
-      this.instance.style.left = `${newX}%`;
+      this.instance.style.left = makeUnitString(newX, '%');
+      this.instance.style.top = makeUnitString(newY, '%');
 
       requestAnimationFrame(animateFunction);
     };
@@ -138,7 +139,7 @@ const GameObject = class {
 
   rotate(angle = 0, duration = 0.2) {
     this.angle = angle;
-    const angleString = `${angle}deg`;
+    const angleString = makeUnitString(angle, 'deg');
     const keyframes = [
       { transform: this.instance.style.transform },
       { transform: `rotateZ(${angleString}) ${this.originStyle}` },
