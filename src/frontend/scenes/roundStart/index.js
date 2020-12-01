@@ -6,7 +6,8 @@ const RoundStart = class {
   }
 
   render() {
-    renderRoundStart({ isTeller: this.isTeller });
+    const { removeArray } = renderRoundStart({ isTeller: this.isTeller });
+    this.removeArray = removeArray;
   }
 
   wrapup() {
