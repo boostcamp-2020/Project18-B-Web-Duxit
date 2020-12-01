@@ -79,7 +79,7 @@ const renderWaitingRoom = (roomID = '') => {
   AllReadyText.setContent('잠시 뒤 게임이 시작됩니다.');
   AllReadyText.attachToRoot();
 
-  const removeArray = [Header, ActionWrapper, GameCodeWrapper];
+  const removeArray = [Header, ActionWrapper, GameCodeWrapper, AllReadyText];
 
   return {
     removeArray,

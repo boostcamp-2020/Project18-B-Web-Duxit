@@ -1,8 +1,9 @@
 import './game.scss';
-import { renderWaitingRoom, setupWaitingRoomSocket } from '@scenes/waitingRoom';
 import socket from '@utils/socket';
 import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
+import WaitingRoom from '@scenes/waitingRoom';
+import SceneManager from '@utils/SceneManager';
 import LeftTab from './leftTab';
 
 const scrollToBottom = (component) => {
@@ -10,6 +11,25 @@ const scrollToBottom = (component) => {
     top: component.scrollHeight,
   };
   component.scrollTo(scrollOption);
+};
+
+const getMessageFromServer = ({ nickname, message }, logObject) => {
+  const messageWrapper = $create('div');
+  const nicknameBox = $create('div');
+  const messageBox = $create('div');
+
+  messageWrapper.classList.add('chat-other-player');
+  messageWrapper.appendChild(nicknameBox);
+  messageWrapper.appendChild(messageBox);
+
+  nicknameBox.classList.add('chat-nickname');
+  nicknameBox.innerText = nickname;
+
+  messageBox.classList.add('chat-message');
+  messageBox.innerText = message;
+
+  logObject.appendChild(messageWrapper);
+  scrollToBottom(logObject);
 };
 
 const initializeLayout = () => {
@@ -41,27 +61,9 @@ const initializeLayout = () => {
     scrollToBottom(chatMessageLog);
   });
 
-  // TODO: initialize에서 분리하기
-  const getMessageFromServer = ({ nickname, message }) => {
-    const messageWrapper = $create('div');
-    const nicknameBox = $create('div');
-    const messageBox = $create('div');
+  const logMessage = (args) => getMessageFromServer(args, chatMessageLog);
 
-    messageWrapper.classList.add('chat-other-player');
-    messageWrapper.appendChild(nicknameBox);
-    messageWrapper.appendChild(messageBox);
-
-    nicknameBox.classList.add('chat-nickname');
-    nicknameBox.innerText = nickname;
-
-    messageBox.classList.add('chat-message');
-    messageBox.innerText = message;
-
-    chatMessageLog.appendChild(messageWrapper);
-    scrollToBottom(chatMessageLog);
-  };
-
-  socket.on('send chat', getMessageFromServer);
+  socket.on('send chat', logMessage);
 };
 
 const initialize = async () => {
@@ -74,21 +76,21 @@ const initialize = async () => {
     window.location.href = '/';
     return;
   }
-  socket.emit('join player', { roomID });
 
   initializeLayout();
+  SceneManager.renderNextScene(new WaitingRoom(roomID));
 
-  const { NicknameInput, AllReadyText } = renderWaitingRoom(roomID);
-  setupWaitingRoomSocket({ AllReadyText });
-
+  // initialize game event socket
   socket.on('enter room', ({ nickname, players }) => {
-    NicknameInput.setValue(nickname);
+    if (SceneManager.isCurrentScene(WaitingRoom))
+      SceneManager.currentScene.setNicknameInput(nickname);
     LeftTab.initializePlayers(players);
   });
-
   socket.on('update player', (playerInfo) => {
     LeftTab.updatePlayer(playerInfo);
   });
+
+  socket.emit('join player', { roomID });
 };
 
 initialize();
