@@ -78,8 +78,8 @@ const initialize = async () => {
 
   initializeLayout();
 
-  const { NicknameInput } = renderWaitingRoom(roomID);
-  setupWaitingRoomSocket();
+  const { NicknameInput, AllReadyText } = renderWaitingRoom(roomID);
+  setupWaitingRoomSocket({ AllReadyText });
 
   socket.on('enter room', ({ nickname, players }) => {
     NicknameInput.setValue(nickname);
