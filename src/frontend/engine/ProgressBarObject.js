@@ -12,6 +12,15 @@ const ProgressBarObject = class extends GameObject {
     this.remainTime -= subtractTime;
   }
 
+  setFinishCallBack(callback) {
+    this.callback = callback;
+  }
+
+  finish() {
+    if (this.callback) this.callback();
+    this.remove();
+  }
+
   createElement() {
     const wrapper = $create('div');
     const progressBar = $create('div');
@@ -45,6 +54,7 @@ const ProgressBarObject = class extends GameObject {
     const intervalManager = setTimeout(() => {
       clearInterval(progressBarTimer);
       clearTimeout(intervalManager);
+      this.finish();
     }, this.time);
   }
 
