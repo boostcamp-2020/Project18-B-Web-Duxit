@@ -1,16 +1,29 @@
 import { $create, $id } from '@utils/dom';
 
+// https://easings.net/#easeInOutCubic
+const easeOutCubic = (x) => 1 - (1 - x) ** 4;
+const replacePercent = (str) => Number.parseFloat(str.replace('%', ''));
+
 const GameObject = class {
-  constructor(data = {}) {
-    const { id, name, position, depth, size, cssClass } = data;
-    this.id = id;
-    this.name = name;
-    this.position = position;
-    this.depth = depth;
-    this.size = size;
-    this.origin = { x: 0, y: 0 };
-    this.cssClass = cssClass;
+  constructor({
+    origin = null,
+    position = null,
+    parent = null,
+    depth = 'auto',
+    classes = [],
+  } = {}) {
     this.createElement();
+    this.animationFrame = null;
+    this.originStyle = '';
+    this.rotateStyle = '';
+
+    this.setDepth(depth);
+    if (origin) this.setOrigin(...origin);
+    if (position) this.move(...position, 0);
+    if (parent) this.attachToObject(parent);
+    classes.forEach((className) => {
+      this.setClass(className);
+    });
   }
 
   attachToObject(parentObject) {
@@ -55,15 +68,79 @@ const GameObject = class {
   }
 
   setOriginCenter() {
-    this.origin = { x: this.size.width / 2, y: this.size.height / 2 };
+    this.setOrigin();
   }
 
-  setOrigin(x, y) {
-    this.origin = { x, y };
+  setOrigin(x = '50%', y = '50%') {
+    const numberY = replacePercent(y);
+    const numberX = replacePercent(x);
+    this.originStyle = `translate(-${x}, -${y})`;
+    this.instance.style.transformOrigin = `${50 - numberX}% ${50 - numberY}%`;
+    this.transform();
   }
 
-  rotate(angle) {
-    this.angle = angle;
+  transform() {
+    this.instance.style.transform = `${this.rotateStyle} ${this.originStyle}`;
+  }
+
+  setDepth(zIndex) {
+    this.instance.style.zIndex = zIndex;
+  }
+
+  move(x = '0%', y = '0%', duration = 0.5) {
+    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+    if (!x && !y) {
+      this.instance.style.removeProperty('top');
+      this.instance.style.removeProperty('left');
+    }
+    if (duration === 0) {
+      this.instance.style.top = y;
+      this.instance.style.left = x;
+      return;
+    }
+    const initialY = replacePercent(this.instance.style.top) || 0;
+    const initialX = replacePercent(this.instance.style.left) || 0;
+    const targetY = replacePercent(y);
+    const targetX = replacePercent(x);
+
+    const miliseconds = duration * 1000;
+    let start = null;
+    const animateFunction = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      if (elapsed > miliseconds) {
+        this.instance.style.top = y;
+        this.instance.style.left = x;
+        this.animationFrame = null;
+        return;
+      }
+      const newY =
+        initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
+      const newX =
+        initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
+
+      this.instance.style.top = `${newY}%`;
+      this.instance.style.left = `${newX}%`;
+
+      requestAnimationFrame(animateFunction);
+    };
+
+    this.animationFrame = requestAnimationFrame(animateFunction);
+  }
+
+  rotate(angle = '0deg', duration = 0.2) {
+    const keyframes = [
+      { transform: this.instance.style.transform },
+      { transform: `rotateZ(${angle}) ${this.originStyle}` },
+    ];
+    const options = {
+      duration: duration * 1000,
+      easing: 'ease',
+    };
+    this.instance.animate(keyframes, options);
+
+    this.instance.style.transform = `rotateZ(${angle}) ${this.originStyle}`;
+    this.rotateStyle = `rotateZ(${angle})`;
   }
 };
 

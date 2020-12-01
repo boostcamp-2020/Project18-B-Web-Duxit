@@ -3,7 +3,7 @@ import { renderWaitingRoom, setupWaitingRoomSocket } from '@scenes/waitingRoom';
 import socket from '@utils/socket';
 import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
-import LeftTab from './LeftTab';
+import LeftTab from './leftTab';
 
 const scrollToBottom = (component) => {
   const scrollOption = {

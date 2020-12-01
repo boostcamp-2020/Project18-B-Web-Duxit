@@ -7,6 +7,7 @@ $right-size: 330px;
   display: flex;
 
   .left-tab {
+    z-index: 10;
     display: flex;
     height: 100vh;
     flex-basis: $left-size;
@@ -17,6 +18,7 @@ $right-size: 330px;
   }
 
   .right-tab {
+    z-index: 10;
     display: flex;
     height: 100vh;
     flex-basis: $right-size;
