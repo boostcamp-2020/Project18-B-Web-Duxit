@@ -50,6 +50,7 @@ function onReadyPlayer({ isReady }) {
       socket.emit('game start', {});
 
       const whoIsTellerInfo = game.startNewRound();
+      socket.in(roomID).emit('get round data', { ...whoIsTellerInfo });
       socket.emit('get round data', { ...whoIsTellerInfo });
       if (timeoutMap.has(roomID)) timeoutMap.delete(roomID);
     }, 5000);
