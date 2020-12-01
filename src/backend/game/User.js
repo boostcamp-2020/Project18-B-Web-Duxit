@@ -9,6 +9,19 @@ class User {
     this.isTeller = null;
     this.cards = [];
     this.score = 0;
+    this.isReady = false;
+  }
+
+  toggleReady(isReady) {
+    this.isReady = isReady;
+  }
+
+  setColor(color) {
+    this.color = color;
+  }
+
+  setNickname(nickname) {
+    this.nickname = nickname;
   }
 
   submitCard(cardID) {
@@ -23,7 +36,7 @@ class User {
     this.cards = [...this.cards, cardID];
   }
 
-  getUserInfo() {
+  getState() {
     const {
       socketID,
       nickname,
@@ -34,6 +47,7 @@ class User {
       isTeller,
       cards,
       score,
+      isReady,
     } = this;
 
     return {
@@ -46,14 +60,16 @@ class User {
       isTeller,
       cards,
       score,
+      isReady,
     };
   }
 
   getProfile() {
-    const { nickname, color } = this;
+    const { nickname, color, score } = this;
     return {
       nickname,
       color,
+      score,
     };
   }
 }

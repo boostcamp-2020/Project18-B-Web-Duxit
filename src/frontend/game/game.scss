@@ -8,10 +8,13 @@ $right-size: 330px;
 
   .left-tab {
     z-index: 10;
+    display: flex;
     height: 100vh;
     flex-basis: $left-size;
+    flex-direction: column;
     flex-shrink: 0;
-    background-color: #abc;
+    padding: 1.5rem 1rem;
+    border-right: 1px solid $gray-color;
   }
 
   .right-tab {
@@ -29,10 +32,6 @@ $right-size: 330px;
     position: relative;
     width: 100%;
   }
-}
-
-.chat-send-button {
-  padding: 0.5em !important;
 }
 
 .chat-message-log {
@@ -82,4 +81,8 @@ $right-size: 330px;
   border-radius: 0.5em;
   font-size: medium;
   word-break: break-word;
+}
+
+.chat-send-button {
+  padding: 0.5em !important;
 }

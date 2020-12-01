@@ -31,6 +31,12 @@ const GameObject = class {
     else this.attachToRoot();
   }
 
+  delete(duration = 1) {
+    this.instance.style.transition = `opacity ${duration}s`;
+    this.instance.style.opacity = 0;
+    setTimeout(() => this.instance.remove(), duration * 1000);
+  }
+
   attachToRoot() {
     $id('root').appendChild(this.instance);
   }
@@ -45,12 +51,16 @@ const GameObject = class {
     // this.childList = [...this.childList, object];
   }
 
-  setClass(className) {
+  addClass(className) {
     this.instance.classList.add(className);
   }
 
   toggleClass(className) {
     this.instance.classList.toggle(className);
+  }
+
+  removeClass(className) {
+    this.instance.classList.remove(className);
   }
 
   setElement(element) {
