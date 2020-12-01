@@ -4,6 +4,7 @@ import ImageObject from './ImageObject';
 
 const getFacingStyle = (isUp) => (isUp ? 'rotateY(0deg)' : 'rotateY(180deg)');
 const deg2rad = (deg) => (deg * Math.PI) / 180;
+const MOVE_PERCENT = 10;
 
 const CardObject = class extends GameObject {
   constructor({
@@ -52,20 +53,26 @@ const CardObject = class extends GameObject {
     this.inner.instance.style.transform = next;
   }
 
-  setAnimateMove() {
-    const [fixedX, fixedY] = this.position;
-    const MOVE_PERCENT = 10;
-
-    this.hoverMoveUpCallback = () => {
-      const movedX = fixedX + Math.sin(deg2rad(this.angle)) * MOVE_PERCENT;
-      const movedY = fixedY - Math.cos(deg2rad(this.angle)) * MOVE_PERCENT;
+  moveUpCallback() {
+    [this.fixedX, this.fixedY] = this.position;
+    return () => {
+      const movedX = this.fixedX + Math.sin(deg2rad(this.angle)) * MOVE_PERCENT;
+      const movedY = this.fixedY - Math.cos(deg2rad(this.angle)) * MOVE_PERCENT;
 
       this.move(movedX, movedY);
     };
+  }
 
-    this.hoverMoveDownCallback = () => {
-      this.move(fixedX, fixedY);
+  moveDownCallback() {
+    [this.fixedX, this.fixedY] = this.position;
+    return () => {
+      this.move(this.fixedX, this.fixedY);
     };
+  }
+
+  setAnimateMove() {
+    this.hoverMoveUpCallback = this.moveUpCallback();
+    this.hoverMoveDownCallback = this.moveDownCallback();
 
     this.instance.addEventListener('mouseover', this.hoverMoveUpCallback);
     this.instance.addEventListener('mouseleave', this.hoverMoveDownCallback);
