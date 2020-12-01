@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npx webpack --watch",
+    "start": "npx webpack --watch --mode=development",
     "dev": "npm start",
     "build": "npx webpack --mode=production"
   },
