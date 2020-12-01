@@ -25,6 +25,8 @@ $progress-color: #d82e21;
 $green-color: #3ed78d;
 $button-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
 
+$glow-color-gold: 0px 0px 36px 5px rgba(235,222,76,1);
+
 html {
   font-family: 'NanumSquare', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -83,4 +85,19 @@ html {
 
 .card-back {
   transform: rotateY(180deg);
+}
+
+.card-glow-gold {
+  box-shadow: $glow-color-gold;
+}
+
+@mixin card-glow-hover {
+  transition: box-shadow 0.5s ease;
+}
+
+.card-glow-gold-hover {
+  @include card-glow-hover;
+  &:hover {
+    box-shadow: $glow-color-gold;
+  }
 }
