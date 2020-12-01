@@ -54,4 +54,17 @@ export default class Game {
     user.setColor(color);
     user.setNickname(nickname);
   }
+
+  startNewRound() {
+    this.status = {
+      ...this.status,
+      turn: this.status.turn + 1,
+    };
+    const userIDs = [...this.users.keys()];
+    const { turn } = this.status;
+
+    return { tellerID: userIDs[(turn - 1) % userIDs.length] };
+    // if (this.status.turn === 1) return this.startFirstRound();
+    // this.startNewRound();
+  }
 }

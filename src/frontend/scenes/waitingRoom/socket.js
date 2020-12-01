@@ -1,6 +1,4 @@
 import socket from '@utils/socket';
-import SceneManager from '../../utils/SceneManager';
-import SomeNextScene from '../someNextScene';
 
 const setupWaitingRoomSocket = ({ AllReadyText }) => {
   const onAllReady = () => {
@@ -18,7 +16,7 @@ const setupWaitingRoomSocket = ({ AllReadyText }) => {
   };
 
   const onGameStart = () => {
-    SceneManager.renderNextScene(new SomeNextScene());
+    // 흠 할게 없네
   };
 
   const onGameStartAborted = () => {
