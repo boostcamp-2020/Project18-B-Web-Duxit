@@ -42,6 +42,7 @@ function onReadyPlayer({ isReady }) {
       socket.emit('game start', {});
       // TODO: 유저들의 turn 정하기
       // game.startGame()
+      if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
     }, 5000);
     timeoutMap.set(game.roomID, timeout);
   } else if (timeoutMap.has(game.roomID)) {
