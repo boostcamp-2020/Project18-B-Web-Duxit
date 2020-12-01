@@ -4,6 +4,7 @@ import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
 import WaitingRoom from '@scenes/waitingRoom';
 import SceneManager from '@utils/SceneManager';
+import NewRoundStart from '@scenes/roundStart';
 import LeftTab from './leftTab';
 
 const scrollToBottom = (component) => {
@@ -82,8 +83,9 @@ const initialize = async () => {
 
   // initialize game event socket
   socket.on('enter room', ({ nickname, players }) => {
-    if (SceneManager.isCurrentScene(WaitingRoom))
+    if (SceneManager.isCurrentScene(WaitingRoom)) {
       SceneManager.currentScene.setNicknameInput(nickname);
+    }
     LeftTab.initializePlayers(players);
   });
   socket.on('update player', (playerInfo) => {
@@ -91,6 +93,11 @@ const initialize = async () => {
   });
 
   socket.emit('join player', { roomID });
+  socket.on('get round data', (data) =>
+    SceneManager.renderNextScene(
+      new NewRoundStart({ ...data, socketID: socket.id }),
+    ),
+  );
 };
 
 initialize();
