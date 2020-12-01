@@ -42,8 +42,9 @@ const ProgressBarObject = class extends GameObject {
       timeText.innerText = (this.remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 
-    setTimeout(() => {
+    const intervalManager = setTimeout(() => {
       clearInterval(progressBarTimer);
+      clearTimeout(intervalManager);
     }, this.time);
   }
 
