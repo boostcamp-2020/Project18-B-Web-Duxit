@@ -15,5 +15,9 @@ export const copyGameCode = (e) => {
 
 export const changeNickname = (NicknameInput) => {
   const newNickname = NicknameInput.instance.value;
+  if (!newNickname || newNickname.length > 12) {
+    // 이전 닉네임으로 되돌아가는 기능 추가해야 함
+    return;
+  }
   socket.emit('update player', { nickname: newNickname, color: '#578' });
 };
