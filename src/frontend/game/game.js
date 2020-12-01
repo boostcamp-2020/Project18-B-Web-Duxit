@@ -3,6 +3,7 @@ import { renderWaitingRoom, setupWaitingRoomSocket } from '@scenes/waitingRoom';
 import socket from '@utils/socket';
 import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
+import LeftTab from './LeftTab';
 
 const scrollToBottom = (component) => {
   const scrollOption = {
@@ -78,13 +79,15 @@ const initialize = async () => {
   initializeLayout();
 
   const { NicknameInput } = renderWaitingRoom(roomID);
-  // const { PlayerList } = renderLeftTab();
   setupWaitingRoomSocket();
 
-  socket.on('enter room', ({ nickname, color, players }) => {
+  socket.on('enter room', ({ nickname, players }) => {
     NicknameInput.setValue(nickname);
-    // NicknameInput.instance.style.backgroundColor = color;
-    // PlayerList.setListItems(players);
+    LeftTab.initializePlayers(players);
+  });
+
+  socket.on('update player', (playerInfo) => {
+    LeftTab.updatePlayer(playerInfo);
   });
 };
 

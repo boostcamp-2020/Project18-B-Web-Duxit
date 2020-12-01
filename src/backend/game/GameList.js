@@ -26,7 +26,6 @@ class GameList {
   getGame(ID) {
     const game = this.games.get(ID);
     if (!game) {
-      console.log(`Game.findGame: can not find ${ID}`);
       return null;
     }
 

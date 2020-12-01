@@ -11,6 +11,14 @@ class User {
     this.score = 0;
   }
 
+  setColor(color) {
+    this.color = color;
+  }
+
+  setNickname(nickname) {
+    this.nickname = nickname;
+  }
+
   submitCard(cardID) {
     this.submittedCard = cardID;
   }
@@ -50,10 +58,11 @@ class User {
   }
 
   getProfile() {
-    const { nickname, color } = this;
+    const { nickname, color, score } = this;
     return {
       nickname,
       color,
+      score,
     };
   }
 }
