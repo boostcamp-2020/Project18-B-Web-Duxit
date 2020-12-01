@@ -1,8 +1,9 @@
 import './game.scss';
-import { renderWaitingRoom, setupWaitingRoomSocket } from '@scenes/waitingRoom';
 import socket from '@utils/socket';
 import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
+import WaitingRoom from '@scenes/waitingRoom';
+import SceneManager from '@utils/SceneManager';
 import LeftTab from './leftTab';
 
 const scrollToBottom = (component) => {
@@ -75,21 +76,21 @@ const initialize = async () => {
     window.location.href = '/';
     return;
   }
-  socket.emit('join player', { roomID });
 
   initializeLayout();
+  SceneManager.renderNextScene(new WaitingRoom(roomID));
 
-  const { NicknameInput, AllReadyText } = renderWaitingRoom(roomID);
-  setupWaitingRoomSocket({ AllReadyText });
-
+  // initialize game event socket
   socket.on('enter room', ({ nickname, players }) => {
-    NicknameInput.setValue(nickname);
+    if (SceneManager.isCurrentScene(WaitingRoom))
+      SceneManager.currentScene.setNicknameInput(nickname);
     LeftTab.initializePlayers(players);
   });
-
   socket.on('update player', (playerInfo) => {
     LeftTab.updatePlayer(playerInfo);
   });
+
+  socket.emit('join player', { roomID });
 };
 
 initialize();

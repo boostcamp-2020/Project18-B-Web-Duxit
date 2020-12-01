@@ -1,4 +1,6 @@
 import socket from '@utils/socket';
+import SceneManager from '../../utils/SceneManager';
+import SomeNextScene from '../someNextScene';
 
 const setupWaitingRoomSocket = ({ AllReadyText }) => {
   const onAllReady = () => {
@@ -16,10 +18,7 @@ const setupWaitingRoomSocket = ({ AllReadyText }) => {
   };
 
   const onGameStart = () => {
-    // TODO: scene이 넘어가야됨!!!
-    // renderWhoIsTeller()
-    // SceneManager.requestNextScene('who is teller');
-    // dispatch('new scene', 'who is teller');
+    SceneManager.renderNextScene(new SomeNextScene());
   };
 
   const onGameStartAborted = () => {
