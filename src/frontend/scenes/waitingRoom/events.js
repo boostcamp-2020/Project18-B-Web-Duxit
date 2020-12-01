@@ -21,3 +21,14 @@ export const changeNickname = (NicknameInput) => {
   }
   socket.emit('update player', { nickname: newNickname, color: '#578' });
 };
+
+export const toggleReady = ({ target }) => {
+  const { isReady } = JSON.parse(target.dataset.data);
+  // const nextStatus = target.dataset.status === 'not ready';
+  const nextStatus = !isReady;
+  // target.dataset.status = nextStatus ? 'ready' : 'not ready';
+  target.dataset.data = JSON.stringify({ isReady: nextStatus });
+  target.classList.toggle('button-primary');
+  target.classList.toggle('button-primary-clicked');
+  socket.emit('ready player', { isReady: nextStatus });
+};

@@ -9,6 +9,11 @@ class User {
     this.isTeller = null;
     this.cards = [];
     this.score = 0;
+    this.isReady = false;
+  }
+
+  toggleReady(isReady) {
+    this.isReady = isReady;
   }
 
   setColor(color) {
@@ -31,7 +36,7 @@ class User {
     this.cards = [...this.cards, cardID];
   }
 
-  getUserInfo() {
+  getState() {
     const {
       socketID,
       nickname,
@@ -42,6 +47,7 @@ class User {
       isTeller,
       cards,
       score,
+      isReady,
     } = this;
 
     return {
@@ -54,6 +60,7 @@ class User {
       isTeller,
       cards,
       score,
+      isReady,
     };
   }
 
