@@ -17,6 +17,9 @@ const GameObject = class {
     this.originStyle = '';
     this.rotateStyle = '';
 
+    this.angle = 0;
+    this.position = [0, 0];
+
     this.setDepth(depth);
     if (origin) this.setOrigin(...origin);
     if (position) this.move(...position, 0);
@@ -87,21 +90,25 @@ const GameObject = class {
     this.instance.style.zIndex = zIndex;
   }
 
-  move(x = '0%', y = '0%', duration = 0.5) {
+  move(x = 0, y = 0, duration = 0.5) {
+    this.position = [x, y];
+    const xString = `${x}%`;
+    const yString = `${y}%`;
+
     if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
-    if (!x && !y) {
+    if (!xString && !yString) {
       this.instance.style.removeProperty('top');
       this.instance.style.removeProperty('left');
     }
     if (duration === 0) {
-      this.instance.style.top = y;
-      this.instance.style.left = x;
+      this.instance.style.top = yString;
+      this.instance.style.left = xString;
       return;
     }
     const initialY = replacePercent(this.instance.style.top) || 0;
     const initialX = replacePercent(this.instance.style.left) || 0;
-    const targetY = replacePercent(y);
-    const targetX = replacePercent(x);
+    const targetY = y;
+    const targetX = x;
 
     const miliseconds = duration * 1000;
     let start = null;
@@ -109,8 +116,8 @@ const GameObject = class {
       if (!start) start = timestamp;
       const elapsed = timestamp - start;
       if (elapsed > miliseconds) {
-        this.instance.style.top = y;
-        this.instance.style.left = x;
+        this.instance.style.top = yString;
+        this.instance.style.left = xString;
         this.animationFrame = null;
         return;
       }
@@ -118,6 +125,7 @@ const GameObject = class {
         initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
       const newX =
         initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
+      // this.position = [newX, newY];
 
       this.instance.style.top = `${newY}%`;
       this.instance.style.left = `${newX}%`;
@@ -128,10 +136,12 @@ const GameObject = class {
     this.animationFrame = requestAnimationFrame(animateFunction);
   }
 
-  rotate(angle = '0deg', duration = 0.2) {
+  rotate(angle = 0, duration = 0.2) {
+    this.angle = angle;
+    const angleString = `${angle}deg`;
     const keyframes = [
       { transform: this.instance.style.transform },
-      { transform: `rotateZ(${angle}) ${this.originStyle}` },
+      { transform: `rotateZ(${angleString}) ${this.originStyle}` },
     ];
     const options = {
       duration: duration * 1000,
@@ -139,8 +149,8 @@ const GameObject = class {
     };
     this.instance.animate(keyframes, options);
 
-    this.instance.style.transform = `rotateZ(${angle}) ${this.originStyle}`;
-    this.rotateStyle = `rotateZ(${angle})`;
+    this.instance.style.transform = `rotateZ(${angleString}) ${this.originStyle}`;
+    this.rotateStyle = `rotateZ(${angleString})`;
   }
 };
 
