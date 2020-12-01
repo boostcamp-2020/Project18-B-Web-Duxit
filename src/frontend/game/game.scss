@@ -34,6 +34,31 @@ $right-size: 330px;
   }
 }
 
+// WAITING ROOM
+
+.progress-bar-wrapper {
+  position: absolute;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 1.5rem;
+  background-color: $gray-color;
+  .progress-bar {
+    position: relative;
+    width: 100%;
+    background-color: $progress-color;
+    transition: width 1s;
+  }
+}
+
+.time-text {
+  padding: 0.5rem;
+  color: $white-color;
+  line-height: 1.5rem;
+}
+
+// RIGHT - TAB
+
 .chat-message-log {
   flex-grow: 1;
   background-color: #eee;
