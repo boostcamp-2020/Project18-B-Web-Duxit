@@ -1,4 +1,4 @@
 export const PLAYER = {
-  MIN: 1,
+  MIN: 3,
   MAX: 6,
 };

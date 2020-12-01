@@ -1,4 +1,5 @@
 import GameList from '@game/GameList';
+import { PLAYER } from '@utils/number';
 
 function onJoinPlayer({ roomID }) {
   const socket = this;
@@ -35,32 +36,30 @@ const timeoutMap = new Map();
 function onReadyPlayer({ isReady }) {
   const socket = this;
   const { game } = socket;
+  const { users, roomID } = game;
+  users.get(socket.id).toggleReady(isReady);
+  socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
-  game.users.get(socket.id).toggleReady(isReady);
-  socket.in(game.roomID).emit('ready player', { playerID: socket.id, isReady });
-
-  const isAllReady = [...game.users].every(([, user]) => user.isReady);
-  const isValidSize = game.users.size >= 3 && game.users.size <= 6;
-
+  const isAllReady = [...users].every(([, user]) => user.isReady);
+  const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
   if (isAllReady && isValidSize) {
-    socket.in(game.roomID).emit('all ready', {});
+    socket.in(roomID).emit('all ready', {});
     socket.emit('all ready', {});
     const timeout = setTimeout(() => {
-      // 5 seconds later
-      // TODO: game start하면서 스토리텔러라던가 그런거 넘겨줘야되나??
-      socket.in(game.roomID).emit('game start', {});
+      socket.in(roomID).emit('game start', {});
       socket.emit('game start', {});
-      // TODO: 유저들의 turn 정하기
-      // game.startGame()
-      if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
+
+      const whoIsTellerInfo = game.startNewRound();
+      socket.emit('get round data', { ...whoIsTellerInfo });
+      if (timeoutMap.has(roomID)) timeoutMap.delete(roomID);
     }, 5000);
-    timeoutMap.set(game.roomID, timeout);
-  } else if (timeoutMap.has(game.roomID)) {
-    socket.in(game.roomID).emit('game start aborted', {});
+    timeoutMap.set(roomID, timeout);
+  } else if (timeoutMap.has(roomID)) {
+    socket.in(roomID).emit('game start aborted', {});
     socket.emit('game start aborted', {});
-    const timeout = timeoutMap.get(game.roomID);
+    const timeout = timeoutMap.get(roomID);
     clearTimeout(timeout);
-    timeoutMap.delete(game.roomID);
+    timeoutMap.delete(roomID);
   }
 }
 
