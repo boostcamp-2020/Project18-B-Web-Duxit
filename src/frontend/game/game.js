@@ -12,6 +12,25 @@ const scrollToBottom = (component) => {
   component.scrollTo(scrollOption);
 };
 
+const getMessageFromServer = ({ nickname, message }, logObject) => {
+  const messageWrapper = $create('div');
+  const nicknameBox = $create('div');
+  const messageBox = $create('div');
+
+  messageWrapper.classList.add('chat-other-player');
+  messageWrapper.appendChild(nicknameBox);
+  messageWrapper.appendChild(messageBox);
+
+  nicknameBox.classList.add('chat-nickname');
+  nicknameBox.innerText = nickname;
+
+  messageBox.classList.add('chat-message');
+  messageBox.innerText = message;
+
+  logObject.appendChild(messageWrapper);
+  scrollToBottom(logObject);
+};
+
 const initializeLayout = () => {
   const chatMessageLog = $id('chat-message-log');
   const chatForm = $id('chat-form');
@@ -41,27 +60,9 @@ const initializeLayout = () => {
     scrollToBottom(chatMessageLog);
   });
 
-  // TODO: initialize에서 분리하기
-  const getMessageFromServer = ({ nickname, message }) => {
-    const messageWrapper = $create('div');
-    const nicknameBox = $create('div');
-    const messageBox = $create('div');
+  const logMessage = (args) => getMessageFromServer(args, chatMessageLog);
 
-    messageWrapper.classList.add('chat-other-player');
-    messageWrapper.appendChild(nicknameBox);
-    messageWrapper.appendChild(messageBox);
-
-    nicknameBox.classList.add('chat-nickname');
-    nicknameBox.innerText = nickname;
-
-    messageBox.classList.add('chat-message');
-    messageBox.innerText = message;
-
-    chatMessageLog.appendChild(messageWrapper);
-    scrollToBottom(chatMessageLog);
-  };
-
-  socket.on('send chat', getMessageFromServer);
+  socket.on('send chat', logMessage);
 };
 
 const initialize = async () => {
