@@ -5,7 +5,12 @@ import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
 import Svg from '@utils/svg';
-import { copyGameCode, redirectToLobby, toggleReady } from './events';
+import {
+  copyGameCode,
+  redirectToLobby,
+  toggleReady,
+  changeNickname,
+} from './events';
 
 const renderWaitingRoom = (roomID = '') => {
   const Header = new GameObject();
@@ -28,6 +33,7 @@ const renderWaitingRoom = (roomID = '') => {
   const RefreshButton = new ButtonObject();
   RefreshButton.addClass('refresh-button');
   RefreshButton.attachToObject(InputWrapper);
+  RefreshButton.addClickHandler(() => changeNickname(NicknameInput));
 
   const RefreshIcon = new SvgObject();
   RefreshIcon.setSvg(Svg.refresh);
