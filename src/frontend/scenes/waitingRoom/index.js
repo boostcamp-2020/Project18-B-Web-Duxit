@@ -28,7 +28,7 @@ export const renderWaitingRoom = (roomID = '') => {
   const RefreshButton = new ButtonObject();
   RefreshButton.setClass('refresh-button');
   RefreshButton.attachToObject(InputWrapper);
-  RefreshButton.addClickHandler((e) => changeNickname(e, NicknameInput));
+  RefreshButton.addClickHandler(() => changeNickname(NicknameInput));
 
   const RefreshIcon = new SvgObject();
   RefreshIcon.setInnerHtml(Svg.refresh);
