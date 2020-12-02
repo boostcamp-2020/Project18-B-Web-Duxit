@@ -12,6 +12,16 @@ class User {
     this.isReady = false;
   }
 
+  initOnStart({ turnID } = {}) {
+    this.turnID = turnID;
+    this.score = 0;
+  }
+
+  initOnRound({ tellerID = '', cards = [] } = {}) {
+    this.isTeller = this.socketID === tellerID;
+    this.cards = cards;
+  }
+
   toggleReady(isReady) {
     this.isReady = isReady;
   }
