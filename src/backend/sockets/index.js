@@ -2,6 +2,7 @@ import io from 'socket.io';
 import onWaitingRoom from './waitingRoom';
 import onChat from './chat';
 import exitRoom from './exitRoom';
+import onGuesserSelectCard from './guesserSelectCard';
 
 const socketIO = io();
 
@@ -13,6 +14,7 @@ socketIO.on('connection', (socket) => {
   onWaitingRoom(socket);
   onChat(socket);
   exitRoom(socket);
+  onGuesserSelectCard(socket);
 });
 
 export default socketIO;

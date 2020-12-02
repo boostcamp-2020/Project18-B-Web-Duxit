@@ -18,11 +18,14 @@ class User {
   }
 
   initOnRound({ tellerID = '', cards = [] } = {}) {
+    this.submittedCard = null;
+    this.votedCard = null;
+    this.isReady = false;
     this.isTeller = this.socketID === tellerID;
     this.cards = cards;
   }
 
-  toggleReady(isReady) {
+  setReady(isReady) {
     this.isReady = isReady;
   }
 

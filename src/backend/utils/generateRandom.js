@@ -23,6 +23,9 @@ const randomFunctions = {
     Array.from({ length: process.env.CARD_COUNT }, (value, index) => index)
       .sort(sortByRandom)
       .slice(count),
+  pickOneFromArray: (array) => {
+    return array[Math.floor(Math.random() * array.length)];
+  },
 };
 
 export default randomFunctions;

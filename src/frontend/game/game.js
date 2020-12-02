@@ -91,7 +91,9 @@ const initialize = async () => {
   socket.on('update player', (playerInfo) => {
     LeftTab.updatePlayer(playerInfo);
   });
-
+  socket.on('exit player', (playerInfo) => {
+    LeftTab.deletePlayer(playerInfo);
+  });
   socket.emit('join player', { roomID });
   socket.on('get round data', (data) =>
     SceneManager.renderNextScene(
