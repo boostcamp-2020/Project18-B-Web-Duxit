@@ -68,7 +68,7 @@ export default class Game {
   }
 
   getUserArray() {
-    return [...this.users].map(([, user]) => user);
+    return [...this.users.values()];
   }
 
   forceGuesserSelect() {
