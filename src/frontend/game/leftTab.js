@@ -26,12 +26,24 @@ class LeftTab {
     return duck;
   }
 
+  findPlayer(socketID) {
+    return this.players.find((player) => player.socketID === socketID);
+  }
+
   updatePlayer(playerInfo) {
-    const updatedPlayer = this.players.find(
-      (player) => player.socketID === playerInfo.socketID,
-    );
+    const updatedPlayer = this.findPlayer(playerInfo.socketID);
     if (updatedPlayer) updatedPlayer.update(playerInfo);
     else this.addPlayer(playerInfo);
+  }
+
+  deletePlayer(playerInfo) {
+    const deletedPlayer = this.findPlayer(playerInfo.socketID);
+    const playerWrapper = $id('participants-wrapper');
+    playerWrapper.removeChild(deletedPlayer.instance);
+    this.players = this.players.filter(
+      (player) => player.socketID !== playerInfo.socketID,
+    );
+    this.renderCount();
   }
 
   addPlayer(playerInfo) {
