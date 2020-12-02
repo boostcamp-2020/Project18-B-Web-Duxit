@@ -15,11 +15,11 @@ class User {
   initRound() {
     this.submittedCard = null;
     this.votedCard = null;
-    this.isTeller = null;
-    this.isReady = null;
+    this.isTeller = false;
+    this.isReady = false;
   }
 
-  toggleReady(isReady) {
+  setReady(isReady) {
     this.isReady = isReady;
   }
 

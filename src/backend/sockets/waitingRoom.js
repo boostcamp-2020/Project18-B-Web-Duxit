@@ -38,7 +38,7 @@ function onReadyPlayer({ isReady }) {
   const socket = this;
   const { game } = socket;
   const { users, roomID } = game;
-  users.get(socket.id).toggleReady(isReady);
+  users.get(socket.id).setReady(isReady);
   socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
   const isAllReady = [...users].every(([, user]) => user.isReady);
