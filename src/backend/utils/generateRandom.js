@@ -8,7 +8,7 @@ const generateRandomColor = () => {
   const r = Math.round(Math.random() * 255).toString(16);
   const g = Math.round(Math.random() * 255).toString(16);
   const b = Math.round(Math.random() * 255).toString(16);
-  const color = `#${r}${g}${b}`;
+  const color = `#${r}${g}${b}`.padEnd(7, '0');
   return color;
 };
 
