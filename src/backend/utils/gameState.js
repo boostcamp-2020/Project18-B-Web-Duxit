@@ -1,4 +1,4 @@
-const PLAYING_STATE = {
+const GAME_STATE = {
   WAITING: 0,
   TELLER: 1,
   GUESSER: 2,
@@ -7,4 +7,4 @@ const PLAYING_STATE = {
   END: 5,
 };
 
-export default PLAYING_STATE;
+export default GAME_STATE;
