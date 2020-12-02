@@ -56,12 +56,13 @@
   width: 80%;
   height: 80%;
   margin: 0 auto 5%;
-  background-color: red;
   .duck-score {
     position: absolute;
-    top: 80%;
-    left: 3%;
-    background-color: yellow;
+    top: 70%;
+    left: 15%;
+    padding: 0.3rem 0.5rem;
+    border-radius: 1rem;
+    background-color: $gray-color;
   }
 
   .duck-hat {
