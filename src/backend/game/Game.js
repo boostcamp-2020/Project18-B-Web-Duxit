@@ -2,6 +2,7 @@ import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
 import { PLAYER } from '@utils/number';
 import GameList from '@game/GameList';
+import socketIO from '@socket';
 import User from './User';
 
 export default class Game {
@@ -66,11 +67,32 @@ export default class Game {
     return { tellerID: userIDs[(turn - 1) % userIDs.length] };
   }
 
+  getUserArray() {
+    return [...this.users.values()];
+  }
+
+  forceGuesserSelect() {
+    this.getUserArray()
+      .filter((user) => user.submittedCard === null)
+      .forEach((user) => {
+        user.submittedCard = generateRandom.pickOneFromArray(user.cards);
+        socketIO
+          .to(user.socketID)
+          .emit('guesser select card', { cardID: user.submittedCard });
+      });
+  }
+
   startNewRound() {
+    // Initialize Game status
     this.status = {
       ...this.status,
+      state: GAME_STATE.WAITING,
+      topic: '',
       turn: this.status.turn + 1,
     };
+
+    // Initialize User status
+    this.users.forEach((user) => user.initRound());
 
     return this.getTeller();
     // if (this.status.turn === 1) return this.startFirstRound();

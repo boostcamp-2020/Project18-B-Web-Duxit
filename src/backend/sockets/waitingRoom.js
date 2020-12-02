@@ -6,8 +6,9 @@ function onJoinPlayer({ roomID }) {
   const game = GameList.getGame(roomID);
   if (!game || !game.isEnterable(roomID)) return;
 
-  socket.game = game;
   const user = game.addUser({ socketID: socket.id, roomID });
+  socket.game = game;
+  socket.user = user;
   socket.join(roomID);
 
   socket.emit('enter room', {
@@ -37,7 +38,7 @@ function onReadyPlayer({ isReady }) {
   const socket = this;
   const { game } = socket;
   const { users, roomID } = game;
-  users.get(socket.id).toggleReady(isReady);
+  users.get(socket.id).setReady(isReady);
   socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
   const isAllReady = [...users].every(([, user]) => user.isReady);
