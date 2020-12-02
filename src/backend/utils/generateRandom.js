@@ -19,4 +19,7 @@ const randomFunctions = {
   },
 };
 
+const randomFunction = () => Math.random() - 0.5;
+export const randomize = (array) => array.slice().sort(randomFunction);
+
 export default randomFunctions;
