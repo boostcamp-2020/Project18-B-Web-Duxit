@@ -6,7 +6,7 @@ const WaitingRoom = class {
     this.roomID = roomID;
   }
 
-  render(root) {
+  render() {
     const { removeArray, NicknameInput, AllReadyText } = renderWaitingRoom(
       this.roomID,
     );

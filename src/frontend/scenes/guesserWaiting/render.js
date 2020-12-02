@@ -1,12 +1,12 @@
-import './roundStart.scss';
+import './guesserWaiting.scss';
 import TextObject from '@engine/TextObject';
 import TEXT from '@utils/text';
 
-const renderRoundStart = ({ isTeller }) => {
+const renderGuesserWaiting = () => {
   const NotifyingTellerText = new TextObject();
-  const tellerText = TEXT.TELLER[isTeller];
+  const tellerText = TEXT.WAIT_TELLER_SELECT;
   NotifyingTellerText.addClass('notify-teller');
-  if (!isTeller) NotifyingTellerText.addClass('other');
+  NotifyingTellerText.addClass('other');
   NotifyingTellerText.attachToRoot();
   NotifyingTellerText.setContent(tellerText);
 
@@ -17,4 +17,4 @@ const renderRoundStart = ({ isTeller }) => {
   };
 };
 
-export default renderRoundStart;
+export default renderGuesserWaiting;
