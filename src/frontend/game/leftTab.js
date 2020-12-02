@@ -1,6 +1,7 @@
 import './left.scss';
 import { $id } from '@utils/dom';
 import DuckObject from '@engine/DuckObject';
+import { DUCK_TYPE } from '@utils/type';
 
 class LeftTab {
   constructor() {
@@ -19,7 +20,7 @@ class LeftTab {
   // eslint-disable-next-line class-methods-use-this
   createDuck(duckInfo) {
     const { socketID, color, nickname } = duckInfo;
-    const duck = new DuckObject({ type: 'left', socketID });
+    const duck = new DuckObject({ type: DUCK_TYPE.LEFT_TAB, socketID });
     duck.setNickname(nickname);
     duck.setColor(color);
     duck.createElement();
