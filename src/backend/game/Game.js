@@ -1,4 +1,5 @@
 import generateRandom from '@utils/generateRandom';
+import PLAYING_STATE from '@utils/playingState';
 import GameList from '@game/GameList';
 import User from './User';
 
@@ -9,7 +10,7 @@ export default class Game {
     this.roomID = roomID;
     this.users = new Map();
     this.status = {
-      isPlaying: false,
+      state: PLAYING_STATE.WAITING,
       unusedCards: [],
       topic: '',
       turn: 0,
@@ -17,7 +18,11 @@ export default class Game {
   }
 
   isEnterable() {
-    if (this.status.isPlaying || this.users.size >= MAX_PLAYER) return false;
+    if (
+      this.status.state !== PLAYING_STATE.WAITING ||
+      this.users.size >= MAX_PLAYER
+    )
+      return false;
     return true;
   }
 
