@@ -1,15 +1,15 @@
 import generateRandom from '@utils/generateRandom';
+import GAME_STATE from '@utils/gameState';
+import { PLAYER } from '@utils/number';
 import GameList from '@game/GameList';
 import User from './User';
-
-const MAX_PLAYER = 6;
 
 export default class Game {
   constructor(roomID) {
     this.roomID = roomID;
     this.users = new Map();
     this.status = {
-      isPlaying: false,
+      state: GAME_STATE.WAITING,
       unusedCards: [],
       topic: '',
       turn: 0,
@@ -17,7 +17,11 @@ export default class Game {
   }
 
   isEnterable() {
-    if (this.status.isPlaying || this.users.size >= MAX_PLAYER) return false;
+    if (
+      this.status.state !== GAME_STATE.WAITING ||
+      this.users.size >= PLAYER.MAX
+    )
+      return false;
     return true;
   }
 
@@ -55,15 +59,20 @@ export default class Game {
     user.setNickname(nickname);
   }
 
+  getTeller() {
+    const userIDs = [...this.users.keys()];
+    const { turn } = this.status;
+
+    return { tellerID: userIDs[(turn - 1) % userIDs.length] };
+  }
+
   startNewRound() {
     this.status = {
       ...this.status,
       turn: this.status.turn + 1,
     };
-    const userIDs = [...this.users.keys()];
-    const { turn } = this.status;
 
-    return { tellerID: userIDs[(turn - 1) % userIDs.length] };
+    return this.getTeller();
     // if (this.status.turn === 1) return this.startFirstRound();
     // this.startNewRound();
   }
