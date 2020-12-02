@@ -1,4 +1,4 @@
-export default ({ color = '#efff00', width = '50' }) => {
+const Duck = ({ color = '#efff00', width = '50' }) => {
   let stroke = '5px';
   if (width > 200) stroke = '3px';
   return `
@@ -18,3 +18,5 @@ export default ({ color = '#efff00', width = '50' }) => {
     </svg>
     `;
 };
+
+export default Duck;
