@@ -1,4 +1,6 @@
-export default ({ color = '#efff00', width = '50', stroke = '5px' }) => {
+export default ({ color = '#efff00', width = '50' }) => {
+  let stroke = '5px';
+  if (width > 200) stroke = '3px';
   return `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 297.02" width=${width}>
         <defs>
