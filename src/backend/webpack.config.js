@@ -1,3 +1,4 @@
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
@@ -19,7 +20,7 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   externals: [nodeExternals()],
-  plugins: [new NodemonPlugin()],
+  plugins: [new DotenvWebpackPlugin(), new NodemonPlugin()],
   module: {
     rules: [
       {
