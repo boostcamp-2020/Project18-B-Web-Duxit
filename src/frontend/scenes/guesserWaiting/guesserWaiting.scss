@@ -1,0 +1,17 @@
+.teller-duck-wrapper {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.teller-cards-wrapper {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  .teller-duck-card {
+    width: 100px;
+    height: 150px;
+  }
+}

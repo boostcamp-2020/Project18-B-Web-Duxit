@@ -1,6 +1,8 @@
 import './tellerSelectCard.scss';
 import TextObject from '@engine/TextObject';
+import ProgressBarObject from '@engine/ProgressBarObject';
 import TEXT from '@utils/text';
+import TIME from '@utils/time';
 
 const renderTellerSelect = () => {
   const NotifyingTellerText = new TextObject();
@@ -9,7 +11,13 @@ const renderTellerSelect = () => {
   NotifyingTellerText.attachToRoot();
   NotifyingTellerText.setContent(tellerText);
 
-  const removeArray = [NotifyingTellerText];
+  const ProgressBar = new ProgressBarObject();
+  ProgressBar.createElement();
+  ProgressBar.attachToRoot();
+  ProgressBar.setTime(TIME.SELECT_CARD);
+  ProgressBar.start();
+
+  const removeArray = [NotifyingTellerText, ProgressBar];
 
   return {
     removeArray,
