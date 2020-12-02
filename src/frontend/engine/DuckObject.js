@@ -58,11 +58,7 @@ const DuckObject = class extends ImageObject {
 
   getChildrenNode(className) {
     const { instance } = this;
-    for (let i = 0; i < instance.children.length; i++) {
-      if (instance.children[i].className === className)
-        return instance.children[i];
-    }
-    return null;
+    return instance.querySelector(className);
   }
 
   render() {
