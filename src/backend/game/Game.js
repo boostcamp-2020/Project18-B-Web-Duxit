@@ -60,15 +60,20 @@ export default class Game {
     user.setNickname(nickname);
   }
 
+  getTeller() {
+    const userIDs = [...this.users.keys()];
+    const { turn } = this.status;
+
+    return { tellerID: userIDs[(turn - 1) % userIDs.length] };
+  }
+
   startNewRound() {
     this.status = {
       ...this.status,
       turn: this.status.turn + 1,
     };
-    const userIDs = [...this.users.keys()];
-    const { turn } = this.status;
 
-    return { tellerID: userIDs[(turn - 1) % userIDs.length] };
+    return this.getTeller();
     // if (this.status.turn === 1) return this.startFirstRound();
     // this.startNewRound();
   }
