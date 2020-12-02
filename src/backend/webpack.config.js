@@ -19,7 +19,11 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   externals: [nodeExternals()],
-  plugins: [new NodemonPlugin()],
+  plugins: [
+    new NodemonPlugin({
+      nodeArgs: ['--inspect=9222'],
+    }),
+  ],
   module: {
     rules: [
       {
