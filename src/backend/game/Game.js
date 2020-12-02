@@ -2,6 +2,7 @@ import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
 import { PLAYER } from '@utils/number';
 import GameList from '@game/GameList';
+import socketIO from '@socket';
 import User from './User';
 
 export default class Game {
@@ -75,6 +76,9 @@ export default class Game {
       .filter((user) => user.submittedCard === null)
       .forEach((user) => {
         user.submittedCard = generateRandom.pickFromArray(user.cards);
+        socketIO
+          .to(user.socketID)
+          .emit('guesser select card', { cardID: user.submittedCard });
       });
   }
 

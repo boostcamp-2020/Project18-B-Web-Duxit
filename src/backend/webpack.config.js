@@ -10,6 +10,7 @@ module.exports = {
     alias: {
       '@game': path.resolve(__dirname, 'game'),
       '@utils': path.resolve(__dirname, 'utils'),
+      '@socket': path.resolve(__dirname, 'sockets'),
     },
   },
   entry: [path.resolve(__dirname, 'server.js')],
