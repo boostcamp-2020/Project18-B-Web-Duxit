@@ -1,9 +1,8 @@
 import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
+import { PLAYER } from '@utils/number';
 import GameList from '@game/GameList';
 import User from './User';
-
-const MAX_PLAYER = 6;
 
 export default class Game {
   constructor(roomID) {
@@ -20,7 +19,7 @@ export default class Game {
   isEnterable() {
     if (
       this.status.state !== GAME_STATE.WAITING ||
-      this.users.size >= MAX_PLAYER
+      this.users.size >= PLAYER.MAX
     )
       return false;
     return true;
