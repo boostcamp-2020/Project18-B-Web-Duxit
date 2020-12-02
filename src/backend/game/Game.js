@@ -66,11 +66,29 @@ export default class Game {
     return { tellerID: userIDs[(turn - 1) % userIDs.length] };
   }
 
+  getUserArray() {
+    return [...this.users].map(([, user]) => user);
+  }
+
+  forceGuesserSelect() {
+    this.getUserArray()
+      .filter((user) => user.submittedCard === null)
+      .forEach((user) => {
+        user.submittedCard = generateRandom.pickFromArray(user.cards);
+      });
+  }
+
   startNewRound() {
+    // Initialize Game status
     this.status = {
       ...this.status,
+      state: GAME_STATE.WAITING,
+      topic: '',
       turn: this.status.turn + 1,
     };
+
+    // Initialize User status
+    this.users.forEach((user) => user.initRound());
 
     return this.getTeller();
     // if (this.status.turn === 1) return this.startFirstRound();
