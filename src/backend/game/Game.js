@@ -75,7 +75,7 @@ export default class Game {
     this.getUserArray()
       .filter((user) => user.submittedCard === null)
       .forEach((user) => {
-        user.submittedCard = generateRandom.pickFromArray(user.cards);
+        user.submittedCard = generateRandom.pickOneFromArray(user.cards);
         socketIO
           .to(user.socketID)
           .emit('guesser select card', { cardID: user.submittedCard });
