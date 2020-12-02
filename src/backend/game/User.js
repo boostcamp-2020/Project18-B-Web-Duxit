@@ -6,7 +6,7 @@ class User {
     this.turnID = 0;
     this.submittedCard = null;
     this.votedCard = null;
-    this.isTeller = null;
+    this.isTeller = false;
     this.cards = [];
     this.score = 0;
     this.isReady = false;
