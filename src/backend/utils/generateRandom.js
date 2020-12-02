@@ -17,6 +17,9 @@ const randomFunctions = {
     if (GameList.hasGame(randomString)) return randomFunctions.roomID();
     return randomString;
   },
+  pickFromArray: (array) => {
+    return array[Math.floor(Math.random() * array.length)];
+  },
 };
 
 export default randomFunctions;
