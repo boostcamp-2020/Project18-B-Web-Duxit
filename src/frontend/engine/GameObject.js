@@ -52,7 +52,6 @@ const GameObject = class {
 
   appendChild(object) {
     this.instance.appendChild(object.instance);
-    // this.childList = [...this.childList, object];
   }
 
   addClass(className) {
