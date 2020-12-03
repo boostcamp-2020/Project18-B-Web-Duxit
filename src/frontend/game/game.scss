@@ -3,11 +3,15 @@
 $left-size: 200px;
 $right-size: 330px;
 
+$z-index-tab: 10;
+$z-index-modal: 20;
+
+
 .game-layout {
   display: flex;
 
   .left-tab {
-    z-index: 10;
+    z-index: $z-index-tab;
     display: flex;
     height: 100vh;
     flex-basis: $left-size;
@@ -19,7 +23,7 @@ $right-size: 330px;
   }
 
   .right-tab {
-    z-index: 10;
+    z-index: $z-index-tab;
     display: flex;
     height: 100vh;
     flex-basis: $right-size;
@@ -111,4 +115,14 @@ $right-size: 330px;
 
 .chat-send-button {
   padding: 0.5em !important;
+}
+
+// Modal
+
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px) brightness(40%);
+  z-index: $z-index-modal;
 }
