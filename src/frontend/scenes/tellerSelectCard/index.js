@@ -6,12 +6,12 @@ const TellerSelectCard = class {
   }
 
   render() {
-    const { removeArray } = renderTellerSelect();
-    this.removeArray = removeArray;
+    const { arrayToBeRemoved } = renderTellerSelect();
+    this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
   wrapup() {
-    this.removeArray.forEach((gameObject) => {
+    this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
   }

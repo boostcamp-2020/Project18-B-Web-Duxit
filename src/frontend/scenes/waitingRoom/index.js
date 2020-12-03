@@ -7,16 +7,16 @@ const WaitingRoom = class {
   }
 
   render() {
-    const { removeArray, NicknameInput, AllReadyText } = renderWaitingRoom(
+    const { arrayToBeRemoved, NicknameInput, AllReadyText } = renderWaitingRoom(
       this.roomID,
     );
-    this.removeArray = removeArray;
+    this.arrayToBeRemoved = arrayToBeRemoved;
     this.NicknameInput = NicknameInput;
     setupWaitingRoomSocket({ AllReadyText });
   }
 
   wrapup() {
-    this.removeArray.forEach((gameObject) => {
+    this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
   }

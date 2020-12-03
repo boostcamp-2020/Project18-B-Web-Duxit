@@ -95,11 +95,11 @@ const initialize = async () => {
     LeftTab.deletePlayer(playerInfo);
   });
   socket.emit('join player', { roomID });
-  socket.on('get round data', (data) =>
+  socket.on('get round data', (data) => {
     SceneManager.renderNextScene(
       new NewRoundStart({ ...data, socketID: socket.id }),
-    ),
-  );
+    );
+  });
 };
 
 initialize();

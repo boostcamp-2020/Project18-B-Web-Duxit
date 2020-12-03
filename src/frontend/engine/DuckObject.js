@@ -31,21 +31,21 @@ const DuckObject = class extends ImageObject {
     this.microphone = microphone;
   }
 
-  createElement() {
-    const element = $create('div');
+  createElement(elementType = 'div') {
+    const element = $create(elementType);
     this.setElement(element);
     if (this.type === DUCK_TYPE.TELLER) this.createTellerDuckElement();
     else this.createLeftTabDuckElement();
   }
 
   createTellerDuckElement() {
-    this.instance.classList.add('teller-duck-wrapper');
-    this.instance.innerHTML = this.getComponentForTeller();
+    this.addClass('teller-duck-wrapper');
+    this.setInnerHTML(this.getComponentForTeller());
   }
 
   createLeftTabDuckElement() {
-    this.instance.classList.add('left-duck-wrapper');
-    this.instance.innerHTML = this.getComponentForLeft();
+    this.addClass('left-duck-wrapper');
+    this.setInnerHTML(this.getComponentForLeft());
   }
 
   getComponentForTeller() {

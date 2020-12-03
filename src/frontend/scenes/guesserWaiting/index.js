@@ -6,12 +6,12 @@ const GuesserWaiting = class {
   }
 
   render() {
-    const { removeArray } = renderGuesserWaiting();
-    this.removeArray = removeArray;
+    const { arrayToBeRemoved } = renderGuesserWaiting();
+    this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
   wrapup() {
-    this.removeArray.forEach((gameObject) => {
+    this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
   }
