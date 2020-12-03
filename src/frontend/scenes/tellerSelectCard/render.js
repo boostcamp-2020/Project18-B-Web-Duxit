@@ -25,7 +25,10 @@ const renderTellerSelect = () => {
     CardManager.myCards,
   );
   CardsWrapper.attachToRoot();
-  cards.forEach((card) => card.animateFlip(3000, true));
+  cards.forEach((card) => {
+    card.animateFlip(3000, true);
+    card.setAnimateMove();
+  });
 
   const arrayToBeRemoved = [NotifyingTellerText, ProgressBar];
 
