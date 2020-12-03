@@ -6,8 +6,9 @@ function onJoinPlayer({ roomID }) {
   const game = GameList.getGame(roomID);
   if (!game || !game.isEnterable(roomID)) return;
 
-  socket.game = game;
   const user = game.addUser({ socketID: socket.id, roomID });
+  socket.game = game;
+  socket.user = user;
   socket.join(roomID);
 
   socket.emit('enter room', {
@@ -37,7 +38,7 @@ function onReadyPlayer({ isReady }) {
   const socket = this;
   const { game } = socket;
   const { users, roomID } = game;
-  users.get(socket.id).toggleReady(isReady);
+  users.get(socket.id).setReady(isReady);
   socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
   const isAllReady = [...users].every(([, user]) => user.isReady);
@@ -46,13 +47,10 @@ function onReadyPlayer({ isReady }) {
     socket.in(roomID).emit('all ready', {});
     socket.emit('all ready', {});
     const timeout = setTimeout(() => {
-      socket.in(roomID).emit('game start', {});
-      socket.emit('game start', {});
-
-      const whoIsTellerInfo = game.startNewRound();
-      socket.in(roomID).emit('get round data', { ...whoIsTellerInfo });
-      socket.emit('get round data', { ...whoIsTellerInfo });
-      if (timeoutMap.has(roomID)) timeoutMap.delete(roomID);
+      game.start();
+      // socket.in(roomID).emit('game start', {});
+      // socket.emit('game start', {});
+      if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
     }, 5000);
     timeoutMap.set(roomID, timeout);
   } else if (timeoutMap.has(roomID)) {

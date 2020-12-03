@@ -6,13 +6,26 @@ class User {
     this.turnID = 0;
     this.submittedCard = null;
     this.votedCard = null;
-    this.isTeller = null;
+    this.isTeller = false;
     this.cards = [];
     this.score = 0;
     this.isReady = false;
   }
 
-  toggleReady(isReady) {
+  initOnStart({ turnID } = {}) {
+    this.turnID = turnID;
+    this.score = 0;
+  }
+
+  initOnRound({ tellerID = '', cards = [] } = {}) {
+    this.submittedCard = null;
+    this.votedCard = null;
+    this.isReady = false;
+    this.isTeller = this.socketID === tellerID;
+    this.cards = cards;
+  }
+
+  setReady(isReady) {
     this.isReady = isReady;
   }
 

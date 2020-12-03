@@ -1,3 +1,4 @@
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
@@ -10,6 +11,7 @@ module.exports = {
     alias: {
       '@game': path.resolve(__dirname, 'game'),
       '@utils': path.resolve(__dirname, 'utils'),
+      '@socket': path.resolve(__dirname, 'sockets'),
     },
   },
   entry: [path.resolve(__dirname, 'server.js')],
@@ -19,7 +21,12 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   externals: [nodeExternals()],
-  plugins: [new NodemonPlugin()],
+  plugins: [
+    new DotenvWebpackPlugin(),
+    new NodemonPlugin({
+      nodeArgs: ['--inspect=9222'],
+    }),
+  ],
   module: {
     rules: [
       {

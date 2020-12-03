@@ -4,6 +4,8 @@ import nickname from './nickname.json';
 const generateRandomString = () =>
   Math.random().toString(36).substr(2, 5).toUpperCase();
 
+const sortByRandom = () => Math.random() - 0.5;
+
 const randomFunctions = {
   nickname: () => {
     const { adjective: adj, noun } = nickname;
@@ -11,11 +13,24 @@ const randomFunctions = {
     const randomNoun = noun[Math.floor(Math.random() * noun.length)];
     return `${randomAdj} ${randomNoun}`;
   },
-  color: () => '#222222',
+  color: () => {
+    const r = Math.round(Math.random() * 255).toString(16);
+    const g = Math.round(Math.random() * 255).toString(16);
+    const b = Math.round(Math.random() * 255).toString(16);
+    const color = `#${r}${g}${b}`.padEnd(7, '0');
+    return color;
+  },
   roomID: () => {
     const randomString = generateRandomString();
     if (GameList.hasGame(randomString)) return randomFunctions.roomID();
     return randomString;
+  },
+  cards: (count) =>
+    Array.from({ length: process.env.CARD_COUNT }, (value, index) => index)
+      .sort(sortByRandom)
+      .slice(count),
+  pickOneFromArray: (array) => {
+    return array[Math.floor(Math.random() * array.length)];
   },
 };
 
