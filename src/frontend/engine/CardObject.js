@@ -10,7 +10,7 @@ const MOVE_PERCENT = 10;
 const CardObject = class extends GameObject {
   constructor({
     imagePath = backImage, // default: 뒷면 이미지
-    facingUp = true,
+    facingUp = false,
     hoverable = false, // <- 안 쓰는게 나을지도?
     origin = ['50%', '50%'],
     ...data
@@ -37,6 +37,11 @@ const CardObject = class extends GameObject {
 
     this.hoverMoveUpCallback = null;
     this.hoverMoveDownCallback = null;
+  }
+
+  setWidth(width = 240) {
+    this.instance.style.width = `${width}px`;
+    this.instance.style.height = `${width * 1.5}px`;
   }
 
   animateFlip(duration = 500, toUp = !this.facingUp) {
