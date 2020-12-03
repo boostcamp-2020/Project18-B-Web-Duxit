@@ -2,29 +2,32 @@ import './left.scss';
 import { $id } from '@utils/dom';
 import DuckObject from '@engine/DuckObject';
 import { DUCK_TYPE } from '@utils/type';
+import PlayerManager from '@utils/PlayerManager';
+
+const createDuck = (duckInfo) => {
+  const { socketID, color, nickname } = duckInfo;
+  const duck = new DuckObject({ type: DUCK_TYPE.LEFT_TAB, socketID });
+  duck.setNickname(nickname);
+  duck.setColor(color);
+  duck.createElement();
+  return duck;
+};
 
 class LeftTab {
   constructor() {
     this.players = [];
+    PlayerManager.onInitialize.push(this.initializePlayers.bind(this));
+    PlayerManager.onUpdate.push(this.updatePlayer.bind(this));
+    PlayerManager.onDelete.push(this.deletePlayer.bind(this));
   }
 
   initializePlayers(players = []) {
     const ducks = players.reduce((prev, player) => {
-      const duck = this.createDuck(player);
+      const duck = createDuck(player);
       return [...prev, duck];
     }, []);
     this.players = ducks;
     this.render();
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  createDuck(duckInfo) {
-    const { socketID, color, nickname } = duckInfo;
-    const duck = new DuckObject({ type: DUCK_TYPE.LEFT_TAB, socketID });
-    duck.setNickname(nickname);
-    duck.setColor(color);
-    duck.createElement();
-    return duck;
   }
 
   findPlayer(socketID) {
@@ -48,7 +51,7 @@ class LeftTab {
   }
 
   addPlayer(playerInfo) {
-    const duck = this.createDuck(playerInfo);
+    const duck = createDuck(playerInfo);
     const playerWrapper = $id('participants-wrapper');
     this.players = [...this.players, duck];
     playerWrapper.appendChild(duck.instance);
@@ -63,7 +66,9 @@ class LeftTab {
   render() {
     this.renderCount();
     const playerWrapper = $id('participants-wrapper');
-    this.players.map((player) => playerWrapper.appendChild(player.instance));
+    this.players.forEach((player) => {
+      playerWrapper.appendChild(player.instance);
+    });
   }
 }
 
