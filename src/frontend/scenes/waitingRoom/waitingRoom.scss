@@ -2,6 +2,7 @@
 
 .waiting-header {
   position: absolute;
+  z-index: $z-index-layouts;
   top: 0;
   left: 50%;
   display: flex;
@@ -57,6 +58,7 @@
 
 .waiting-action-wrapper {
   position: absolute;
+  z-index: $z-index-layouts;
   top: 50%;
   right: 1rem;
   display: flex;
@@ -69,6 +71,7 @@
 
 .waiting-game-code-wrapper {
   position: absolute;
+  z-index: $z-index-layouts;
   right: 1rem;
   bottom: 1rem;
   display: flex;
@@ -95,6 +98,7 @@
 
 .waiting-text-all-ready {
   position: absolute;
+  z-index: $z-index-layouts;
   top: 70%;
   left: 50%;
   font-size: xx-large;
