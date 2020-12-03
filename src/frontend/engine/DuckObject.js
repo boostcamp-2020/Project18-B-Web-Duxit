@@ -80,7 +80,7 @@ const DuckObject = class extends ImageObject {
   }
 
   render() {
-    const nicknameElement = this.getChildrenNode('duck-nickname');
+    const nicknameElement = this.getChildrenNode('.duck-nickname');
     nicknameElement.innerText = this.nickname;
   }
 };
