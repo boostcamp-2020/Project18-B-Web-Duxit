@@ -60,14 +60,14 @@ const CardObject = class extends GameObject {
       const movedX = this.fixedX + Math.sin(deg2rad(this.angle)) * MOVE_PERCENT;
       const movedY = this.fixedY - Math.cos(deg2rad(this.angle)) * MOVE_PERCENT;
 
-      this.move(movedX * TIME.ONE_SECOND, movedY * TIME.ONE_SECOND);
+      this.move(movedX, movedY);
     };
   }
 
   moveDownCallback() {
     [this.fixedX, this.fixedY] = this.position;
     return () => {
-      this.move(this.fixedX * TIME.ONE_SECOND, this.fixedY * TIME.ONE_SECOND);
+      this.move(this.fixedX, this.fixedY);
     };
   }
 
