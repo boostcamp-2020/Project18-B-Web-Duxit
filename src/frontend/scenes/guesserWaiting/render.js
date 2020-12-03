@@ -7,10 +7,8 @@ import DuckObject from '@engine/DuckObject';
 import TEXT from '@utils/text';
 import TIME from '@utils/time';
 import { DUCK_TYPE } from '@utils/type';
+import cardPosition from './cardPosition.json';
 
-const xPoint = [37.5, 42.5, 47.5, 52.5, 57.5, 62.5];
-const yPoint = [20, 17, 15, 15, 17, 20];
-const angle = [-25, -15, -5, 5, 15, 25];
 let count = 0;
 const createCards = () => {
   const emptyObject = new GameObject();
@@ -20,8 +18,8 @@ const createCards = () => {
     const card = new CardObject();
     card.addClass('teller-duck-card');
     card.move(50, 0, 0);
-    card.rotate(angle[count], 0);
-    card.move(xPoint[count], yPoint[count], TIME.ONE_SECOND);
+    card.rotate(cardPosition.angle[count], 0);
+    card.move(cardPosition.x[count], cardPosition.y[count], TIME.ONE_SECOND);
     count += 1;
     emptyObject.appendChild(card);
     return card;
