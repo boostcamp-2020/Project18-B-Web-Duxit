@@ -1,13 +1,16 @@
 import PlayerManager from '@utils/PlayerManager';
 import DuckObject from '@engine/DuckObject';
 import { DUCK_TYPE } from '@utils/type';
+import { $id } from '@utils/dom';
 import renderWaitingRoom from './render';
 import setupWaitingRoomSocket from './socket';
+import { moveMyDuck } from './events';
 
 const WaitingRoom = class {
   constructor(roomID) {
     this.roomID = roomID;
     this.ducks = new Map();
+    this.duckMoveEvent = null;
 
     PlayerManager.onInitialize.push(this.addDucksOnInit.bind(this));
     PlayerManager.onUpdate.push(this.setNicknameInput.bind(this));
@@ -24,6 +27,7 @@ const WaitingRoom = class {
   }
 
   wrapup() {
+    $id('root').removeEventListener('click', this.duckMoveEvent);
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
@@ -39,6 +43,9 @@ const WaitingRoom = class {
 
   addDucksOnInit(players = []) {
     players.forEach(this.createDuck.bind(this));
+    const myDuck = this.ducks.get(PlayerManager.currentPlayerID);
+    this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
+    $id('root').addEventListener('click', this.duckMoveEvent);
   }
 
   updateDucks(player = {}) {
