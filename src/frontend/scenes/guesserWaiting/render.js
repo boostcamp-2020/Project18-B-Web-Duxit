@@ -12,7 +12,7 @@ const createCards = () => {
   const emptyObject = new GameObject();
   emptyObject.createElement();
   emptyObject.addClass('teller-cards-wrapper');
-  const cards = [...new Array(6).fill(1)].map(() => {
+  const cards = Array.from({ length: 6 }, () => {
     const card = new CardObject();
     card.addClass('teller-duck-card');
     card.move(10, 10, 0);
