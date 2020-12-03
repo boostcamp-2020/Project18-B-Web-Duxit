@@ -9,13 +9,13 @@ $right-size: 330px;
   .left-tab {
     z-index: 10;
     display: flex;
+    overflow: auto;
     height: 100vh;
     flex-basis: $left-size;
     flex-direction: column;
     flex-shrink: 0;
-    padding: 1.5rem 1rem;
+    padding: 1.3rem 1rem;
     border-right: 1px solid $gray-color;
-    overflow: auto;
   }
 
   .right-tab {
