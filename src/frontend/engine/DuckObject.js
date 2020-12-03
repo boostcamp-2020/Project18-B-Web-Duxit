@@ -1,7 +1,6 @@
 import { $create } from '@utils/dom';
 import { DUCK_TYPE } from '@utils/type';
-
-import Duck from '@utils/duck';
+import Duck, { DuckHat } from '@utils/duck';
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
@@ -31,21 +30,21 @@ const DuckObject = class extends ImageObject {
     this.microphone = microphone;
   }
 
-  createElement() {
-    const element = $create('div');
+  createElement(elementType = 'div') {
+    const element = $create(elementType);
     this.setElement(element);
     if (this.type === DUCK_TYPE.TELLER) this.createTellerDuckElement();
     else this.createLeftTabDuckElement();
   }
 
   createTellerDuckElement() {
-    this.instance.classList.add('teller-duck-wrapper');
-    this.instance.innerHTML = this.getComponentForTeller();
+    this.addClass('teller-duck-wrapper');
+    this.setInnerHTML(this.getComponentForTeller());
   }
 
   createLeftTabDuckElement() {
-    this.instance.classList.add('left-duck-wrapper');
-    this.instance.innerHTML = this.getComponentForLeft();
+    this.addClass('left-duck-wrapper');
+    this.setInnerHTML(this.getComponentForLeft());
   }
 
   getComponentForTeller() {
@@ -56,10 +55,10 @@ const DuckObject = class extends ImageObject {
 
   getComponentForLeft() {
     const { nickname, color, score, hat } = this;
-    const option = { color, width: 65 };
+    const option = { color, width: 50 };
     return `
         <div class="duck-image">
-          ${hat ? '<span class="duck-hat">hat</span>' : ''}
+          ${hat ? DuckHat({ width: 40 }) : ''}
           ${Duck(option)}
           <span class="duck-score">${score}</span>
         </div>
@@ -80,7 +79,7 @@ const DuckObject = class extends ImageObject {
   }
 
   render() {
-    const nicknameElement = this.getChildrenNode('duck-nickname');
+    const nicknameElement = this.getChildrenNode('.duck-nickname');
     nicknameElement.innerText = this.nickname;
   }
 };

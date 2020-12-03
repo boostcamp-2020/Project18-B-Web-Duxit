@@ -1,4 +1,5 @@
 import { $create, $id } from '@utils/dom';
+import TIME from '@utils/time';
 
 // https://easings.net/#easeInOutCubic
 const easeOutCubic = (x) => 1 - (1 - x) ** 4;
@@ -35,18 +36,18 @@ const GameObject = class {
     else this.attachToRoot();
   }
 
-  delete(duration = 1) {
-    this.instance.style.transition = `opacity ${duration}s`;
+  delete(duration = TIME.ONE_SECOND) {
+    this.instance.style.transition = `opacity ${duration / TIME.ONE_SECOND}s`;
     this.instance.style.opacity = 0;
-    setTimeout(() => this.instance.remove(), duration * 1000);
+    setTimeout(() => this.instance.remove(), duration);
   }
 
   attachToRoot() {
     $id('root').appendChild(this.instance);
   }
 
-  createElement() {
-    const element = $create('div');
+  createElement(elementType = 'div') {
+    const element = $create(elementType);
     this.setElement(element);
   }
 
@@ -82,6 +83,10 @@ const GameObject = class {
     this.transform();
   }
 
+  setInnerHTML(html = '') {
+    this.instance.innerHTML = html;
+  }
+
   transform() {
     this.instance.style.transform = `${this.rotateStyle} ${this.originStyle}`;
   }
@@ -90,7 +95,7 @@ const GameObject = class {
     this.instance.style.zIndex = zIndex;
   }
 
-  move(x = 0, y = 0, duration = 0.5) {
+  move(x = 0, y = 0, duration = TIME.ONE_SECOND / 2) {
     this.position = [x, y];
     const xString = makeUnitString(x, '%');
     const yString = makeUnitString(y, '%');
@@ -110,7 +115,7 @@ const GameObject = class {
     const targetY = y;
     const targetX = x;
 
-    const miliseconds = duration * 1000;
+    const miliseconds = duration;
     let start = null;
     const animateFunction = (timestamp) => {
       if (!start) start = timestamp;
@@ -136,7 +141,7 @@ const GameObject = class {
     this.animationFrame = requestAnimationFrame(animateFunction);
   }
 
-  rotate(angle = 0, duration = 0.2) {
+  rotate(angle = 0, duration = TIME.ONE_SECOND / 5) {
     this.angle = angle;
     const angleString = makeUnitString(angle, 'deg');
     const keyframes = [
@@ -144,7 +149,7 @@ const GameObject = class {
       { transform: `rotateZ(${angleString}) ${this.originStyle}` },
     ];
     const options = {
-      duration: duration * 1000,
+      duration,
       easing: 'ease',
     };
     this.instance.animate(keyframes, options);

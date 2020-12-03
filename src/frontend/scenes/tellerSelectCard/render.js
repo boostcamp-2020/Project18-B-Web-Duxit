@@ -17,10 +17,10 @@ const renderTellerSelect = () => {
   ProgressBar.setTime(TIME.SELECT_CARD);
   ProgressBar.start();
 
-  const removeArray = [NotifyingTellerText, ProgressBar];
+  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar];
 
   return {
-    removeArray,
+    arrayToBeRemoved,
   };
 };
 
