@@ -16,6 +16,10 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
+$z-index-tab: 10;
+$z-index-modal: 5;
+$z-index-progress-bar: 30;
+
 $main-color: #ffd600;
 $main-clicked-color: #ffab00;
 $white-color: #fff;
