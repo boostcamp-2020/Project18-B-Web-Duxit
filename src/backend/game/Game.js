@@ -4,7 +4,6 @@ import { PLAYER, CARD } from '@utils/number';
 import GameList from '@game/GameList';
 import socketIO from '@socket';
 import User from './User';
-import socketIO from '../sockets';
 
 export default class Game {
   constructor(roomID) {
