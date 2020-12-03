@@ -13,7 +13,13 @@ const randomFunctions = {
     const randomNoun = noun[Math.floor(Math.random() * noun.length)];
     return `${randomAdj} ${randomNoun}`;
   },
-  color: () => '#222222',
+  color: () => {
+    const r = Math.round(Math.random() * 255).toString(16);
+    const g = Math.round(Math.random() * 255).toString(16);
+    const b = Math.round(Math.random() * 255).toString(16);
+    const color = `#${r}${g}${b}`.padEnd(7, '0');
+    return color;
+  },
   roomID: () => {
     const randomString = generateRandomString();
     if (GameList.hasGame(randomString)) return randomFunctions.roomID();

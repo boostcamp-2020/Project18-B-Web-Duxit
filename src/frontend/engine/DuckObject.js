@@ -1,4 +1,5 @@
 import { $create } from '@utils/dom';
+import Duck from '@utils/duck';
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
@@ -37,9 +38,11 @@ const DuckObject = class extends ImageObject {
 
   getComponent() {
     const { nickname, color, score, hat } = this;
+    const option = { color, width: 65 };
     return `
-        <div class="duck-image" color=${color}>
+        <div class="duck-image">
           ${hat ? '<span class="duck-hat">hat</span>' : ''}
+          ${Duck(option)}
           <span class="duck-score">${score}</span>
         </div>
         <span class="duck-nickname">${nickname}</span>
@@ -53,9 +56,13 @@ const DuckObject = class extends ImageObject {
     this.render();
   }
 
-  render() {
+  getChildrenNode(className) {
     const { instance } = this;
-    const nicknameElement = instance.children.item(1);
+    return instance.querySelector(className);
+  }
+
+  render() {
+    const nicknameElement = this.getChildrenNode('duck-nickname');
     nicknameElement.innerText = this.nickname;
   }
 };

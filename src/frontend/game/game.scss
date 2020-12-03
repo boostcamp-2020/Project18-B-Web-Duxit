@@ -15,6 +15,7 @@ $right-size: 330px;
     flex-shrink: 0;
     padding: 1.5rem 1rem;
     border-right: 1px solid $gray-color;
+    overflow: auto;
   }
 
   .right-tab {
