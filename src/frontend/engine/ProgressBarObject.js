@@ -5,11 +5,6 @@ import GameObject from './GameObject';
 const ProgressBarObject = class extends GameObject {
   setTime(time) {
     this.time = time;
-    this.remainTime = time;
-  }
-
-  setRemainTime(subtractTime) {
-    this.remainTime -= subtractTime;
   }
 
   setFinishCallBack(callback) {
@@ -43,12 +38,14 @@ const ProgressBarObject = class extends GameObject {
 
   start() {
     const [progressBar, timeText] = this.getProgessBar();
+    const startTime = new Date().getTime();
+    const targetTime = startTime + this.time;
 
     const progressBarTimer = setInterval(() => {
-      this.setRemainTime(TIME.HALF_SECOND);
-      const widthSize = (this.remainTime / this.time).toFixed(3) * 100;
+      const remainTime = targetTime - new Date().getTime();
+      const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
-      timeText.innerText = (this.remainTime / 1000).toFixed(0);
+      timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 
     const intervalManager = setTimeout(() => {

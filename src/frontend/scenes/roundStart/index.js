@@ -1,20 +1,21 @@
-import renderRoundStart from './render';
+import SceneManager from '@utils/SceneManager';
+import TellerSelectCard from '../tellerSelectCard';
+import GuesserWaiting from '../guesserWaiting';
 
 const RoundStart = class {
-  constructor({ tellerID, socketID }) {
+  constructor({ tellerID, socketID, cards }) {
+    this.cards = cards;
     this.isTeller = tellerID === socketID;
   }
 
   render() {
-    const { removeArray } = renderRoundStart({ isTeller: this.isTeller });
-    this.removeArray = removeArray;
+    const nextScene = this.isTeller
+      ? new TellerSelectCard({ cards: this.cards })
+      : new GuesserWaiting();
+    SceneManager.renderNextScene(nextScene);
   }
 
-  wrapup() {
-    this.removeArray.forEach((gameObject) => {
-      gameObject.delete();
-    });
-  }
+  wrapup() {}
 };
 
 export default RoundStart;
