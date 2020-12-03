@@ -28,7 +28,7 @@ const randomFunctions = {
   cards: (count) =>
     Array.from({ length: process.env.CARD_COUNT }, (value, index) => index)
       .sort(sortByRandom)
-      .slice(count),
+      .slice(0, count),
   pickOneFromArray: (array) => {
     return array[Math.floor(Math.random() * array.length)];
   },
