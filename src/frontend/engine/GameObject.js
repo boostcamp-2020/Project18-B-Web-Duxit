@@ -45,8 +45,8 @@ const GameObject = class {
     $id('root').appendChild(this.instance);
   }
 
-  createElement() {
-    const element = $create('div');
+  createElement(elementType = 'div') {
+    const element = $create(elementType);
     this.setElement(element);
   }
 
@@ -80,6 +80,10 @@ const GameObject = class {
     this.originStyle = `translate(-${x}, -${y})`;
     this.instance.style.transformOrigin = `${50 - numberX}% ${50 - numberY}%`;
     this.transform();
+  }
+
+  setInnerHTML(html = '') {
+    this.instance.innerHTML = html;
   }
 
   transform() {

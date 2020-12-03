@@ -6,13 +6,14 @@ import ProgressBarObject from '@engine/ProgressBarObject';
 import DuckObject from '@engine/DuckObject';
 import TEXT from '@utils/text';
 import TIME from '@utils/time';
+import NUM from '@utils/number';
 import { DUCK_TYPE } from '@utils/type';
 
 const createCards = () => {
   const emptyObject = new GameObject();
   emptyObject.createElement();
   emptyObject.addClass('teller-cards-wrapper');
-  const cards = Array.from({ length: 6 }, () => {
+  const cards = Array.from({ length: NUM.CARD }, () => {
     const card = new CardObject();
     card.addClass('teller-duck-card');
     card.move(10, 10, 0);
@@ -44,10 +45,10 @@ const renderGuesserWaiting = () => {
   const { CardsWrapper, cards } = createCards();
   CardsWrapper.attachToRoot();
 
-  const removeArray = [NotifyingTellerText, ProgressBar, TellerDuck];
+  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar, TellerDuck];
 
   return {
-    removeArray,
+    arrayToBeRemoved,
   };
 };
 
