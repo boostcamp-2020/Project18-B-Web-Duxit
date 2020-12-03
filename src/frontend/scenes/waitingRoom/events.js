@@ -19,7 +19,7 @@ export const changeNickname = (NicknameInput) => {
     // 이전 닉네임으로 되돌아가는 기능 추가해야 함
     return;
   }
-  socket.emit('update player', { nickname: newNickname, color: '#578' });
+  socket.emit('update player', { nickname: newNickname });
 };
 
 export const toggleReady = ({ target }) => {

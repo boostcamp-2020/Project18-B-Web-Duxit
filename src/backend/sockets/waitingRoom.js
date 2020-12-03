@@ -22,9 +22,13 @@ function onJoinPlayer({ roomID }) {
     .emit('update player', { ...user.getProfile(), socketID: socket.id });
 }
 
-function onUpdatePlayer({ nickname, color }) {
+function onUpdatePlayer(params = {}) {
   const socket = this;
-  const { roomID } = socket.game;
+  const {
+    user,
+    game: { roomID },
+  } = socket;
+  const { nickname = user.nickname, color = user.color } = params;
   const passedData = { nickname, color, socketID: socket.id };
 
   socket.game.updateUserProfile(passedData);
