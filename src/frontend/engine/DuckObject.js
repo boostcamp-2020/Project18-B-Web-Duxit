@@ -1,7 +1,6 @@
 import { $create } from '@utils/dom';
 import { DUCK_TYPE } from '@utils/type';
-
-import Duck from '@utils/duck';
+import Duck, { DuckHat } from '@utils/duck';
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
@@ -56,10 +55,10 @@ const DuckObject = class extends ImageObject {
 
   getComponentForLeft() {
     const { nickname, color, score, hat } = this;
-    const option = { color, width: 65 };
+    const option = { color, width: 50 };
     return `
         <div class="duck-image">
-          ${hat ? '<span class="duck-hat">hat</span>' : ''}
+          ${hat ? DuckHat({ width: 40 }) : ''}
           ${Duck(option)}
           <span class="duck-score">${score}</span>
         </div>
