@@ -20,7 +20,7 @@ export default class Game {
   start() {
     this.status = {
       ...this.status,
-      isPlaying: GAME_STATE.TELLER,
+      state: GAME_STATE.TELLER,
       unusedCards: generateRandom.cards(CARD.DECK),
     };
     [...this.users.values()].forEach((user, index) => {
@@ -33,7 +33,7 @@ export default class Game {
     // 아직 사용되지 않은 함수
     this.status = {
       ...this.status,
-      isPlaying: GAME_STATE.WAITING,
+      state: GAME_STATE.WAITING,
     };
   }
 
@@ -119,17 +119,17 @@ export default class Game {
     const isFirstTurn = turn === 1;
     const teller = [...users.values()][turn % users.size];
     const { socketID: tellerID } = teller;
-    const emptyHand = isFirstTurn ? CARD.HAND : 1;
+    const requiredCardCount = isFirstTurn ? CARD.HAND : 1;
 
     // 카드가 부족한지 체크
-    const outOfDeck = unusedCards.length < users.size * emptyHand;
+    const outOfDeck = unusedCards.length < users.size * requiredCardCount;
     // if (outOfDeck) {
     //   // TODO: 점수나 승자같은 결과를 내면서 턴을 끝내야되요~
     //   return;
     // }
 
     users.forEach((user) => {
-      const cards = this.dealCards(user.cards, emptyHand);
+      const cards = this.dealCards(user.cards, requiredCardCount);
       const params = { tellerID, cards };
       user.initOnRound(params);
       socketIO.to(user.socketID).emit('get round data', params);
