@@ -1,5 +1,6 @@
 import GameList from '@game/GameList';
 import { PLAYER } from '@utils/number';
+import logger from '@utils/winston';
 
 function onJoinPlayer({ roomID }) {
   const socket = this;
@@ -32,6 +33,7 @@ function onUpdatePlayer(params = {}) {
   const passedData = { nickname, color, socketID: socket.id };
 
   socket.game.updateUserProfile(passedData);
+  logger.info(`nickname ip:${socket.handshake.address} nickname:${nickname}`);
   socket.in(roomID).emit('update player', passedData);
   socket.emit('update player', passedData);
 }
