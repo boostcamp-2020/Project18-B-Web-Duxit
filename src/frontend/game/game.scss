@@ -3,11 +3,15 @@
 $left-size: 200px;
 $right-size: 330px;
 
+$z-index-tab: 10;
+$z-index-modal: 5;
+$z-index-progress-bar: 30;
+
 .game-layout {
   display: flex;
 
   .left-tab {
-    z-index: 10;
+    z-index: $z-index-tab;
     display: flex;
     overflow: auto;
     height: 100vh;
@@ -16,10 +20,11 @@ $right-size: 330px;
     flex-shrink: 0;
     padding: 1.3rem 1rem;
     border-right: 1px solid $gray-color;
+    background-color: $white-color;
   }
 
   .right-tab {
-    z-index: 10;
+    z-index: $z-index-tab;
     display: flex;
     height: 100vh;
     flex-basis: $right-size;
@@ -39,6 +44,7 @@ $right-size: 330px;
 
 .progress-bar-wrapper {
   position: absolute;
+  z-index: $z-index-progress-bar;
   top: 0;
   display: flex;
   width: 100%;
@@ -111,4 +117,66 @@ $right-size: 330px;
 
 .chat-send-button {
   padding: 0.5em !important;
+}
+
+// Modal
+
+.modal {
+  position: absolute;
+  z-index: $z-index-modal;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(1px) brightness(70%);
+  transition: opacity 0.5s ease-in;
+}
+
+@mixin modal-mixin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.modal-title {
+  @include modal-mixin;
+  top: 10%;
+  left: 50%;
+  color: white;
+  font-size: xx-large;
+  font-weight: 600;
+  user-select: none;
+}
+
+.modal-card {
+  @include modal-mixin;
+  top: 40%;
+  left: 50%;
+}
+
+.modal-ok-button {
+  @include button;
+  @include modal-mixin;
+  top: 90%;
+  left: 40%;
+  background-color: $main-color;
+}
+
+.modal-cancel-button {
+  @include button;
+  @include modal-mixin;
+  top: 90%;
+  left: 60%;
+  background-color: $gray-color;
+}
+
+.modal-input {
+  @include modal-mixin;
+  top: 75%;
+  left: 50%;
+  width: 16em;
+  padding: 1em;
+  border: 0;
+  background-color: $main-color;
+  border-radius: 2em;
+  box-shadow: $button-shadow;
+  font-size: x-large;
+  text-align: center;
 }
