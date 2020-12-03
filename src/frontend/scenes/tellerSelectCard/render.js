@@ -3,6 +3,9 @@ import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import TEXT from '@utils/text';
 import TIME from '@utils/time';
+import { TELLER_SELECT_CARD } from '@utils/scene';
+import { createCards } from '@utils/card';
+import CardManager from '@utils/CardManager';
 
 const renderTellerSelect = () => {
   const NotifyingTellerText = new TextObject();
@@ -16,6 +19,13 @@ const renderTellerSelect = () => {
   ProgressBar.attachToRoot();
   ProgressBar.setTime(TIME.SELECT_CARD);
   ProgressBar.start();
+
+  const { CardsWrapper, cards } = createCards(
+    TELLER_SELECT_CARD,
+    CardManager.myCards,
+  );
+  CardsWrapper.attachToRoot();
+  cards.forEach((card) => card.animateFlip(3000, true));
 
   const arrayToBeRemoved = [NotifyingTellerText, ProgressBar];
 

@@ -25,7 +25,7 @@ $progress-color: #d82e21;
 $green-color: #3ed78d;
 $button-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
 
-$glow-color-gold: 0px 0px 36px 5px rgba(235,222,76,1);
+$glow-color-gold: 0 0 36px 5px rgba(235, 222, 76, 1);
 
 html {
   font-family: 'NanumSquare', -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -53,8 +53,8 @@ html {
 }
 .button-primary-clicked {
   @include button;
-  font-weight: 600;
   background-color: $main-clicked-color;
+  font-weight: 600;
 }
 
 .button-cancel {
@@ -67,6 +67,9 @@ html {
   // card size를 %로 지정하거나 media-query를 이용해 화면 width에 따라 다른 지정 사이즈를 잡는게 좋아보여요
   width: 240px;
   height: 370px;
+  img {
+    border-radius: 1em;
+  }
 }
 
 .card-inner {

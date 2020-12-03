@@ -7,6 +7,8 @@ import TellerSelectCard from '@scenes/tellerSelectCard';
 import GuesserWaiting from '@scenes/guesserWaiting';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
+import CardManager from '@utils/CardManager';
+import './leftTab';
 
 const scrollToBottom = (component) => {
   const scrollOption = {
@@ -96,8 +98,8 @@ const initialize = async () => {
   socket.emit('join player', { roomID });
   socket.on('get round data', ({ tellerID, cards }) => {
     PlayerManager.setTellerID(tellerID);
+    CardManager.initailizeMyCards(cards);
     const { isTeller } = PlayerManager.getCurrentPlayer();
-    console.log(PlayerManager.getCurrentPlayer(), isTeller);
     const nextScene = isTeller
       ? new TellerSelectCard({ cards })
       : new GuesserWaiting();
