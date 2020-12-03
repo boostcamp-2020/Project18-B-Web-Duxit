@@ -1,12 +1,15 @@
-import CSS from '@utils/CSS';
-import { $qs } from '@utils/dom';
+import CSS from '@utils/css';
 import GameObject from './GameObject';
 
 const ModalObject = class extends GameObject {
   constructor() {
     super({ depth: CSS.Z_INDEX_MODAL });
     this.addClass('modal');
-    $qs('.game-layout').appendChild(this.instance);
+    this.instance.style.opacity = '0';
+    setTimeout(() => {
+      this.instance.style.opacity = '1';
+    });
+    this.attachToRoot();
   }
 };
 
