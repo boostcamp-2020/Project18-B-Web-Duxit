@@ -21,7 +21,7 @@ const createCards = () => {
     card.addClass('teller-duck-card');
     card.move(50, 0, 0);
     card.rotate(angle[count], 0);
-    card.move(xPoint[count], yPoint[count], 1);
+    card.move(xPoint[count], yPoint[count], TIME.ONE_SECOND);
     count += 1;
     emptyObject.appendChild(card);
     return card;
@@ -37,7 +37,7 @@ const renderGuesserWaiting = () => {
   NotifyingTellerText.attachToRoot();
   NotifyingTellerText.setContent(tellerText);
   NotifyingTellerText.move(50, 100, 0);
-  NotifyingTellerText.move(50, 70, 1);
+  NotifyingTellerText.move(50, 70, TIME.ONE_SECOND);
 
   const ProgressBar = new ProgressBarObject();
   ProgressBar.createElement();
@@ -49,7 +49,7 @@ const renderGuesserWaiting = () => {
   TellerDuck.createElement();
   TellerDuck.attachToRoot();
   TellerDuck.move(50, 0, 0);
-  TellerDuck.move(50, 10, 1);
+  TellerDuck.move(50, 10, TIME.ONE_SECOND);
   const { CardsWrapper, cards } = createCards();
   CardsWrapper.attachToRoot();
 

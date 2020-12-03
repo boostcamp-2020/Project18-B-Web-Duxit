@@ -123,10 +123,10 @@ export default class Game {
 
     // 카드가 부족한지 체크
     const outOfDeck = unusedCards.length < users.size * emptyHand;
-    if (outOfDeck) {
-      // TODO: 점수나 승자같은 결과를 내면서 턴을 끝내야되요~
-      return;
-    }
+    // if (outOfDeck) {
+    //   // TODO: 점수나 승자같은 결과를 내면서 턴을 끝내야되요~
+    //   return;
+    // }
 
     users.forEach((user) => {
       const cards = this.dealCards(user.cards, emptyHand);

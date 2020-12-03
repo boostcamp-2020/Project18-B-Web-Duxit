@@ -1,4 +1,5 @@
 import backImage from '@resources/back.png';
+import TIME from '@utils/time';
 import GameObject from './GameObject';
 import ImageObject from './ImageObject';
 
@@ -38,13 +39,13 @@ const CardObject = class extends GameObject {
     this.hoverMoveDownCallback = null;
   }
 
-  animateFlip(duration = 0.5, toUp = !this.facingUp) {
+  animateFlip(duration = 500, toUp = !this.facingUp) {
     const current = getFacingStyle(this.facingUp);
     const next = getFacingStyle(toUp);
     if (duration > 0 && this.facingUp !== toUp) {
       const keyframes = [{ transform: current }, { transform: next }];
       const options = {
-        duration: duration * 1000,
+        duration,
         easing: 'ease',
       };
       this.inner.instance.animate(keyframes, options);
@@ -59,14 +60,14 @@ const CardObject = class extends GameObject {
       const movedX = this.fixedX + Math.sin(deg2rad(this.angle)) * MOVE_PERCENT;
       const movedY = this.fixedY - Math.cos(deg2rad(this.angle)) * MOVE_PERCENT;
 
-      this.move(movedX, movedY);
+      this.move(movedX * TIME.ONE_SECOND, movedY * TIME.ONE_SECOND);
     };
   }
 
   moveDownCallback() {
     [this.fixedX, this.fixedY] = this.position;
     return () => {
-      this.move(this.fixedX, this.fixedY);
+      this.move(this.fixedX * TIME.ONE_SECOND, this.fixedY * TIME.ONE_SECOND);
     };
   }
 
