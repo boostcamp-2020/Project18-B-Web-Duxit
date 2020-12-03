@@ -1,5 +1,4 @@
 import backImage from '@resources/back.png';
-import TIME from '@utils/time';
 import GameObject from './GameObject';
 import ImageObject from './ImageObject';
 
@@ -13,6 +12,7 @@ const CardObject = class extends GameObject {
     facingUp = false,
     hoverable = false, // <- 안 쓰는게 나을지도?
     origin = ['50%', '50%'],
+    cardID,
     ...data
   } = {}) {
     super({ origin, ...data });
@@ -34,7 +34,7 @@ const CardObject = class extends GameObject {
     this.setImagePath = this.front.setImagePath.bind(this.front);
     this.setImagePath(imagePath);
     this.inner.instance.style.transform = getFacingStyle(facingUp);
-
+    this.cardID = cardID;
     this.hoverMoveUpCallback = null;
     this.hoverMoveDownCallback = null;
   }
@@ -42,6 +42,10 @@ const CardObject = class extends GameObject {
   setWidth(width = 240) {
     this.instance.style.width = `${width}px`;
     this.instance.style.height = `${width * 1.5}px`;
+  }
+
+  addClickHandler(clickHandler) {
+    this.instance.addEventListener('click', clickHandler);
   }
 
   animateFlip(duration = 500, toUp = !this.facingUp) {

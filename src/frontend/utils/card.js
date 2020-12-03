@@ -1,10 +1,8 @@
 import CardObject from '@engine/CardObject';
 import GameObject from '@engine/GameObject';
 import TIME from '@utils/time';
-import NUM from './number';
+import { GET_IMAGE_PATH } from '@utils/text';
 import CARD_POSITION from './cardPosition.json';
-
-const imagePath = (id) => `http://duxit.ga/assets/cards/${id}.png`;
 
 // eslint-disable-next-line import/prefer-default-export
 export const createCards = (sceneName, cardIds = Array(6).fill(null)) => {
@@ -14,7 +12,8 @@ export const createCards = (sceneName, cardIds = Array(6).fill(null)) => {
   emptyObject.addClass('teller-cards-wrapper');
   const cards = cardIds.map((cardID, index) => {
     const card = new CardObject({
-      imagePath: cardID ? imagePath(cardID) : undefined,
+      imagePath: cardID ? GET_IMAGE_PATH(cardID) : undefined,
+      cardID,
     });
     card.addClass('teller-duck-card');
     card.setWidth(cardPosition.size);
