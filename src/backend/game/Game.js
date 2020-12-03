@@ -1,9 +1,10 @@
 import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
-import { PLAYER } from '@utils/number';
+import { PLAYER, CARD } from '@utils/number';
 import GameList from '@game/GameList';
 import socketIO from '@socket';
 import User from './User';
+import socketIO from '../sockets';
 
 export default class Game {
   constructor(roomID) {
@@ -14,6 +15,26 @@ export default class Game {
       unusedCards: [],
       topic: '',
       turn: 0,
+    };
+  }
+
+  start() {
+    this.status = {
+      ...this.status,
+      isPlaying: GAME_STATE.TELLER,
+      unusedCards: generateRandom.cards(CARD.DECK),
+    };
+    [...this.users.values()].forEach((user, index) => {
+      user.initOnStart({ turnID: index });
+    });
+    this.startNewRound();
+  }
+
+  end() {
+    // 아직 사용되지 않은 함수
+    this.status = {
+      ...this.status,
+      isPlaying: GAME_STATE.WAITING,
     };
   }
 
@@ -60,11 +81,13 @@ export default class Game {
     user.setNickname(nickname);
   }
 
-  getTeller() {
-    const userIDs = [...this.users.keys()];
-    const { turn } = this.status;
-
-    return { tellerID: userIDs[(turn - 1) % userIDs.length] };
+  dealCards(cards, count) {
+    const newCards = this.status.unusedCards.slice(0, count);
+    this.status = {
+      ...this.status,
+      unusedCards: [...this.status.unusedCards.slice(count)],
+    };
+    return [...cards, ...newCards];
   }
 
   getUserArray() {
@@ -90,12 +113,27 @@ export default class Game {
       topic: '',
       turn: this.status.turn + 1,
     };
+    const {
+      users,
+      status: { unusedCards, turn },
+    } = this;
+    const isFirstTurn = turn === 1;
+    const teller = [...users.values()][turn % users.size];
+    const { socketID: tellerID } = teller;
+    const emptyHand = isFirstTurn ? CARD.HAND : 1;
 
-    // Initialize User status
-    this.users.forEach((user) => user.initRound());
+    // 카드가 부족한지 체크
+    const outOfDeck = unusedCards.length < users.size * emptyHand;
+    if (outOfDeck) {
+      // TODO: 점수나 승자같은 결과를 내면서 턴을 끝내야되요~
+      return;
+    }
 
-    return this.getTeller();
-    // if (this.status.turn === 1) return this.startFirstRound();
-    // this.startNewRound();
+    users.forEach((user) => {
+      const cards = this.dealCards(user.cards, emptyHand);
+      const params = { tellerID, cards };
+      user.initOnRound(params);
+      socketIO.to(user.socketID).emit('get round data', params);
+    });
   }
 }

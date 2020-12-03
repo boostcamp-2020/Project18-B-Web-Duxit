@@ -1,3 +1,4 @@
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
@@ -21,6 +22,7 @@ module.exports = {
   },
   externals: [nodeExternals()],
   plugins: [
+    new DotenvWebpackPlugin(),
     new NodemonPlugin({
       nodeArgs: ['--inspect=9222'],
     }),

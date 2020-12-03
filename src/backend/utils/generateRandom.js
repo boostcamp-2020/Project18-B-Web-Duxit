@@ -4,6 +4,8 @@ import nickname from './nickname.json';
 const generateRandomString = () =>
   Math.random().toString(36).substr(2, 5).toUpperCase();
 
+const sortByRandom = () => Math.random() - 0.5;
+
 const randomFunctions = {
   nickname: () => {
     const { adjective: adj, noun } = nickname;
@@ -17,6 +19,10 @@ const randomFunctions = {
     if (GameList.hasGame(randomString)) return randomFunctions.roomID();
     return randomString;
   },
+  cards: (count) =>
+    Array.from({ length: process.env.CARD_COUNT }, (value, index) => index)
+      .sort(sortByRandom)
+      .slice(count),
   pickOneFromArray: (array) => {
     return array[Math.floor(Math.random() * array.length)];
   },
