@@ -42,6 +42,12 @@ const GameObject = class {
     setTimeout(() => this.instance.remove(), duration);
   }
 
+  setAttributes(attributes = {}) {
+    Object.entries(attributes).forEach(([name, value]) => {
+      this.instance.setAttribute(name, value);
+    });
+  }
+
   attachToRoot() {
     $id('root').appendChild(this.instance);
   }
