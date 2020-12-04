@@ -2,16 +2,12 @@
  * Module dependencies.
  */
 
-import dotenv from 'dotenv';
 import debugModule from 'debug';
 import http from 'http';
 import socketIO from './sockets';
 import createApplication from './app';
 
 const debug = debugModule('backend:server');
-
-// dotenv
-dotenv.config();
 
 /**
  * Normalize a port into a number, string, or false.

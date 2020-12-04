@@ -1,74 +1,68 @@
-import './waitingRoom.scss';
-import ButtonObject from '@engine/ButtonObject';
-import GameObject from '@engine/GameObject';
-import TextObject from '@engine/TextObject';
-import InputObject from '@engine/InputObject';
-import SvgObject from '@engine/SvgObject';
-import Svg from '@utils/svg';
-import socket from '@utils/socket';
-import { copyGameCode, redirectToLobby } from './events';
+import PlayerManager from '@utils/PlayerManager';
+import DuckObject from '@engine/DuckObject';
+import { DUCK_TYPE } from '@utils/type';
+import { $id } from '@utils/dom';
+import renderWaitingRoom from './render';
+import setupWaitingRoomSocket from './socket';
+import { moveMyDuck } from './events';
 
-export const renderWaitingRoom = (roomID = '') => {
-  const Header = new GameObject();
-  Header.toggleClass('waiting-header');
-  Header.attachToRoot();
+const WaitingRoom = class {
+  constructor(roomID) {
+    this.roomID = roomID;
+    this.ducks = new Map();
+    this.duckMoveEvent = null;
 
-  const NicknameHelpText = new TextObject();
-  NicknameHelpText.setContent('게임에 참여할 닉네임을 정해주세요');
-  NicknameHelpText.setClass('waiting-nickname-help');
-  NicknameHelpText.attachToObject(Header);
+    PlayerManager.onInitialize.push(this.addDucksOnInit.bind(this));
+    PlayerManager.onUpdate.push(this.setNicknameInput.bind(this));
+    PlayerManager.onUpdate.push(this.updateDucks.bind(this));
+  }
 
-  const InputWrapper = new GameObject();
-  InputWrapper.setClass('waiting-input-wrapper');
-  InputWrapper.attachToObject(Header);
+  render() {
+    const { arrayToBeRemoved, NicknameInput, AllReadyText } = renderWaitingRoom(
+      this.roomID,
+    );
+    this.arrayToBeRemoved = arrayToBeRemoved;
+    this.NicknameInput = NicknameInput;
+    setupWaitingRoomSocket({ AllReadyText });
+  }
 
-  const NicknameInput = new InputObject();
-  NicknameInput.toggleClass('waiting-nickname-input');
-  NicknameInput.attachToObject(InputWrapper);
+  wrapup() {
+    $id('root').removeEventListener('click', this.duckMoveEvent);
+    this.arrayToBeRemoved.forEach((gameObject) => {
+      gameObject.delete();
+    });
+    this.ducks.forEach((duck) => {
+      duck.delete();
+    });
+  }
 
-  const RefreshButton = new ButtonObject();
-  RefreshButton.setClass('refresh-button');
-  RefreshButton.attachToObject(InputWrapper);
+  setNicknameInput({ socketID, nickname }) {
+    if (socketID === PlayerManager.currentPlayerID)
+      this.NicknameInput.setValue(nickname);
+  }
 
-  const RefreshIcon = new SvgObject();
-  RefreshIcon.setInnerHtml(Svg.refresh);
-  RefreshIcon.attachToObject(RefreshButton);
+  addDucksOnInit(players = []) {
+    players.forEach(this.createDuck.bind(this));
+    const myDuck = this.ducks.get(PlayerManager.currentPlayerID);
+    this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
+    $id('root').addEventListener('click', this.duckMoveEvent);
+  }
 
-  const ActionWrapper = new GameObject();
-  ActionWrapper.toggleClass('waiting-action-wrapper');
-  ActionWrapper.attachToRoot();
+  updateDucks(player = {}) {
+    const { socketID, color } = player;
+    if (this.ducks.has(socketID)) this.ducks.get(socketID).setColor(color);
+    else this.createDuck(player);
+  }
 
-  const ButtonReturnToLobby = new ButtonObject();
-  ButtonReturnToLobby.setContent('로비로 돌아가기');
-  ButtonReturnToLobby.setClass('button-cancel');
-  ButtonReturnToLobby.attachToObject(ActionWrapper);
-  ButtonReturnToLobby.addClickHandler(redirectToLobby);
-
-  const ButtonReady = new ButtonObject();
-  ButtonReady.setContent('준비 완료');
-  ButtonReady.setClass('button-primary');
-  ButtonReady.attachToObject(ActionWrapper);
-
-  const GameCodeWrapper = new ButtonObject();
-  GameCodeWrapper.setClass('waiting-game-code-wrapper');
-  GameCodeWrapper.attachToRoot();
-  GameCodeWrapper.addClickHandler(copyGameCode);
-
-  const GameCodeText = new TextObject();
-  GameCodeText.setContent(roomID);
-  GameCodeText.attachToObject(GameCodeWrapper);
-
-  const GameCodeCopyButton = new GameObject();
-  GameCodeCopyButton.setClass('waiting-code-icon');
-  GameCodeCopyButton.attachToObject(GameCodeWrapper);
-
-  const CopyIcon = new SvgObject();
-  CopyIcon.setInnerHtml(Svg.copy);
-  CopyIcon.attachToObject(GameCodeCopyButton);
-
-  return {
-    NicknameInput,
-  };
+  createDuck({ socketID, color = '' } = {}) {
+    const duck = new DuckObject({ type: DUCK_TYPE.CURSOR });
+    duck.setColor(color);
+    duck.createElement();
+    duck.setOriginCenter();
+    duck.move(Math.random() * 50 + 25, Math.random() * 50 + 25, 0);
+    duck.attachToRoot();
+    this.ducks.set(socketID, duck);
+  }
 };
 
-export const setupWaitingRoomSocket = () => {};
+export default WaitingRoom;
