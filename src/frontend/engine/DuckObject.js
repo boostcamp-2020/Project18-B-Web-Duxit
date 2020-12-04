@@ -4,7 +4,7 @@ import Duck, { DuckHat } from '@utils/duck';
 import ImageObject from './ImageObject';
 
 const DuckObject = class extends ImageObject {
-  constructor({ socketID, type = DUCK_TYPE.LEFT_TAB, ...rest }) {
+  constructor({ socketID, type = DUCK_TYPE.LEFT_TAB, ...rest } = {}) {
     super(rest);
     this.socketID = socketID;
     this.nickname = null;
@@ -36,6 +36,7 @@ const DuckObject = class extends ImageObject {
     const element = $create(elementType);
     this.setElement(element);
     if (this.type === DUCK_TYPE.TELLER) this.createTellerDuckElement();
+    else if (this.type === DUCK_TYPE.CURSOR) this.createCursorDuckElement();
     else this.createLeftTabDuckElement();
   }
 
@@ -47,6 +48,11 @@ const DuckObject = class extends ImageObject {
   createLeftTabDuckElement() {
     this.addClass('left-duck-wrapper');
     this.setInnerHTML(this.getComponentForLeft());
+  }
+
+  createCursorDuckElement() {
+    this.addClass('cursor-duck-wrapper');
+    this.setInnerHTML(Duck({ color: this.color, width: 100 }));
   }
 
   getComponentForTeller() {

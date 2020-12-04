@@ -11,7 +11,7 @@ const GameObject = class {
     origin = null,
     position = null,
     parent = null,
-    depth = 'auto',
+    depth = null,
     classes = [],
   } = {}) {
     this.createElement();
@@ -22,7 +22,7 @@ const GameObject = class {
     this.angle = 0;
     this.position = [0, 0];
 
-    this.setDepth(depth);
+    if (depth) this.setDepth(depth);
     if (origin) this.setOrigin(...origin);
     if (position) this.move(...position, 0);
     if (parent) this.attachToObject(parent);
