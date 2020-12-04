@@ -22,7 +22,7 @@ const Duck = ({ color = '#efff00', width = '50' }) => {
 
 export const DuckHat = ({ width = '40' }) => {
   return `
-    <svg class="duck-hat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 110.58" width=${width}>
+    <svg class="duck-hat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 110.58" width=${width} style="display:none">
         <defs>
         <style>
         .cls-a{fill:#cbd467;stroke:#000;}.cls-a,.cls-d{stroke-miterlimit:10;stroke-width:3px;}.cls-b{fill:#201c1d;}.cls-c{fill:#df8e14;}.cls-d{fill:#f3f2f9;stroke:#161616;}.cls-e{fill:none;}</style>

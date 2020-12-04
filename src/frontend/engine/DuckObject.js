@@ -23,7 +23,9 @@ const DuckObject = class extends ImageObject {
   }
 
   setHat(hat = false) {
-    this.hat = hat;
+    const hatElement = this.getChildrenNode('.duck-hat');
+    const displayType = hat ? 'block' : 'none';
+    hatElement.style.display = displayType;
   }
 
   setMicrophone(microphone = false) {
@@ -54,11 +56,11 @@ const DuckObject = class extends ImageObject {
   }
 
   getComponentForLeft() {
-    const { nickname, color, score, hat } = this;
-    const option = { color, width: 50 };
+    const { nickname, color, score } = this;
+    const option = { color, width: 55 };
     return `
         <div class="duck-image">
-          ${hat ? DuckHat({ width: 40 }) : ''}
+          ${DuckHat({ width: 45 })}
           ${Duck(option)}
           <span class="duck-score">${score}</span>
         </div>

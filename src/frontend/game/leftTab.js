@@ -36,8 +36,10 @@ class LeftTab {
 
   updatePlayer(playerInfo) {
     const updatedPlayer = this.findPlayer(playerInfo.socketID);
-    if (updatedPlayer) updatedPlayer.update(playerInfo);
-    else this.addPlayer(playerInfo);
+    if (updatedPlayer) {
+      updatedPlayer.setHat(playerInfo.isTeller);
+      updatedPlayer.update(playerInfo);
+    } else this.addPlayer(playerInfo);
   }
 
   deletePlayer(playerInfo) {

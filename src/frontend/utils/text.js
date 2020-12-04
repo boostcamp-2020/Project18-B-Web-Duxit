@@ -9,7 +9,7 @@ const TEXT = {
 };
 
 export const GET_IMAGE_PATH = (cardID) => {
-  return `http://duxit.ga/assets/cards/${cardID}.png`;
+  return `${process.env.ASSET_URL}/${cardID}.png`;
 };
 
 export default TEXT;
