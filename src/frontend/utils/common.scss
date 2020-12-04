@@ -67,6 +67,7 @@ html {
   // card size를 %로 지정하거나 media-query를 이용해 화면 width에 따라 다른 지정 사이즈를 잡는게 좋아보여요
   width: 240px;
   height: 370px;
+  border-radius: 1em;
   img {
     border-radius: 1em;
   }

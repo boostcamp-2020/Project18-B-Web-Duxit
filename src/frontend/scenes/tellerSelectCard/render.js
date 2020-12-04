@@ -58,6 +58,7 @@ const renderTellerSelect = () => {
   );
   CardsWrapper.attachToRoot();
   cards.forEach((card) => {
+    card.addClass('card-glow-gold-hover');
     card.animateFlip(3000, true);
     card.setAnimateMove();
     card.addClickHandler(() => onClickTellerCard({ cardID: card.cardID }));
