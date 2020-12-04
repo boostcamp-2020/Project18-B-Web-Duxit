@@ -28,6 +28,11 @@ const renderWaitingRoom = (roomID = '') => {
 
   const NicknameInput = new InputObject();
   NicknameInput.addClass('waiting-nickname-input');
+  NicknameInput.setAttributes({
+    maxlength: 12,
+    autocomplete: 'off',
+    placeholder: '닉네임을 정해보세요.',
+  });
   NicknameInput.attachToObject(InputWrapper);
 
   const RefreshButton = new ButtonObject();
@@ -35,9 +40,9 @@ const renderWaitingRoom = (roomID = '') => {
   RefreshButton.attachToObject(InputWrapper);
   RefreshButton.addClickHandler(() => changeNickname(NicknameInput));
 
-  const RefreshIcon = new SvgObject();
-  RefreshIcon.setSvg(Svg.refresh);
-  RefreshIcon.attachToObject(RefreshButton);
+  const CheckIcon = new SvgObject();
+  CheckIcon.setSvg(Svg.check);
+  CheckIcon.attachToObject(RefreshButton);
 
   const ActionWrapper = new GameObject();
   ActionWrapper.addClass('waiting-action-wrapper');

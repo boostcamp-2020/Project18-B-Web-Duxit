@@ -122,7 +122,7 @@ $right-size: 330px;
   z-index: $z-index-modal;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(1px) brightness(70%);
+  backdrop-filter: blur(8px) brightness(70%);
   transition: opacity 0.5s ease-in;
 }
 

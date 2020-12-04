@@ -108,7 +108,7 @@ export default class Game {
     // Initialize Game status
     this.status = {
       ...this.status,
-      state: GAME_STATE.WAITING,
+      state: GAME_STATE.TELLER,
       topic: '',
       turn: this.status.turn + 1,
     };
