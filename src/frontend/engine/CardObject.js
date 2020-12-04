@@ -1,4 +1,4 @@
-import backImage from '@resources/back.png';
+import { GET_IMAGE_PATH } from '@utils/text';
 import GameObject from './GameObject';
 import ImageObject from './ImageObject';
 
@@ -8,7 +8,7 @@ const MOVE_PERCENT = 10;
 
 const CardObject = class extends GameObject {
   constructor({
-    imagePath = backImage, // default: 뒷면 이미지
+    imagePath = GET_IMAGE_PATH('back'), // default: 뒷면 이미지
     facingUp = false,
     hoverable = false, // <- 안 쓰는게 나을지도?
     origin = ['50%', '50%'],
@@ -26,7 +26,7 @@ const CardObject = class extends GameObject {
     this.front.addClass('card-common');
     this.front.attachToObject(this.inner);
     const Back = new ImageObject();
-    Back.setImagePath(backImage);
+    Back.setImagePath(GET_IMAGE_PATH('back'));
     Back.attachToObject(this.inner);
     Back.addClass('card-common');
     Back.addClass('card-back');
