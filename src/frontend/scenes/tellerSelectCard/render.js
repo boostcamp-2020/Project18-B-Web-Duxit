@@ -73,7 +73,7 @@ const renderTellerSelect = () => {
     card.addClickHandler(() => onClickTellerCard({ cardID: card.cardID }));
   });
 
-  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar];
+  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar, ...cards];
 
   return {
     arrayToBeRemoved,
