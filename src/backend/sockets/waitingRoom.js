@@ -40,6 +40,12 @@ function onUpdatePlayer(params = {}) {
 
 const timeoutMap = new Map();
 
+const isPossibleStartGame = ({ users }) => {
+  const isAllReady = [...users].every(([, user]) => user.isReady);
+  const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
+  return isAllReady && isValidSize;
+};
+
 function onReadyPlayer({ isReady }) {
   const socket = this;
   const { game } = socket;
@@ -47,15 +53,12 @@ function onReadyPlayer({ isReady }) {
   users.get(socket.id).setReady(isReady);
   socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
-  const isAllReady = [...users].every(([, user]) => user.isReady);
-  const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
-  if (isAllReady && isValidSize) {
+  const validationToStart = isPossibleStartGame({ users });
+  if (validationToStart) {
     socket.in(roomID).emit('all ready', {});
     socket.emit('all ready', {});
     const timeout = setTimeout(() => {
       game.start();
-      // socket.in(roomID).emit('game start', {});
-      // socket.emit('game start', {});
       if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
     }, 5000);
     timeoutMap.set(roomID, timeout);
