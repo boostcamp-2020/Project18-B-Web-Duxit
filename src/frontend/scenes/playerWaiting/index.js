@@ -1,8 +1,9 @@
-import rendePlayerWaiting from './render';
+import './style.scss';
+import renderPlayerWaiting from './render';
 
 const PlayerWaiting = class {
   render() {
-    const { arrayToBeRemoved = [] } = rendePlayerWaiting();
+    const { arrayToBeRemoved } = renderPlayerWaiting();
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 

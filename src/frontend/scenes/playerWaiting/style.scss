@@ -1,0 +1,12 @@
+@import '@utils/common';
+
+.player-waiting-helper-text {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 30%;
+  left: 50%;
+  font-size: x-large;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
