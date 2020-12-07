@@ -72,3 +72,9 @@
     transform: translateX(-50%);
   }
 }
+
+video {
+  display: none;
+  width: 0;
+  height: 0;
+}
