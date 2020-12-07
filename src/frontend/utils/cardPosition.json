@@ -27,7 +27,7 @@
             25
         ]
     },
-    "TELLER_SELECT_CARD": {
+    "SELECT_CARD": {
         "moveFrom": 100,
         "size": 320,
         "x": [
