@@ -1,6 +1,7 @@
 @import '@utils/common';
 
 .player-waiting-helper-text {
+  @include helper-text-white-background;
   position: absolute;
   z-index: $z-index-layouts;
   top: 30%;
