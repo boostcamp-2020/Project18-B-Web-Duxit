@@ -135,4 +135,11 @@ export default class Game {
       socketIO.to(user.socketID).emit('get round data', params);
     });
   }
+
+  updateTopic(topic) {
+    this.status = {
+      ...this.status,
+      topic,
+    };
+  }
 }
