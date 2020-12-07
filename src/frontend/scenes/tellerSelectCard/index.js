@@ -1,4 +1,5 @@
 import renderTellerSelect from './render';
+import setupTellerSelectSocket from './socket';
 
 const TellerSelectCard = class {
   constructor({ cards }) {
@@ -6,8 +7,9 @@ const TellerSelectCard = class {
   }
 
   render() {
-    const { arrayToBeRemoved } = renderTellerSelect();
+    const { arrayToBeRemoved = [] } = renderTellerSelect();
     this.arrayToBeRemoved = arrayToBeRemoved;
+    setupTellerSelectSocket();
   }
 
   wrapup() {
