@@ -37,6 +37,13 @@ export default class Game {
     };
   }
 
+  updateState(state) {
+    this.status = {
+      ...this.status,
+      state,
+    };
+  }
+
   isEnterable() {
     if (
       this.status.state !== GAME_STATE.WAITING ||
