@@ -1,5 +1,5 @@
 import GameList from '@game/GameList';
-import nickname from './nickname.json';
+import nickname from '@utils/nickname.json';
 
 const generateRandomString = () =>
   Math.random().toString(36).substr(2, 5).toUpperCase();
@@ -20,16 +20,16 @@ const randomFunctions = {
     const color = `#${r}${g}${b}`.padEnd(7, '0');
     return color;
   },
-  roomID: () => {
+  roomID: (): string => {
     const randomString = generateRandomString();
     if (GameList.hasGame(randomString)) return randomFunctions.roomID();
     return randomString;
   },
-  cards: (count) =>
-    Array.from({ length: process.env.CARD_COUNT }, (value, index) => index)
+  cards: (count: number) =>
+    Array.from({ length: +process.env.CARD_COUNT! }, (value, index) => index)
       .sort(sortByRandom)
       .slice(0, count),
-  pickOneFromArray: (array) => {
+  pickOneFromArray: (array: Array<number>) => {
     return array[Math.floor(Math.random() * array.length)];
   },
 };

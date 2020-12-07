@@ -7,7 +7,7 @@ const babelConfig = require('./babel.config.js');
 module.exports = {
   target: 'node',
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.ts'],
     alias: {
       '@game': path.resolve(__dirname, 'game'),
       '@utils': path.resolve(__dirname, 'utils'),
@@ -35,6 +35,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: babelConfig,
+        },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader',
         },
       },
     ],

@@ -1,9 +1,9 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import GameList from '@game/GameList';
 
 const router = express.Router();
 
-const getRoomsRouter = (req, res) => {
+const getRoomsRouter = (req: Request, res: Response) => {
   const { roomID } = req.params;
   const game = GameList.getGame(roomID);
   if (game && game.isEnterable(roomID)) {
@@ -16,7 +16,7 @@ const getRoomsRouter = (req, res) => {
 router.get('/rooms', getRoomsRouter);
 router.get('/rooms/:roomID', getRoomsRouter);
 
-router.post('/rooms', (req, res) => {
+router.post('/rooms', (req: Request, res: Response) => {
   const roomID = GameList.createGame();
   return res.status(200).json({ roomID });
 });
