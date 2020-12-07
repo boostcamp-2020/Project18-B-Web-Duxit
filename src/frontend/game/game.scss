@@ -133,11 +133,13 @@ $right-size: 330px;
 
 .modal-title {
   @include modal-mixin;
-  top: 13%;
+  top: 11%;
   left: 50%;
+  width: 100%;
   color: $white-color;
-  font-size: 2.3rem;
+  font-size: 2.1rem;
   font-weight: 700;
+  text-align: center;
   user-select: none;
 }
 
@@ -150,7 +152,7 @@ $right-size: 330px;
 .modal-ok-button {
   @include button;
   @include modal-mixin;
-  top: 90%;
+  top: 85%;
   left: 40%;
   background-color: $main-color;
 }
@@ -158,7 +160,7 @@ $right-size: 330px;
 .modal-cancel-button {
   @include button;
   @include modal-mixin;
-  top: 90%;
+  top: 85%;
   left: 60%;
   background-color: $gray-color;
 }
@@ -168,7 +170,7 @@ $right-size: 330px;
   top: 75%;
   left: 50%;
   width: 16em;
-  padding: 1em;
+  padding: 1rem;
   border: 0;
   background-color: $main-color;
   border-radius: 2em;
