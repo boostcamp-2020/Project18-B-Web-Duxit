@@ -3,8 +3,7 @@ import SceneManager from '@utils/SceneManager';
 
 const setupGuesserWaiting = () => {
   const onTellerSelectCard = ({ topic }) => {
-    // SceneManager.render();
-    console.log(topic);
+    // SceneManager.render(new GuesserSelectCard(topic));
   };
 
   socket.on('teller select card', onTellerSelectCard);
