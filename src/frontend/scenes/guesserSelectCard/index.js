@@ -3,9 +3,9 @@ import setupGuesserSelectCard from './socket';
 
 const GuesserSelectCard = class {
   render() {
-    const { arrayToBeRemoved = [] } = renderGuesserSelect();
+    const { arrayToBeRemoved, ProgressBar } = renderGuesserSelect();
     this.arrayToBeRemoved = arrayToBeRemoved;
-    setupGuesserSelectCard();
+    setupGuesserSelectCard({ ProgressBar });
   }
 
   wrapup() {

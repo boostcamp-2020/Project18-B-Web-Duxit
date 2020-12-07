@@ -61,10 +61,11 @@ const renderGuesserSelect = () => {
     );
   });
 
-  const arrayToBeRemoved = [TopicText, ProgressBar, CardsWrapper, ...cards];
+  const arrayToBeRemoved = [TopicText, CardsWrapper, ...cards];
 
   return {
     arrayToBeRemoved,
+    ProgressBar,
   };
 };
 
