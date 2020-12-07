@@ -3,7 +3,7 @@ import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import TEXT, { GET_IMAGE_PATH } from '@utils/text';
 import TIME from '@utils/time';
-import { TELLER_SELECT_CARD } from '@utils/scene';
+import { SELECT_CARD } from '@utils/scene';
 import { createCards } from '@utils/card';
 import CardManager from '@utils/CardManager';
 import InputObject from '@engine/InputObject';
@@ -61,10 +61,7 @@ const renderTellerSelect = () => {
   ProgressBar.setTime(TIME.SELECT_CARD);
   ProgressBar.start();
 
-  const { CardsWrapper, cards } = createCards(
-    TELLER_SELECT_CARD,
-    CardManager.myCards,
-  );
+  const { CardsWrapper, cards } = createCards(SELECT_CARD, CardManager.myCards);
   CardsWrapper.attachToRoot();
   cards.forEach((card) => {
     card.addClass('card-glow-gold-hover');
@@ -73,7 +70,12 @@ const renderTellerSelect = () => {
     card.addClickHandler(() => onClickTellerCard({ cardID: card.cardID }));
   });
 
-  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar, ...cards];
+  const arrayToBeRemoved = [
+    NotifyingTellerText,
+    ProgressBar,
+    CardsWrapper,
+    ...cards,
+  ];
 
   return {
     arrayToBeRemoved,

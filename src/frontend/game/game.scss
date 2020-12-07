@@ -145,7 +145,7 @@ $right-size: 330px;
 
 .modal-card {
   @include modal-mixin;
-  top: 43%;
+  top: 45%;
   left: 50%;
 }
 
@@ -177,4 +177,16 @@ $right-size: 330px;
   box-shadow: $button-shadow;
   font-size: x-large;
   text-align: center;
+}
+
+.topic-text {
+  @include button;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 40%;
+  background-color: $main-color;
+  font-size: 1.5rem;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
 }
