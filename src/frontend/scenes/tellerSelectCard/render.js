@@ -10,6 +10,7 @@ import InputObject from '@engine/InputObject';
 import ModalObject from '@engine/ModalObject';
 import ButtonObject from '@engine/ButtonObject';
 import CardObject from '@engine/CardObject';
+import { sendTellerdecision } from './events';
 
 const onClickTellerCard = ({
   okText = '확인',
@@ -18,18 +19,26 @@ const onClickTellerCard = ({
   cardID,
 }) => {
   const Modal = new ModalObject();
+
+  const modalTitle = new TextObject({ parent: Modal });
+  modalTitle.setContent(questionText);
+  modalTitle.addClass('modal-title');
+
+  const modalInput = new InputObject({ parent: Modal });
+  modalInput.addClass('modal-input');
+
   const okButton = new ButtonObject({ parent: Modal });
   okButton.addClass('modal-ok-button');
   okButton.setContent(okText);
+  okButton.addClickHandler(() =>
+    sendTellerdecision({ cardID, topic: modalInput.getCotent(), Modal }),
+  );
+
   const cancelButton = new ButtonObject({ parent: Modal });
   cancelButton.addClass('modal-cancel-button');
   cancelButton.setContent(cancleText);
   cancelButton.addClickHandler(() => Modal.delete());
-  const modalInput = new InputObject({ parent: Modal });
-  modalInput.addClass('modal-input');
-  const modalTitle = new TextObject({ parent: Modal });
-  modalTitle.setContent(questionText);
-  modalTitle.addClass('modal-title');
+
   const modalCard = new CardObject({
     parent: Modal,
     imagePath: GET_IMAGE_PATH(cardID),
@@ -64,7 +73,7 @@ const renderTellerSelect = () => {
     card.addClickHandler(() => onClickTellerCard({ cardID: card.cardID }));
   });
 
-  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar];
+  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar, ...cards];
 
   return {
     arrayToBeRemoved,

@@ -22,6 +22,10 @@ const InputObject = class extends GameObject {
   addClickHandler(clickHandler) {
     this.instance.addEventListener('click', clickHandler);
   }
+
+  getCotent() {
+    return this.instance.value;
+  }
 };
 
 export default InputObject;
