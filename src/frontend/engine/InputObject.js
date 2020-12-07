@@ -23,7 +23,7 @@ const InputObject = class extends GameObject {
     this.instance.addEventListener('click', clickHandler);
   }
 
-  getValue() {
+  getCotent() {
     return this.instance.value;
   }
 };

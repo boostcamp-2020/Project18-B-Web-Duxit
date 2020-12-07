@@ -31,7 +31,7 @@ const onClickTellerCard = ({
   okButton.addClass('modal-ok-button');
   okButton.setContent(okText);
   okButton.addClickHandler(() =>
-    sendTellerdecision({ cardID, topic: modalInput.getValue(), Modal }),
+    sendTellerdecision({ cardID, topic: modalInput.getCotent(), Modal }),
   );
 
   const cancelButton = new ButtonObject({ parent: Modal });
