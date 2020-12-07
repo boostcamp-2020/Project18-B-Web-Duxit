@@ -147,6 +147,60 @@ const GameObject = class {
     this.animationFrame = requestAnimationFrame(animateFunction);
   }
 
+  roll(
+    x = 0,
+    y = 0,
+    duration = TIME.ONE_SECOND / 2,
+    rollCount = 1,
+    rollClockwise = Math.random() < 0.5,
+  ) {
+    // TODO: move()와 겹치는 부분들 refactor...
+    this.position = [x, y];
+    const xString = makeUnitString(x, '%');
+    const yString = makeUnitString(y, '%');
+
+    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+    if (!xString && !yString) {
+      this.instance.style.removeProperty('top');
+      this.instance.style.removeProperty('left');
+    }
+    if (duration === 0) {
+      this.instance.style.top = yString;
+      this.instance.style.left = xString;
+      return;
+    }
+    const initialY = makeFloat(this.instance.style.top) || 0;
+    const initialX = makeFloat(this.instance.style.left) || 0;
+    const targetY = y;
+    const targetX = x;
+
+    let start = null;
+    const animateFunction = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      if (elapsed > duration) {
+        this.instance.style.top = yString;
+        this.instance.style.left = xString;
+        this.animationFrame = null;
+        return;
+      }
+      const newY = initialY + (targetY - initialY) * (elapsed / duration);
+      const newX = initialX + (targetX - initialX) * (elapsed / duration);
+      this.angle = rollClockwise
+        ? this.angle + rollCount * 4 * (elapsed / duration)
+        : this.angle - rollCount * 4 * (elapsed / duration);
+      this.rotateStyle = makeUnitString(this.angle, 'deg');
+
+      this.instance.style.left = makeUnitString(newX, '%');
+      this.instance.style.top = makeUnitString(newY, '%');
+      this.instance.style.transform = `rotateZ(${this.rotateStyle}) ${this.originStyle}`;
+
+      requestAnimationFrame(animateFunction);
+    };
+
+    this.animationFrame = requestAnimationFrame(animateFunction);
+  }
+
   rotate(angle = 0, duration = TIME.ONE_SECOND / 5) {
     this.angle = angle;
     const angleString = makeUnitString(angle, 'deg');
