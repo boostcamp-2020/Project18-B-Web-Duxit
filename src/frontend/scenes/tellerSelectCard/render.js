@@ -10,7 +10,7 @@ import InputObject from '@engine/InputObject';
 import ModalObject from '@engine/ModalObject';
 import ButtonObject from '@engine/ButtonObject';
 import CardObject from '@engine/CardObject';
-import { sendTellerDicision } from './events';
+import { sendTellerdecision } from './events';
 
 const onClickTellerCard = ({
   okText = '확인',
@@ -31,7 +31,7 @@ const onClickTellerCard = ({
   okButton.addClass('modal-ok-button');
   okButton.setContent(okText);
   okButton.addClickHandler(() =>
-    sendTellerDicision({ cardID, topic: modalInput.getValue(), Modal }),
+    sendTellerdecision({ cardID, topic: modalInput.getValue(), Modal }),
   );
 
   const cancelButton = new ButtonObject({ parent: Modal });
