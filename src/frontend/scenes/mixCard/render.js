@@ -27,47 +27,8 @@ const rotateCard = (Cards) => {
   });
 };
 
-const shuffleCard = async (card, zindex = NUMBER.MAX_Z_INDEX) => {
-  await card.move(position.CENTER, position.CENTER);
-  card.setDepth(zindex);
-  await card.move(position.CENTER, position.STACK_Y);
-  card.setDepth(null);
-};
-
-const spreadCard = async (Cards) => {
-  const promises = Cards.map(async (card, count) => {
-    return card.move(
-      spreadXPosition[count],
-      position.SPREAD_Y,
-      TIME.ONE_SECOND,
-    );
-  });
-  await Promise.all(promises);
-};
-
-const flipCard = async (Cards) => {
-  Cards.forEach((element) => {
-    element.animateFlip();
-  });
-};
-
-const shuffleCards = async (Cards, count) => {
-  for (let i = 0; i < count; i += 1) {
-    await shuffleCard(Cards[i]);
-  }
-};
-
-const mixCard = async (Cards) => {
-  await stackCard(Cards);
-  rotateCard(Cards);
-  await shuffleCards(Cards, NUMBER.SHUFFLE_COUNT);
-  await spreadCard(Cards);
-  flipCard(Cards);
-};
-
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
-  mixCard(Cards);
   const arrayToBeRemoved = [];
   return {
     arrayToBeRemoved,
