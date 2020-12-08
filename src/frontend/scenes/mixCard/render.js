@@ -40,6 +40,17 @@ const shuffleCards = async (Cards, count) => {
   }
 };
 
+const spreadCard = async (Cards) => {
+  const promises = Cards.map(async (card, count) => {
+    return card.move(
+      spreadXPosition[count],
+      position.SPREAD_Y,
+      TIME.ONE_SECOND,
+    );
+  });
+  await Promise.all(promises);
+};
+
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
   const arrayToBeRemoved = [];
