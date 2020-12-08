@@ -3,6 +3,7 @@ import { $id } from '@utils/dom';
 import DuckObject from '@engine/DuckObject';
 import { DUCK_TYPE } from '@type/duck';
 import PlayerManager from '@utils/PlayerManager';
+import initVoiceChat from '@utils/voiceChat';
 
 const createDuck = (duckInfo) => {
   const { socketID, color, nickname } = duckInfo;
@@ -28,6 +29,7 @@ class LeftTab {
     }, []);
     this.players = ducks;
     this.render();
+    initVoiceChat();
   }
 
   findPlayer(socketID) {
