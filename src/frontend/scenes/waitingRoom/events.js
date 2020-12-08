@@ -47,4 +47,5 @@ export const moveMyDuck = (event, duck) => {
   duck.move(x, y);
 
   // 오리정보를 서버에 넘긴다면 여기서
+  socket.emit('send duck move', { x, y });
 };
