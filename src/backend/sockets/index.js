@@ -4,6 +4,7 @@ import onChat from './chat';
 import exitRoom from './exitRoom.ts';
 import onTellerSelectCard from './tellerSelectCard';
 import onGuesserSelectCard from './guesserSelectCard';
+import onVoiceChat from './voiceChat';
 
 const socketIO = io();
 
@@ -12,6 +13,7 @@ socketIO.on('connection', (socket) => {
     console.log(`User connected ${socket.id}`);
   }
 
+  onVoiceChat(socket);
   onWaitingRoom(socket);
   onChat(socket);
   exitRoom(socket);
