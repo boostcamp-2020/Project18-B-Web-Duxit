@@ -35,7 +35,7 @@ const PlayerWaiting = class {
     myDuck.setDepth(3);
     this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
     $id('root').addEventListener('click', this.duckMoveEvent);
-    Array.from({ length: CardManager.submittedCount }, () =>
+    Array.from({ length: CardManager.beforeSubmittedCount }, () =>
       CardManager.dropNewCard(),
     );
     setupPlayerWaiting();
