@@ -42,23 +42,25 @@ const CardManager = class {
 
   liftSelectedCardUp() {
     const liftingCard = new CardObject({
-      position: [50, 50],
+      position: [50, 60],
       facingUp: true,
       imagePath: GET_IMAGE_PATH(this.selectedCard),
     });
     liftingCard.setWidth(250);
+    liftingCard.setDepth(10);
     liftingCard.attachToRoot();
-    liftingCard.move(50, 30, TIME.LIFT_CARD_UP);
+
+    setTimeout(
+      () => liftingCard.move(50, -50, TIME.LIFT_CARD_UP),
+      TIME.ONE_SECOND,
+    );
 
     const topicText = new TextObject();
     topicText.setContent(this.topic);
     topicText.addClass(['topic-text', 'bottom']);
     topicText.attachToRoot();
 
-    setTimeout(() => {
-      liftingCard.delete();
-      topicText.delete();
-    }, TIME.LIFT_CARD_DELETE);
+    setTimeout(() => liftingCard.delete(), TIME.LIFT_CARD_DELETE);
   }
 
   dropNewCard() {
