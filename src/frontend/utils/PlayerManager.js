@@ -35,9 +35,14 @@ const PlayerManager = class extends Map {
     const { socketID } = playerParams;
     if (!socketID) return this;
 
-    const player = this.get(socketID) || new Player();
-    player.update(playerParams);
-    super.set(socketID, player);
+    let player;
+    if (this.has(socketID)) {
+      player = this.get(socketID);
+      player.update(playerParams);
+    } else {
+      player = new Player(playerParams);
+      super.set(socketID, player);
+    }
 
     this.onUpdate.forEach((callback) => callback(player));
     return this;
