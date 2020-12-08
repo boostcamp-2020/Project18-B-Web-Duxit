@@ -57,8 +57,17 @@ const flipCard = async (Cards) => {
   });
 };
 
+const mixCard = async (Cards) => {
+  await stackCard(Cards);
+  rotateCard(Cards);
+  await shuffleCards(Cards, NUMBER.SHUFFLE_COUNT);
+  await spreadCard(Cards);
+  flipCard(Cards);
+};
+
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
+  mixCard(Cards);
   const arrayToBeRemoved = [];
   return {
     arrayToBeRemoved,
