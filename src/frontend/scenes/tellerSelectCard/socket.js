@@ -5,8 +5,9 @@ import PlayerWaiting from '../playerWaiting';
 
 const setupTellerSelectSocket = () => {
   const onTellerSelectCard = ({ topic }) => {
-    SceneManager.renderNextScene(new PlayerWaiting());
     CardManager.updateTopic(topic);
+    CardManager.addSubmittedCardCount();
+    SceneManager.renderNextScene(new PlayerWaiting());
   };
 
   socket.on('teller select card', onTellerSelectCard);

@@ -1,9 +1,10 @@
 import './style.scss';
 import CardObject from '@engine/CardObject';
 import DuckObject from '@engine/DuckObject';
-import { DUCK_TYPE } from '@type/duck';
 import PlayerManager from '@utils/PlayerManager';
+import CardManager from '@utils/CardManager';
 import { $id } from '@utils/dom';
+import { DUCK_TYPE } from '@type/duck';
 import renderPlayerWaiting from './render';
 import { moveMyDuck } from '../waitingRoom/events';
 
@@ -35,7 +36,9 @@ const PlayerWaiting = class {
     myDuck.setDepth(3);
     this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
     $id('root').addEventListener('click', this.duckMoveEvent);
-    this.dropNewCard();
+    Array.from({ length: CardManager.submittedCount }, () =>
+      this.dropNewCard(),
+    );
   }
 
   dropNewCard() {
