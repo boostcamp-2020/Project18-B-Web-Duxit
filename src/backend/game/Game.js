@@ -136,10 +136,13 @@ export default class Game {
       .filter((user) => user.submittedCard === null)
       .forEach((user) => {
         const { socketID } = user;
+        const otherUsers = this.users.filter(
+          ({ socketID: guesserID }) => guesserID !== socketID,
+        );
         const { cardID } = this.selectCardFromUser({ socketID, teller: false });
         emit({ socketID, name: 'guesser select card', params: { cardID } });
         emit({
-          users: this.users,
+          users: otherUsers,
           name: 'other guesser decision',
           params: { playerID: socketID },
         });

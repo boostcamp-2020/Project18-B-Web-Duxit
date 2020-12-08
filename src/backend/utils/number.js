@@ -1,5 +1,5 @@
 export const PLAYER = {
-  MIN: 2,
+  MIN: 3,
   MAX: 6,
 };
 
