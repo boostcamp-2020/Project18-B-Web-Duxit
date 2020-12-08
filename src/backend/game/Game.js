@@ -1,6 +1,8 @@
 import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
-import { PLAYER, CARD } from '@utils/number';
+import { PLAYER, CARD, TIME } from '@utils/number';
+import { emit } from '@utils/socket';
+import TOPIC from '@utils/cardTopic.json';
 import GameList from '@game/GameList';
 import socketIO from '@socket';
 import User from './User';
@@ -26,7 +28,13 @@ export default class Game {
     [...this.users.values()].forEach((user, index) => {
       user.initOnStart({ turnID: index });
     });
-    this.startNewRound();
+
+    const tellerID = this.startNewRound();
+    setTimeout(() => {
+      if (this.status.state === GAME_STATE.TELLER) {
+        this.forceTellerSelect(tellerID);
+      }
+    }, TIME.WAIT_TELLER_SELECT);
   }
 
   end() {
@@ -100,23 +108,49 @@ export default class Game {
     return [...this.users.values()];
   }
 
+  selectCardFromUser({ socketID, teller = true }) {
+    const user = this.users.get(socketID);
+    const cardID = generateRandom.pickOneFromArray(user.cards);
+    user.submittedCard = cardID;
+    return teller ? { cardID, topic: TOPIC[cardID] } : { cardID };
+  }
+
+  forceTellerSelect(tellerID) {
+    const { cardID, topic } = this.selectCardFromUser({
+      socketID: tellerID,
+      teller: true,
+    });
+    this.updateTopic(topic);
+    this.users.forEach((user) => {
+      const { socketID } = user;
+      const isTeller = socketID === tellerID;
+      const name = isTeller ? 'teller select card' : 'teller decision';
+      const params = isTeller ? { cardID, topic } : { cardID };
+      emit({ socketID, name, params });
+    });
+    this.updateState(GAME_STATE.GUESSER);
+  }
+
   forceGuesserSelect() {
     this.getUserArray()
       .filter((user) => user.submittedCard === null)
       .forEach((user) => {
-        user.submittedCard = generateRandom.pickOneFromArray(user.cards);
-        socketIO
-          .to(user.socketID)
-          .emit('guesser select card', { cardID: user.submittedCard });
+        const { socketID } = user;
+        const { cardID } = this.selectCardFromUser({ socketID, teller: false });
+        emit({ socketID, name: 'guesser select card', params: { cardID } });
+        emit({
+          users: this.users,
+          name: 'other guesser decision',
+          params: { playerID: socketID },
+        });
       });
+    this.updateState(GAME_STATE.GUESSER);
   }
 
   startNewRound() {
     // Initialize Game status
     this.status = {
       ...this.status,
-      state: GAME_STATE.TELLER,
-      topic: '',
       turn: this.status.turn + 1,
     };
     const {
@@ -139,8 +173,10 @@ export default class Game {
       const cards = this.dealCards(user.cards, requiredCardCount);
       const params = { tellerID, cards };
       user.initOnRound(params);
-      socketIO.to(user.socketID).emit('get round data', params);
+      emit({ socketID: user.socketID, name: 'get round data', params });
     });
+
+    return tellerID;
   }
 
   updateTopic(topic) {
