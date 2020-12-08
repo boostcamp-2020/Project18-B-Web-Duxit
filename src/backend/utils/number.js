@@ -1,5 +1,5 @@
 export const PLAYER = {
-  MIN: 3,
+  MIN: 2,
   MAX: 6,
 };
 
@@ -8,4 +8,8 @@ export const CARD = {
   HAND: 6,
 };
 
-export const WAIT_GAME_START = 5000;
+export const TIME = {
+  WAIT_TELLER_SELECT: 6000,
+};
+
+export const WAIT_GAME_START = 60000;
