@@ -39,8 +39,10 @@ const PlayerWaiting = class {
   }
 
   dropNewCard() {
-    const newCard = new CardObject();
-    newCard.move(50, -50, 0);
+    const newCard = new CardObject({
+      origin: [50, 50],
+      position: [50, -50],
+    });
     newCard.setWidth(150);
     newCard.angle = Math.random() * 360 - 180;
     newCard.roll(40 + Math.random() * 20, 65 + Math.random() * 20, 3000);

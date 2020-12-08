@@ -101,7 +101,7 @@ const GameObject = class {
     this.instance.style.zIndex = zIndex;
   }
 
-  move(x = 0, y = 0, duration = TIME.ONE_SECOND / 2) {
+  move(x = 0, y = 0, duration = TIME.DEFAULT_TRANSITION) {
     this.position = [x, y];
     const xString = makeUnitString(x, '%');
     const yString = makeUnitString(y, '%');
@@ -150,9 +150,9 @@ const GameObject = class {
   roll(
     x = 0,
     y = 0,
-    duration = TIME.ONE_SECOND / 2,
+    duration = TIME.DEFAULT_TRANSITION,
     rollCount = 1,
-    rollClockwise = Math.random() < 0.5,
+    rollClockwise = Math.random() < 0.5 ? 1 : -1,
   ) {
     // TODO: move()와 겹치는 부분들 refactor...
     this.position = [x, y];
@@ -186,9 +186,7 @@ const GameObject = class {
       }
       const newY = initialY + (targetY - initialY) * (elapsed / duration);
       const newX = initialX + (targetX - initialX) * (elapsed / duration);
-      this.angle = rollClockwise
-        ? this.angle + rollCount * 4 * (elapsed / duration)
-        : this.angle - rollCount * 4 * (elapsed / duration);
+      this.angle += rollClockwise * rollCount * 4 * (elapsed / duration);
       this.rotateStyle = makeUnitString(this.angle, 'deg');
 
       this.instance.style.left = makeUnitString(newX, '%');
@@ -201,7 +199,7 @@ const GameObject = class {
     this.animationFrame = requestAnimationFrame(animateFunction);
   }
 
-  rotate(angle = 0, duration = TIME.ONE_SECOND / 5) {
+  rotate(angle = 0, duration = TIME.DEFAULT_TRANSITION) {
     this.angle = angle;
     const angleString = makeUnitString(angle, 'deg');
     const keyframes = [
