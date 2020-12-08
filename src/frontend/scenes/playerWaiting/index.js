@@ -1,5 +1,4 @@
 import './style.scss';
-import CardObject from '@engine/CardObject';
 import DuckObject from '@engine/DuckObject';
 import PlayerManager from '@utils/PlayerManager';
 import CardManager from '@utils/CardManager';
@@ -7,6 +6,7 @@ import { $id } from '@utils/dom';
 import { DUCK_TYPE } from '@type/duck';
 import renderPlayerWaiting from './render';
 import { moveMyDuck } from '../waitingRoom/events';
+import setupPlayerWaiting from './socket';
 
 const createDuck = ({
   color = '',
@@ -25,7 +25,6 @@ const createDuck = ({
 
 const PlayerWaiting = class {
   constructor() {
-    this.cards = [];
     this.ducks = new Map();
 
     PlayerManager.forEach(({ socketID, ...duckData }) => {
@@ -37,21 +36,9 @@ const PlayerWaiting = class {
     this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
     $id('root').addEventListener('click', this.duckMoveEvent);
     Array.from({ length: CardManager.submittedCount }, () =>
-      this.dropNewCard(),
+      CardManager.dropNewCard(),
     );
-  }
-
-  dropNewCard() {
-    const newCard = new CardObject({
-      origin: [50, 50],
-      position: [50, -50],
-    });
-    newCard.setWidth(150);
-    newCard.angle = Math.random() * 360 - 180;
-    newCard.roll(40 + Math.random() * 20, 65 + Math.random() * 20, 3000);
-    newCard.attachToRoot();
-
-    this.cards = [...this.cards, newCard];
+    setupPlayerWaiting();
   }
 
   render() {

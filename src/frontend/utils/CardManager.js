@@ -1,8 +1,11 @@
+import CardObject from '@engine/CardObject';
+
 const CardManager = class {
   constructor() {
     this.myCards = [];
     this.selectedCard = null;
     this.topic = null;
+    this.submittedCards = [];
     this.submittedCount = 0;
   }
 
@@ -28,6 +31,23 @@ const CardManager = class {
 
   addSubmittedCardCount() {
     this.submittedCount += 1;
+  }
+
+  addSubmittedCard(cardObject) {
+    this.submittedCards = [...this.submittedCards, cardObject];
+  }
+
+  dropNewCard() {
+    const newCard = new CardObject({
+      origin: [50, 50],
+      position: [50, -50],
+    });
+    newCard.setWidth(150);
+    newCard.angle = Math.random() * 360 - 180;
+    newCard.roll(40 + Math.random() * 20, 65 + Math.random() * 20, 3000);
+    newCard.attachToRoot();
+
+    this.addSubmittedCard(newCard);
   }
 };
 
