@@ -61,8 +61,10 @@ const GameObject = class {
     this.instance.appendChild(object.instance);
   }
 
-  addClass(className) {
-    this.instance.classList.add(className);
+  addClass(classes) {
+    if (Array.isArray(classes)) {
+      classes.forEach((className) => this.instance.classList.add(className));
+    } else this.instance.classList.add(classes);
   }
 
   toggleClass(className) {
