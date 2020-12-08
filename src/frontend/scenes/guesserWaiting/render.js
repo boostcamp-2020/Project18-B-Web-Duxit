@@ -3,10 +3,10 @@ import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import DuckObject from '@engine/DuckObject';
 import TEXT from '@utils/text';
-import TIME from '@utils/time';
-import { DUCK_TYPE } from '@utils/type';
+import TIME from '@type/time';
+import { DUCK_TYPE } from '@type/duck';
 import { createCards } from '@utils/card';
-import { GUESSER_WAITING } from '@utils/scene';
+import { GUESSER_WAITING } from '@type/scene';
 
 const renderGuesserWaiting = () => {
   const NotifyingTellerText = new TextObject();

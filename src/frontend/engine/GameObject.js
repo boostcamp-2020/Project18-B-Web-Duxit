@@ -1,5 +1,5 @@
 import { $create, $id } from '@utils/dom';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 
 // https://easings.net/#easeInOutCubic
 const easeOutCubic = (x) => 1 - (1 - x) ** 4;

@@ -1,7 +1,7 @@
 import './left.scss';
 import { $id } from '@utils/dom';
 import DuckObject from '@engine/DuckObject';
-import { DUCK_TYPE } from '@utils/type';
+import { DUCK_TYPE } from '@type/duck';
 import PlayerManager from '@utils/PlayerManager';
 import initVoiceChat from '@utils/voiceChat';
 

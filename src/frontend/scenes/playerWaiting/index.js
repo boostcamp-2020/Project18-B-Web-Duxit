@@ -1,7 +1,7 @@
 import './style.scss';
 import CardObject from '@engine/CardObject';
 import DuckObject from '@engine/DuckObject';
-import { DUCK_TYPE } from '@utils/type';
+import { DUCK_TYPE } from '@type/duck';
 import PlayerManager from '@utils/PlayerManager';
 import { $id } from '@utils/dom';
 import renderPlayerWaiting from './render';

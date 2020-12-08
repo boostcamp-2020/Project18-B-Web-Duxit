@@ -1,6 +1,6 @@
 import ProgressBarObject from '@engine/ProgressBarObject';
 import TextObject from '@engine/TextObject';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 import TEXT from '@utils/text';
 
 const renderPlayerWaiting = () => {

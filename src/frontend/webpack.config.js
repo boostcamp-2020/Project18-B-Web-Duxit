@@ -22,6 +22,7 @@ module.exports = (webpackEnv) => {
         '@scenes': path.resolve(__dirname, 'scenes'),
         '@resources': path.resolve(__dirname, 'resources'),
         '@utils': path.resolve(__dirname, 'utils'),
+        '@type': path.resolve(__dirname, 'type'),
       },
     },
     output: {
@@ -40,6 +41,7 @@ module.exports = (webpackEnv) => {
         filename: 'game/index.html',
         template: path.resolve(__dirname, './game/game.html'),
         chunks: ['game'],
+        favicon: 'logo.png',
       }),
       isEnvProduction && new CleanWebpackPlugin(),
       isEnvProduction &&
