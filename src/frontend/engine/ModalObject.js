@@ -1,4 +1,4 @@
-import CSS from '@utils/css';
+import CSS from '@type/css';
 import GameObject from './GameObject';
 
 const ModalObject = class extends GameObject {

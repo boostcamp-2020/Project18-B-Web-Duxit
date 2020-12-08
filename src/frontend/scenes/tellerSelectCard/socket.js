@@ -5,6 +5,7 @@ import PlayerWaiting from '../playerWaiting';
 
 const setupTellerSelectSocket = () => {
   const onTellerSelectCard = ({ topic }) => {
+    console.log(topic);
     SceneManager.renderNextScene(new PlayerWaiting());
     CardManager.updateTopic(topic);
   };

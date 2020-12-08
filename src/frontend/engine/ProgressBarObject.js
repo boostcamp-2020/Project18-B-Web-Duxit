@@ -1,5 +1,5 @@
 import { $create, $id } from '@utils/dom';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 import GameObject from './GameObject';
 
 const ProgressBarObject = class extends GameObject {

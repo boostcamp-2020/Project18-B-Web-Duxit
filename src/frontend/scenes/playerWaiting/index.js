@@ -1,4 +1,4 @@
-import rendePlayerWaiting from './render';
+import renderPlayerWaiting from './render';
 
 const PlayerWaiting = class {
   constructor({ ProgressBar }) {
@@ -6,7 +6,7 @@ const PlayerWaiting = class {
   }
 
   render() {
-    const { arrayToBeRemoved = [] } = rendePlayerWaiting();
+    const { arrayToBeRemoved = [] } = renderPlayerWaiting();
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 

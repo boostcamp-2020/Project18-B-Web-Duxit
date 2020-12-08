@@ -1,40 +1,11 @@
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
-import ModalObject from '@engine/ModalObject';
-import ButtonObject from '@engine/ButtonObject';
-import CardObject from '@engine/CardObject';
 import CardManager from '@utils/CardManager';
-import TEXT, { GET_IMAGE_PATH } from '@utils/text';
-import TIME from '@utils/time';
-import { SELECT_CARD } from '@utils/scene';
+import TIME from '@type/time';
+import { SELECT_CARD, GUESSER_SELECT_CARD } from '@type/scene';
 import { createCards } from '@utils/card';
 import { sendGuesserdecision } from './events';
-
-const onClickTellerCard = ({ cardID, topic }) => {
-  const Modal = new ModalObject();
-
-  const modalTitle = new TextObject({ parent: Modal });
-  modalTitle.setContent(TEXT.GUESSER_SELECT.TITLE(topic));
-  modalTitle.addClass('modal-title');
-
-  const okButton = new ButtonObject({ parent: Modal });
-  okButton.addClass('modal-ok-button');
-  okButton.setContent(TEXT.GUESSER_SELECT.OK);
-  okButton.addClickHandler(() => sendGuesserdecision({ cardID, Modal }));
-
-  const cancelButton = new ButtonObject({ parent: Modal });
-  cancelButton.addClass('modal-cancel-button');
-  cancelButton.setContent(TEXT.GUESSER_SELECT.CANCLE);
-  cancelButton.addClickHandler(() => Modal.delete());
-
-  const modalCard = new CardObject({
-    parent: Modal,
-    imagePath: GET_IMAGE_PATH(cardID),
-    facingUp: true,
-  });
-  modalCard.addClass('modal-card');
-  modalCard.setWidth(270);
-};
+import onClickCard from '@utils/modal';
 
 const renderGuesserSelect = () => {
   const { topic, myCards } = CardManager;
@@ -57,7 +28,13 @@ const renderGuesserSelect = () => {
     card.animateFlip(3000, true);
     card.setAnimateMove();
     card.addClickHandler(() =>
-      onClickTellerCard({ cardID: card.cardID, topic }),
+      onClickCard({
+        textType: GUESSER_SELECT_CARD,
+        cardID: card.cardID,
+        topic,
+        submitEvent: sendGuesserdecision,
+        input: false,
+      }),
     );
   });
 

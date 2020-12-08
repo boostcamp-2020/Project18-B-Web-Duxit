@@ -145,14 +145,14 @@ $right-size: 330px;
 
 .modal-card {
   @include modal-mixin;
-  top: 45%;
+  top: 43%;
   left: 50%;
 }
 
 .modal-ok-button {
   @include button;
   @include modal-mixin;
-  top: 85%;
+  top: 88%;
   left: 40%;
   background-color: $main-color;
 }
@@ -160,14 +160,14 @@ $right-size: 330px;
 .modal-cancel-button {
   @include button;
   @include modal-mixin;
-  top: 85%;
+  top: 88%;
   left: 60%;
   background-color: $gray-color;
 }
 
 .modal-input {
   @include modal-mixin;
-  top: 75%;
+  top: 77%;
   left: 50%;
   width: 16em;
   padding: 1rem;

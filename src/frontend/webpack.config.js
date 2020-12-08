@@ -22,6 +22,7 @@ module.exports = (webpackEnv) => {
         '@scenes': path.resolve(__dirname, 'scenes'),
         '@resources': path.resolve(__dirname, 'resources'),
         '@utils': path.resolve(__dirname, 'utils'),
+        '@type': path.resolve(__dirname, 'type'),
       },
     },
     output: {

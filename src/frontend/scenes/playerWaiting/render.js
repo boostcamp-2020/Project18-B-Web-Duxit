@@ -1,6 +1,6 @@
 import './playerWaiting.scss';
 import ProgressBarObject from '@engine/ProgressBarObject';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 
 const renderPlayerWaiting = () => {
   const ProgressBar = new ProgressBarObject();

@@ -4,7 +4,7 @@ import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
-import Svg from '@utils/svg';
+import Svg from '@type/svg';
 import {
   copyGameCode,
   redirectToLobby,

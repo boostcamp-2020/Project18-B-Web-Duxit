@@ -1,6 +1,6 @@
 import PlayerManager from '@utils/PlayerManager';
 import DuckObject from '@engine/DuckObject';
-import { DUCK_TYPE } from '@utils/type';
+import { DUCK_TYPE } from '@type/duck';
 import { $id } from '@utils/dom';
 import renderWaitingRoom from './render';
 import setupWaitingRoomSocket from './socket';

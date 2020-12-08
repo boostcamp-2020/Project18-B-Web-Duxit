@@ -1,5 +1,5 @@
 import { $create } from '@utils/dom';
-import { DUCK_TYPE } from '@utils/type';
+import { DUCK_TYPE } from '@type/duck';
 import Duck, { DuckHat } from '@utils/duck';
 import ImageObject from './ImageObject';
 

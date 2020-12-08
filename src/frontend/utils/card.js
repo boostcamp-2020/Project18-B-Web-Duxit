@@ -1,8 +1,8 @@
 import CardObject from '@engine/CardObject';
 import GameObject from '@engine/GameObject';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 import { GET_IMAGE_PATH } from '@utils/text';
-import CARD_POSITION from './cardPosition.json';
+import CARD_POSITION from '@type/cardPosition.json';
 
 // eslint-disable-next-line import/prefer-default-export
 export const createCards = (sceneName, cardIds = Array(6).fill(null)) => {
