@@ -1,5 +1,5 @@
 import GameList from '@game/GameList';
-import { PLAYER } from '@utils/number';
+import { PLAYER, WAIT_GAME_START } from '@utils/number';
 import logger from '@utils/winston';
 
 function onJoinPlayer({ roomID }) {
@@ -60,7 +60,7 @@ function onReadyPlayer({ isReady }) {
     const timeout = setTimeout(() => {
       game.start();
       if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
-    }, 5000);
+    }, WAIT_GAME_START);
     timeoutMap.set(roomID, timeout);
   } else if (timeoutMap.has(roomID)) {
     socket.in(roomID).emit('game start aborted', {});
