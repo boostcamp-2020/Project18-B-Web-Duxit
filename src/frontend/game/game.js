@@ -8,6 +8,7 @@ import GuesserWaiting from '@scenes/guesserWaiting';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
 import CardManager from '@utils/CardManager';
+import initializeBackground from './background';
 import './leftTab';
 
 const scrollToBottom = (component) => {
@@ -81,6 +82,7 @@ const initialize = async () => {
     return;
   }
 
+  initializeBackground();
   initializeLayout();
   SceneManager.renderNextScene(new WaitingRoom(roomID));
 
