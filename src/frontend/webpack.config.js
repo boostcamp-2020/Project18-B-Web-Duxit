@@ -35,6 +35,7 @@ module.exports = (webpackEnv) => {
         filename: 'index.html',
         template: path.resolve(__dirname, './main/index.html'),
         chunks: ['main'],
+        favicon: 'logo.png',
       }),
       new HtmlWebpackPlugin({
         filename: 'game/index.html',

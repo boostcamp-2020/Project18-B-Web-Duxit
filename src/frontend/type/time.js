@@ -3,4 +3,5 @@ export default {
   SELECT_CARD: 60000,
   ONE_SECOND: 1000,
   HALF_SECOND: 500,
+  DEFAULT_TRANSITION: 200,
 };

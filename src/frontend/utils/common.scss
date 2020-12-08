@@ -41,6 +41,13 @@ html {
   display: none;
 }
 
+@mixin helper-text-white-background {
+  padding: 0.5em;
+  background-color: #fffa;
+  border-radius: 1em;
+  box-shadow: 0 0 4em 1em $white-color;
+}
+
 @mixin button {
   display: flex;
   flex-direction: row;
