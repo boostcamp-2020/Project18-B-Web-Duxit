@@ -1,11 +1,11 @@
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import CardManager from '@utils/CardManager';
-import TIME from '@type/time';
-import { SELECT_CARD, GUESSER_SELECT_CARD } from '@type/scene';
 import { createCards } from '@utils/card';
-import { sendGuesserdecision } from './events';
 import onClickCard from '@utils/modal';
+import { SELECT_CARD, GUESSER_SELECT_CARD } from '@type/scene';
+import TIME from '@type/time';
+import { sendGuesserdecision } from './events';
 
 const renderGuesserSelect = () => {
   const { topic, myCards } = CardManager;
