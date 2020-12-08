@@ -32,20 +32,3 @@ export const toggleReady = ({ target }) => {
   target.classList.toggle('button-primary-clicked');
   socket.emit('ready player', { isReady: nextStatus });
 };
-
-export const moveMyDuck = (event, duck) => {
-  const { clientX: cursorX, clientY: cursorY, target, currentTarget } = event;
-  if (target !== currentTarget) return;
-  const {
-    x: rootX,
-    y: rootY,
-    width,
-    height,
-  } = currentTarget.getBoundingClientRect();
-  const x = ((cursorX - rootX) / width) * 100;
-  const y = ((cursorY - rootY) / height) * 100;
-  duck.move(x, y);
-
-  // 오리정보를 서버에 넘긴다면 여기서
-  socket.emit('send duck move', { x, y });
-};

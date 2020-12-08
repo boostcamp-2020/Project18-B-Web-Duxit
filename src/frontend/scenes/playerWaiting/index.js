@@ -5,7 +5,6 @@ import { DUCK_TYPE } from '@type/duck';
 import PlayerManager from '@utils/PlayerManager';
 import { $id } from '@utils/dom';
 import renderPlayerWaiting from './render';
-import { moveMyDuck } from '../waitingRoom/events';
 
 const createDuck = ({
   color = '',
@@ -25,16 +24,6 @@ const createDuck = ({
 const PlayerWaiting = class {
   constructor() {
     this.cards = [];
-    this.ducks = new Map();
-
-    // PlayerManager.forEach(({ socketID, ...duckData }) => {
-    //   const duck = createDuck(duckData);
-    //   this.ducks.set(socketID, duck);
-    // });
-    // const myDuck = this.ducks.get(PlayerManager.currentPlayerID);
-    // myDuck.setDepth(3);
-    // this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
-    // $id('root').addEventListener('click', this.duckMoveEvent);
     this.dropNewCard();
   }
 

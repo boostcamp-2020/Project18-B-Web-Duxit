@@ -3,6 +3,7 @@ import DuckObject from './DuckObject';
 
 class DuckLeftTabObject extends DuckObject {
   constructor({ socketID, color, nickname, ...rest }) {
+    console.log('left', socketID);
     super(rest);
     this.socketID = socketID;
     this.color = color;

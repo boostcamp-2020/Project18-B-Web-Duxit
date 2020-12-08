@@ -18,12 +18,7 @@ class LeftTab {
     PlayerManager.onDelete.push(this.deletePlayer.bind(this));
   }
 
-  initializePlayers(players = []) {
-    const ducks = players.reduce((prev, player) => {
-      const duck = createDuck(player);
-      return [...prev, duck];
-    }, []);
-    this.ducks = ducks;
+  initializePlayers() {
     this.render();
     initVoiceChat();
   }
@@ -51,6 +46,7 @@ class LeftTab {
   }
 
   addDuck(playerInfo) {
+    console.log('add duck');
     const duck = createDuck(playerInfo);
     const playerWrapper = $id('participants-wrapper');
     this.ducks = [...this.ducks, duck];

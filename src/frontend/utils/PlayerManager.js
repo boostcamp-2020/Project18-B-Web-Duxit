@@ -16,7 +16,8 @@ const PlayerManager = class extends Map {
     this.currentPlayerID = socket.id;
     this.tellerID = '';
     super.clear();
-    players.forEach((player) => super.set(player.socketID, new Player(player)));
+    // players.forEach((player) => super.set(player.socketID, new Player(player)));
+    players.forEach((player) => super.set(player.socketID, this.set(player)));
     this.onInitialize.forEach((callback) => callback(this.getArray()));
   }
 
@@ -40,12 +41,13 @@ const PlayerManager = class extends Map {
       player = this.get(socketID);
       player.update(playerParams);
     } else {
-      player = new Player(playerParams);
+      const isMine = this.currentPlayerID === socketID;
+      player = new Player({ ...playerParams, isMine });
       super.set(socketID, player);
     }
 
     this.onUpdate.forEach((callback) => callback(player));
-    return this;
+    return player;
   }
 
   updateCurrentPlayer(playerParams = {}) {
@@ -53,6 +55,9 @@ const PlayerManager = class extends Map {
   }
 
   delete(socketID) {
+    if (!this.has(socketID)) return false;
+
+    this.get(socketID).delete();
     const result = super.delete(socketID);
     this.onDelete.forEach((callback) => callback({ socketID }));
     return result;
