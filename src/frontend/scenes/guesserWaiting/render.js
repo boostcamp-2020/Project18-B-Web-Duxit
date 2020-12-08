@@ -29,10 +29,16 @@ const renderGuesserWaiting = () => {
   TellerDuck.attachToRoot();
   TellerDuck.move(50, 0, 0);
   TellerDuck.move(50, 10, TIME.ONE_SECOND);
-  const { CardsWrapper } = createCards(GUESSER_WAITING);
+  const { CardsWrapper, cards } = createCards(GUESSER_WAITING);
   CardsWrapper.attachToRoot();
 
-  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar, TellerDuck];
+  const arrayToBeRemoved = [
+    NotifyingTellerText,
+    ProgressBar,
+    TellerDuck,
+    CardsWrapper,
+    ...cards,
+  ];
 
   return {
     arrayToBeRemoved,

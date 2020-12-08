@@ -4,15 +4,12 @@ function onSendGuesserDecision({ cardID }) {
   const socket = this;
   const { game, user } = socket;
 
-  // Error handling
   if (!game || !user) return;
   if (game.status.state !== GAME_STATE.GUESSER) return;
 
-  // Save cardID into Game.user
   user.submitCard(cardID);
-
-  // Emit socket
-  socket.emit('guesser select card', { cardID });
+  socket.emit('guesser select card', { playerID: socket.id });
+  socket.in(game.roomID).emit('guesser select card', { playerID: socket.id });
 }
 
 export default function onGuesserSelectCard(socket) {

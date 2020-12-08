@@ -2,6 +2,7 @@ const CardManager = class {
   constructor() {
     this.myCards = [];
     this.selectedCard = null;
+    this.topic = null;
   }
 
   initailizeMyCards(cards) {
@@ -18,6 +19,10 @@ const CardManager = class {
 
   removeSelectedCard() {
     this.myCards = this.myCards.filter((card) => card !== this.selectedCard);
+  }
+
+  updateTopic(topic) {
+    this.topic = topic;
   }
 };
 
