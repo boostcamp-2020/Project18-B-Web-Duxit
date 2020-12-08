@@ -1,4 +1,7 @@
 import CardObject from '@engine/CardObject';
+import TextObject from '@engine/TextObject';
+import { GET_IMAGE_PATH } from '@utils/text';
+import TIME from '@type/time';
 
 const CardManager = class {
   constructor() {
@@ -35,6 +38,29 @@ const CardManager = class {
 
   addSubmittedCard(cardObject) {
     this.submittedCards = [...this.submittedCards, cardObject];
+  }
+
+  liftSelectedCardUp() {
+    const liftingCard = new CardObject({
+      position: [50, 60],
+      facingUp: true,
+      imagePath: GET_IMAGE_PATH(this.selectedCard),
+    });
+    liftingCard.setWidth(250);
+    liftingCard.setDepth(10);
+    liftingCard.attachToRoot();
+
+    setTimeout(
+      () => liftingCard.move(50, -50, TIME.LIFT_CARD_UP),
+      TIME.ONE_SECOND,
+    );
+
+    const topicText = new TextObject();
+    topicText.setContent(this.topic);
+    topicText.addClass(['topic-text', 'bottom']);
+    topicText.attachToRoot();
+
+    setTimeout(() => liftingCard.delete(), TIME.LIFT_CARD_DELETE);
   }
 
   dropNewCard() {

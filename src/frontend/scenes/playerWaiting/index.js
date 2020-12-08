@@ -26,24 +26,26 @@ const createDuck = ({
 const PlayerWaiting = class {
   constructor() {
     this.ducks = new Map();
-
-    PlayerManager.forEach(({ socketID, ...duckData }) => {
-      const duck = createDuck(duckData);
-      this.ducks.set(socketID, duck);
-    });
-    const myDuck = this.ducks.get(PlayerManager.currentPlayerID);
-    myDuck.setDepth(3);
-    this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
-    $id('root').addEventListener('click', this.duckMoveEvent);
-    Array.from({ length: CardManager.beforeSubmittedCount }, () =>
-      CardManager.dropNewCard(),
-    );
     setupPlayerWaiting();
   }
 
   render() {
+    PlayerManager.forEach(({ socketID, ...duckData }) => {
+      const duck = createDuck(duckData);
+      this.ducks.set(socketID, duck);
+    });
+
+    const myDuck = this.ducks.get(PlayerManager.currentPlayerID);
+    myDuck.setDepth(3);
+    this.duckMoveEvent = (e) => moveMyDuck(e, myDuck);
+    $id('root').addEventListener('click', this.duckMoveEvent);
+
     const { arrayToBeRemoved } = renderPlayerWaiting();
     this.arrayToBeRemoved = arrayToBeRemoved;
+
+    Array.from({ length: CardManager.beforeSubmittedCount }, () =>
+      CardManager.dropNewCard(),
+    );
   }
 
   wrapup() {
