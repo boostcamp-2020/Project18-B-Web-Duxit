@@ -6,6 +6,13 @@ const easeOutCubic = (x) => 1 - (1 - x) ** 4;
 const makeUnitString = (numericValue, unit) => `${numericValue}${unit}`;
 const makeFloat = (unitValue) => parseFloat(unitValue);
 
+const getJumpHighPoint = (y1 = 0, y2 = 0) => {
+  const isTopHigh = y1 < y2;
+  const diff = Math.abs(y1 - y2);
+  const isDiffTooSmall = diff < 5;
+  return `${(isTopHigh ? y1 : y2) - (diff + +isDiffTooSmall * 5) * 0.5}%`;
+};
+
 const GameObject = class {
   constructor({
     origin = null,
@@ -197,6 +204,45 @@ const GameObject = class {
     };
 
     this.animationFrame = requestAnimationFrame(animateFunction);
+  }
+
+  jump(x = 0, y = 0, duration = TIME.HALF_SECOND) {
+    const { top, left } = this.instance.style;
+    const xString = makeUnitString(x, '%');
+    const yString = makeUnitString(y, '%');
+    const yJump = getJumpHighPoint(y, makeFloat(top));
+
+    const xKeyframe = [
+      {
+        left,
+      },
+      {
+        left: xString,
+      },
+    ];
+    const yKeyframe = [
+      {
+        top,
+      },
+      {
+        top: yJump,
+      },
+      {
+        top: yString,
+      },
+    ];
+    const xOption = {
+      duration,
+    };
+    const yOption = {
+      duration,
+      easing: 'cubic-bezier(.25, .82, .48, .1)',
+    };
+
+    this.instance.animate(xKeyframe, xOption);
+    this.instance.animate(yKeyframe, yOption);
+    this.instance.style.left = xString;
+    this.instance.style.top = yString;
   }
 
   rotate(angle = 0, duration = TIME.DEFAULT_TRANSITION) {
