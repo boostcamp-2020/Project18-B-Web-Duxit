@@ -27,6 +27,13 @@ const rotateCard = (Cards) => {
   });
 };
 
+const shuffleCard = async (card, zindex = NUMBER.MAX_Z_INDEX) => {
+  await card.move(position.CENTER, position.CENTER);
+  card.setDepth(zindex);
+  await card.move(position.CENTER, position.STACK_Y);
+  card.setDepth(null);
+};
+
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
   const arrayToBeRemoved = [];
