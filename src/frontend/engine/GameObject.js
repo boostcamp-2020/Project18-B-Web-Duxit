@@ -27,7 +27,7 @@ const GameObject = class {
     if (position) this.move(...position, 0);
     if (parent) this.attachToObject(parent);
     classes.forEach((className) => {
-      this.setClass(className);
+      this.addClass(className);
     });
   }
 

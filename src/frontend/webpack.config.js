@@ -89,7 +89,7 @@ module.exports = (webpackEnv) => {
           ],
         },
         {
-          test: /\.(png|jpe?g|gif)$/i,
+          test: /\.(png|jpe?g|gif|webp)$/i,
           loader: 'file-loader',
           options: {
             outputPath: 'assets',
