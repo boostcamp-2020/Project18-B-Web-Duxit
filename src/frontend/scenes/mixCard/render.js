@@ -51,6 +51,12 @@ const spreadCard = async (Cards) => {
   await Promise.all(promises);
 };
 
+const flipCard = async (Cards) => {
+  Cards.forEach((element) => {
+    element.animateFlip();
+  });
+};
+
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
   const arrayToBeRemoved = [];
