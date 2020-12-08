@@ -8,8 +8,10 @@ function onSendGuesserDecision({ cardID }) {
   if (game.status.state !== GAME_STATE.GUESSER) return;
 
   user.submitCard(cardID);
-  socket.emit('guesser select card', { playerID: socket.id });
-  socket.in(game.roomID).emit('guesser select card', { playerID: socket.id });
+  socket.emit('guesser select card', { cardID });
+  socket
+    .in(game.roomID)
+    .emit('other guesser decision', { playerID: socket.id });
 }
 
 export default function onGuesserSelectCard(socket) {

@@ -11,7 +11,7 @@ function onSendTellerDecision({ cardID, topic }) {
   user.submitCard(cardID);
   game.updateTopic(topic);
   socket.emit('teller select card', { cardID, topic });
-  socket.in(game.roomID).emit('teller select card', { topic });
+  socket.in(game.roomID).emit('teller decision', { topic });
   game.updateState(GAME_STATE.GUESSER);
 }
 
