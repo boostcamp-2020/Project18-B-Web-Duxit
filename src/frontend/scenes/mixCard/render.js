@@ -34,6 +34,12 @@ const shuffleCard = async (card, zindex = NUMBER.MAX_Z_INDEX) => {
   card.setDepth(null);
 };
 
+const shuffleCards = async (Cards, count) => {
+  for (let i = 0; i < count; i += 1) {
+    await shuffleCard(Cards[i]);
+  }
+};
+
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
   const arrayToBeRemoved = [];
