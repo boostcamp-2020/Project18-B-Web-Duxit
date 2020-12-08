@@ -1,4 +1,6 @@
 import CardObject from '@engine/CardObject';
+import { GET_IMAGE_PATH } from '@utils/text';
+import TIME from '@type/time';
 
 const CardManager = class {
   constructor() {
@@ -35,6 +37,18 @@ const CardManager = class {
 
   addSubmittedCard(cardObject) {
     this.submittedCards = [...this.submittedCards, cardObject];
+  }
+
+  liftSelectedCardUp() {
+    const liftingCard = new CardObject({
+      position: [50, 50],
+      facingUp: true,
+      imagePath: GET_IMAGE_PATH(this.selectedCard),
+    });
+    liftingCard.setWidth(250);
+    liftingCard.attachToRoot();
+    liftingCard.move(50, 30, TIME.LIFT_CARD_UP);
+    setTimeout(() => liftingCard.delete(), TIME.LIFT_CARD_DELETE);
   }
 
   dropNewCard() {
