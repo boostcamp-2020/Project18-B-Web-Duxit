@@ -81,11 +81,11 @@ const GameObject = class {
     this.setOrigin();
   }
 
-  setOrigin(x = '50%', y = '50%') {
-    const numberY = makeFloat(y);
-    const numberX = makeFloat(x);
-    this.originStyle = `translate(-${x}, -${y})`;
-    this.instance.style.transformOrigin = `${50 - numberX}% ${50 - numberY}%`;
+  setOrigin(x = 50, y = 50) {
+    const xString = makeUnitString(x, '%');
+    const yString = makeUnitString(y, '%');
+    this.originStyle = `translate(-${xString}, -${yString})`;
+    this.instance.style.transformOrigin = `${50 - x}% ${50 - y}%`;
     this.transform();
   }
 
