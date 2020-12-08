@@ -3,6 +3,7 @@ const CardManager = class {
     this.myCards = [];
     this.selectedCard = null;
     this.topic = null;
+    this.submittedCount = 0;
   }
 
   initailizeMyCards(cards) {
@@ -23,6 +24,10 @@ const CardManager = class {
 
   updateTopic(topic) {
     this.topic = topic;
+  }
+
+  addSubmittedCardCount() {
+    this.submittedCount += 1;
   }
 };
 
