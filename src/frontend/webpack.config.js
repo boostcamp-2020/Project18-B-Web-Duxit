@@ -41,6 +41,7 @@ module.exports = (webpackEnv) => {
         filename: 'game/index.html',
         template: path.resolve(__dirname, './game/game.html'),
         chunks: ['game'],
+        favicon: 'logo.png',
       }),
       isEnvProduction && new CleanWebpackPlugin(),
       isEnvProduction &&
