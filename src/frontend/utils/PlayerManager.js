@@ -31,20 +31,20 @@ const PlayerManager = class extends Map {
     });
   }
 
-  set(player = {}) {
-    const { socketID } = player;
+  set(playerParams = {}) {
+    const { socketID } = playerParams;
     if (!socketID) return this;
 
-    const old = this.get(socketID) || {};
-    const updated = { ...old, ...player };
-    super.set(socketID, new Player(updated));
+    const player = this.get(socketID) || new Player();
+    player.update(playerParams);
+    super.set(socketID, player);
 
-    this.onUpdate.forEach((callback) => callback(updated));
+    this.onUpdate.forEach((callback) => callback(player));
     return this;
   }
 
-  updateCurrentPlayer(player = {}) {
-    this.set({ ...player, socketID: this.currentPlayerID });
+  updateCurrentPlayer(playerParams = {}) {
+    this.set({ ...playerParams, socketID: this.currentPlayerID });
   }
 
   delete(socketID) {

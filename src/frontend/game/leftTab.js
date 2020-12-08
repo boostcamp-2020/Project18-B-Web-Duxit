@@ -1,16 +1,15 @@
 import './left.scss';
 import { $id } from '@utils/dom';
-import DuckObject from '@engine/DuckObject';
-import { DUCK_TYPE } from '@type/duck';
+import DuckLeftTabObject from '@engine/DuckLeftTabObject';
 import PlayerManager from '@utils/PlayerManager';
 import initVoiceChat from '@utils/voiceChat';
 
 const createDuck = (duckInfo) => {
   const { socketID, color, nickname } = duckInfo;
-  const duck = new DuckObject({ type: DUCK_TYPE.LEFT_TAB, socketID });
-  duck.setNickname(nickname);
-  duck.setColor(color);
-  duck.createElement();
+  const duck = new DuckLeftTabObject({ socketID, color, nickname });
+  // duck.setNickname(nickname);
+  // duck.setColor(color);
+  // duck.createElement();
   return duck;
 };
 

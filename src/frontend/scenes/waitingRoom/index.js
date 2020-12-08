@@ -1,5 +1,5 @@
 import PlayerManager from '@utils/PlayerManager';
-import DuckObject from '@engine/DuckObject';
+import DuckCursorObject from '@engine/DuckCursorObject';
 import { DUCK_TYPE } from '@type/duck';
 import { $id } from '@utils/dom';
 import renderWaitingRoom from './render';
@@ -55,13 +55,13 @@ const WaitingRoom = class {
   }
 
   createDuck({ socketID, color = '' } = {}) {
-    const duck = new DuckObject({ type: DUCK_TYPE.CURSOR });
-    duck.setColor(color);
-    duck.createElement();
-    duck.setOriginCenter();
-    duck.move(Math.random() * 50 + 25, Math.random() * 50 + 25, 0);
-    duck.attachToRoot();
-    this.ducks.set(socketID, duck);
+    // const duck = new DuckCursorObject();
+    // duck.setColor(color);
+    // duck.createElement();
+    // duck.setOriginCenter();
+    // duck.move(Math.random() * 50 + 25, Math.random() * 50 + 25, 0);
+    // duck.attachToRoot();
+    // this.ducks.set(socketID, duck);
   }
 };
 

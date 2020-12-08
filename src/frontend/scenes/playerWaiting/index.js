@@ -1,6 +1,6 @@
 import './style.scss';
 import CardObject from '@engine/CardObject';
-import DuckObject from '@engine/DuckObject';
+import DuckCursorObject from '@engine/DuckCursorObject';
 import { DUCK_TYPE } from '@type/duck';
 import PlayerManager from '@utils/PlayerManager';
 import { $id } from '@utils/dom';
@@ -12,7 +12,7 @@ const createDuck = ({
   x = 25 + Math.random() * 50,
   y = 25 + Math.random() * 50,
 } = {}) => {
-  const duck = new DuckObject({ type: DUCK_TYPE.CURSOR });
+  const duck = new DuckCursorObject();
   duck.setColor(color);
   duck.createElement();
   duck.setOriginCenter();
