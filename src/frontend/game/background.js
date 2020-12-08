@@ -5,9 +5,8 @@ import stonePath from '@resources/stone.png';
 import stonePosition from '@type/stonePosition.json';
 import GameObject from '../engine/GameObject';
 
-const initializeBackground = () => {
-  const background = $id('background');
-  stonePosition.forEach((position, index) => {
+const initializeLayout = (background) =>
+  stonePosition.map((position, index) => {
     const wrapper = new GameObject({
       classes: ['stone'],
       position,
@@ -20,9 +19,16 @@ const initializeBackground = () => {
     const number = new TextObject({
       parent: wrapper,
       classes: ['stone-text'],
-    }).setContent(index + 1);
+    }).setContent(index);
     background.appendChild(wrapper.instance);
   });
 };
 
-export default initializeBackground;
+const Background = class {
+  constructor() {
+    this.dom = $id('background');
+    initializeLayout(this.dom);
+  }
+};
+
+export default new Background();
