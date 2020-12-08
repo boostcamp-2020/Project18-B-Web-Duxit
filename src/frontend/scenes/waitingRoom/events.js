@@ -34,7 +34,7 @@ export const toggleReady = ({ target }) => {
 };
 
 export const moveMyDuck = (event, duck) => {
-  const { x: cursorX, y: cursorY, target, currentTarget } = event;
+  const { clientX: cursorX, clientY: cursorY, target, currentTarget } = event;
   if (target !== currentTarget) return;
   const {
     x: rootX,
