@@ -65,8 +65,13 @@ const mixCard = async (Cards) => {
   flipCard(Cards);
 };
 
+const setCardsImage = () => {
+  // 이 함수 구현해서 아래 주석 쪽에 넣어주면 될 듯
+};
+
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
+  // Todo: 카드에 ID 및 Image 경로 할당하는 작업 해야 뒤집었을 때 그림 나옴
   mixCard(Cards);
   const arrayToBeRemoved = [];
   return {
