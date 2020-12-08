@@ -189,4 +189,7 @@ $right-size: 330px;
   font-size: 1.5rem;
   font-weight: 700;
   transform: translate(-50%, -50%);
+  &.bottom {
+    top: 70%;
+  }
 }

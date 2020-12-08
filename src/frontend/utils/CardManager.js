@@ -1,4 +1,5 @@
 import CardObject from '@engine/CardObject';
+import TextObject from '@engine/TextObject';
 import { GET_IMAGE_PATH } from '@utils/text';
 import TIME from '@type/time';
 
@@ -48,7 +49,16 @@ const CardManager = class {
     liftingCard.setWidth(250);
     liftingCard.attachToRoot();
     liftingCard.move(50, 30, TIME.LIFT_CARD_UP);
-    setTimeout(() => liftingCard.delete(), TIME.LIFT_CARD_DELETE);
+
+    const topicText = new TextObject();
+    topicText.setContent(this.topic);
+    topicText.addClass(['topic-text', 'bottom']);
+    topicText.attachToRoot();
+
+    setTimeout(() => {
+      liftingCard.delete();
+      topicText.delete();
+    }, TIME.LIFT_CARD_DELETE);
   }
 
   dropNewCard() {
