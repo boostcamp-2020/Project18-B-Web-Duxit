@@ -15,18 +15,22 @@ function onSendGuesserDecision({ cardID }) {
     .emit('other guesser decision', { playerID: socket.id });
 }
 
-export const forceGuesserSelect = ({ unsubmittedUsers, users }) => {
+export const forceGuesserSelect = ({ unsubmittedUsers, users, endTime }) => {
   unsubmittedUsers.forEach((user) => {
     const { socketID } = user;
     const otherUsers = users.filter(
       ({ socketID: guesserID }) => guesserID !== socketID,
     );
     const { cardID } = user.selectCardFromUser({ teller: false });
-    emit({ socketID, name: 'guesser select card', params: { cardID } });
+    emit({
+      socketID,
+      name: 'guesser select card',
+      params: { cardID, endTime },
+    });
     emit({
       users: otherUsers,
       name: 'other guesser decision',
-      params: { playerID: socketID },
+      params: { playerID: socketID, endTime },
     });
   });
 };
