@@ -111,49 +111,52 @@ const GameObject = class {
   }
 
   move(x = 0, y = 0, duration = TIME.DEFAULT_TRANSITION) {
-    this.position = [x, y];
-    const xString = makeUnitString(x, '%');
-    const yString = makeUnitString(y, '%');
+    return new Promise((resolve) => {
+      this.position = [x, y];
+      const xString = makeUnitString(x, '%');
+      const yString = makeUnitString(y, '%');
 
-    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
-    if (!xString && !yString) {
-      this.instance.style.removeProperty('top');
-      this.instance.style.removeProperty('left');
-    }
-    if (duration === 0) {
-      this.instance.style.top = yString;
-      this.instance.style.left = xString;
-      return;
-    }
-    const initialY = makeFloat(this.instance.style.top) || 0;
-    const initialX = makeFloat(this.instance.style.left) || 0;
-    const targetY = y;
-    const targetX = x;
-
-    const miliseconds = duration;
-    let start = null;
-    const animateFunction = (timestamp) => {
-      if (!start) start = timestamp;
-      const elapsed = timestamp - start;
-      if (elapsed > miliseconds) {
+      if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+      if (!xString && !yString) {
+        this.instance.style.removeProperty('top');
+        this.instance.style.removeProperty('left');
+      }
+      if (duration === 0) {
         this.instance.style.top = yString;
         this.instance.style.left = xString;
-        this.animationFrame = null;
         return;
       }
-      const newY =
-        initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
-      const newX =
-        initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
-      // this.position = [newX, newY];
+      const initialY = makeFloat(this.instance.style.top) || 0;
+      const initialX = makeFloat(this.instance.style.left) || 0;
+      const targetY = y;
+      const targetX = x;
 
-      this.instance.style.left = makeUnitString(newX, '%');
-      this.instance.style.top = makeUnitString(newY, '%');
+      const miliseconds = duration;
+      let start = null;
+      const animateFunction = (timestamp) => {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        if (elapsed > miliseconds) {
+          this.instance.style.top = yString;
+          this.instance.style.left = xString;
+          this.animationFrame = null;
+          resolve();
+          return;
+        }
+        const newY =
+          initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
+        const newX =
+          initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
+        // this.position = [newX, newY];
 
-      requestAnimationFrame(animateFunction);
-    };
+        this.instance.style.left = makeUnitString(newX, '%');
+        this.instance.style.top = makeUnitString(newY, '%');
 
-    this.animationFrame = requestAnimationFrame(animateFunction);
+        requestAnimationFrame(animateFunction);
+      };
+
+      this.animationFrame = requestAnimationFrame(animateFunction);
+    });
   }
 
   roll(
@@ -163,49 +166,52 @@ const GameObject = class {
     rollCount = 1,
     rollClockwise = Math.random() < 0.5 ? 1 : -1,
   ) {
-    // TODO: move()와 겹치는 부분들 refactor...
-    this.position = [x, y];
-    const xString = makeUnitString(x, '%');
-    const yString = makeUnitString(y, '%');
+    return new Promise((resolve) => {
+      // TODO: move()와 겹치는 부분들 refactor...
+      this.position = [x, y];
+      const xString = makeUnitString(x, '%');
+      const yString = makeUnitString(y, '%');
 
-    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
-    if (!xString && !yString) {
-      this.instance.style.removeProperty('top');
-      this.instance.style.removeProperty('left');
-    }
-    if (duration === 0) {
-      this.instance.style.top = yString;
-      this.instance.style.left = xString;
-      return;
-    }
-    const initialY = makeFloat(this.instance.style.top) || 0;
-    const initialX = makeFloat(this.instance.style.left) || 0;
-    const targetY = y;
-    const targetX = x;
-
-    let start = null;
-    const animateFunction = (timestamp) => {
-      if (!start) start = timestamp;
-      const elapsed = timestamp - start;
-      if (elapsed > duration) {
+      if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+      if (!xString && !yString) {
+        this.instance.style.removeProperty('top');
+        this.instance.style.removeProperty('left');
+      }
+      if (duration === 0) {
         this.instance.style.top = yString;
         this.instance.style.left = xString;
-        this.animationFrame = null;
         return;
       }
-      const newY = initialY + (targetY - initialY) * (elapsed / duration);
-      const newX = initialX + (targetX - initialX) * (elapsed / duration);
-      this.angle += rollClockwise * rollCount * 4 * (elapsed / duration);
-      this.rotateStyle = makeUnitString(this.angle, 'deg');
+      const initialY = makeFloat(this.instance.style.top) || 0;
+      const initialX = makeFloat(this.instance.style.left) || 0;
+      const targetY = y;
+      const targetX = x;
 
-      this.instance.style.left = makeUnitString(newX, '%');
-      this.instance.style.top = makeUnitString(newY, '%');
-      this.instance.style.transform = `rotateZ(${this.rotateStyle}) ${this.originStyle}`;
+      let start = null;
+      const animateFunction = (timestamp) => {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        if (elapsed > duration) {
+          this.instance.style.top = yString;
+          this.instance.style.left = xString;
+          this.animationFrame = null;
+          resolve();
+          return;
+        }
+        const newY = initialY + (targetY - initialY) * (elapsed / duration);
+        const newX = initialX + (targetX - initialX) * (elapsed / duration);
+        this.angle += rollClockwise * rollCount * 4 * (elapsed / duration);
+        this.rotateStyle = makeUnitString(this.angle, 'deg');
 
-      requestAnimationFrame(animateFunction);
-    };
+        this.instance.style.left = makeUnitString(newX, '%');
+        this.instance.style.top = makeUnitString(newY, '%');
+        this.instance.style.transform = `rotateZ(${this.rotateStyle}) ${this.originStyle}`;
 
-    this.animationFrame = requestAnimationFrame(animateFunction);
+        requestAnimationFrame(animateFunction);
+      };
+
+      this.animationFrame = requestAnimationFrame(animateFunction);
+    });
   }
 
   jump(x = 0, y = 0, duration = TIME.HALF_SECOND) {
