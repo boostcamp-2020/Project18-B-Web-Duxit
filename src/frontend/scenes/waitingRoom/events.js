@@ -1,4 +1,5 @@
 import socket from '@utils/socket';
+import { testHexColorString } from '@utils/hexColor';
 
 export const redirectToLobby = () => {
   window.location.href = '/';
@@ -31,4 +32,29 @@ export const toggleReady = ({ target }) => {
   target.classList.toggle('button-primary');
   target.classList.toggle('button-primary-clicked');
   socket.emit('ready player', { isReady: nextStatus });
+};
+
+export const changeColor = ({ target }) => {
+  const { value: color } = target;
+  if (testHexColorString(color)) {
+    target.classList.remove('input-state-invalid');
+    socket.emit('update player', { color });
+  } else {
+    target.classList.add('input-state-invalid');
+  }
+};
+
+export const inputColorHandler = ({ target }) => {
+  const { value: color = '' } = target;
+  if (!color.startsWith('#')) {
+    Object.assign(target, { value: `#${color}` });
+    inputColorHandler({ target });
+    return;
+  }
+  if (color.length > 7) {
+    Object.assign(target, { value: color.slice(0, 7) });
+    inputColorHandler({ target });
+    return;
+  }
+  changeColor({ target });
 };

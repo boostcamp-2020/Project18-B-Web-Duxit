@@ -6,11 +6,14 @@ import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
 import Svg from '@type/svg';
 import defaultColors from '@type/defaultColors.json';
+import { getRandomColor } from '@utils/hexColor';
 import {
   copyGameCode,
   redirectToLobby,
   toggleReady,
   changeNickname,
+  inputColorHandler,
+  changeColor,
 } from './events';
 
 const renderWaitingRoom = (roomID = '') => {
@@ -77,6 +80,13 @@ const renderWaitingRoom = (roomID = '') => {
     parent: ColorPickerWrapper,
   });
 
+  const emitChangeColor = (colorFunction) => () => {
+    ColorInput.setValue(colorFunction());
+    changeColor({ target: ColorInput.instance });
+  };
+
+  ColorInput.instance.addEventListener('input', inputColorHandler);
+  RandomColorButton.addClickHandler(emitChangeColor(() => getRandomColor()));
   defaultColors.forEach((color) => {
     const sampleButton = new ButtonObject({
       classes: ['color-sample-button'],
@@ -86,6 +96,7 @@ const renderWaitingRoom = (roomID = '') => {
       title: color,
     });
     sampleButton.instance.style.backgroundColor = color;
+    sampleButton.addClickHandler(emitChangeColor(() => color));
   });
 
   const NicknameInput = new InputObject();
@@ -157,6 +168,9 @@ const renderWaitingRoom = (roomID = '') => {
     arrayToBeRemoved,
     NicknameInput,
     AllReadyText,
+    ColorButton,
+    RandomColorButton,
+    ColorInput,
   };
 };
 

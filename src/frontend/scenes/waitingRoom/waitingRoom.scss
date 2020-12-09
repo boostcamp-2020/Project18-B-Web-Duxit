@@ -99,6 +99,14 @@
   margin-left: 1em;
 }
 
+.color-white {
+  fill: $white-color;
+}
+
+.input-state-invalid {
+  color: $red-color;
+}
+
 .color-sample-grid {
   flex-wrap: wrap;
   margin-top: 0.5rem;
