@@ -85,6 +85,10 @@ const PlayerManager = class extends Map {
     if (this.tellerID) return this.map.get(this.tellerID);
     return [...this.map].find((player) => player.isTeller) || null;
   }
+
+  isTeller() {
+    return this.currentPlayerID === this.tellerID;
+  }
 };
 
 export default new PlayerManager();

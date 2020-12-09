@@ -4,10 +4,10 @@ import CardManager from '@utils/CardManager';
 import GuesserSelectCard from '../guesserSelectCard';
 
 const setupGuesserWaiting = () => {
-  const onTellerSelectCard = ({ topic }) => {
+  const onTellerSelectCard = ({ topic, endTime }) => {
     CardManager.updateTopic(topic);
     CardManager.addSubmittedCardCount();
-    SceneManager.renderNextScene(new GuesserSelectCard());
+    SceneManager.renderNextScene(new GuesserSelectCard({ endTime }));
   };
 
   socket.on('teller decision', onTellerSelectCard);
