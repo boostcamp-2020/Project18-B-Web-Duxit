@@ -1,8 +1,9 @@
 import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
-import { PLAYER, CARD } from '@utils/number';
+import { PLAYER, CARD, TIME } from '@utils/number';
+import { forceTellerSelect } from '@socket/tellerSelectCard';
+import { emit } from '@socket';
 import GameList from '@game/GameList';
-import socketIO from '@socket';
 import User from './User';
 
 export default class Game {
@@ -18,22 +19,32 @@ export default class Game {
   }
 
   start() {
-    this.status = {
-      ...this.status,
-      state: GAME_STATE.TELLER,
-      unusedCards: generateRandom.cards(CARD.DECK),
-    };
+    this.updateState(GAME_STATE.TELLER);
+    this.updateUnusedCards(generateRandom.cards(CARD.DECK));
+
     [...this.users.values()].forEach((user, index) => {
       user.initOnStart({ turnID: index });
     });
-    this.startNewRound();
+
+    const tellerID = this.startNewRound();
+    setTimeout(() => {
+      if (this.status.state === GAME_STATE.TELLER) {
+        const teller = this.getUser(tellerID);
+        const topic = forceTellerSelect({ teller, users: this.users });
+        this.updateState(GAME_STATE.GUESSER);
+        this.updateTopic(topic);
+      }
+    }, TIME.WAIT_TELLER_SELECT);
   }
 
   end() {
-    // 아직 사용되지 않은 함수
+    this.updateState(GAME_STATE.WAITING);
+  }
+
+  updateUnusedCards(cards) {
     this.status = {
       ...this.status,
-      state: GAME_STATE.WAITING,
+      unusedCards: cards,
     };
   }
 
@@ -100,23 +111,9 @@ export default class Game {
     return [...this.users.values()];
   }
 
-  forceGuesserSelect() {
-    this.getUserArray()
-      .filter((user) => user.submittedCard === null)
-      .forEach((user) => {
-        user.submittedCard = generateRandom.pickOneFromArray(user.cards);
-        socketIO
-          .to(user.socketID)
-          .emit('guesser select card', { cardID: user.submittedCard });
-      });
-  }
-
   startNewRound() {
-    // Initialize Game status
     this.status = {
       ...this.status,
-      state: GAME_STATE.TELLER,
-      topic: '',
       turn: this.status.turn + 1,
     };
     const {
@@ -139,8 +136,10 @@ export default class Game {
       const cards = this.dealCards(user.cards, requiredCardCount);
       const params = { tellerID, cards };
       user.initOnRound(params);
-      socketIO.to(user.socketID).emit('get round data', params);
+      emit({ socketID: user.socketID, name: 'get round data', params });
     });
+
+    return tellerID;
   }
 
   updateTopic(topic) {
