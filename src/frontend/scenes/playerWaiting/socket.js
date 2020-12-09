@@ -8,7 +8,8 @@ const setupPlayerWaiting = () => {
     CardManager.dropNewCard();
   };
 
-  const onGetAllDecisions = () => {
+  const onGetAllDecisions = ({ cards }) => {
+    CardManager.updateCardInformation(cards);
     SceneManager.renderNextScene(new MixCard());
   };
 

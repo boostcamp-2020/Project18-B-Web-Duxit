@@ -40,6 +40,12 @@ const CardManager = class {
     this.submittedCards = [...this.submittedCards, cardObject];
   }
 
+  updateCardInformation(cardIDs) {
+    this.submittedCards.forEach((card, idx) => {
+      card.setCardInformation(cardIDs[idx]);
+    });
+  }
+
   liftSelectedCardUp() {
     const liftingCard = new CardObject({
       position: [50, 60],

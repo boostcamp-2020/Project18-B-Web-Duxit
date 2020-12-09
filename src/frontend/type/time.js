@@ -11,6 +11,6 @@ export default {
   NONE_INTERVAL: 0,
   WRAP_UP: {
     TELLER_SELECT: 3500,
+    PLAYER_WAITING: 3000,
   },
-
 };
