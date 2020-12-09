@@ -22,12 +22,14 @@ class DuckCursorObject extends DuckObejct {
   constructor(props) {
     super(props);
     this.addClass('cursor-duck-wrapper');
-    this.setInnerHTML(Duck({ color: this.color, width: 100 }));
     this.setOriginCenter();
     this.move(Math.random() * 50 + 25, Math.random() * 50 + 25, 0);
     this.attachToRoot();
     this.throttling = false;
     this.lastPosition = null;
+
+    this.width = 100;
+    this.render();
   }
 
   makeFollowMouse() {

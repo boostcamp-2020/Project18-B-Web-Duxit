@@ -5,6 +5,7 @@ import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
 import Svg from '@type/svg';
+import DuckObject from '@engine/DuckObject';
 import {
   copyGameCode,
   redirectToLobby,
@@ -83,6 +84,12 @@ const renderWaitingRoom = (roomID = '') => {
   AllReadyText.addClass('hide');
   AllReadyText.setContent('잠시 뒤 게임이 시작됩니다.');
   AllReadyText.attachToRoot();
+
+  const duck = new DuckObject();
+  duck.attachToRoot();
+  duck.addClass('movable');
+  duck.move(50, 50);
+  window.a = duck;
 
   const arrayToBeRemoved = [
     Header,

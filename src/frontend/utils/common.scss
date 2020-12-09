@@ -41,6 +41,10 @@ html {
   display: none;
 }
 
+.movable {
+  position: absolute;
+}
+
 @mixin helper-text-white-background {
   padding: 0.5em;
   background-color: #fffa;
