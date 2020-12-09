@@ -27,7 +27,7 @@ export default class Game {
 
     this.updateState(GAME_STATE.TELLER);
     this.updateUnusedCards(generateRandom.cards(CARD.DECK));
-    this.addTimeToEndTime(TIME.WAIT_TELLER_SELECT);
+    this.setEndTime(TIME.WAIT_TELLER_SELECT);
     this.startNewRound();
   }
 
@@ -56,7 +56,7 @@ export default class Game {
     };
   }
 
-  addTimeToEndTime(timeUnit) {
+  setEndTime(timeUnit) {
     const currentTime = new Date().getTime();
     const newTargetTime = new Date(currentTime + timeUnit);
     this.endTime = newTargetTime;
@@ -131,6 +131,7 @@ export default class Game {
     const { socketID: tellerID } = teller;
     const requiredCardCount = isFirstTurn ? CARD.HAND : 1;
     const outOfDeck = unusedCards.length < users.size * requiredCardCount;
+    if (outOfDeck) return;
 
     users.forEach((user) => {
       const cards = this.dealCards(user.cards, requiredCardCount);
@@ -145,7 +146,7 @@ export default class Game {
   waitTellerSelect(tellerID) {
     setTimeout(() => {
       if (this.status.state === GAME_STATE.TELLER) {
-        this.addTimeToEndTime(TIME.WAIT_GUESSER_SELECT);
+        this.setEndTime(TIME.WAIT_GUESSER_SELECT);
         const teller = this.getUser(tellerID);
         const topic = forceTellerSelect({
           teller,
@@ -167,7 +168,7 @@ export default class Game {
     const users = this.getUserArray();
     setTimeout(() => {
       if (this.status.state === GAME_STATE.GUESSER) {
-        this.addTimeToEndTime(TIME.WAIT_DISCUSSION);
+        this.setEndTime(TIME.WAIT_DISCUSSION);
         const unsubmittedUsers = users.filter(
           ({ submittedCard }) => submittedCard === null,
         );

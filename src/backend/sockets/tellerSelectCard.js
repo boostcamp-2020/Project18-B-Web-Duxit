@@ -11,7 +11,7 @@ function onSendTellerDecision({ cardID, topic }) {
   if (!cardID || !topic) return;
 
   user.submitCard(cardID);
-  game.addTimeToEndTime(TIME.WAIT_GUESSER_SELECT);
+  game.setEndTime(TIME.WAIT_GUESSER_SELECT);
   socket.emit('teller select card', { cardID, topic, endTime: game.endTime });
   socket
     .in(game.roomID)
