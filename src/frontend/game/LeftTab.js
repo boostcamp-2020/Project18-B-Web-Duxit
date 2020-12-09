@@ -1,76 +1,68 @@
 import './left.scss';
 import { $id } from '@utils/dom';
-import DuckObject from '@engine/DuckObject';
-import { DUCK_TYPE } from '@type/duck';
+import DuckLeftTabObject from '@engine/DuckLeftTabObject';
 import PlayerManager from '@utils/PlayerManager';
 import initVoiceChat from '@utils/voiceChat';
 
 const createDuck = (duckInfo) => {
   const { socketID, color, nickname } = duckInfo;
-  const duck = new DuckObject({ type: DUCK_TYPE.LEFT_TAB, socketID });
-  duck.setNickname(nickname);
-  duck.setColor(color);
-  duck.createElement();
+  const duck = new DuckLeftTabObject({ socketID, color, nickname });
   return duck;
 };
 
 class LeftTab {
   constructor() {
-    this.players = [];
+    this.ducks = [];
     PlayerManager.onInitialize.push(this.initializePlayers.bind(this));
-    PlayerManager.onUpdate.push(this.updatePlayer.bind(this));
+    PlayerManager.onUpdate.push(this.updateDuck.bind(this));
     PlayerManager.onDelete.push(this.deletePlayer.bind(this));
   }
 
-  initializePlayers(players = []) {
-    const ducks = players.reduce((prev, player) => {
-      const duck = createDuck(player);
-      return [...prev, duck];
-    }, []);
-    this.players = ducks;
+  initializePlayers() {
     this.render();
     initVoiceChat();
   }
 
-  findPlayer(socketID) {
-    return this.players.find((player) => player.socketID === socketID);
+  findDuck(socketID) {
+    return this.ducks.find((player) => player.socketID === socketID);
   }
 
-  updatePlayer(playerInfo) {
-    const updatedPlayer = this.findPlayer(playerInfo.socketID);
-    if (updatedPlayer) {
-      updatedPlayer.setHat(playerInfo.isTeller);
-      updatedPlayer.update(playerInfo);
-    } else this.addPlayer(playerInfo);
+  updateDuck(playerInfo) {
+    const updatedDuck = this.findDuck(playerInfo.socketID);
+    if (updatedDuck) {
+      updatedDuck.setHat(playerInfo.isTeller);
+      updatedDuck.update(playerInfo);
+    } else this.addDuck(playerInfo);
   }
 
   deletePlayer(playerInfo) {
-    const deletedPlayer = this.findPlayer(playerInfo.socketID);
+    const deletedPlayer = this.findDuck(playerInfo.socketID);
     const playerWrapper = $id('participants-wrapper');
     playerWrapper.removeChild(deletedPlayer.instance);
-    this.players = this.players.filter(
+    this.ducks = this.ducks.filter(
       (player) => player.socketID !== playerInfo.socketID,
     );
     this.renderCount();
   }
 
-  addPlayer(playerInfo) {
+  addDuck(playerInfo) {
+    console.log('add duck');
     const duck = createDuck(playerInfo);
     const playerWrapper = $id('participants-wrapper');
-    this.players = [...this.players, duck];
+    this.ducks = [...this.ducks, duck];
     playerWrapper.appendChild(duck.instance);
     this.renderCount();
   }
 
   renderCount() {
     const playerCount = $id('participants-count');
-    playerCount.innerText = this.players.length;
+    playerCount.innerText = this.ducks.length;
   }
 
   render() {
     this.renderCount();
     const playerWrapper = $id('participants-wrapper');
-    this.players.forEach((player) => {
+    this.ducks.forEach((player) => {
       playerWrapper.appendChild(player.instance);
     });
   }

@@ -16,7 +16,7 @@ const PlayerManager = class extends Map {
     this.currentPlayerID = socket.id;
     this.tellerID = '';
     super.clear();
-    players.forEach((player) => super.set(player.socketID, new Player(player)));
+    players.forEach((player) => super.set(player.socketID, this.set(player)));
     this.onInitialize.forEach((callback) => callback(this.getArray()));
   }
 
@@ -31,23 +31,32 @@ const PlayerManager = class extends Map {
     });
   }
 
-  set(player = {}) {
-    const { socketID } = player;
+  set(playerParams = {}) {
+    const { socketID } = playerParams;
     if (!socketID) return this;
 
-    const old = this.get(socketID) || {};
-    const updated = { ...old, ...player };
-    super.set(socketID, new Player(updated));
+    let player;
+    if (this.has(socketID)) {
+      player = this.get(socketID);
+      player.update(playerParams);
+    } else {
+      const isCurrentPlayer = this.currentPlayerID === socketID;
+      player = new Player({ ...playerParams, isCurrentPlayer });
+      super.set(socketID, player);
+    }
 
-    this.onUpdate.forEach((callback) => callback(updated));
-    return this;
+    this.onUpdate.forEach((callback) => callback(player));
+    return player;
   }
 
-  updateCurrentPlayer(player = {}) {
-    this.set({ ...player, socketID: this.currentPlayerID });
+  updateCurrentPlayer(playerParams = {}) {
+    this.set({ ...playerParams, socketID: this.currentPlayerID });
   }
 
   delete(socketID) {
+    if (!this.has(socketID)) return false;
+
+    this.get(socketID).delete();
     const result = super.delete(socketID);
     this.onDelete.forEach((callback) => callback({ socketID }));
     return result;

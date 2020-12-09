@@ -1,7 +1,7 @@
 import './guesserWaiting.scss';
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
-import DuckObject from '@engine/DuckObject';
+import DuckTellerObject from '@engine/DuckTellerObject';
 import TEXT from '@utils/text';
 import TIME from '@type/time';
 import { DUCK_TYPE } from '@type/duck';
@@ -24,8 +24,7 @@ const renderGuesserWaiting = () => {
   ProgressBar.setTime(TIME.SELECT_CARD);
   ProgressBar.start();
 
-  const TellerDuck = new DuckObject({ type: DUCK_TYPE.TELLER });
-  TellerDuck.createElement();
+  const TellerDuck = new DuckTellerObject();
   TellerDuck.attachToRoot();
   TellerDuck.move(50, 0, 0);
   TellerDuck.move(50, 10, TIME.ONE_SECOND);

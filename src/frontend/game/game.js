@@ -8,8 +8,9 @@ import GuesserWaiting from '@scenes/guesserWaiting';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
 import CardManager from '@utils/CardManager';
+import TIME from '@type/time';
+import './LeftTab';
 import './background';
-import './leftTab';
 
 const scrollToBottom = (component) => {
   const scrollOption = {
@@ -105,6 +106,12 @@ const initialize = async () => {
       ? new TellerSelectCard({ cards })
       : new GuesserWaiting();
     SceneManager.renderNextScene(nextScene);
+  });
+
+  socket.on('get duck move', ({ x, y, playerID: socketID }) => {
+    if (!PlayerManager.has(socketID)) return;
+    const { duck } = PlayerManager.get(socketID);
+    duck.move(x, y, TIME.DUCK_SPEED);
   });
 };
 
