@@ -131,7 +131,8 @@ const GameObject = class {
           this.instance.style.top = yString;
           this.instance.style.left = xString;
           this.animationFrame = null;
-          return resolve();
+          resolve();
+          return;
         }
         const newY =
           initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
@@ -185,7 +186,8 @@ const GameObject = class {
           this.instance.style.top = yString;
           this.instance.style.left = xString;
           this.animationFrame = null;
-          return resolve();
+          resolve();
+          return;
         }
         const newY = initialY + (targetY - initialY) * (elapsed / duration);
         const newX = initialX + (targetX - initialX) * (elapsed / duration);
