@@ -16,7 +16,6 @@ const PlayerManager = class extends Map {
     this.currentPlayerID = socket.id;
     this.tellerID = '';
     super.clear();
-    // players.forEach((player) => super.set(player.socketID, new Player(player)));
     players.forEach((player) => super.set(player.socketID, this.set(player)));
     this.onInitialize.forEach((callback) => callback(this.getArray()));
   }
