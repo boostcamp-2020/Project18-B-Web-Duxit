@@ -74,7 +74,7 @@
   display: flex;
   flex-direction: column;
   padding: 1em;
-  border: 1px #000 solid;
+  border: 1px $black-color solid;
   background-color: $white-color;
 
   div {
@@ -95,7 +95,7 @@
 
 .waiting-color-input {
   padding: 0.5em;
-  border: 1px #000 solid;
+  border: 1px $black-color solid;
   margin-left: 1em;
 }
 
