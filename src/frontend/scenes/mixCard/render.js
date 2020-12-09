@@ -8,7 +8,7 @@ const cardCount = NUMBER[CardManager.submittedCards.length];
 const position = CARD_POSITION[MIX_CARD];
 const spreadXPosition = position.SPREAD_X[cardCount];
 
-const stackCard = async (Cards) => {
+const stackCards = async (Cards) => {
   const promises = Cards.map(async (card) => {
     return card.roll(
       position.CENTER,
@@ -21,7 +21,7 @@ const stackCard = async (Cards) => {
   await Promise.all(promises);
 };
 
-const rotateCard = (Cards) => {
+const rotateCards = (Cards) => {
   Cards.forEach(async (element) => {
     element.rotate(NUMBER.ZERO, NUMBER.ZERO);
   });
@@ -40,7 +40,7 @@ const shuffleCards = async (Cards, count) => {
   }
 };
 
-const spreadCard = async (Cards) => {
+const spreadCards = async (Cards) => {
   const promises = Cards.map(async (card, count) => {
     return card.move(
       spreadXPosition[count],
@@ -51,28 +51,28 @@ const spreadCard = async (Cards) => {
   await Promise.all(promises);
 };
 
-const flipCard = async (Cards) => {
+const flipCards = async (Cards) => {
   Cards.forEach((element) => {
     element.animateFlip();
   });
 };
 
-const mixCard = async (Cards) => {
-  await stackCard(Cards);
-  rotateCard(Cards);
+const mixCards = async (Cards) => {
+  await stackCards(Cards);
+  rotateCards(Cards);
   await shuffleCards(Cards, NUMBER.SHUFFLE_COUNT);
-  await spreadCard(Cards);
-  flipCard(Cards);
+  await spreadCards(Cards);
+  flipCards(Cards);
 };
 
-const setCardsImage = () => {
+const setCardsInfo = () => {
   // 이 함수 구현해서 아래 주석 쪽에 넣어주면 될 듯
 };
 
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
   // Todo: 카드에 ID 및 Image 경로 할당하는 작업 해야 뒤집었을 때 그림 나옴
-  mixCard(Cards);
+  mixCards(Cards);
   const arrayToBeRemoved = [];
   return {
     arrayToBeRemoved,
