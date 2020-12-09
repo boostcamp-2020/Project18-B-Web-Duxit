@@ -7,17 +7,17 @@ const Player = class {
     color,
     score = 0,
     isTeller = false,
-    isMine = false,
+    isCurrentPlayer = false,
   } = {}) {
     this.socketID = socketID;
     this.nickname = nickname;
     this.color = color;
     this.score = score;
     this.isTeller = isTeller;
-    this.isMine = isMine;
+    this.isCurrentPlayer = isCurrentPlayer;
     this.duck = new DuckCursorObject({ color });
 
-    if (this.isMine) {
+    if (this.isCurrentPlayer) {
       this.duck.makeFollowMouse();
     } else {
     }

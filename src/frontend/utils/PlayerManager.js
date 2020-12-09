@@ -41,8 +41,8 @@ const PlayerManager = class extends Map {
       player = this.get(socketID);
       player.update(playerParams);
     } else {
-      const isMine = this.currentPlayerID === socketID;
-      player = new Player({ ...playerParams, isMine });
+      const isCurrentPlayer = this.currentPlayerID === socketID;
+      player = new Player({ ...playerParams, isCurrentPlayer });
       super.set(socketID, player);
     }
 
