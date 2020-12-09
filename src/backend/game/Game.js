@@ -1,10 +1,9 @@
 import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
 import { PLAYER, CARD, TIME } from '@utils/number';
-import { emit } from '@utils/socket';
-import TOPIC from '@utils/cardTopic.json';
+import { forceTellerSelect } from '@utils/socket';
+import { emit } from '@socket';
 import GameList from '@game/GameList';
-import socketIO from '@socket';
 import User from './User';
 
 export default class Game {
@@ -20,11 +19,9 @@ export default class Game {
   }
 
   start() {
-    this.status = {
-      ...this.status,
-      state: GAME_STATE.TELLER,
-      unusedCards: generateRandom.cards(CARD.DECK),
-    };
+    this.updateState(GAME_STATE.TELLER);
+    this.updateUnusedCards(generateRandom.cards(CARD.DECK));
+
     [...this.users.values()].forEach((user, index) => {
       user.initOnStart({ turnID: index });
     });
@@ -32,16 +29,22 @@ export default class Game {
     const tellerID = this.startNewRound();
     setTimeout(() => {
       if (this.status.state === GAME_STATE.TELLER) {
-        this.forceTellerSelect(tellerID);
+        const teller = this.getUser(tellerID);
+        const topic = forceTellerSelect({ teller, users: this.users });
+        this.updateState(GAME_STATE.GUESSER);
+        this.updateTopic(topic);
       }
     }, TIME.WAIT_TELLER_SELECT);
   }
 
   end() {
-    // 아직 사용되지 않은 함수
+    this.updateState(GAME_STATE.WAITING);
+  }
+
+  updateUnusedCards(cards) {
     this.status = {
       ...this.status,
-      state: GAME_STATE.WAITING,
+      unusedCards: cards,
     };
   }
 
@@ -108,50 +111,7 @@ export default class Game {
     return [...this.users.values()];
   }
 
-  selectCardFromUser({ socketID, teller = true }) {
-    const user = this.users.get(socketID);
-    const cardID = generateRandom.pickOneFromArray(user.cards);
-    user.submittedCard = cardID;
-    return teller ? { cardID, topic: TOPIC[cardID] } : { cardID };
-  }
-
-  forceTellerSelect(tellerID) {
-    const { cardID, topic } = this.selectCardFromUser({
-      socketID: tellerID,
-      teller: true,
-    });
-    this.updateTopic(topic);
-    this.users.forEach((user) => {
-      const { socketID } = user;
-      const isTeller = socketID === tellerID;
-      const name = isTeller ? 'teller select card' : 'teller decision';
-      const params = isTeller ? { cardID, topic } : { cardID };
-      emit({ socketID, name, params });
-    });
-    this.updateState(GAME_STATE.GUESSER);
-  }
-
-  forceGuesserSelect() {
-    this.getUserArray()
-      .filter((user) => user.submittedCard === null)
-      .forEach((user) => {
-        const { socketID } = user;
-        const otherUsers = this.users.filter(
-          ({ socketID: guesserID }) => guesserID !== socketID,
-        );
-        const { cardID } = this.selectCardFromUser({ socketID, teller: false });
-        emit({ socketID, name: 'guesser select card', params: { cardID } });
-        emit({
-          users: otherUsers,
-          name: 'other guesser decision',
-          params: { playerID: socketID },
-        });
-      });
-    this.updateState(GAME_STATE.GUESSER);
-  }
-
   startNewRound() {
-    // Initialize Game status
     this.status = {
       ...this.status,
       turn: this.status.turn + 1,

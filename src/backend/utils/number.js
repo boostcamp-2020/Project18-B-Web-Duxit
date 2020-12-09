@@ -9,7 +9,6 @@ export const CARD = {
 };
 
 export const TIME = {
-  WAIT_TELLER_SELECT: 6000,
+  WAIT_GAME_START: 5000,
+  WAIT_TELLER_SELECT: 60000,
 };
-
-export const WAIT_GAME_START = 60000;
