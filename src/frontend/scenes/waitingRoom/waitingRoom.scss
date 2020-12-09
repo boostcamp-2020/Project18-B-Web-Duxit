@@ -74,18 +74,17 @@
   display: flex;
   flex-direction: column;
   padding: 1em;
-  border: 1px $black-color solid;
-  background-color: $white-color;
-
+  background-color: #e0e0e0aa;
+  border-radius: 1em;
   div {
     display: flex;
   }
 }
 
 .color-sample-button {
-  flex: 20%;
-  border: 0.2rem $gray-color outset;
-  border-radius: 0.4rem;
+  flex: 25%;
+  box-shadow: $button-shadow;
+  outline: 1px $gray-color solid;
 }
 .color-sample-button::before {
   display: block;
@@ -95,8 +94,9 @@
 
 .waiting-color-input {
   padding: 0.5em;
-  border: 1px $black-color solid;
   margin-left: 1em;
+  background-color: $white-color;
+  border-radius: 1em;
 }
 
 .color-white {
