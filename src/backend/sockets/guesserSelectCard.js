@@ -26,7 +26,10 @@ function onSendGuesserDecision({ cardID }) {
     ({ submittedCard }) => submittedCard !== null,
   );
 
-  if (submittedUsers.length === users.length) emitGetAllDecisions(users);
+  if (submittedUsers.length === users.length) {
+    emitGetAllDecisions({ users });
+    game.updateState(GAME_STATE.DISCUSSION);
+  }
 }
 
 export const forceGuesserSelect = ({ unsubmittedUsers, users, endTime }) => {
