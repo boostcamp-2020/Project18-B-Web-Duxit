@@ -1,4 +1,5 @@
 import GAME_STATE from '@utils/gameState';
+import { TIME } from '@utils/number';
 import generateRandom from '@utils/generateRandom';
 import { emit } from '@socket';
 
@@ -27,8 +28,10 @@ function onSendGuesserDecision({ cardID }) {
   );
 
   if (submittedUsers.length === users.length) {
-    emitGetAllDecisions({ users });
     game.updateState(GAME_STATE.DISCUSSION);
+    setTimeout(() => {
+      emitGetAllDecisions({ users });
+    }, TIME.DELAY_GET_ALL_DECISIONS);
   }
 }
 
@@ -51,7 +54,9 @@ export const forceGuesserSelect = ({ unsubmittedUsers, users, endTime }) => {
     });
   });
 
-  emitGetAllDecisions({ users });
+  setTimeout(() => {
+    emitGetAllDecisions({ users });
+  }, TIME.DELAY_GET_ALL_DECISIONS);
 };
 
 export default function onGuesserSelectCard(socket) {
