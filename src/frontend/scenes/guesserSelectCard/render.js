@@ -37,7 +37,7 @@ const renderGuesserSelect = ({ endTime }) => {
     );
   });
 
-  const arrayToBeRemoved = [TopicText, CardsWrapper, ...cards];
+  const arrayToBeRemoved = [CardsWrapper, ...cards];
 
   return {
     arrayToBeRemoved,

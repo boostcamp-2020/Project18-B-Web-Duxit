@@ -6,10 +6,13 @@ import setupPlayerWaiting from './socket';
 
 const PlayerWaiting = class {
   constructor({ ProgressBar, endTime }) {
-    this.wrapupInterval = TIME.WRAP_UP.PLAYER_WAITING;
     this.endTime = endTime;
     this.ProgressBar = ProgressBar;
     this.ducks = new Map();
+
+    Array.from({ length: CardManager.beforeSubmittedCount }, () =>
+      CardManager.dropNewCard(),
+    );
     setupPlayerWaiting();
   }
 
@@ -17,10 +20,6 @@ const PlayerWaiting = class {
     const { ProgressBar, endTime } = this;
     const { arrayToBeRemoved } = renderPlayerWaiting({ ProgressBar, endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
-
-    Array.from({ length: CardManager.beforeSubmittedCount }, () =>
-      CardManager.dropNewCard(),
-    );
   }
 
   wrapup() {

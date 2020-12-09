@@ -96,7 +96,7 @@ const CardObject = class extends GameObject {
   setCardInformation(cardID) {
     const imagePath = GET_IMAGE_PATH(cardID);
     this.cardID = cardID;
-    this.front.setImagePath(imagePath);
+    this.setImagePath(imagePath);
   }
 };
 
