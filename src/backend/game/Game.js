@@ -1,7 +1,7 @@
 import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
 import { PLAYER, CARD, TIME } from '@utils/number';
-import { forceTellerSelect } from '@utils/socket';
+import { forceTellerSelect } from '@socket/tellerSelectCard';
 import { emit } from '@socket';
 import GameList from '@game/GameList';
 import User from './User';
