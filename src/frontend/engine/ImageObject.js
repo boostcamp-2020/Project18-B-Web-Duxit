@@ -1,7 +1,7 @@
 import GameObject from './GameObject';
 
 const ImageObject = class extends GameObject {
-  constructor({ imagePath, ...rest }) {
+  constructor({ imagePath = '', ...rest } = {}) {
     super(rest);
     this.setImagePath(imagePath);
   }

@@ -6,7 +6,7 @@ import stonePosition from '@type/stonePosition.json';
 import GameObject from '../engine/GameObject';
 
 const initializeLayout = (background) =>
-  stonePosition.map((position, index) => {
+  stonePosition.forEach((position, index) => {
     const wrapper = new GameObject({
       classes: ['stone'],
       position,
@@ -22,7 +22,6 @@ const initializeLayout = (background) =>
     }).setContent(index);
     background.appendChild(wrapper.instance);
   });
-};
 
 const Background = class {
   constructor() {
