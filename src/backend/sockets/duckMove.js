@@ -1,4 +1,4 @@
-function onSendTellerDecision({ x, y }) {
+function onUserDuckMove({ x, y }) {
   const socket = this;
   const { game } = socket;
 
@@ -8,5 +8,5 @@ function onSendTellerDecision({ x, y }) {
 }
 
 export default function onDuckMove(socket) {
-  socket.on('send duck move', onSendTellerDecision);
+  socket.on('send duck move', onUserDuckMove);
 }
