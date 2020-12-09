@@ -1,7 +1,7 @@
 import { $create } from '@utils/dom';
-import ImageObject from './ImageObject';
+import GameObject from './GameObject';
 
-class DuckObject extends ImageObject {
+class DuckObject extends GameObject {
   constructor({ color, ...rest } = {}) {
     super(rest);
     this.color = color;
