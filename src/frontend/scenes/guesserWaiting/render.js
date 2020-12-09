@@ -25,7 +25,6 @@ const renderGuesserWaiting = () => {
   ProgressBar.start();
 
   const TellerDuck = new DuckTellerObject();
-  // TellerDuck.createElement();
   TellerDuck.attachToRoot();
   TellerDuck.move(50, 0, 0);
   TellerDuck.move(50, 10, TIME.ONE_SECOND);
