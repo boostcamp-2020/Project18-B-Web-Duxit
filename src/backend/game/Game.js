@@ -2,6 +2,7 @@ import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
 import { PLAYER, CARD, TIME } from '@utils/number';
 import { forceTellerSelect } from '@socket/tellerSelectCard';
+import { forceGuesserSelect } from '@socket/guesserSelectCard';
 import { emit } from '@socket';
 import GameList from '@game/GameList';
 import User from './User';
@@ -27,20 +28,7 @@ export default class Game {
     this.updateState(GAME_STATE.TELLER);
     this.updateUnusedCards(generateRandom.cards(CARD.DECK));
     this.addTimeToEndTime(TIME.WAIT_TELLER_SELECT);
-
-    const tellerID = this.startNewRound();
-    setTimeout(() => {
-      if (this.status.state === GAME_STATE.TELLER) {
-        const teller = this.getUser(tellerID);
-        const topic = forceTellerSelect({ teller, users: this.users });
-        this.updateState(GAME_STATE.GUESSER);
-        this.updateTopic(topic);
-      }
-    }, TIME.WAIT_TELLER_SELECT);
-  }
-
-  end() {
-    this.updateState(GAME_STATE.WAITING);
+    this.startNewRound();
   }
 
   updateUnusedCards(cards) {
@@ -54,6 +42,17 @@ export default class Game {
     this.status = {
       ...this.status,
       state,
+    };
+  }
+
+  updateTopic(topic) {
+    this.status = { ...this.status, topic };
+  }
+
+  addTurn() {
+    this.status = {
+      ...this.status,
+      turn: this.status.turn + 1,
     };
   }
 
@@ -120,25 +119,19 @@ export default class Game {
   }
 
   startNewRound() {
-    this.status = {
-      ...this.status,
-      turn: this.status.turn + 1,
-    };
+    this.addTurn();
+
     const {
       users,
       status: { unusedCards, turn },
     } = this;
+
     const isFirstTurn = turn === 1;
     const teller = [...users.values()][turn % users.size];
     const { socketID: tellerID } = teller;
     const requiredCardCount = isFirstTurn ? CARD.HAND : 1;
-
-    // 카드가 부족한지 체크
     const outOfDeck = unusedCards.length < users.size * requiredCardCount;
-    // if (outOfDeck) {
-    //   // TODO: 점수나 승자같은 결과를 내면서 턴을 끝내야되요~
-    //   return;
-    // }
+
     users.forEach((user) => {
       const cards = this.dealCards(user.cards, requiredCardCount);
       const params = { tellerID, cards, endTime: this.endTime };
@@ -146,13 +139,41 @@ export default class Game {
       emit({ socketID: user.socketID, name: 'get round data', params });
     });
 
-    return tellerID;
+    this.waitTellerSelect(tellerID);
   }
 
-  updateTopic(topic) {
-    this.status = {
-      ...this.status,
-      topic,
-    };
+  waitTellerSelect(tellerID) {
+    setTimeout(() => {
+      if (this.status.state === GAME_STATE.TELLER) {
+        this.addTimeToEndTime(TIME.WAIT_GUESSER_SELECT);
+        const teller = this.getUser(tellerID);
+        const topic = forceTellerSelect({
+          teller,
+          users: this.users,
+          endTime: this.endTime,
+        });
+        this.startGuesserSelect(topic);
+      }
+    }, TIME.WAIT_TELLER_SELECT);
+  }
+
+  startGuesserSelect(topic) {
+    this.updateTopic(topic);
+    this.updateState(GAME_STATE.GUESSER);
+    this.waitGuesserSelect();
+  }
+
+  waitGuesserSelect() {
+    const users = this.getUserArray();
+    setTimeout(() => {
+      if (this.status.state === GAME_STATE.GUESSER) {
+        this.addTimeToEndTime(TIME.WAIT_DISCUSSION);
+        const unsubmittedUsers = users.filter(
+          ({ submittedCard }) => submittedCard === null,
+        );
+        forceGuesserSelect({ unsubmittedUsers, users, endTime: this.endTime });
+        this.updateState(GAME_STATE.DISCUSSION);
+      }
+    }, TIME.WAIT_GUESSER_SELECT);
   }
 }
