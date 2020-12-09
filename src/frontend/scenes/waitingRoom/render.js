@@ -5,6 +5,7 @@ import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
 import Svg from '@type/svg';
+import defaultColors from '@type/defaultColors.json';
 import {
   copyGameCode,
   redirectToLobby,
@@ -26,6 +27,67 @@ const renderWaitingRoom = (roomID = '') => {
   InputWrapper.addClass('waiting-input-wrapper');
   InputWrapper.attachToObject(Header);
 
+  const ColorButtonWrapper = new GameObject({
+    classes: ['color-button-wrapper'],
+    parent: InputWrapper,
+  });
+
+  const ColorButton = new ButtonObject({
+    classes: ['refresh-button'],
+    parent: ColorButtonWrapper,
+  });
+
+  const BrushIcon = new SvgObject();
+  BrushIcon.setSvg(Svg.brush);
+  BrushIcon.attachToObject(ColorButton);
+
+  const ColorPickerWrapper = new GameObject({
+    classes: ['color-picker-wrapper'],
+    parent: ColorButtonWrapper,
+  });
+
+  const ColorPickerTops = new GameObject({
+    parent: ColorPickerWrapper,
+  });
+
+  const RandomColorButton = new ButtonObject({
+    classes: ['refresh-button', 'refresh-button-small'],
+    parent: ColorPickerTops,
+  });
+
+  const RandomIcon = new SvgObject();
+  RandomIcon.setSvg(Svg.refresh);
+  RandomIcon.attachToObject(RandomColorButton);
+
+  const ColorInput = new InputObject({
+    classes: ['waiting-color-input'],
+    parent: ColorPickerTops,
+  });
+  ColorInput.setAttributes({
+    maxlength: 8,
+    size: 7,
+    autocomplete: 'off',
+    placeholder: '#',
+    title: '16진 색상 코드를 직접 입력해보세요.',
+    value: '#',
+  });
+
+  const ColorSampleGrid = new GameObject({
+    classes: ['color-sample-grid'],
+    parent: ColorPickerWrapper,
+  });
+
+  defaultColors.forEach((color) => {
+    const sampleButton = new ButtonObject({
+      classes: ['color-sample-button'],
+      parent: ColorSampleGrid,
+    });
+    sampleButton.setAttributes({
+      title: color,
+    });
+    sampleButton.instance.style.backgroundColor = color;
+  });
+
   const NicknameInput = new InputObject();
   NicknameInput.addClass('waiting-nickname-input');
   NicknameInput.setAttributes({
@@ -35,14 +97,14 @@ const renderWaitingRoom = (roomID = '') => {
   });
   NicknameInput.attachToObject(InputWrapper);
 
-  const RefreshButton = new ButtonObject();
-  RefreshButton.addClass('refresh-button');
-  RefreshButton.attachToObject(InputWrapper);
-  RefreshButton.addClickHandler(() => changeNickname(NicknameInput));
+  const NicknameSubmitButton = new ButtonObject();
+  NicknameSubmitButton.addClass('refresh-button');
+  NicknameSubmitButton.attachToObject(InputWrapper);
+  NicknameSubmitButton.addClickHandler(() => changeNickname(NicknameInput));
 
   const CheckIcon = new SvgObject();
   CheckIcon.setSvg(Svg.check);
-  CheckIcon.attachToObject(RefreshButton);
+  CheckIcon.attachToObject(NicknameSubmitButton);
 
   const ActionWrapper = new GameObject();
   ActionWrapper.addClass('waiting-action-wrapper');
