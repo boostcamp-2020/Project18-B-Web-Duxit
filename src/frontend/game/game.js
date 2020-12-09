@@ -98,13 +98,13 @@ const initialize = async () => {
     PlayerManager.delete(socketID);
   });
   socket.emit('join player', { roomID });
-  socket.on('get round data', ({ tellerID, cards }) => {
+  socket.on('get round data', ({ tellerID, cards, endTime }) => {
     PlayerManager.setTellerID(tellerID);
     CardManager.initailizeMyCards(cards);
     const { isTeller } = PlayerManager.getCurrentPlayer();
     const nextScene = isTeller
-      ? new TellerSelectCard({ cards })
-      : new GuesserWaiting();
+      ? new TellerSelectCard({ cards, endTime })
+      : new GuesserWaiting({ endTime });
     SceneManager.renderNextScene(nextScene);
   });
 
