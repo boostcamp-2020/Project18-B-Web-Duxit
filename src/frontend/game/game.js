@@ -10,6 +10,7 @@ import PlayerManager from '@utils/PlayerManager';
 import CardManager from '@utils/CardManager';
 import TIME from '@type/time';
 import './LeftTab';
+import './background';
 
 const scrollToBottom = (component) => {
   const scrollOption = {

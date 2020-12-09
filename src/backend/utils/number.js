@@ -7,3 +7,8 @@ export const CARD = {
   DECK: 84,
   HAND: 6,
 };
+
+export const TIME = {
+  WAIT_GAME_START: 5000,
+  WAIT_TELLER_SELECT: 60000,
+};

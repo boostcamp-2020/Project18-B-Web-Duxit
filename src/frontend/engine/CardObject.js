@@ -8,9 +8,8 @@ const MOVE_PERCENT = 10;
 
 const CardObject = class extends GameObject {
   constructor({
-    imagePath = GET_IMAGE_PATH('back'), // default: 뒷면 이미지
+    imagePath = GET_IMAGE_PATH('back'),
     facingUp = false,
-    hoverable = false, // <- 안 쓰는게 나을지도?
     origin = [50, 50],
     cardID,
     ...data

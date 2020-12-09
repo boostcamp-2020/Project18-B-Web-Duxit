@@ -1,3 +1,6 @@
+import generateRandom from '@utils/generateRandom';
+import TOPIC from '@utils/cardTopic.json';
+
 class User {
   constructor({ socketID, nickname, color }) {
     this.socketID = socketID;
@@ -84,6 +87,12 @@ class User {
       color,
       score,
     };
+  }
+
+  selectCardFromUser({ teller = true }) {
+    const cardID = generateRandom.pickOneFromArray(this.cards);
+    this.submittedCard = cardID;
+    return teller ? { cardID, topic: TOPIC[cardID] } : { cardID };
   }
 }
 
