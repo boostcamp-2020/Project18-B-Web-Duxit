@@ -10,6 +10,7 @@ export default class Game {
   constructor(roomID) {
     this.roomID = roomID;
     this.users = new Map();
+    this.endTime = null;
     this.status = {
       state: GAME_STATE.WAITING,
       unusedCards: [],
@@ -19,12 +20,13 @@ export default class Game {
   }
 
   start() {
-    this.updateState(GAME_STATE.TELLER);
-    this.updateUnusedCards(generateRandom.cards(CARD.DECK));
-
     [...this.users.values()].forEach((user, index) => {
       user.initOnStart({ turnID: index });
     });
+
+    this.updateState(GAME_STATE.TELLER);
+    this.updateUnusedCards(generateRandom.cards(CARD.DECK));
+    this.addTimeToEndTime(TIME.WAIT_TELLER_SELECT);
 
     const tellerID = this.startNewRound();
     setTimeout(() => {
@@ -53,6 +55,12 @@ export default class Game {
       ...this.status,
       state,
     };
+  }
+
+  addTimeToEndTime(timeUnit) {
+    const currentTime = new Date().getTime();
+    const newTargetTime = new Date(currentTime + timeUnit);
+    this.endTime = newTargetTime;
   }
 
   isEnterable() {
@@ -131,10 +139,9 @@ export default class Game {
     //   // TODO: 점수나 승자같은 결과를 내면서 턴을 끝내야되요~
     //   return;
     // }
-
     users.forEach((user) => {
       const cards = this.dealCards(user.cards, requiredCardCount);
-      const params = { tellerID, cards };
+      const params = { tellerID, cards, endTime: this.endTime };
       user.initOnRound(params);
       emit({ socketID: user.socketID, name: 'get round data', params });
     });
