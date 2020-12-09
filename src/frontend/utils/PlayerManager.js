@@ -17,7 +17,7 @@ const PlayerManager = class extends Map {
     this.tellerID = '';
     super.clear();
     players.forEach((player) => super.set(player.socketID, this.set(player)));
-    this.onInitialize.forEach((callback) => callback(this.getArray()));
+    this.onInitialize.forEach((callback) => callback(this.getPlayers()));
   }
 
   setTellerID(tellerID = '') {
@@ -73,7 +73,7 @@ const PlayerManager = class extends Map {
     );
   }
 
-  getArray() {
+  getPlayers() {
     return [...this.values()];
   }
 
