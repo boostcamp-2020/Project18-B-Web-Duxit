@@ -24,8 +24,9 @@ const Player = class {
   }
 
   update(params) {
-    Object.keys(params).forEach((param) => {
-      this[param] = params[param];
+    const keys = Object.keys(params);
+    keys.forEach((key) => {
+      this[key] = params[key];
     });
   }
 
