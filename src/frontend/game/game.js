@@ -8,6 +8,7 @@ import GuesserWaiting from '@scenes/guesserWaiting';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
 import CardManager from '@utils/CardManager';
+import TIME from '@type/time';
 import './LeftTab';
 
 const scrollToBottom = (component) => {
@@ -109,7 +110,7 @@ const initialize = async () => {
   socket.on('get duck move', ({ x, y, playerID: socketID }) => {
     if (!PlayerManager.has(socketID)) return;
     const { duck } = PlayerManager.get(socketID);
-    duck.move(x, y);
+    duck.move(x, y, TIME.DUCK_SPEED);
   });
 };
 

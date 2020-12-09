@@ -1,10 +1,8 @@
 import { Duck, DuckHat } from '@utils/duck';
 import socket from '@utils/socket';
 import { $id } from '@utils/dom';
+import TIME from '@type/time';
 import DuckObejct from './DuckObject';
-
-const THROTTLE_TIME = 100;
-const MOVE_SPEED = 1000;
 
 const calcPosition = (event) => {
   const { clientX: cursorX, clientY: cursorY, currentTarget } = event;
@@ -47,20 +45,15 @@ class DuckCursorObject extends DuckObejct {
           this.moveToMouse(this.lastPosition);
           this.lastPosition = null;
         }
-      }, THROTTLE_TIME);
+      }, TIME.DUCK_THROTTLE);
     });
   }
 
   moveToMouse(position) {
     const { x, y } = position;
-    this.move(x, y);
+    this.move(x, y, TIME.DUCK_SPEED);
 
     socket.emit('send duck move', { x, y });
-  }
-
-  // Override
-  move(x, y, moveSpeed = MOVE_SPEED) {
-    super.move(x, y, moveSpeed);
   }
 }
 
