@@ -7,8 +7,6 @@ const WaitingRoom = class {
     this.roomID = roomID;
     this.ducks = new Map();
     this.duckMoveEvent = null;
-
-    PlayerManager.onUpdate.push(this.setNicknameInput.bind(this));
   }
 
   render() {
@@ -18,6 +16,8 @@ const WaitingRoom = class {
     this.arrayToBeRemoved = arrayToBeRemoved;
     this.NicknameInput = NicknameInput;
     setupWaitingRoomSocket({ AllReadyText });
+
+    PlayerManager.onUpdate.push(this.onUpdate.bind(this));
   }
 
   wrapup() {
