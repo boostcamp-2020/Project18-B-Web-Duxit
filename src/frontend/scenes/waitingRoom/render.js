@@ -85,12 +85,6 @@ const renderWaitingRoom = (roomID = '') => {
   AllReadyText.setContent('잠시 뒤 게임이 시작됩니다.');
   AllReadyText.attachToRoot();
 
-  const duck = new DuckObject();
-  duck.attachToRoot();
-  duck.addClass('movable');
-  duck.move(50, 50);
-  window.a = duck;
-
   const arrayToBeRemoved = [
     Header,
     ActionWrapper,

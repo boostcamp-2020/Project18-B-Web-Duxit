@@ -1,6 +1,8 @@
 import { Duck, DuckHat } from '@utils/duck';
 import DuckObejct from './DuckObject';
 
+// deprecated
+
 class DuckTellerObject extends DuckObejct {
   constructor(props) {
     super(props);

@@ -3,7 +3,6 @@ import GameObject from './GameObject';
 
 class DuckObject extends GameObject {
   constructor({ color = '#555', width = 100, ...rest } = {}) {
-    console.log(color, rest);
     super(rest);
     this.color = color;
     this.width = width;
