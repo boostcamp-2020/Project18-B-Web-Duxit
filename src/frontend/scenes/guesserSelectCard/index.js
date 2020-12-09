@@ -10,7 +10,7 @@ const GuesserSelectCard = class {
     const { endTime } = this;
     const { arrayToBeRemoved, ProgressBar } = renderGuesserSelect({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
-    setupGuesserSelectCard({ ProgressBar });
+    setupGuesserSelectCard({ ProgressBar, scene: this });
   }
 
   wrapup() {
