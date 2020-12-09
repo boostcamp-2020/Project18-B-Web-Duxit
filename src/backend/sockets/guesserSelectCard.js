@@ -1,5 +1,12 @@
 import GAME_STATE from '@utils/gameState';
+import generateRandom from '@utils/generateRandom';
 import { emit } from '@socket';
+
+const emitGetAllDecisions = ({ users }) => {
+  const submittedCardIDs = users.map((user) => user.submittedCard);
+  const suffledCardIDs = generateRandom.suffleArray(submittedCardIDs);
+  emit({ users, name: 'get all decisions', params: { cards: suffledCardIDs } });
+};
 
 function onSendGuesserDecision({ cardID }) {
   const socket = this;
@@ -13,6 +20,13 @@ function onSendGuesserDecision({ cardID }) {
   socket
     .in(game.roomID)
     .emit('other guesser decision', { playerID: socket.id });
+
+  const users = game.getUserArray();
+  const submittedUsers = users.filter(
+    ({ submittedCard }) => submittedCard !== null,
+  );
+
+  if (submittedUsers.length === users.length) emitGetAllDecisions(users);
 }
 
 export const forceGuesserSelect = ({ unsubmittedUsers, users, endTime }) => {
@@ -33,6 +47,8 @@ export const forceGuesserSelect = ({ unsubmittedUsers, users, endTime }) => {
       params: { playerID: socketID, endTime },
     });
   });
+
+  emitGetAllDecisions({ users });
 };
 
 export default function onGuesserSelectCard(socket) {
