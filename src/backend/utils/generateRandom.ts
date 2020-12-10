@@ -6,7 +6,7 @@ const generateRandomString = () =>
 
 const sortByRandom = () => Math.random() - 0.5;
 
-const randomFunctions = {
+const generateRandom = {
   nickname: () => {
     const { adjective: adj, noun } = nickname;
     const randomAdj = adj[Math.floor(Math.random() * adj.length)];
@@ -22,7 +22,7 @@ const randomFunctions = {
   },
   roomID: (): string => {
     const randomString = generateRandomString();
-    if (GameList.hasGame(randomString)) return randomFunctions.roomID();
+    if (GameList.hasGame(randomString)) return generateRandom.roomID();
     return randomString;
   },
   cards: (count: number) =>
@@ -32,6 +32,16 @@ const randomFunctions = {
   pickOneFromArray: (array: Array<number>) => {
     return array[Math.floor(Math.random() * array.length)];
   },
+  suffleArray: (array: Array<number>) => {
+    let j, x, i; 
+    for (i = array.length; i; i -= 1) { 
+        j = Math.floor(Math.random() * i); 
+        x = array[i - 1]; 
+        array[i - 1] = array[j]; 
+        array[j] = x; 
+    } 
+    return array;
+  }
 };
 
-export default randomFunctions;
+export default generateRandom;
