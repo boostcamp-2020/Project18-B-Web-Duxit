@@ -7,7 +7,7 @@ export const getRandomColor = () => {
   return getRandomColor();
 };
 
-export const testHexColorString = (str) =>
+export const checkHexColorString = (str) =>
   str.startsWith('#') && hexColorRegex.test(str.slice(1));
 
 // https://stackoverflow.com/a/41491220

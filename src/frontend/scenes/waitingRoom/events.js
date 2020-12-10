@@ -1,5 +1,5 @@
 import socket from '@utils/socket';
-import { testHexColorString } from '@utils/hexColor';
+import { checkHexColorString } from '@utils/hexColor';
 
 export const redirectToLobby = () => {
   window.location.href = '/';
@@ -36,7 +36,7 @@ export const toggleReady = ({ target }) => {
 
 export const changeColor = ({ target }) => {
   const { value: color } = target;
-  if (testHexColorString(color)) {
+  if (checkHexColorString(color)) {
     target.classList.remove('input-state-invalid');
     socket.emit('update player', { color });
   } else {
