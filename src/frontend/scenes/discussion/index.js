@@ -3,8 +3,13 @@ import renderDiscussion from './render';
 import setupDiscussion from './socket';
 
 const Discussion = class {
+  constructor({ endTime }) {
+    this.endTime = endTime;
+  }
+
   render() {
-    const { arrayToBeRemoved = [], SkipText } = renderDiscussion();
+    const { endTime } = this;
+    const { arrayToBeRemoved = [], SkipText } = renderDiscussion({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
     setupDiscussion({ SkipText });
   }

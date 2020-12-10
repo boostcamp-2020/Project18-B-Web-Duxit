@@ -2,15 +2,14 @@ import ProgressBarObject from '@engine/ProgressBarObject';
 import ButtonObject from '@engine/ButtonObject';
 import TextObject from '@engine/TextObject';
 import GameObject from '@engine/GameObject';
-import TIME from '@type/time';
 import TEXT from '@utils/text';
 import { clickSkip, mouseOverSkip, mouseOutSkip, initTeller } from './events';
 
-const renderDiscussion = () => {
+const renderDiscussion = ({ endTime }) => {
   const ProgressBar = new ProgressBarObject();
   ProgressBar.createElement();
   ProgressBar.attachToRoot();
-  ProgressBar.setTime(TIME.SELECT_CARD);
+  ProgressBar.setTime(endTime);
   ProgressBar.start();
 
   const HelpText = new TextObject();
