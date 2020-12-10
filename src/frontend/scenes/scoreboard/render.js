@@ -1,6 +1,8 @@
 import GameObject from '@engine/GameObject';
 import DuckObject from '@engine/DuckObject';
 import TextObject from '@engine/TextObject';
+import { ROOT, BACKGROUND } from '@utils/dom';
+import stonePosition from '@type/stonePosition.json';
 import './style.scss';
 import template from './template.html';
 
@@ -46,7 +48,63 @@ const renderRow = (TableBody) => ({
   }).setContent(`${totalScore}`);
 };
 
-const renderScoreboardLayout = ({ round, players, scoreData } = {}) => {
+const getMaximumScoreDifference = (players) =>
+  players.reduce(
+    (max, player) => Math.max(max, player.totalScore - player.score),
+    0,
+  );
+
+const getTotalAnimationTime = (players) => {
+  const maxJumpCount = getMaximumScoreDifference(players) + 1;
+  return 4000 + maxJumpCount * 500;
+};
+
+const yellowDuckyJumpsOverTheLazyStone = (players) =>
+  players.map(({ color, score: currentScore = 0, totalScore } = {}) => {
+    const duck = new DuckObject({
+      color,
+      width: 50,
+      classes: ['movable'],
+      position: stonePosition[currentScore],
+      origin: [50, 90],
+      depth: 10,
+    });
+    BACKGROUND.appendChild(duck.instance);
+
+    const jumpCount = totalScore - currentScore + 1;
+    const jumpTiming = (index) => 1000 + 500 * index;
+    [...Array(jumpCount)].forEach((_, index) => {
+      setTimeout(() => {
+        duck.jump(...stonePosition[currentScore + index], 500);
+      }, jumpTiming(index));
+    });
+    return duck;
+  });
+
+const animateBackground = (players, totalAnimationTime, isGameOver) => {
+  setTimeout(() => {
+    ROOT.style.transform = 'scale(0.6)';
+    const ducks = yellowDuckyJumpsOverTheLazyStone(players);
+    if (!isGameOver) {
+      setTimeout(() => {
+        ROOT.style.transform = null;
+        ducks.forEach((duck) => {
+          duck.setDepth(0);
+          setTimeout(() => {
+            duck.delete();
+          }, 1000);
+        });
+      }, totalAnimationTime - 2000);
+    }
+  }, 2000);
+};
+
+const renderScoreboardLayout = ({
+  round,
+  players,
+  scoreData,
+  isGameOver,
+} = {}) => {
   const templateWrapper = document.createElement('div');
   templateWrapper.innerHTML = template;
 
@@ -67,13 +125,14 @@ const renderScoreboardLayout = ({ round, players, scoreData } = {}) => {
     ...player,
     ...scoreData.find((data) => data.socketID === player.socketID),
   }));
-  const renderRowInTableBody = renderRow(TableBody);
+  const totalAnimationTime = getTotalAnimationTime(playersWithScore);
 
-  playersWithScore.forEach(renderRowInTableBody);
+  animateBackground(playersWithScore, totalAnimationTime, isGameOver);
 
   const arrayToBeRemoved = [Background];
   return {
     arrayToBeRemoved,
+    totalAnimationTime,
   };
 };
 
