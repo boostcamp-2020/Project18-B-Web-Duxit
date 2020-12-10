@@ -9,7 +9,7 @@ const SceneManager = {
 
   renderNextScene(scene, ...args) {
     let wrapupInterval = TIME.NONE_INTERVAL;
-    this.removeAllDucks();
+    this.hideAllDucks();
 
     if (this.currentScene) {
       this.currentScene.wrapup();
@@ -25,7 +25,7 @@ const SceneManager = {
     return this.currentScene.constructor.name === classObject.name;
   },
 
-  removeAllDucks() {
+  hideAllDucks() {
     const players = PlayerManager.getPlayers();
     players.forEach((player) =>
       player.duck.setVisibility(false, player.isCurrentPlayer),
