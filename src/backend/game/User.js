@@ -27,6 +27,7 @@ class User {
     this.isReady = false;
     this.isTeller = this.socketID === tellerID;
     this.cards = cards;
+    this.isSkip = false;
   }
 
   setReady(isReady) {
