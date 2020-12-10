@@ -81,11 +81,12 @@ class User {
   }
 
   getProfile() {
-    const { nickname, color, score } = this;
+    const { nickname, color, score, isReady } = this;
     return {
       nickname,
       color,
       score,
+      isReady,
     };
   }
 
