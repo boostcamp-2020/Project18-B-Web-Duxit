@@ -7,10 +7,9 @@ function exitRoom() {
   const { roomID } = socket.game;
   const passedData = { socketID: socket.id };
   socket.in(roomID).emit('exit player', passedData);
-
   socket.game?.removeUser({ socketID: socket.id });
 }
 
-export default function onWaitingRoom(socket) {
+export default function onWaitingRoom(socket: any) {
   socket.on('disconnect', exitRoom);
 }

@@ -27,7 +27,7 @@
             25
         ]
     },
-    "TELLER_SELECT_CARD": {
+    "SELECT_CARD": {
         "moveFrom": 100,
         "size": 320,
         "x": [
@@ -54,5 +54,16 @@
             17,
             30
         ]
+    },
+    "MIX_CARD": {
+        "CENTER": 50,
+        "STACK_Y": 70,
+        "SPREAD_X": {
+            "THREE" : [30, 50, 70],
+            "FOUR" : [20, 40, 60, 80],
+            "FIVE" : [10, 30, 50, 70, 90],
+            "SIX" : [10, 26, 42, 58, 74, 90]
+        },
+        "SPREAD_Y": 50
     }
 }

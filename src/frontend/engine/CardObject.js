@@ -1,4 +1,4 @@
-import backImage from '@resources/back.png';
+import { GET_IMAGE_PATH } from '@utils/text';
 import GameObject from './GameObject';
 import ImageObject from './ImageObject';
 
@@ -8,10 +8,9 @@ const MOVE_PERCENT = 10;
 
 const CardObject = class extends GameObject {
   constructor({
-    imagePath = backImage, // default: 뒷면 이미지
+    imagePath = GET_IMAGE_PATH('back'),
     facingUp = false,
-    hoverable = false, // <- 안 쓰는게 나을지도?
-    origin = ['50%', '50%'],
+    origin = [50, 50],
     cardID,
     ...data
   } = {}) {
@@ -26,7 +25,7 @@ const CardObject = class extends GameObject {
     this.front.addClass('card-common');
     this.front.attachToObject(this.inner);
     const Back = new ImageObject();
-    Back.setImagePath(backImage);
+    Back.setImagePath(GET_IMAGE_PATH('back'));
     Back.attachToObject(this.inner);
     Back.addClass('card-common');
     Back.addClass('card-back');
@@ -92,6 +91,12 @@ const CardObject = class extends GameObject {
   deleteAnimateMove() {
     this.instance.removeEventListener('mouseover', this.hoverMoveUpCallback);
     this.instance.removeEventListener('mouseleave', this.hoverMoveDownCallback);
+  }
+
+  setCardInformation(cardID) {
+    const imagePath = GET_IMAGE_PATH(cardID);
+    this.cardID = cardID;
+    this.setImagePath(imagePath);
   }
 };
 

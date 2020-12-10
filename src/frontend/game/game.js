@@ -3,12 +3,11 @@ import socket from '@utils/socket';
 import { $id, $create } from '@utils/dom';
 import requestHandler from '@utils/requestHandler';
 import WaitingRoom from '@scenes/waitingRoom';
-import TellerSelectCard from '@scenes/tellerSelectCard';
-import GuesserWaiting from '@scenes/guesserWaiting';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
-import CardManager from '@utils/CardManager';
-import './leftTab';
+import TIME from '@type/time';
+import './LeftTab';
+import './background';
 
 const scrollToBottom = (component) => {
   const scrollOption = {
@@ -66,7 +65,6 @@ const initializeLayout = () => {
   });
 
   const logMessage = (args) => getMessageFromServer(args, chatMessageLog);
-
   socket.on('send chat', logMessage);
 };
 
@@ -83,27 +81,11 @@ const initialize = async () => {
 
   initializeLayout();
   SceneManager.renderNextScene(new WaitingRoom(roomID));
-
-  // initialize game event socket
-  socket.on('enter room', ({ nickname, players }) => {
-    PlayerManager.initialize(players);
-    PlayerManager.updateCurrentPlayer({ nickname });
-  });
-  socket.on('update player', ({ socketID, nickname, color }) => {
-    PlayerManager.set({ socketID, nickname, color });
-  });
-  socket.on('exit player', ({ socketID }) => {
-    PlayerManager.delete(socketID);
-  });
   socket.emit('join player', { roomID });
-  socket.on('get round data', ({ tellerID, cards }) => {
-    PlayerManager.setTellerID(tellerID);
-    CardManager.initailizeMyCards(cards);
-    const { isTeller } = PlayerManager.getCurrentPlayer();
-    const nextScene = isTeller
-      ? new TellerSelectCard({ cards })
-      : new GuesserWaiting();
-    SceneManager.renderNextScene(nextScene);
+  socket.on('get duck move', ({ x, y, playerID: socketID }) => {
+    if (!PlayerManager.has(socketID)) return;
+    const { duck } = PlayerManager.get(socketID);
+    duck.move(x, y, TIME.DUCK_SPEED);
   });
 };
 

@@ -1,5 +1,5 @@
 import GameList from '@game/GameList';
-import { PLAYER } from '@utils/number';
+import { PLAYER, TIME } from '@utils/number';
 import logger from '@utils/winston';
 
 function onJoinPlayer({ roomID }) {
@@ -40,6 +40,12 @@ function onUpdatePlayer(params = {}) {
 
 const timeoutMap = new Map();
 
+const isPossibleStartGame = ({ users }) => {
+  const isAllReady = [...users].every(([, user]) => user.isReady);
+  const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
+  return isAllReady && isValidSize;
+};
+
 function onReadyPlayer({ isReady }) {
   const socket = this;
   const { game } = socket;
@@ -47,17 +53,14 @@ function onReadyPlayer({ isReady }) {
   users.get(socket.id).setReady(isReady);
   socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
-  const isAllReady = [...users].every(([, user]) => user.isReady);
-  const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
-  if (isAllReady && isValidSize) {
+  const validationToStart = isPossibleStartGame({ users });
+  if (validationToStart) {
     socket.in(roomID).emit('all ready', {});
     socket.emit('all ready', {});
     const timeout = setTimeout(() => {
       game.start();
-      // socket.in(roomID).emit('game start', {});
-      // socket.emit('game start', {});
       if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
-    }, 5000);
+    }, TIME.WAIT_GAME_START);
     timeoutMap.set(roomID, timeout);
   } else if (timeoutMap.has(roomID)) {
     socket.in(roomID).emit('game start aborted', {});

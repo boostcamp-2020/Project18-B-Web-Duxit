@@ -1,10 +1,17 @@
 import { $create, $id } from '@utils/dom';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 
 // https://easings.net/#easeInOutCubic
 const easeOutCubic = (x) => 1 - (1 - x) ** 4;
 const makeUnitString = (numericValue, unit) => `${numericValue}${unit}`;
 const makeFloat = (unitValue) => parseFloat(unitValue);
+
+const getJumpHighPoint = (y1 = 0, y2 = 0) => {
+  const isTopHigh = y1 < y2;
+  const diff = Math.abs(y1 - y2);
+  const isDiffTooSmall = diff < 5;
+  return `${(isTopHigh ? y1 : y2) - (diff + +isDiffTooSmall * 5) * 0.5}%`;
+};
 
 const GameObject = class {
   constructor({
@@ -27,7 +34,7 @@ const GameObject = class {
     if (position) this.move(...position, 0);
     if (parent) this.attachToObject(parent);
     classes.forEach((className) => {
-      this.setClass(className);
+      this.addClass(className);
     });
   }
 
@@ -61,8 +68,10 @@ const GameObject = class {
     this.instance.appendChild(object.instance);
   }
 
-  addClass(className) {
-    this.instance.classList.add(className);
+  addClass(classes) {
+    if (Array.isArray(classes)) {
+      classes.forEach((className) => this.instance.classList.add(className));
+    } else this.instance.classList.add(classes);
   }
 
   toggleClass(className) {
@@ -81,11 +90,11 @@ const GameObject = class {
     this.setOrigin();
   }
 
-  setOrigin(x = '50%', y = '50%') {
-    const numberY = makeFloat(y);
-    const numberX = makeFloat(x);
-    this.originStyle = `translate(-${x}, -${y})`;
-    this.instance.style.transformOrigin = `${50 - numberX}% ${50 - numberY}%`;
+  setOrigin(x = 50, y = 50) {
+    const xString = makeUnitString(x, '%');
+    const yString = makeUnitString(y, '%');
+    this.originStyle = `translate(-${xString}, -${yString})`;
+    this.instance.style.transformOrigin = `${50 - x}% ${50 - y}%`;
     this.transform();
   }
 
@@ -101,53 +110,150 @@ const GameObject = class {
     this.instance.style.zIndex = zIndex;
   }
 
-  move(x = 0, y = 0, duration = TIME.ONE_SECOND / 2) {
-    this.position = [x, y];
-    const xString = makeUnitString(x, '%');
-    const yString = makeUnitString(y, '%');
+  move(x = 0, y = 0, duration = TIME.DEFAULT_TRANSITION) {
+    return new Promise((resolve) => {
+      this.position = [x, y];
+      const xString = makeUnitString(x, '%');
+      const yString = makeUnitString(y, '%');
 
-    if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
-    if (!xString && !yString) {
-      this.instance.style.removeProperty('top');
-      this.instance.style.removeProperty('left');
-    }
-    if (duration === 0) {
-      this.instance.style.top = yString;
-      this.instance.style.left = xString;
-      return;
-    }
-    const initialY = makeFloat(this.instance.style.top) || 0;
-    const initialX = makeFloat(this.instance.style.left) || 0;
-    const targetY = y;
-    const targetX = x;
-
-    const miliseconds = duration;
-    let start = null;
-    const animateFunction = (timestamp) => {
-      if (!start) start = timestamp;
-      const elapsed = timestamp - start;
-      if (elapsed > miliseconds) {
+      if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+      if (!xString && !yString) {
+        this.instance.style.removeProperty('top');
+        this.instance.style.removeProperty('left');
+      }
+      if (duration === 0) {
         this.instance.style.top = yString;
         this.instance.style.left = xString;
-        this.animationFrame = null;
         return;
       }
-      const newY =
-        initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
-      const newX =
-        initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
-      // this.position = [newX, newY];
+      const initialY = makeFloat(this.instance.style.top) || 0;
+      const initialX = makeFloat(this.instance.style.left) || 0;
+      const targetY = y;
+      const targetX = x;
 
-      this.instance.style.left = makeUnitString(newX, '%');
-      this.instance.style.top = makeUnitString(newY, '%');
+      const miliseconds = duration;
+      let start = null;
+      const animateFunction = (timestamp) => {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        if (elapsed > miliseconds) {
+          this.instance.style.top = yString;
+          this.instance.style.left = xString;
+          this.animationFrame = null;
+          resolve();
+          return;
+        }
+        const newY =
+          initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
+        const newX =
+          initialX + (targetX - initialX) * easeOutCubic(elapsed / miliseconds);
+        // this.position = [newX, newY];
 
-      requestAnimationFrame(animateFunction);
-    };
+        this.instance.style.left = makeUnitString(newX, '%');
+        this.instance.style.top = makeUnitString(newY, '%');
 
-    this.animationFrame = requestAnimationFrame(animateFunction);
+        requestAnimationFrame(animateFunction);
+      };
+
+      this.animationFrame = requestAnimationFrame(animateFunction);
+    });
   }
 
-  rotate(angle = 0, duration = TIME.ONE_SECOND / 5) {
+  roll(
+    x = 0,
+    y = 0,
+    duration = TIME.DEFAULT_TRANSITION,
+    rollCount = 1,
+    rollClockwise = Math.random() < 0.5 ? 1 : -1,
+  ) {
+    return new Promise((resolve) => {
+      // TODO: move()와 겹치는 부분들 refactor...
+      this.position = [x, y];
+      const xString = makeUnitString(x, '%');
+      const yString = makeUnitString(y, '%');
+
+      if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
+      if (!xString && !yString) {
+        this.instance.style.removeProperty('top');
+        this.instance.style.removeProperty('left');
+      }
+      if (duration === 0) {
+        this.instance.style.top = yString;
+        this.instance.style.left = xString;
+        return;
+      }
+      const initialY = makeFloat(this.instance.style.top) || 0;
+      const initialX = makeFloat(this.instance.style.left) || 0;
+      const targetY = y;
+      const targetX = x;
+
+      let start = null;
+      const animateFunction = (timestamp) => {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        if (elapsed > duration) {
+          this.instance.style.top = yString;
+          this.instance.style.left = xString;
+          this.animationFrame = null;
+          resolve();
+          return;
+        }
+        const newY = initialY + (targetY - initialY) * (elapsed / duration);
+        const newX = initialX + (targetX - initialX) * (elapsed / duration);
+        this.angle += rollClockwise * rollCount * 4 * (elapsed / duration);
+        this.rotateStyle = makeUnitString(this.angle, 'deg');
+
+        this.instance.style.left = makeUnitString(newX, '%');
+        this.instance.style.top = makeUnitString(newY, '%');
+        this.instance.style.transform = `rotateZ(${this.rotateStyle}) ${this.originStyle}`;
+
+        requestAnimationFrame(animateFunction);
+      };
+
+      this.animationFrame = requestAnimationFrame(animateFunction);
+    });
+  }
+
+  jump(x = 0, y = 0, duration = TIME.HALF_SECOND) {
+    const { top, left } = this.instance.style;
+    const xString = makeUnitString(x, '%');
+    const yString = makeUnitString(y, '%');
+    const yJump = getJumpHighPoint(y, makeFloat(top));
+
+    const xKeyframe = [
+      {
+        left,
+      },
+      {
+        left: xString,
+      },
+    ];
+    const yKeyframe = [
+      {
+        top,
+      },
+      {
+        top: yJump,
+      },
+      {
+        top: yString,
+      },
+    ];
+    const xOption = {
+      duration,
+    };
+    const yOption = {
+      duration,
+      easing: 'cubic-bezier(.25, .82, .48, .1)',
+    };
+
+    this.instance.animate(xKeyframe, xOption);
+    this.instance.animate(yKeyframe, yOption);
+    this.instance.style.left = xString;
+    this.instance.style.top = yString;
+  }
+
+  rotate(angle = 0, duration = TIME.DEFAULT_TRANSITION) {
     this.angle = angle;
     const angleString = makeUnitString(angle, 'deg');
     const keyframes = [

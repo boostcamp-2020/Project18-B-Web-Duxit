@@ -3,36 +3,46 @@ import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import DuckObject from '@engine/DuckObject';
 import TEXT from '@utils/text';
-import TIME from '@utils/time';
-import { DUCK_TYPE } from '@utils/type';
+import TIME from '@type/time';
 import { createCards } from '@utils/card';
-import { GUESSER_WAITING } from '@utils/scene';
+import { GUESSER_WAITING } from '@type/scene';
+import PlayerManager from '@utils/PlayerManager';
 
-const renderGuesserWaiting = () => {
+const renderGuesserWaiting = ({ endTime }) => {
   const NotifyingTellerText = new TextObject();
-  const tellerText = TEXT.WAIT_TELLER_SELECT;
-  NotifyingTellerText.addClass('notify-teller');
-  NotifyingTellerText.addClass('other');
+  NotifyingTellerText.addClass(['notify-teller', 'other']);
   NotifyingTellerText.attachToRoot();
-  NotifyingTellerText.setContent(tellerText);
+  NotifyingTellerText.setContent(TEXT.WAIT_TELLER_SELECT);
   NotifyingTellerText.move(50, 100, 0);
   NotifyingTellerText.move(50, 70, TIME.ONE_SECOND);
 
   const ProgressBar = new ProgressBarObject();
   ProgressBar.createElement();
   ProgressBar.attachToRoot();
-  ProgressBar.setTime(TIME.SELECT_CARD);
+  ProgressBar.setTime(endTime);
   ProgressBar.start();
 
-  const TellerDuck = new DuckObject({ type: DUCK_TYPE.TELLER });
-  TellerDuck.createElement();
+  PlayerManager.getPlayers().forEach((player) =>
+    player.duck.setVisibility(false),
+  );
+  const tellerColor = PlayerManager.getTeller().color;
+  const TellerDuck = new DuckObject({ color: tellerColor, width: 200 });
+  TellerDuck.addClass('teller-duck-wrapper');
   TellerDuck.attachToRoot();
   TellerDuck.move(50, 0, 0);
+  TellerDuck.setHat(true);
   TellerDuck.move(50, 10, TIME.ONE_SECOND);
-  const { CardsWrapper } = createCards(GUESSER_WAITING);
+
+  const { CardsWrapper, cards } = createCards(GUESSER_WAITING);
   CardsWrapper.attachToRoot();
 
-  const arrayToBeRemoved = [NotifyingTellerText, ProgressBar, TellerDuck];
+  const arrayToBeRemoved = [
+    NotifyingTellerText,
+    ProgressBar,
+    TellerDuck,
+    CardsWrapper,
+    ...cards,
+  ];
 
   return {
     arrayToBeRemoved,

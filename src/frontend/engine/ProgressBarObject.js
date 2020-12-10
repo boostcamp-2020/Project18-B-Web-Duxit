@@ -1,10 +1,11 @@
 import { $create, $id } from '@utils/dom';
-import TIME from '@utils/time';
+import TIME from '@type/time';
 import GameObject from './GameObject';
 
 const ProgressBarObject = class extends GameObject {
-  setTime(time) {
-    this.time = time;
+  setTime(endTime) {
+    this.endTime = new Date(endTime).getTime();
+    this.time = this.endTime - new Date().getTime();
   }
 
   setFinishCallBack(callback) {
@@ -38,11 +39,9 @@ const ProgressBarObject = class extends GameObject {
 
   start() {
     const [progressBar, timeText] = this.getProgessBar();
-    const startTime = new Date().getTime();
-    const targetTime = startTime + this.time;
-
+    const { endTime } = this;
     const progressBarTimer = setInterval(() => {
-      const remainTime = targetTime - new Date().getTime();
+      const remainTime = endTime - new Date().getTime();
       const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
       timeText.innerText = (remainTime / 1000).toFixed(0);

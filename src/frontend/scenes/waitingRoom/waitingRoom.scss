@@ -31,8 +31,7 @@
 .waiting-nickname-input {
   width: 16em;
   border: 0;
-  margin-right: 1rem;
-  margin-left: 3rem;
+  margin: 0 1rem;
   background-color: $main-color;
   border-radius: 2em;
   box-shadow: $button-shadow;
@@ -54,6 +53,63 @@
     width: 1.7rem;
     height: 1.7rem;
   }
+
+  &.refresh-button-small {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.color-button-wrapper {
+  position: relative;
+}
+
+.color-button-wrapper:not(:hover) .color-picker-wrapper {
+  display: none;
+}
+
+.color-picker-wrapper {
+  position: absolute;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  background-color: #e0e0e0aa;
+  border-radius: 1em;
+  div {
+    display: flex;
+  }
+}
+
+.color-sample-button {
+  flex: 25%;
+  box-shadow: $button-shadow;
+  outline: 1px $gray-color solid;
+}
+.color-sample-button::before {
+  display: block;
+  padding-top: 100%;
+  content: '';
+}
+
+.waiting-color-input {
+  padding: 0.5em;
+  margin-left: 1em;
+  background-color: $white-color;
+  border-radius: 1em;
+}
+
+.color-white {
+  fill: $white-color;
+}
+
+.input-state-invalid {
+  color: $red-color;
+}
+
+.color-sample-grid {
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .waiting-action-wrapper {

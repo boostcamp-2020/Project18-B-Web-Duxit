@@ -1,4 +1,6 @@
 import socket from '@utils/socket';
+import PlayerManager from '@utils/PlayerManager';
+import { testHexColorString } from '@utils/hexColor';
 
 export const redirectToLobby = () => {
   window.location.href = '/';
@@ -23,28 +25,39 @@ export const changeNickname = (NicknameInput) => {
 };
 
 export const toggleReady = ({ target }) => {
-  const { isReady } = JSON.parse(target.dataset.data);
-  // const nextStatus = target.dataset.status === 'not ready';
+  const currentPlayer = PlayerManager.getCurrentPlayer();
+  const { isReady } = currentPlayer;
   const nextStatus = !isReady;
-  // target.dataset.status = nextStatus ? 'ready' : 'not ready';
-  target.dataset.data = JSON.stringify({ isReady: nextStatus });
+
+  target.innerText = nextStatus ? '준비 해제' : '준비 완료';
   target.classList.toggle('button-primary');
   target.classList.toggle('button-primary-clicked');
+
+  PlayerManager.getCurrentPlayer().setReady(nextStatus);
   socket.emit('ready player', { isReady: nextStatus });
 };
 
-export const moveMyDuck = (event, duck) => {
-  const { x: cursorX, y: cursorY, target, currentTarget } = event;
-  if (target !== currentTarget) return;
-  const {
-    x: rootX,
-    y: rootY,
-    width,
-    height,
-  } = currentTarget.getBoundingClientRect();
-  const x = ((cursorX - rootX) / width) * 100;
-  const y = ((cursorY - rootY) / height) * 100;
-  duck.move(x, y);
+export const changeColor = ({ target }) => {
+  const { value: color } = target;
+  if (testHexColorString(color)) {
+    target.classList.remove('input-state-invalid');
+    socket.emit('update player', { color });
+  } else {
+    target.classList.add('input-state-invalid');
+  }
+};
 
-  // 오리정보를 서버에 넘긴다면 여기서
+export const inputColorHandler = ({ target }) => {
+  const { value: color = '' } = target;
+  if (!color.startsWith('#')) {
+    Object.assign(target, { value: `#${color}` });
+    inputColorHandler({ target });
+    return;
+  }
+  if (color.length > 7) {
+    Object.assign(target, { value: color.slice(0, 7) });
+    inputColorHandler({ target });
+    return;
+  }
+  changeColor({ target });
 };
