@@ -28,6 +28,9 @@ const Player = class {
     keys.forEach((key) => {
       this[key] = params[key];
     });
+
+    // update player duck
+    this.duck.setColor(this.color);
   }
 
   delete() {
