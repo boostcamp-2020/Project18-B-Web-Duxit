@@ -6,12 +6,10 @@ import stonePosition from '@type/stonePosition.json';
 import './style.scss';
 import template from './template.html';
 
-const renderRow = (TableBody) => ({
+const defineRenderRow = (TableBody) => ({
   nickname,
   color,
   isTeller,
-  isCurrentPlayer,
-  score: currentScore,
   correctScore,
   bonusScore,
   totalScore,
@@ -46,6 +44,10 @@ const renderRow = (TableBody) => ({
     classes: ['scoreboard-table-score'],
     parent: TableRow,
   }).setContent(`${totalScore}`);
+};
+
+const renderRow = (TableBody, players) => {
+  players.forEach(defineRenderRow(TableBody));
 };
 
 const getMaximumScoreDifference = (players) =>
@@ -127,6 +129,7 @@ const renderScoreboardLayout = ({
   }));
   const totalAnimationTime = getTotalAnimationTime(playersWithScore);
 
+  renderRow(TableBody, playersWithScore);
   animateBackground(playersWithScore, totalAnimationTime, isGameOver);
 
   const arrayToBeRemoved = [Background];
