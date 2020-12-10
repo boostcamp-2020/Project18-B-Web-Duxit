@@ -18,7 +18,7 @@ const calcPosition = (event) => {
 };
 
 class DuckCursorObject extends DuckObejct {
-  constructor(props) {
+  constructor({ isReady, ...props }) {
     super(props);
     this.addClass('cursor-duck-wrapper');
     this.setOriginCenter();
@@ -29,6 +29,7 @@ class DuckCursorObject extends DuckObejct {
     this.mouseHandler = this.makeFollowMouse.bind(this);
     this.width = 100;
     this.render();
+    this.setVisibility(isReady);
   }
 
   addMouseMoveEvent() {
@@ -60,6 +61,18 @@ class DuckCursorObject extends DuckObejct {
     this.move(x, y, TIME.DUCK_SPEED);
 
     socket.emit('send duck move', { x, y });
+  }
+
+  setVisibility(value = false, isCurrentPlayer) {
+    const displayStyle = value ? 'block' : 'none';
+    this.instance.style.display = displayStyle;
+
+    if (isCurrentPlayer) this.setMouseEvent(value);
+  }
+
+  setMouseEvent(value = true) {
+    if (value) this.addMouseMoveEvent();
+    else this.removeMouseMoveEvent();
   }
 }
 

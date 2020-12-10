@@ -21,10 +21,6 @@ class DuckObject extends GameObject {
     hatElement.style.display = display;
   }
 
-  setVisible(boolean) {
-    boolean ? this.removeClass('hide') : this.addClass('hide');
-  }
-
   generateDuckHTML() {
     const { color, width } = this;
     return `
