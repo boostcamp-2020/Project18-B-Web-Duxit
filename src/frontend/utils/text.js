@@ -18,6 +18,7 @@ const TEXT = {
     OK: '확인',
     CANCLE: '다시 선택',
   },
+  DISCUSSION: '어떤 카드가 이야기꾼의 카드일지 이야기를 나눠보세요!',
 };
 
 export const GET_IMAGE_PATH = (cardID) => {
