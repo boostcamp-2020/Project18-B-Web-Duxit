@@ -8,6 +8,7 @@ const WaitingRoom = class {
     this.roomID = roomID;
     this.ducks = new Map();
     this.duckMoveEvent = null;
+
   }
 
   render() {

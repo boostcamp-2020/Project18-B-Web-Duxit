@@ -2,8 +2,13 @@ import renderGuesserWaiting from './render';
 import setupGuesserWaiting from './socket';
 
 const GuesserWaiting = class {
+  constructor({ endTime }) {
+    this.endTime = endTime;
+  }
+
   render() {
-    const { arrayToBeRemoved = [] } = renderGuesserWaiting();
+    const { endTime } = this;
+    const { arrayToBeRemoved = [] } = renderGuesserWaiting({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
     setupGuesserWaiting();
   }

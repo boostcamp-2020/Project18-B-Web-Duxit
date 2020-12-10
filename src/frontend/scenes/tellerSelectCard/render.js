@@ -2,14 +2,13 @@ import './tellerSelectCard.scss';
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import TEXT from '@utils/text';
-import TIME from '@type/time';
 import { SELECT_CARD, TELLER_SELECT_CARD } from '@type/scene';
 import { createCards } from '@utils/card';
 import CardManager from '@utils/CardManager';
 import onClickCard from '@utils/modal';
 import { sendTellerdecision } from './events';
 
-const renderTellerSelect = () => {
+const renderTellerSelect = ({ endTime }) => {
   const NotifyingTellerText = new TextObject();
   const tellerText = TEXT.TELLER_SELECT_CARD.NOTIFY;
   NotifyingTellerText.addClass('notify-teller');
@@ -19,7 +18,7 @@ const renderTellerSelect = () => {
   const ProgressBar = new ProgressBarObject();
   ProgressBar.createElement();
   ProgressBar.attachToRoot();
-  ProgressBar.setTime(TIME.SELECT_CARD);
+  ProgressBar.setTime(endTime);
   ProgressBar.start();
 
   const { CardsWrapper, cards } = createCards(SELECT_CARD, CardManager.myCards);

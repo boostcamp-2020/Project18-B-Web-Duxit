@@ -17,7 +17,7 @@ const PlayerManager = class extends Map {
     this.tellerID = '';
     super.clear();
     players.forEach((player) => super.set(player.socketID, this.set(player)));
-    this.onInitialize.forEach((callback) => callback(this.getArray()));
+    this.onInitialize.forEach((callback) => callback(this.getPlayers()));
   }
 
   setTellerID(tellerID = '') {
@@ -73,7 +73,7 @@ const PlayerManager = class extends Map {
     );
   }
 
-  getArray() {
+  getPlayers() {
     return [...this.values()];
   }
 
@@ -82,8 +82,12 @@ const PlayerManager = class extends Map {
   }
 
   getTeller() {
-    if (this.tellerID) return this.map.get(this.tellerID);
+    if (this.tellerID) return this.get(this.tellerID);
     return [...this.map].find((player) => player.isTeller) || null;
+  }
+
+  isTeller() {
+    return this.currentPlayerID === this.tellerID;
   }
 };
 

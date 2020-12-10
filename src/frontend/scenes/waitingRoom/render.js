@@ -7,6 +7,7 @@ import SvgObject from '@engine/SvgObject';
 import Svg from '@type/svg';
 import defaultColors from '@type/defaultColors.json';
 import { getRandomColor } from '@utils/hexColor';
+
 import {
   copyGameCode,
   redirectToLobby,

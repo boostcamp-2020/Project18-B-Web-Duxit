@@ -46,7 +46,6 @@ class LeftTab {
   }
 
   addDuck(playerInfo) {
-    console.log('add duck');
     const duck = createDuck(playerInfo);
     const playerWrapper = $id('participants-wrapper');
     this.ducks = [...this.ducks, duck];

@@ -12,5 +12,4 @@ export default {
   WRAP_UP: {
     TELLER_SELECT: 3500,
   },
-
 };

@@ -2,37 +2,35 @@ import { Duck, DuckHat } from '@utils/duck';
 import DuckObject from './DuckObject';
 
 class DuckLeftTabObject extends DuckObject {
-  constructor({ socketID, color, nickname, ...rest }) {
+  constructor({ socketID, nickname, ...rest }) {
     super(rest);
     this.socketID = socketID;
-    this.color = color;
     this.nickname = nickname;
     this.score = 0;
     this.microphone = false;
+    this.duckWidth = 55;
+    this.hatWidth = 45;
 
     this.addClass('left-duck-wrapper');
-    this.setInnerHTML(this.getComponent());
+    this.render();
   }
 
   setNickname(nickname) {
     this.nickname = nickname;
-  }
-
-  setColor(color) {
-    this.color = color;
+    const nicknameElement = this.getChildrenNode('.duck-nickname');
+    nicknameElement.innerText = this.nickname;
   }
 
   setMicrophone(microphone = false) {
     this.microphone = microphone;
   }
 
-  getComponent() {
-    const { nickname, color, score } = this;
-    const option = { color, width: 55 };
+  generateDuckHTML() {
+    const { nickname, color, score, duckWidth, hatWidth } = this;
     return `
         <div class="duck-image">
-          ${DuckHat({ width: 45 })}
-          ${Duck(option)}
+          ${DuckHat({ width: hatWidth })}
+          ${Duck({ color, width: duckWidth })}
           <span class="duck-score">${score}</span>
         </div>
         <span class="duck-nickname">${nickname}</span>
@@ -43,12 +41,6 @@ class DuckLeftTabObject extends DuckObject {
     if (this.nickname === nickname && this.color === color) return;
     this.setNickname(nickname);
     this.setColor(color);
-    this.render();
-  }
-
-  render() {
-    const nicknameElement = this.instance.querySelector('.duck-nickname');
-    nicknameElement.innerText = this.nickname;
   }
 }
 
