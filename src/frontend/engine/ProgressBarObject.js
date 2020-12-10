@@ -44,6 +44,7 @@ const ProgressBarObject = class extends GameObject {
       const remainTime = endTime - new Date().getTime();
       const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
+      if (widthSize < 30) progressBar.style.backgroundColor = '#d82e21';
       timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 
