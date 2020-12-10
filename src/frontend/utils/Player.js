@@ -15,12 +15,9 @@ const Player = class {
     this.score = score;
     this.isTeller = isTeller;
     this.isCurrentPlayer = isCurrentPlayer;
+    this.isReady = false;
     this.duck = new DuckCursorObject({ color });
-
-    if (this.isCurrentPlayer) {
-      this.duck.makeFollowMouse();
-    } else {
-    }
+    this.setVisibility(false);
   }
 
   update(params) {
@@ -29,12 +26,29 @@ const Player = class {
       this[key] = params[key];
     });
 
-    // update player duck
     this.duck.setColor(this.color);
   }
 
   delete() {
     this.duck.delete();
+  }
+
+  setVisibility(value = false) {
+    const displayStyle = value ? 'block' : 'none';
+    this.duck.instance.style.display = displayStyle;
+
+    if (this.isCurrentPlayer) this.setMouseEvent(value);
+  }
+
+  setMouseEvent(value = true) {
+    if (value) this.duck.addMouseMoveEvent();
+    else this.duck.removeMouseMoveEvent();
+  }
+
+  setReady(value) {
+    if (this.isReady === value) return;
+    this.isReady = value;
+    this.setVisibility(value);
   }
 };
 
