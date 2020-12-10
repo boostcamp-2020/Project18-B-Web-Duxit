@@ -8,7 +8,7 @@ export const clickSkip = ({ target }) => {
   target.classList.add('skip-button-clicked');
   target.setAttribute('disabled', true);
   warningBox.style.visibility = 'hidden';
-  //   socket.emit('skip player', { isSkip: nextStatus });
+  socket.emit('skip player');
 };
 
 export const mouseOverSkip = ({ target }) => {
