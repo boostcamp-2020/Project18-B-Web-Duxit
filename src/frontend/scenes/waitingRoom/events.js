@@ -1,4 +1,5 @@
 import socket from '@utils/socket';
+import PlayerManager from '@utils/PlayerManager';
 import { testHexColorString } from '@utils/hexColor';
 
 export const redirectToLobby = () => {
@@ -24,13 +25,15 @@ export const changeNickname = (NicknameInput) => {
 };
 
 export const toggleReady = ({ target }) => {
-  const { isReady } = JSON.parse(target.dataset.data);
-  // const nextStatus = target.dataset.status === 'not ready';
+  const currentPlayer = PlayerManager.getCurrentPlayer();
+  const { isReady } = currentPlayer;
   const nextStatus = !isReady;
-  // target.dataset.status = nextStatus ? 'ready' : 'not ready';
-  target.dataset.data = JSON.stringify({ isReady: nextStatus });
+
+  target.innerText = nextStatus ? '준비 해제' : '준비 완료';
   target.classList.toggle('button-primary');
   target.classList.toggle('button-primary-clicked');
+
+  PlayerManager.getCurrentPlayer().setReady(nextStatus);
   socket.emit('ready player', { isReady: nextStatus });
 };
 

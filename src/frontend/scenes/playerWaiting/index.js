@@ -1,5 +1,4 @@
 import './style.scss';
-import TIME from '@type/time';
 import CardManager from '@utils/CardManager';
 import renderPlayerWaiting from './render';
 import setupPlayerWaiting from './socket';

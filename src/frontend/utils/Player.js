@@ -8,6 +8,7 @@ const Player = class {
     score = 0,
     isTeller = false,
     isCurrentPlayer = false,
+    isReady = false,
   } = {}) {
     this.socketID = socketID;
     this.nickname = nickname;
@@ -15,12 +16,8 @@ const Player = class {
     this.score = score;
     this.isTeller = isTeller;
     this.isCurrentPlayer = isCurrentPlayer;
-    this.duck = new DuckCursorObject({ color });
-
-    if (this.isCurrentPlayer) {
-      this.duck.makeFollowMouse();
-    } else {
-    }
+    this.isReady = isReady;
+    this.duck = new DuckCursorObject({ isReady, color });
   }
 
   update(params) {
@@ -29,12 +26,17 @@ const Player = class {
       this[key] = params[key];
     });
 
-    // update player duck
     this.duck.setColor(this.color);
   }
 
   delete() {
     this.duck.delete();
+  }
+
+  setReady(value) {
+    if (this.isReady === value) return;
+    this.isReady = value;
+    this.duck.setVisibility(value, this.isCurrentPlayer);
   }
 };
 
