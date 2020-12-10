@@ -26,7 +26,7 @@
 
 .warning-bubble {
   position: relative;
-  max-width: 50%;
+  max-width: 70%;
   padding: 15px;
   margin: 0 5% 5% auto;
   background: #efefef;
@@ -36,7 +36,7 @@
   opacity: 0.7;
   visibility: hidden;
   .warning-text {
-    margin: 0 0 10px;
+    margin: 0;
 
     :last-of-type {
       margin-bottom: 0;
@@ -44,7 +44,7 @@
   }
   &::after {
     position: absolute;
-    right: 20px;
+    right: 50px;
     bottom: -20px;
     border-top: 20px solid #efefef;
     border-left: 20px solid transparent;
@@ -54,12 +54,14 @@
 .skip-button {
   @include button;
   max-width: 10%;
+  margin-right: 5%;
   margin-left: auto;
   background-color: $main-color;
 }
 .skip-button-clicked {
   @include button;
   max-width: 10%;
+  margin-right: 5%;
   margin-left: auto;
   background-color: $main-clicked-color;
   font-weight: 600;
