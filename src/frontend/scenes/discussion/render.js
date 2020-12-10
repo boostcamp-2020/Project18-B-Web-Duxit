@@ -4,7 +4,7 @@ import TextObject from '@engine/TextObject';
 import GameObject from '@engine/GameObject';
 import TIME from '@type/time';
 import TEXT from '@utils/text';
-import { clickSkip } from './events';
+import { clickSkip, mouseOverSkip, mouseOutSkip } from './events';
 
 const renderDiscussion = () => {
   const ProgressBar = new ProgressBarObject();
@@ -22,11 +22,24 @@ const renderDiscussion = () => {
   ActionWrapper.addClass('discussion-action-wrapper');
   ActionWrapper.attachToRoot();
 
+  const WarningTextBox = new GameObject();
+  WarningTextBox.addClass('warning-bubble');
+  WarningTextBox.attachToObject(ActionWrapper);
+
+  const WarningText = new TextObject();
+  WarningText.addClass('warning-text');
+  WarningText.setContent(
+    '한 번 Skip을 누르면 취소할 수 없어요! 신중하게 선택하세요!',
+  );
+  WarningText.attachToObject(WarningTextBox);
+
   const SkipButton = new ButtonObject();
   SkipButton.setContent('Skip');
   SkipButton.addClass('skip-button');
   SkipButton.attachToObject(ActionWrapper);
   SkipButton.addClickHandler(clickSkip);
+  SkipButton.instance.addEventListener('mouseover', mouseOverSkip);
+  SkipButton.instance.addEventListener('mouseout', mouseOutSkip);
   const arrayToBeRemoved = [ProgressBar];
 
   return {
