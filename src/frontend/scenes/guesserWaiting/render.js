@@ -36,7 +36,6 @@ const renderGuesserWaiting = ({ endTime }) => {
   cards.forEach((card) => {
     card.setAnimateMove(false);
   });
-  window.c = cards;
 
   const arrayToBeRemoved = [
     NotifyingTellerText,
