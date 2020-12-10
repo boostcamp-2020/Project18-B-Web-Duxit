@@ -4,7 +4,7 @@ import TextObject from '@engine/TextObject';
 import GameObject from '@engine/GameObject';
 import TIME from '@type/time';
 import TEXT from '@utils/text';
-import { clickSkip, mouseOverSkip, mouseOutSkip } from './events';
+import { clickSkip, mouseOverSkip, mouseOutSkip, initTeller } from './events';
 
 const renderDiscussion = () => {
   const ProgressBar = new ProgressBarObject();
@@ -46,6 +46,8 @@ const renderDiscussion = () => {
   SkipText.addClass('hide');
   SkipText.setContent('모든 유저가 스킵했으므로 잠시 후 투표로 넘어갑니다.');
   SkipText.attachToRoot();
+
+  initTeller();
   const arrayToBeRemoved = [
     ProgressBar,
     HelpText,

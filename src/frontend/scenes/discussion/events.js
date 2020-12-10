@@ -1,5 +1,6 @@
 import socket from '@utils/socket';
 import { $qs } from '@utils/dom';
+import PlayerManager from '@utils/PlayerManager';
 
 // eslint-disable-next-line import/prefer-default-export
 export const clickSkip = ({ target }) => {
@@ -19,4 +20,14 @@ export const mouseOverSkip = ({ target }) => {
 export const mouseOutSkip = ({ target }) => {
   const warningBox = $qs('.warning-bubble');
   warningBox.style.visibility = 'hidden';
+};
+
+export const initTeller = () => {
+  const isTeller = PlayerManager.isTeller();
+  const skipButton = $qs('.skip-button');
+  if (isTeller) {
+    skipButton.classList.remove('skip-button');
+    skipButton.classList.add('skip-button-clicked');
+    socket.emit('skip player');
+  }
 };
