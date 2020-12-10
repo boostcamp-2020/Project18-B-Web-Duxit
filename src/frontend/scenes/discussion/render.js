@@ -40,10 +40,25 @@ const renderDiscussion = () => {
   SkipButton.addClickHandler(clickSkip);
   SkipButton.instance.addEventListener('mouseover', mouseOverSkip);
   SkipButton.instance.addEventListener('mouseout', mouseOutSkip);
-  const arrayToBeRemoved = [ProgressBar];
+
+  const SkipText = new TextObject();
+  SkipText.addClass('discussion-skip-text');
+  SkipText.addClass('hide');
+  SkipText.setContent('모든 유저가 스킵했으므로 잠시 후 투표로 넘어갑니다.');
+  SkipText.attachToRoot();
+  const arrayToBeRemoved = [
+    ProgressBar,
+    HelpText,
+    ActionWrapper,
+    WarningTextBox,
+    WarningText,
+    SkipButton,
+    SkipText,
+  ];
 
   return {
     arrayToBeRemoved,
+    SkipText,
   };
 };
 

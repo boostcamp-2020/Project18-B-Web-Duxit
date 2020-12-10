@@ -65,3 +65,14 @@
   font-weight: 600;
   opacity: 0.5;
 }
+
+.discussion-skip-text {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 70%;
+  left: 50%;
+  font-size: xx-large;
+  font-weight: bolder;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
