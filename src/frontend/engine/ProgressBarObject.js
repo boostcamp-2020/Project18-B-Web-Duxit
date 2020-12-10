@@ -2,6 +2,8 @@ import { $create, $id } from '@utils/dom';
 import TIME from '@type/time';
 import GameObject from './GameObject';
 
+const RED = '#d82e21';
+
 const ProgressBarObject = class extends GameObject {
   setTime(endTime) {
     this.endTime = new Date(endTime).getTime();
@@ -44,7 +46,7 @@ const ProgressBarObject = class extends GameObject {
       const remainTime = endTime - new Date().getTime();
       const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
-      if (widthSize < 30) progressBar.style.backgroundColor = '#d82e21';
+      if (widthSize < 30) progressBar.style.backgroundColor = RED;
       timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 
