@@ -13,6 +13,7 @@ class User {
     this.cards = [];
     this.score = 0;
     this.isReady = false;
+    this.isSkip = false;
   }
 
   initOnStart({ turnID } = {}) {
@@ -30,6 +31,10 @@ class User {
 
   setReady(isReady) {
     this.isReady = isReady;
+  }
+
+  setSkip() {
+    this.isSkip = true;
   }
 
   setColor(color) {
