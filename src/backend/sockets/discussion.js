@@ -22,6 +22,26 @@ function onSkipPlayer() {
   }
 }
 
+function onStartDiscussion() {
+  const socket = this;
+  const { game } = socket;
+  const { roomID } = game;
+  if (!game.status.firstDiscussionUser) {
+    game.setEndTime(TIME.WAIT_DISCUSSION);
+    game.toggleFirstDiscussionUser();
+  }
+  const { endTime } = game;
+  socket.in(roomID).emit('start discussion', { endTime });
+  socket.emit('start discussion', { endTime });
+  const currentTime = new Date().getTime();
+  const targetTime = new Date(endTime - currentTime).getTime();
+  setTimeout(() => {
+    socket.in(roomID).emit('end discussion');
+    socket.emit('end discussion');
+  }, targetTime);
+}
+
 export default function onDiscussion(socket) {
   socket.on('skip player', onSkipPlayer);
+  socket.on('mix card end', onStartDiscussion);
 }
