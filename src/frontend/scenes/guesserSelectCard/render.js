@@ -4,10 +4,9 @@ import CardManager from '@utils/CardManager';
 import { createCards } from '@utils/card';
 import onClickCard from '@utils/modal';
 import { SELECT_CARD, GUESSER_SELECT_CARD } from '@type/scene';
-import TIME from '@type/time';
 import { sendGuesserdecision } from './events';
 
-const renderGuesserSelect = () => {
+const renderGuesserSelect = ({ endTime }) => {
   const { topic, myCards } = CardManager;
 
   const TopicText = new TextObject();
@@ -18,7 +17,7 @@ const renderGuesserSelect = () => {
   const ProgressBar = new ProgressBarObject();
   ProgressBar.createElement();
   ProgressBar.attachToRoot();
-  ProgressBar.setTime(TIME.SELECT_CARD);
+  ProgressBar.setTime(endTime);
   ProgressBar.start();
 
   const { CardsWrapper, cards } = createCards(SELECT_CARD, myCards);
@@ -38,7 +37,7 @@ const renderGuesserSelect = () => {
     );
   });
 
-  const arrayToBeRemoved = [TopicText, CardsWrapper, ...cards];
+  const arrayToBeRemoved = [CardsWrapper, ...cards];
 
   return {
     arrayToBeRemoved,

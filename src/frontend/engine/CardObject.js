@@ -92,6 +92,12 @@ const CardObject = class extends GameObject {
     this.instance.removeEventListener('mouseover', this.hoverMoveUpCallback);
     this.instance.removeEventListener('mouseleave', this.hoverMoveDownCallback);
   }
+
+  setCardInformation(cardID) {
+    const imagePath = GET_IMAGE_PATH(cardID);
+    this.cardID = cardID;
+    this.setImagePath(imagePath);
+  }
 };
 
 export default CardObject;
