@@ -3,6 +3,7 @@ import NUMBER from '@type/number';
 import CardManager from '@utils/CardManager';
 import CARD_POSITION from '@type/cardPosition.json';
 import { MIX_CARD } from '@type/scene';
+import socket from '@utils/socket';
 
 const stackCards = async ({ Cards, position }) => {
   const promises = Cards.map(async (card) => {
@@ -61,7 +62,8 @@ const mixCards = async (Cards) => {
   rotateCards({ Cards });
   await shuffleCards({ Cards, position });
   await spreadCards({ Cards, position, spreadXPosition });
-  flipCards(Cards);
+  await flipCards(Cards);
+  socket.emit('mix card end');
 };
 
 const renderMixCard = () => {
