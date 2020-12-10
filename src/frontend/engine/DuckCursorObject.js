@@ -26,21 +26,17 @@ class DuckCursorObject extends DuckObejct {
     this.attachToRoot();
     this.throttling = false;
     this.lastPosition = null;
-
+    this.mouseHandler = this.makeFollowMouse.bind(this);
     this.width = 100;
     this.render();
   }
 
   addMouseMoveEvent() {
-    $id('root').addEventListener('mousemove', (event) =>
-      this.makeFollowMouse(event),
-    );
+    $id('root').addEventListener('mousemove', this.mouseHandler);
   }
 
   removeMouseMoveEvent() {
-    $id('root').removeEventListener('mousemove', (event) =>
-      this.makeFollowMouse(event),
-    );
+    $id('root').removeEventListener('mousemove', this.mouseHandler);
   }
 
   makeFollowMouse(event) {
