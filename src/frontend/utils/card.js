@@ -12,7 +12,7 @@ export const createCards = (sceneName, cardIds = Array(6).fill(null)) => {
   emptyObject.addClass('teller-cards-wrapper');
   const cards = cardIds.map((cardID, index) => {
     const card = new CardObject({
-      imagePath: cardID ? GET_IMAGE_PATH(cardID) : undefined,
+      imagePath: GET_IMAGE_PATH(cardID),
       cardID,
     });
     card.addClass('teller-duck-card');
