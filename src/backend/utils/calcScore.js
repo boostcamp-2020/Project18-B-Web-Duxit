@@ -1,3 +1,4 @@
+/* ///SCORE RULE///
 // 출제자
 // 출제자 (0 < 정답자 < 맞추는 사람.length): +3  => 보너스
 
@@ -11,7 +12,9 @@
 // 속여서받은점수: 1, => 보너스A
 // 스토리텔러로받은점수: 3, => 보너스B
 // 모두틀리거나맞아서받은점수: 2, => 보너스C
+*/ /// //////////////
 
+// 모든 Guesser가 맞추거나 모든 Guesser가 틀리면 Teller가 진 것으로 간주
 const isTellerWin = (guessers, correctAnswer) => {
   const correctGuessers = guessers.filter(
     (guesser) => guesser.votedCard === correctAnswer,
@@ -22,65 +25,41 @@ const isTellerWin = (guessers, correctAnswer) => {
   return true;
 };
 
-const calcScore = (game) => {
-  let result;
-  let bonusB;
-  let bonusC;
+const mapScore = (correctScore, bonusScore) => ({ correctScore, bonusScore });
+
+const getScoreMap = (game) => {
+  const scoreMap = new Map();
   const users = game.getUserArray();
   const [teller] = users.filter((user) => user.isTeller);
   const guessers = users.filter((user) => !user.isTeller);
 
   // Teller
   // [다 맞추거나 아무도 못 맞춤]인지 [한명이라도 맞춤]인지 확인
-  if (isTellerWin(guessers, teller.submittedCard)) {
-    // 보너스B, 보너스C 점수 할당
-    bonusB = 0;
-    bonusC = 2;
-  } else {
-    // 보너스B, 보너스C 점수 할당
-    bonusB = 3;
-    bonusC = 0;
-  }
+  const tellerWin = isTellerWin(guessers, teller.submittedCard);
+  // 보너스B, 보너스C 점수 할당
+  const [bonusB, bonusC] = tellerWin ? [0, 2] : [3, 0];
 
   // teller = {correct: 0, bonus: 보너스B 점수}
-  result = { [teller.socketID]: { correct: 0, bonus: bonusB } };
+  scoreMap.set(teller.socketID, mapScore(0, bonusB));
 
   // Guesser
   guessers.forEach((guesser) => {
-    let correct;
-    let bonusA;
     // 내가 정답을 맞췄는지 확인
-    if (guesser.votedCard === teller.submittedCard) {
-      // 정답 점수 할당
-      correct = 3;
-    } else {
-      // 정답 점수 할당
-      correct = 0;
-    }
+    const correct = guesser.votedCard === teller.submittedCard;
+    // 정답 점수 할당
+    const correctScore = correct ? 3 : 0;
 
     // 다른 사람들이 내 카드를 얼마나 찍었는지 확인
     // 보너스A 점수 할당
-    bonusA = guessers.filter(
+    const bonusA = guessers.filter(
       (otherGuesser) => otherGuesser.votedCard === guesser.submittedCard,
     ).length;
 
     // guesser = {correct: 정답, bonus: 보너스A + 보너스C}
-    result = {
-      ...result,
-      [guesser.socketID]: { correct, bonus: bonusA + bonusC },
-    };
+    scoreMap.set(guesser.socketID, mapScore(correctScore, bonusA + bonusC));
   });
 
-  return result;
+  return scoreMap;
 };
 
-// 플레이어 수 만큼 다시 계산해야 하는 비효율성!! 이지만 혹시 몰라서 만들어 봄
-const getCorrectScore = (game, user) => {
-  return calcScore(game)[user.socketID].correct;
-};
-
-const getBonusScore = (game, user) => {
-  return calcScore(game)[user.socketID].bonus;
-};
-
-export { getCorrectScore, getBonusScore, calcScore };
+export { getScoreMap };
