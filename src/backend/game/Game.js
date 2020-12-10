@@ -17,6 +17,7 @@ export default class Game {
       unusedCards: [],
       topic: '',
       turn: 0,
+      firstDiscussionUser: false,
     };
   }
 
@@ -53,6 +54,20 @@ export default class Game {
     this.status = {
       ...this.status,
       turn: this.status.turn + 1,
+    };
+  }
+
+  toggleFirstDiscussionUser() {
+    this.status = {
+      ...this.status,
+      firstDiscussionUser: true,
+    };
+  }
+
+  initFirstDiscussionUser() {
+    this.status = {
+      ...this.status,
+      firstDiscussionUser: false,
     };
   }
 
@@ -120,6 +135,7 @@ export default class Game {
 
   startNewRound() {
     this.addTurn();
+    this.initFirstDiscussionUser();
 
     const {
       users,
