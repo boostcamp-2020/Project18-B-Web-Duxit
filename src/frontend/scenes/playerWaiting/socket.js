@@ -1,11 +1,14 @@
 import socket from '@utils/socket';
 import CardManager from '@utils/CardManager';
+import PlayerManager from '@utils/PlayerManager';
 import SceneManager from '@utils/SceneManager';
 import MixCard from '../mixCard';
 
 const setupPlayerWaiting = () => {
-  const onOtherGuesserSelectCard = () => {
+  const onOtherGuesserSelectCard = ({ playerID }) => {
     CardManager.dropNewCard();
+    const guesserDuck = PlayerManager.get(playerID).duck;
+    guesserDuck.setVisibility(true);
   };
 
   const onGetAllDecisions = ({ cards }) => {

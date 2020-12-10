@@ -23,8 +23,9 @@ const renderGuesserWaiting = ({ endTime }) => {
   ProgressBar.start();
 
   PlayerManager.getPlayers().forEach((player) =>
-    player.duck.setVisibility(false),
+    player.duck.setVisibility(!player.isTeller, player.isCurrentPlayer),
   );
+
   const tellerColor = PlayerManager.getTeller().color;
   const TellerDuck = new DuckObject({ color: tellerColor, width: 200 });
   TellerDuck.addClass('teller-duck-wrapper');

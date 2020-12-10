@@ -63,7 +63,7 @@ class DuckCursorObject extends DuckObejct {
     socket.emit('send duck move', { x, y });
   }
 
-  setVisibility(value = false, isCurrentPlayer) {
+  setVisibility(value = false, isCurrentPlayer = false) {
     const displayStyle = value ? 'block' : 'none';
     this.instance.style.display = displayStyle;
 

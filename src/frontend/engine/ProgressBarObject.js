@@ -14,7 +14,7 @@ const ProgressBarObject = class extends GameObject {
 
   finish() {
     if (this.callback) this.callback();
-    this.remove();
+    this.instance.style.display = 'none';
   }
 
   createElement() {
