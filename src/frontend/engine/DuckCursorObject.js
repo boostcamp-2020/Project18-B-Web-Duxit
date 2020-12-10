@@ -1,4 +1,3 @@
-import { Duck, DuckHat } from '@utils/duck';
 import socket from '@utils/socket';
 import { $id } from '@utils/dom';
 import TIME from '@type/time';
