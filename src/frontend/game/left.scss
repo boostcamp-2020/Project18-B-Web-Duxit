@@ -64,13 +64,13 @@
     background-color: $gray-color;
     border-radius: 1rem;
   }
+}
 
-  .duck-hat {
-    position: absolute;
-    top: -26%;
-    left: 49%;
-    transform: translateX(-50%);
-  }
+.duck-hat {
+  position: absolute;
+  top: -26%;
+  left: 49%;
+  transform: translateX(-50%);
 }
 
 video {

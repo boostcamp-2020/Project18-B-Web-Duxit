@@ -5,6 +5,7 @@ import TextObject from '@engine/TextObject';
 import InputObject from '@engine/InputObject';
 import SvgObject from '@engine/SvgObject';
 import Svg from '@type/svg';
+import DuckObject from '@engine/DuckObject';
 import {
   copyGameCode,
   redirectToLobby,

@@ -1,12 +1,12 @@
 import './guesserWaiting.scss';
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
-import DuckTellerObject from '@engine/DuckTellerObject';
+import DuckObject from '@engine/DuckObject';
 import TEXT from '@utils/text';
 import TIME from '@type/time';
-import { DUCK_TYPE } from '@type/duck';
 import { createCards } from '@utils/card';
 import { GUESSER_WAITING } from '@type/scene';
+import PlayerManager from '@utils/PlayerManager';
 
 const renderGuesserWaiting = () => {
   const NotifyingTellerText = new TextObject();
@@ -24,9 +24,13 @@ const renderGuesserWaiting = () => {
   ProgressBar.setTime(TIME.SELECT_CARD);
   ProgressBar.start();
 
-  const TellerDuck = new DuckTellerObject();
+  PlayerManager.getPlayers().forEach((player) => player.duck.setVisible(false));
+  const tellerColor = PlayerManager.getTeller().color;
+  const TellerDuck = new DuckObject({ color: tellerColor, width: 200 });
+  TellerDuck.addClass('teller-duck-wrapper');
   TellerDuck.attachToRoot();
   TellerDuck.move(50, 0, 0);
+  TellerDuck.setHat(true);
   TellerDuck.move(50, 10, TIME.ONE_SECOND);
   const { CardsWrapper, cards } = createCards(GUESSER_WAITING);
   CardsWrapper.attachToRoot();

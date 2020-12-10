@@ -5,8 +5,6 @@ import setupWaitingRoomSocket from './socket';
 const WaitingRoom = class {
   constructor(roomID) {
     this.roomID = roomID;
-    this.ducks = new Map();
-    this.duckMoveEvent = null;
 
     PlayerManager.onUpdate.push(this.setNicknameInput.bind(this));
   }
