@@ -12,7 +12,6 @@ const setupGuesserWaiting = () => {
 
   const onTellerPicking = ({ cardPosition }) => {
     const GuesserWaitingScene = SceneManager.currentScene;
-    console.log(GuesserWaitingScene);
     const { cards } = GuesserWaitingScene;
     cards.forEach((card) => card.hoverMoveDownCallback());
     cards[cardPosition].hoverMoveUpCallback();
