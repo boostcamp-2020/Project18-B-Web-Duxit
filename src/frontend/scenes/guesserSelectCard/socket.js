@@ -1,8 +1,8 @@
 import socket from '@utils/socket';
 import CardManager from '@utils/CardManager';
 import SceneManager from '@utils/SceneManager';
+import PlayerManager from '@utils/PlayerManager';
 import PlayerWaiting from '../playerWaiting';
-import PlayerManager from '../../utils/PlayerManager';
 
 const setupGuesserSelectCard = ({ ProgressBar, scene }) => {
   const onGuesserSelectCard = ({ cardID }) => {

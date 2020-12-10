@@ -1,5 +1,5 @@
 import TIME from '@type/time';
-import CardManager from '../../utils/CardManager';
+import CardManager from '@utils/CardManager';
 import renderTellerSelect from './render';
 import setupTellerSelectSocket from './socket';
 
