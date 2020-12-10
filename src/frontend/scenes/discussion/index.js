@@ -1,10 +1,12 @@
 import './discussion.scss';
 import renderDiscussion from './render';
+import setupDiscussion from './socket';
 
 const Discussion = class {
   render() {
-    const { arrayToBeRemoved = [] } = renderDiscussion();
+    const { arrayToBeRemoved = [], SkipText } = renderDiscussion();
     this.arrayToBeRemoved = arrayToBeRemoved;
+    setupDiscussion({ SkipText });
   }
 
   wrapup() {
