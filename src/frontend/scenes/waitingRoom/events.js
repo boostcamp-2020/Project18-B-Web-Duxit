@@ -45,16 +45,12 @@ export const changeColor = ({ target }) => {
 };
 
 export const inputColorHandler = ({ target }) => {
-  const { value: color = '' } = target;
-  if (!color.startsWith('#')) {
-    Object.assign(target, { value: `#${color}` });
-    inputColorHandler({ target });
+  const { value = '' } = target;
+  const hexColor = `#${value.replaceAll('#', '')}`.slice(0, 7);
+  if (hexColor === value) {
+    changeColor({ target });
     return;
   }
-  if (color.length > 7) {
-    Object.assign(target, { value: color.slice(0, 7) });
-    inputColorHandler({ target });
-    return;
-  }
-  changeColor({ target });
+  Object.assign(target, { value: hexColor });
+  inputColorHandler({ target });
 };
