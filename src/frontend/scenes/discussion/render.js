@@ -15,7 +15,7 @@ const renderDiscussion = () => {
 
   const HelpText = new TextObject();
   HelpText.addClass('discussion-helper-text');
-  HelpText.setContent(TEXT.DISCUSSION);
+  HelpText.setContent(TEXT.DISCUSSION.TITLE);
   HelpText.attachToRoot();
 
   const ActionWrapper = new GameObject();
@@ -28,9 +28,7 @@ const renderDiscussion = () => {
 
   const WarningText = new TextObject();
   WarningText.addClass('warning-text');
-  WarningText.setContent(
-    '한 번 Skip을 누르면 취소할 수 없어요! 신중하게 선택하세요!',
-  );
+  WarningText.setContent(TEXT.DISCUSSION.WARNING);
   WarningText.attachToObject(WarningTextBox);
 
   const SkipButton = new ButtonObject();
@@ -44,7 +42,7 @@ const renderDiscussion = () => {
   const SkipText = new TextObject();
   SkipText.addClass('discussion-skip-text');
   SkipText.addClass('hide');
-  SkipText.setContent('모든 유저가 스킵했으므로 잠시 후 투표로 넘어갑니다.');
+  SkipText.setContent(TEXT.DISCUSSION.SKIP);
   SkipText.attachToRoot();
 
   initTeller();

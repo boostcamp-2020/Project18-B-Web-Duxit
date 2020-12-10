@@ -12,12 +12,12 @@ export const clickSkip = ({ target }) => {
   socket.emit('skip player');
 };
 
-export const mouseOverSkip = ({ target }) => {
+export const mouseOverSkip = () => {
   const warningBox = $qs('.warning-bubble');
   warningBox.style.visibility = 'visible';
 };
 
-export const mouseOutSkip = ({ target }) => {
+export const mouseOutSkip = () => {
   const warningBox = $qs('.warning-bubble');
   warningBox.style.visibility = 'hidden';
 };

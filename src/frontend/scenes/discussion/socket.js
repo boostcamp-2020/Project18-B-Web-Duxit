@@ -17,6 +17,7 @@ const setupDiscussion = ({ SkipText }) => {
   };
 
   const onEndDiscussion = () => {
+    // 이 부분에 vote로 넘어가는 부분 추가하면 됩니다.
     SceneManager.renderNextScene();
   };
   socket.on('all skip', onAllSkip);
