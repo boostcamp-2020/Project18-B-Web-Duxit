@@ -28,6 +28,7 @@ export const initTeller = () => {
   if (isTeller) {
     skipButton.classList.remove('skip-button');
     skipButton.classList.add('skip-button-clicked');
+    skipButton.setAttribute('disabled', true);
     socket.emit('skip player');
   }
 };
