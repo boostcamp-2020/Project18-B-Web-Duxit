@@ -43,7 +43,7 @@ jobs:
             npm run build || exit 1
             echo "=== update nginx serve files ==="
             # rm -rf ${{ secrets.NGINX_DIRECTORY }}
-            sudo cp ./dist/* ${{ secrets.NGINX_DIRECTORY }}
+            sudo cp -r ./dist/* ${{ secrets.NGINX_DIRECTORY }}
             cd ..
           fi
           
