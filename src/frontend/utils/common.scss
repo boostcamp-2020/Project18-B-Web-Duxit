@@ -122,3 +122,37 @@ html {
     box-shadow: $glow-color-gold;
   }
 }
+
+.guide-wrapper {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 10%;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-50%);
+  > * {
+    margin: 0.5em 0;
+  }
+}
+
+.guide-button {
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  background-color: $main-color;
+  border-radius: 100%;
+  box-shadow: $button-shadow;
+  cursor: pointer;
+  svg {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  &.refresh-button-small {
+    width: 2rem;
+    height: 2rem;
+  }
+}
