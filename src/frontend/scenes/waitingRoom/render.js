@@ -7,6 +7,7 @@ import SvgObject from '@engine/SvgObject';
 import Svg from '@type/svg';
 import defaultColors from '@type/defaultColors.json';
 import { getRandomColor } from '@utils/hexColor';
+import { onClickGuide } from '@utils/modal';
 
 import {
   copyGameCode,
@@ -117,6 +118,19 @@ const renderWaitingRoom = (roomID = '') => {
   const CheckIcon = new SvgObject();
   CheckIcon.setSvg(Svg.check);
   CheckIcon.attachToObject(NicknameSubmitButton);
+
+  const GuideWrapper = new GameObject();
+  GuideWrapper.addClass('guide-wrapper');
+  GuideWrapper.attachToRoot();
+
+  const GuideButton = new ButtonObject();
+  GuideButton.addClass('guide-button');
+  GuideButton.attachToObject(GuideWrapper);
+  GuideButton.addClickHandler(() => onClickGuide());
+
+  const GuideIcon = new SvgObject();
+  GuideIcon.setSvg(Svg.guide);
+  GuideIcon.attachToObject(GuideButton);
 
   const ActionWrapper = new GameObject();
   ActionWrapper.addClass('waiting-action-wrapper');

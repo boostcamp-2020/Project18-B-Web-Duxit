@@ -2,7 +2,7 @@ import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import CardManager from '@utils/CardManager';
 import { createCards } from '@utils/card';
-import onClickCard from '@utils/modal';
+import { onClickCard } from '@utils/modal';
 import { SELECT_CARD, GUESSER_SELECT_CARD } from '@type/scene';
 import { sendGuesserdecision } from './events';
 
