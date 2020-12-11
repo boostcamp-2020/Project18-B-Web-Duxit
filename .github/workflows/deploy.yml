@@ -48,7 +48,7 @@ jobs:
             npm run build || exit 1
             echo -e "\n=== update nginx serve files ==="
             # rm -rf ${{ secrets.NGINX_DIRECTORY }}
-            sudo cp ./dist/* ${{ secrets.NGINX_DIRECTORY }}
+            sudo cp -r ./dist/* ${{ secrets.NGINX_DIRECTORY }}
             cd ..
           else
             echo "- Frontend code not changed; step skipped."

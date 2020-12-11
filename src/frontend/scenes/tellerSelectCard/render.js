@@ -5,7 +5,7 @@ import TEXT from '@utils/text';
 import { SELECT_CARD, TELLER_SELECT_CARD } from '@type/scene';
 import { createCards } from '@utils/card';
 import CardManager from '@utils/CardManager';
-import onClickCard from '@utils/modal';
+import { onClickCard } from '@utils/modal';
 import { sendTellerdecision } from './events';
 
 const renderTellerSelect = ({ endTime }) => {
@@ -24,6 +24,7 @@ const renderTellerSelect = ({ endTime }) => {
   const { CardsWrapper, cards } = createCards(SELECT_CARD, CardManager.myCards);
   CardsWrapper.attachToRoot();
   cards.forEach((card) => {
+    card.setTellerCard(true);
     card.addClass('card-glow-gold-hover');
     card.animateFlip(3000, true);
     card.setAnimateMove();

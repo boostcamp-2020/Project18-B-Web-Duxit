@@ -7,7 +7,11 @@ const renderPlayerWaiting = ({ ProgressBar, endTime }) => {
   const newProgressBar = new ProgressBarObject();
   newProgressBar.createElement();
 
-  if (PlayerManager.isTeller()) {
+  const isTeller = PlayerManager.isTeller();
+  const tellerDuck = PlayerManager.getTeller().duck;
+  tellerDuck.setVisibility(true, isTeller);
+
+  if (isTeller) {
     newProgressBar.attachToRoot();
     newProgressBar.setTime(endTime);
     newProgressBar.start();

@@ -27,7 +27,7 @@ $white-color: #fff;
 $gray-color: #ddd;
 $black-color: #000;
 $red-color: #ff2617;
-$progress-color: #d82e21;
+$progress-color: #3ed78d;
 $green-color: #3ed78d;
 $button-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
 
@@ -120,5 +120,39 @@ html {
   @include card-glow-hover;
   &:hover {
     box-shadow: $glow-color-gold;
+  }
+}
+
+.guide-wrapper {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 10%;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-50%);
+  > * {
+    margin: 0.5em 0;
+  }
+}
+
+.guide-button {
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  background-color: $main-color;
+  border-radius: 100%;
+  box-shadow: $button-shadow;
+  cursor: pointer;
+  svg {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  &.refresh-button-small {
+    width: 2rem;
+    height: 2rem;
   }
 }

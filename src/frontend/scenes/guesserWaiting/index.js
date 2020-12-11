@@ -8,8 +8,9 @@ const GuesserWaiting = class {
 
   render() {
     const { endTime } = this;
-    const { arrayToBeRemoved = [] } = renderGuesserWaiting({ endTime });
+    const { arrayToBeRemoved = [], cards } = renderGuesserWaiting({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
+    this.cards = cards;
     setupGuesserWaiting();
   }
 

@@ -23,8 +23,9 @@ const renderGuesserWaiting = ({ endTime }) => {
   ProgressBar.start();
 
   PlayerManager.getPlayers().forEach((player) =>
-    player.duck.setVisibility(false),
+    player.duck.setVisibility(!player.isTeller, player.isCurrentPlayer),
   );
+
   const tellerColor = PlayerManager.getTeller().color;
   const TellerDuck = new DuckObject({ color: tellerColor, width: 200 });
   TellerDuck.addClass('teller-duck-wrapper');
@@ -35,6 +36,9 @@ const renderGuesserWaiting = ({ endTime }) => {
 
   const { CardsWrapper, cards } = createCards(GUESSER_WAITING);
   CardsWrapper.attachToRoot();
+  cards.forEach((card) => {
+    card.setAnimateMove(false);
+  });
 
   const arrayToBeRemoved = [
     NotifyingTellerText,
@@ -46,6 +50,7 @@ const renderGuesserWaiting = ({ endTime }) => {
 
   return {
     arrayToBeRemoved,
+    cards,
   };
 };
 
