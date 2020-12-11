@@ -1,0 +1,80 @@
+@import '@utils/common';
+
+.discussion-helper-text {
+  @include helper-text-white-background;
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 10%;
+  left: 50%;
+  font-size: x-large;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.discussion-action-wrapper {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 85%;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-50%);
+  > * {
+    margin: 0.5em 0;
+  }
+}
+
+.warning-bubble {
+  position: relative;
+  max-width: 70%;
+  padding: 15px;
+  margin: 0 5% 5% auto;
+  background: #efefef;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  opacity: 0.7;
+  visibility: hidden;
+  .warning-text {
+    margin: 0;
+
+    :last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  &::after {
+    position: absolute;
+    right: 50px;
+    bottom: -20px;
+    border-top: 20px solid #efefef;
+    border-left: 20px solid transparent;
+    content: '';
+  }
+}
+.skip-button {
+  @include button;
+  max-width: 10%;
+  margin-right: 5%;
+  margin-left: auto;
+  background-color: $main-color;
+}
+.skip-button-clicked {
+  @include button;
+  max-width: 10%;
+  margin-right: 5%;
+  margin-left: auto;
+  background-color: $main-clicked-color;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.discussion-skip-text {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 70%;
+  left: 50%;
+  font-size: xx-large;
+  font-weight: bolder;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
