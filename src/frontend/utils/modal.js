@@ -1,3 +1,4 @@
+import GameObject from '@engine/GameObject';
 import ModalObject from '@engine/ModalObject';
 import InputObject from '@engine/InputObject';
 import CardObject from '@engine/CardObject';
@@ -5,7 +6,7 @@ import ButtonObject from '@engine/ButtonObject';
 import TextObject from '@engine/TextObject';
 import TEXT, { GET_IMAGE_PATH } from '@utils/text';
 
-const onClickCard = ({
+export const onClickCard = ({
   textType,
   cardID,
   topic,
@@ -44,4 +45,24 @@ const onClickCard = ({
   okButton.addClickHandler(() => submitEvent(paramsOfHandler));
 };
 
-export default onClickCard;
+export const onClickGuide = () => {
+  const Modal = new ModalObject();
+
+  const modalTitle = new TextObject({ parent: Modal });
+  modalTitle.setContent('사용 설명서');
+  modalTitle.addClass('modal-title');
+
+  const guideContentWrapper = new GameObject({ parent: Modal });
+  guideContentWrapper.addClass('guide-content-wrapper');
+
+  const guideContentText = new TextObject({ parent: guideContentWrapper });
+  guideContentText.addClass('guide-content');
+  guideContentText.setContent(TEXT.GUIDE.CONTENT);
+
+  const closeButton = new ButtonObject({ parent: Modal });
+  closeButton.addClass('modal-close');
+  closeButton.setContent('계속하기');
+  closeButton.addClickHandler(() => {
+    Modal.delete();
+  });
+};
