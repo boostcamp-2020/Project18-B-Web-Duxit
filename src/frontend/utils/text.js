@@ -32,6 +32,11 @@ const TEXT = {
     5. 정답을 맞히지 못한 경우 : +0점
     `,
   },
+  DISCUSSION: {
+    TITLE: '어떤 카드가 이야기꾼의 카드일지 이야기를 나눠보세요!',
+    WARNING: '한 번 Skip을 누르면 취소할 수 없어요! 신중하게 선택하세요!',
+    SKIP: '모든 유저가 스킵했으므로 잠시 후 투표로 넘어갑니다.',
+  },
 };
 
 export const GET_IMAGE_PATH = (cardID) => {

@@ -24,6 +24,7 @@ const renderTellerSelect = ({ endTime }) => {
   const { CardsWrapper, cards } = createCards(SELECT_CARD, CardManager.myCards);
   CardsWrapper.attachToRoot();
   cards.forEach((card) => {
+    card.setTellerCard(true);
     card.addClass('card-glow-gold-hover');
     card.animateFlip(3000, true);
     card.setAnimateMove();

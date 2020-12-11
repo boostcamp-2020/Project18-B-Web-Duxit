@@ -6,6 +6,7 @@ import onTellerSelectCard from './tellerSelectCard';
 import onGuesserSelectCard from './guesserSelectCard';
 import onVoiceChat from './voiceChat';
 import onDuckMove from './duckMove';
+import onDiscussion from './discussion';
 
 const socketIO = io();
 
@@ -21,6 +22,7 @@ socketIO.on('connection', (socket) => {
   onTellerSelectCard(socket);
   onGuesserSelectCard(socket);
   onDuckMove(socket);
+  onDiscussion(socket);
 });
 
 export const emit = ({ users, socketID, name, params }) => {

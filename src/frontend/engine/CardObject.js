@@ -1,4 +1,5 @@
 import { GET_IMAGE_PATH } from '@utils/text';
+import socket from '@utils/socket';
 import GameObject from './GameObject';
 import ImageObject from './ImageObject';
 
@@ -36,6 +37,7 @@ const CardObject = class extends GameObject {
     this.cardID = cardID;
     this.hoverMoveUpCallback = null;
     this.hoverMoveDownCallback = null;
+    this.tellerCard = false;
   }
 
   setWidth(width = 240) {
@@ -62,6 +64,10 @@ const CardObject = class extends GameObject {
     this.inner.instance.style.transform = next;
   }
 
+  setTellerCard(boolean = true) {
+    this.tellerCard = boolean;
+  }
+
   moveUpCallback() {
     [this.fixedX, this.fixedY] = this.position;
     return () => {
@@ -69,6 +75,9 @@ const CardObject = class extends GameObject {
       const movedY = this.fixedY - Math.cos(deg2rad(this.angle)) * MOVE_PERCENT;
       this.setDepth('7');
       this.move(movedX, movedY);
+
+      if (this.tellerCard)
+        socket.emit('send teller picking', { cardID: this.cardID });
     };
   }
 
@@ -80,12 +89,14 @@ const CardObject = class extends GameObject {
     };
   }
 
-  setAnimateMove() {
+  setAnimateMove(mouse = true) {
     this.hoverMoveUpCallback = this.moveUpCallback();
     this.hoverMoveDownCallback = this.moveDownCallback();
 
-    this.instance.addEventListener('mouseover', this.hoverMoveUpCallback);
-    this.instance.addEventListener('mouseleave', this.hoverMoveDownCallback);
+    if (mouse) {
+      this.instance.addEventListener('mouseover', this.hoverMoveUpCallback);
+      this.instance.addEventListener('mouseleave', this.hoverMoveDownCallback);
+    }
   }
 
   deleteAnimateMove() {

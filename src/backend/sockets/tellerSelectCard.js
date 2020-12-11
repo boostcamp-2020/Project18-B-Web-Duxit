@@ -20,6 +20,15 @@ function onSendTellerDecision({ cardID, topic }) {
   game.startGuesserSelect(topic);
 }
 
+function onSendTellerPicking({ cardID }) {
+  const socket = this;
+  const { game, user } = socket;
+  const cardPosition = user.cards.findIndex(
+    (userCardID) => userCardID === cardID,
+  );
+  socket.in(game.roomID).emit('get teller picking', { cardPosition });
+}
+
 export const forceTellerSelect = ({ teller, users, endTime }) => {
   const { cardID, topic } = teller.selectCardFromUser({ teller: true });
   users.forEach((user) => {
@@ -34,4 +43,5 @@ export const forceTellerSelect = ({ teller, users, endTime }) => {
 
 export default function onTellerSelectCard(socket) {
   socket.on('send teller decision', onSendTellerDecision);
+  socket.on('send teller picking', onSendTellerPicking);
 }
