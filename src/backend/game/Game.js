@@ -6,6 +6,7 @@ import { forceGuesserSelect } from '@socket/guesserSelectCard';
 import { emit } from '@socket';
 import GameList from '@game/GameList';
 import User from './User';
+import methodGroups from './GameMethods';
 
 export default class Game {
   constructor(roomID) {
@@ -19,6 +20,14 @@ export default class Game {
       turn: 0,
       firstDiscussionUser: false,
     };
+
+    methodGroups.forEach((methodGroup) => this.addMethods(methodGroup));
+  }
+
+  addMethods(methodGroup) {
+    Object.entries(methodGroup).forEach(([methodName, method]) => {
+      this[methodName] = method;
+    });
   }
 
   start() {
