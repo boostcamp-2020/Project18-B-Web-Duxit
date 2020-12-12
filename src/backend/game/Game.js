@@ -48,13 +48,6 @@ export default class Game {
     };
   }
 
-  updateState(state) {
-    this.status = {
-      ...this.status,
-      state,
-    };
-  }
-
   updateTopic(topic) {
     this.status = { ...this.status, topic };
   }
@@ -84,15 +77,6 @@ export default class Game {
     const currentTime = new Date().getTime();
     const newTargetTime = new Date(currentTime + timeUnit);
     this.endTime = newTargetTime;
-  }
-
-  isEnterable() {
-    if (
-      this.status.state !== GAME_STATE.WAITING ||
-      this.users.size >= PLAYER.MAX
-    )
-      return false;
-    return true;
   }
 
   addUser({ socketID }) {
