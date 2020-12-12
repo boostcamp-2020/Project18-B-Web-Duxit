@@ -2,40 +2,46 @@ import GameList from '@game/GameList';
 import { PLAYER, TIME } from '@utils/number';
 import logger from '@utils/winston';
 
+// 유저가 게임 페이지에 접속했을 때 처음으로 호출하는 함수
 function onJoinPlayer({ roomID }) {
   const socket = this;
   const game = GameList.getGame(roomID);
   if (!game || !game.isEnterable(roomID)) return;
 
+  // 유저 정보를 Game.users에 저장
   const user = game.addUser({ socketID: socket.id, roomID });
+  // 나중에 코드를 작성하기 쉽게 game과 user를 socket에 저장
   socket.game = game;
   socket.user = user;
   socket.join(roomID);
 
+  // 이미 접속해 있는 다른 플레이어들의 정보를 전송
   socket.emit('enter room', {
     ...user.getProfile(),
     roomID,
     players: game.getUsersProfile(),
   });
 
+  // 이미 접속해 있는 다른 플레이어들에게 지금 새로 들어온 유저 정보 전송
   socket
     .in(game.roomID)
     .emit('update player', { ...user.getProfile(), socketID: socket.id });
 }
 
-function onUpdatePlayer(params = {}) {
+// 플레이어가 오리색이나 닉네임을 바꿨을 때
+function onUpdatePlayer(updatedUserProfile = {}) {
   const socket = this;
-  const {
-    user,
-    game: { roomID },
-  } = socket;
-  const { nickname = user.nickname, color = user.color } = params;
-  const passedData = { nickname, color, socketID: socket.id };
+  const { user, game } = socket;
+  const { nickname, color } = updatedUserProfile;
+  user.nickname = nickname ?? user.nickname;
+  user.color = color ?? user.color;
 
-  socket.game.updateUserProfile(passedData);
+  const userProfile = { nickname, color, socketID: socket.id };
+
+  game.updateUserProfile(userProfile);
   logger.info(`nickname ip:${socket.handshake.address} nickname:${nickname}`);
-  socket.in(roomID).emit('update player', passedData);
-  socket.emit('update player', passedData);
+  socket.in(game.roomID).emit('update player', userProfile);
+  socket.emit('update player', userProfile);
 }
 
 const timeoutMap = new Map();

@@ -7,6 +7,12 @@ function isEnterable() {
   return true;
 }
 
+function updateUserProfile({ socketID, nickname, color }) {
+  const user = this.users.get(socketID);
+  user.setColor(color);
+  user.setNickname(nickname);
+}
+
 const methodGroup = { isEnterable };
 
 export default methodGroup;
