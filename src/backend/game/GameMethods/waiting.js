@@ -8,11 +8,11 @@ function isEnterable() {
 }
 
 function updateUserProfile({ socketID, nickname, color }) {
-  const user = this.users.get(socketID);
-  user.setColor(color);
-  user.setNickname(nickname);
+  const user = this.getUser(socketID);
+  if (color) user.setColor(color);
+  if (nickname) user.setNickname(nickname);
 }
 
-const methodGroup = { isEnterable };
+const methodGroup = { isEnterable, updateUserProfile };
 
 export default methodGroup;

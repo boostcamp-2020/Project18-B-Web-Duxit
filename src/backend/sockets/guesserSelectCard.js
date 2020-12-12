@@ -22,7 +22,7 @@ function onSendGuesserDecision({ cardID }) {
     .in(game.roomID)
     .emit('other guesser decision', { playerID: socket.id });
 
-  const users = game.getUserArray();
+  const users = game.getUsers();
   const submittedUsers = users.filter(
     ({ submittedCard }) => submittedCard !== null,
   );

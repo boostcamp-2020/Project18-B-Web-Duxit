@@ -79,38 +79,10 @@ export default class Game {
     this.endTime = newTargetTime;
   }
 
-  addUser({ socketID }) {
-    const nickname = generateRandom.nickname();
-    const color = generateRandom.color();
-    const user = new User({ socketID, nickname, color });
-    GameList.addID(socketID, this);
-    this.users.set(socketID, user);
-    return user;
-  }
-
-  removeUser({ socketID }) {
-    this.users.delete(socketID);
-    GameList.removeID(socketID);
-    if (this.users.size < 1) {
-      GameList.removeID(this.roomID);
-    }
-  }
-
-  getUser(socketID) {
-    if (!this.users.has(socketID)) return null;
-    return this.users.get(socketID);
-  }
-
   getUsersProfile() {
     return [...this.users.keys()].map((socketID) => {
       return { ...this.users.get(socketID).getProfile(), socketID };
     });
-  }
-
-  updateUserProfile({ socketID, nickname, color }) {
-    const user = this.users.get(socketID);
-    user.setColor(color);
-    user.setNickname(nickname);
   }
 
   dealCards(cards, count) {
@@ -120,10 +92,6 @@ export default class Game {
       unusedCards: [...this.status.unusedCards.slice(count)],
     };
     return [...cards, ...newCards];
-  }
-
-  getUserArray() {
-    return [...this.users.values()];
   }
 
   startNewRound() {
@@ -174,7 +142,7 @@ export default class Game {
   }
 
   waitGuesserSelect() {
-    const users = this.getUserArray();
+    const users = this.getUsers();
     setTimeout(() => {
       if (this.status.state === GAME_STATE.GUESSER) {
         this.setEndTime(TIME.WAIT_DISCUSSION);

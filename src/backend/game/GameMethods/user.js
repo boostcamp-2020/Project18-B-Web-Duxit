@@ -38,6 +38,13 @@ function getGuessers() {
   return this.getUsers().filter((user) => !user.isTeller);
 }
 
-const methodGroup = { addUser, removeUser };
+const methodGroup = {
+  addUser,
+  removeUser,
+  getUser,
+  getUsers,
+  getTeller,
+  getGuessers,
+};
 
 export default methodGroup;
