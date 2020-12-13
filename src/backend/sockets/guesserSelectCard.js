@@ -25,10 +25,11 @@ function onSendGuesserDecision({ cardID }) {
   );
 
   if (submittedUsers.length === users.length) {
-    game.setState(GAME_STATE.DISCUSSION);
-    setTimeout(() => {
-      emitGetAllDecisions({ users });
-    }, TIME.DELAY_GET_ALL_DECISIONS);
+    game.endGuesserScene();
+    // game.setState(GAME_STATE.DISCUSSION);
+    // setTimeout(() => {
+    //   emitGetAllDecisions({ users });
+    // }, TIME.DELAY_GET_ALL_DECISIONS);
   }
 }
 

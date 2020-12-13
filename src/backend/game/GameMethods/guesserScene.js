@@ -54,7 +54,10 @@ function emitGetAllDecisions() {
 
 function endGuesserScene() {
   this.forceGuesserSelect();
-  this.emitGetAllDecisions();
+  setTimeout(() => {
+    this.emitGetAllDecisions();
+  }, TIME.DELAY_GET_ALL_DECISIONS);
+  this.startDiscussionScene();
 }
 
 const methodGroup = {

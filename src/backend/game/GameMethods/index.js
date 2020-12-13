@@ -3,8 +3,8 @@ import user from './user';
 import waiting from './waitingScene';
 import teller from './tellerScene';
 import guesser from './guesserScene';
-import mix from './mixCardScene';
+import discussion from './DiscussionScene';
 
-const methodGroups = [common, user, waiting, teller, guesser, mix];
+const methodGroups = [common, user, waiting, teller, guesser, discussion];
 
 export default methodGroups;
