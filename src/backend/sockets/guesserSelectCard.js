@@ -17,10 +17,7 @@ function onSendGuesserDecision({ cardID }) {
   if (game.status.state !== GAME_STATE.GUESSER) return;
 
   user.submitCard(cardID);
-  socket.emit('guesser select card', { cardID });
-  socket
-    .in(game.roomID)
-    .emit('other guesser decision', { playerID: socket.id });
+  game.emitGuesserSubmit(user);
 
   const users = game.getUsers();
   const submittedUsers = users.filter(

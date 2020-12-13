@@ -25,24 +25,6 @@ export default class Game {
     });
   }
 
-  updateUnusedCards(cards) {
-    this.status = {
-      ...this.status,
-      unusedCards: cards,
-    };
-  }
-
-  updateTopic(topic) {
-    this.status = { ...this.status, topic };
-  }
-
-  addTurn() {
-    this.status = {
-      ...this.status,
-      turn: this.status.turn + 1,
-    };
-  }
-
   toggleFirstDiscussionUser() {
     this.status = {
       ...this.status,
@@ -70,25 +52,5 @@ export default class Game {
       unusedCards: [...this.status.unusedCards.slice(count)],
     };
     return [...cards, ...newCards];
-  }
-
-  startGuesserSelect(topic) {
-    this.updateTopic(topic);
-    this.setState(GAME_STATE.GUESSER);
-    this.waitGuesserSelect();
-  }
-
-  waitGuesserSelect() {
-    const users = this.getUsers();
-    setTimeout(() => {
-      if (this.status.state === GAME_STATE.GUESSER) {
-        this.setEndTime(TIME.WAIT_DISCUSSION);
-        const unsubmittedUsers = users.filter(
-          ({ submittedCard }) => submittedCard === null,
-        );
-        forceGuesserSelect({ unsubmittedUsers, users, endTime: this.endTime });
-        this.setState(GAME_STATE.DISCUSSION);
-      }
-    }, TIME.WAIT_GUESSER_SELECT);
   }
 }

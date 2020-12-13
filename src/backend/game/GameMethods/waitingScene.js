@@ -15,12 +15,16 @@ function updateUserProfile({ socketID, nickname, color }) {
 }
 
 function startGame() {
+  // 플레이어들의 turnID 설정
+  // TODO: turnID 섞기
   [...this.users.values()].forEach((user, index) => {
     user.initOnStart({ turnID: index });
   });
 
-  this.updateUnusedCards(generateRandom.cards(CARD.DECK));
-  // this.setEndTime(TIME.WAIT_TELLER_SELECT);
+  // 게임에 사용할 카드 섞어서 세팅하기
+  this.status.unusedCards = generateRandom.cards(CARD.DECK);
+
+  this.setEndTime(TIME.WAIT_TELLER_SELECT);
 }
 
 function endWaitingScene() {

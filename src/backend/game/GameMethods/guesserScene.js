@@ -4,10 +4,11 @@ import { emit } from '@socket';
 
 function startGuesserScene() {
   this.setState(GAME_STATE.GUESSER);
+  this.setEndTime(TIME.WAIT_DISCUSSION);
   setTimeout(this.endGuesserSelect, TIME.WAIT_GUESSER_SELECT);
 }
 
-function emitGuesserSelect(guesser) {
+function emitGuesserSubmit(guesser) {
   const otherUsers = this.getUsers().filter(
     (user) => user.socketID !== guesser.socketID,
   );
@@ -37,7 +38,7 @@ function forceGuesserSelect() {
 
   unsubmittedUsers.forEach((user) => {
     user.forceSubmitCard();
-    this.emitGuesserSelect(user);
+    this.emitGuesserSubmit(user);
   });
 }
 
@@ -47,7 +48,7 @@ function endGuesserScene() {
 
 const methodGroup = {
   startGuesserScene,
-  emitGuesserSelect,
+  emitGuesserSubmit,
   forceGuesserSelect,
   endGuesserScene,
 };

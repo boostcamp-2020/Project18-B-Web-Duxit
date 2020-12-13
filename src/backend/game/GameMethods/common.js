@@ -15,7 +15,7 @@ function setState(state) {
 }
 
 function startRound() {
-  this.addTurn();
+  this.status.turn += 1;
   this.initFirstDiscussionUser();
 
   const {
