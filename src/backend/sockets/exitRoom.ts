@@ -11,7 +11,7 @@ function exitRoom() {
   const { roomID } = socket.game;
   const passedData = { socketID: socket.id };
 
-  if (game.getState === GAME_STATE.WAITING) {
+  if (game.getState() === GAME_STATE.WAITING) {
     socket.in(roomID).emit('exit player', passedData);
   } else {
     // READY 상태일때 나가면 답이 없음
