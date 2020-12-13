@@ -6,7 +6,18 @@ function startDiscussionScene() {
   this.setState(GAME_STATE.DISCUSSION);
 }
 
-function forceGuesserVote() {}
+function forceGuesserVote() {
+  if (this.getState() !== GAME_STATE.DISCUSSION) return;
+
+  const unvotedUsers = this.getGuessers().filter(
+    ({ votedCard }) => votedCard === null,
+  );
+
+  unvotedUsers.forEach((user) => {
+    user.forceVoteCard();
+    // this.emitGuesserVote(user);
+  });
+}
 
 function endDiscussionScene() {
   this.forceGuesserVote();
