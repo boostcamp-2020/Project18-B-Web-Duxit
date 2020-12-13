@@ -1,5 +1,3 @@
-import GAME_STATE from '@utils/gameState';
-import { PLAYER, CARD, TIME } from '@utils/number';
 import generateRandom from '@utils/generateRandom';
 import GameList from '@game/GameList';
 import User from './User';

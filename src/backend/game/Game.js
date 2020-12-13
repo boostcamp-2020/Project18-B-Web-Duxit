@@ -1,11 +1,6 @@
-import generateRandom from '@utils/generateRandom';
 import GAME_STATE from '@utils/gameState';
 import { PLAYER, CARD, TIME } from '@utils/number';
-import { forceTellerSelect } from '@socket/tellerSelectCard';
 import { forceGuesserSelect } from '@socket/guesserSelectCard';
-import { emit } from '@socket';
-import GameList from '@game/GameList';
-import User from './User';
 import methodGroups from './GameMethods';
 
 export default class Game {
@@ -75,21 +70,6 @@ export default class Game {
       unusedCards: [...this.status.unusedCards.slice(count)],
     };
     return [...cards, ...newCards];
-  }
-
-  waitTellerSelect(tellerID) {
-    setTimeout(() => {
-      if (this.status.state === GAME_STATE.TELLER) {
-        this.setEndTime(TIME.WAIT_GUESSER_SELECT);
-        const teller = this.getUser(tellerID);
-        const topic = forceTellerSelect({
-          teller,
-          users: this.users,
-          endTime: this.endTime,
-        });
-        this.startGuesserSelect(topic);
-      }
-    }, TIME.WAIT_TELLER_SELECT);
   }
 
   startGuesserSelect(topic) {
