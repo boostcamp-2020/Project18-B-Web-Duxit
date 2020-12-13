@@ -1,6 +1,4 @@
 import GAME_STATE from '@utils/gameState';
-import { PLAYER, CARD, TIME } from '@utils/number';
-import { forceGuesserSelect } from '@socket/guesserSelectCard';
 import methodGroups from './GameMethods';
 
 export default class Game {

@@ -5,7 +5,7 @@ import { emit } from '@socket';
 
 const emitGetAllDecisions = ({ users }) => {
   const submittedCardIDs = users.map((user) => user.submittedCard);
-  const suffledCardIDs = generateRandom.suffleArray(submittedCardIDs);
+  const suffledCardIDs = generateRandom.shuffleArray(submittedCardIDs);
   emit({ users, name: 'get all decisions', params: { cards: suffledCardIDs } });
 };
 

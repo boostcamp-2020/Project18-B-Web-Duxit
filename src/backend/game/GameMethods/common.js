@@ -1,4 +1,3 @@
-import { PLAYER, CARD, TIME } from '@utils/number';
 import { emit } from '@socket';
 
 function getState() {
@@ -14,7 +13,7 @@ function setState(state) {
 }
 
 function dealCards(count = 1) {
-  this.getUsers.forEach((user) => {
+  this.getUsers().forEach((user) => {
     const deck = this.status.unusedCards;
     const newCards = deck.slice(0, count);
     newCards.forEach((card) => user.addCard(card));
@@ -23,22 +22,25 @@ function dealCards(count = 1) {
 }
 
 function startRound() {
+  const users = this.getUsers();
+
   this.status.turn += 1;
+  const tellerTurnID = this.status.turn % users.size;
+  users.forEach((user) => {
+    if (tellerTurnID === user.TurnID) user.setTeller(true);
+    else user.setTeller(false);
+  });
 
-  const {
-    users,
-    status: { turn },
-  } = this;
+  this.dealCards();
+  const params = {
+    tellerID: this.getTeller().socketID,
+    endTime: this.endTime,
+  };
 
-  // TODO: teller 순서 섞기
-  const teller = [...users.values()][turn % users.size];
-  const { socketID: tellerID } = teller;
+  emit({ users, name: 'get round data', params });
 
   users.forEach((user) => {
-    this.dealCards();
-    const params = { tellerID, endTime: this.endTime };
-    user.initOnRound(params);
-    emit({ socketID: user.socketID, name: 'get round data', params });
+    user.initOnRound();
   });
 }
 

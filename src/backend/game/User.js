@@ -21,13 +21,15 @@ class User {
     this.score = 0;
   }
 
-  initOnRound({ tellerID = '', cards = [] } = {}) {
+  initOnRound() {
     this.submittedCard = null;
     this.votedCard = null;
     this.isReady = false;
-    this.isTeller = this.socketID === tellerID;
-    this.cards = cards;
     this.isSkip = false;
+  }
+
+  setTeller(boolean) {
+    this.isTeller = boolean;
   }
 
   setReady(isReady) {
