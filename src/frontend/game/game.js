@@ -5,6 +5,7 @@ import requestHandler from '@utils/requestHandler';
 import WaitingRoom from '@scenes/waitingRoom';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
+import SocketManager from '@socket';
 import TIME from '@type/time';
 import './LeftTab';
 import './background';
@@ -69,6 +70,9 @@ const initializeLayout = () => {
 };
 
 const initialize = async () => {
+  SceneManager.initializeComponents();
+  SocketManager.initializeSocketOn();
+
   const urlParams = new URLSearchParams(window.location.search);
   const roomID = urlParams.get('room');
   const config = { method: 'GET', uri: `/rooms/${roomID}` };
