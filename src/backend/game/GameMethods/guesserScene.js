@@ -1,6 +1,7 @@
 import { PLAYER, CARD, TIME } from '@utils/number';
 import GAME_STATE from '@utils/gameState';
 import { emit } from '@socket';
+import generateRandom from '@utils/generateRandom';
 
 function startGuesserScene() {
   this.setState(GAME_STATE.GUESSER);
@@ -44,14 +45,23 @@ function forceGuesserSelect() {
   });
 }
 
+function emitGetAllDecisions() {
+  const users = this.getUsers();
+  const submittedCardIDs = users.map((user) => user.submittedCard);
+  const suffledCardIDs = generateRandom.shuffleArray(submittedCardIDs);
+  emit({ users, name: 'get all decisions', params: { cards: suffledCardIDs } });
+}
+
 function endGuesserScene() {
   this.forceGuesserSelect();
+  this.emitGetAllDecisions();
 }
 
 const methodGroup = {
   startGuesserScene,
   emitGuesserSubmit,
   forceGuesserSelect,
+  emitGetAllDecisions,
   endGuesserScene,
 };
 
