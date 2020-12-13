@@ -1,7 +1,7 @@
 import socket from '@utils/socket';
 import Peer from 'peerjs';
 
-const myPeer = new Peer();
+let myPeer;
 
 const videoGrid = document.getElementById('video-grid');
 
@@ -56,12 +56,13 @@ function connectionHandler(stream) {
 }
 
 function initVoiceChat() {
-  // peer server와 연결에 성공하면 발생되는 이벤트
-  myPeer.on('open', (id) => {
-    socket.emit('player connect voice channel', id);
-  });
   const connectButton = document.querySelector('.microphone-controller');
   connectButton.addEventListener('click', async (e) => {
+    myPeer = new Peer();
+    myPeer.on('open', (id) => {
+      socket.emit('player connect voice channel', id);
+    });
+
     let stream = null;
     try {
       stream = await navigator.mediaDevices.getUserMedia({
