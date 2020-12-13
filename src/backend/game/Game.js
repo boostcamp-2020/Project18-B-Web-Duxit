@@ -29,13 +29,4 @@ export default class Game {
     const newTargetTime = new Date(currentTime + timeUnit);
     this.endTime = newTargetTime;
   }
-
-  dealCards(cards, count) {
-    const newCards = this.status.unusedCards.slice(0, count);
-    this.status = {
-      ...this.status,
-      unusedCards: [...this.status.unusedCards.slice(count)],
-    };
-    return [...cards, ...newCards];
-  }
 }

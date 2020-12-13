@@ -57,7 +57,6 @@ const deleteGameStartTimeout = (roomID) => {
   const timeout = timeoutMap.get(roomID);
   clearTimeout(timeout);
   timeoutMap.delete(roomID);
-  return true;
 };
 
 // 사용자가 레디를 눌렀을 때 or 레디를 풀었을 때
