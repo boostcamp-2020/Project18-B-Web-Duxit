@@ -1,4 +1,5 @@
 import GameList from '@game/GameList';
+import GAME_STATE from '@utils/gameState';
 import { PLAYER, TIME } from '@utils/number';
 import logger from '@utils/winston';
 
@@ -53,8 +54,6 @@ const isPossibleStartGame = ({ users }) => {
 };
 
 const deleteGameStartTimeout = (roomID) => {
-  if (!timeoutMap.has(roomID)) return false;
-
   const timeout = timeoutMap.get(roomID);
   clearTimeout(timeout);
   timeoutMap.delete(roomID);
@@ -80,14 +79,15 @@ function onReadyChange({ isReady }) {
 
     // 게임 시작을 위한 타이머 설정
     const timeout = setTimeout(() => {
-      game.startGame();
-      game.startTellerScene();
+      game.endWaitingScene();
       if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
     }, TIME.WAIT_GAME_START);
     timeoutMap.set(roomID, timeout);
+    game.setState(GAME_STATE.READY);
   }
-  // 한명이라도 레디 하지 않은 경우, 타이머 중지 시도
-  else if (deleteGameStartTimeout()) {
+  // 한명이라도 레디 하지 않은 경우, 이미 레디 상태였는지 확인
+  else if (game.getState() === GAME_STATE.READY) {
+    deleteGameStartTimeout(roomID);
     // 실제로 타이머가 중지 되었을 경우 플레이어들에게 알림
     socket.in(roomID).emit('game start aborted', {});
     socket.emit('game start aborted', {});

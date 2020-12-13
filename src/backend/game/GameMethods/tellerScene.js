@@ -4,10 +4,14 @@ import { emit } from '@socket';
 
 function startTellerScene() {
   this.startRound();
-  this.waitTellerSelect(tellerID);
+  setTimeout(this.endTellerScene, TIME.WAIT_TELLER_SELECT);
 }
 
-function endTellerScene() {}
+function forceTellerSelect() {}
+
+function endTellerScene() {
+  this.forceTellerSelect();
+}
 
 const methodGroup = { startTellerScene };
 

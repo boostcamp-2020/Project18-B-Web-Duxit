@@ -24,6 +24,16 @@ function startGame() {
   this.setEndTime(TIME.WAIT_TELLER_SELECT);
 }
 
-const methodGroup = { isEnterable, updateUserProfile, startGame };
+function endWaitingScene() {
+  this.startGame();
+  this.startTellerScene();
+}
+
+const methodGroup = {
+  isEnterable,
+  updateUserProfile,
+  startGame,
+  endWaitingScene,
+};
 
 export default methodGroup;
