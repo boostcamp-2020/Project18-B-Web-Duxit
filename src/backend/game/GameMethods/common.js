@@ -3,10 +3,11 @@ function getState() {
 }
 
 function setState(state) {
-  this.status = {
-    ...this.status,
-    state,
-  };
+  if (!state) {
+    console.error(`Set State, but ${state}`);
+    return;
+  }
+  this.status.state = state;
 }
 
 const methodGroup = { getState, setState };
