@@ -64,7 +64,7 @@ function onReadyPlayer({ isReady }) {
     socket.in(roomID).emit('all ready', {});
     socket.emit('all ready', {});
     const timeout = setTimeout(() => {
-      game.start();
+      game.startGame();
       if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
     }, TIME.WAIT_GAME_START);
     timeoutMap.set(roomID, timeout);

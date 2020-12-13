@@ -30,17 +30,6 @@ export default class Game {
     });
   }
 
-  start() {
-    [...this.users.values()].forEach((user, index) => {
-      user.initOnStart({ turnID: index });
-    });
-
-    this.setState(GAME_STATE.TELLER);
-    this.updateUnusedCards(generateRandom.cards(CARD.DECK));
-    this.setEndTime(TIME.WAIT_TELLER_SELECT);
-    this.startNewRound();
-  }
-
   updateUnusedCards(cards) {
     this.status = {
       ...this.status,
@@ -79,12 +68,6 @@ export default class Game {
     this.endTime = newTargetTime;
   }
 
-  getUsersProfile() {
-    return [...this.users.keys()].map((socketID) => {
-      return { ...this.users.get(socketID).getProfile(), socketID };
-    });
-  }
-
   dealCards(cards, count) {
     const newCards = this.status.unusedCards.slice(0, count);
     this.status = {
@@ -92,32 +75,6 @@ export default class Game {
       unusedCards: [...this.status.unusedCards.slice(count)],
     };
     return [...cards, ...newCards];
-  }
-
-  startNewRound() {
-    this.addTurn();
-    this.initFirstDiscussionUser();
-
-    const {
-      users,
-      status: { unusedCards, turn },
-    } = this;
-
-    const isFirstTurn = turn === 1;
-    const teller = [...users.values()][turn % users.size];
-    const { socketID: tellerID } = teller;
-    const requiredCardCount = isFirstTurn ? CARD.HAND : 1;
-    const outOfDeck = unusedCards.length < users.size * requiredCardCount;
-    if (outOfDeck) return;
-
-    users.forEach((user) => {
-      const cards = this.dealCards(user.cards, requiredCardCount);
-      const params = { tellerID, cards, endTime: this.endTime };
-      user.initOnRound(params);
-      emit({ socketID: user.socketID, name: 'get round data', params });
-    });
-
-    this.waitTellerSelect(tellerID);
   }
 
   waitTellerSelect(tellerID) {

@@ -1,5 +1,6 @@
 import GAME_STATE from '@utils/gameState';
 import { PLAYER, CARD, TIME } from '@utils/number';
+import generateRandom from '@utils/generateRandom';
 
 function isEnterable() {
   if (this.status.state !== GAME_STATE.WAITING || this.users.size >= PLAYER.MAX)
@@ -13,6 +14,17 @@ function updateUserProfile({ socketID, nickname, color }) {
   if (nickname) user.setNickname(nickname);
 }
 
-const methodGroup = { isEnterable, updateUserProfile };
+function startGame() {
+  [...this.users.values()].forEach((user, index) => {
+    user.initOnStart({ turnID: index });
+  });
+
+  this.setState(GAME_STATE.TELLER);
+  this.updateUnusedCards(generateRandom.cards(CARD.DECK));
+  this.setEndTime(TIME.WAIT_TELLER_SELECT);
+  this.startRound();
+}
+
+const methodGroup = { isEnterable, updateUserProfile, startGame };
 
 export default methodGroup;

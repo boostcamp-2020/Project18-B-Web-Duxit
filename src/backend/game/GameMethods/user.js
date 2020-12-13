@@ -38,6 +38,12 @@ function getGuessers() {
   return this.getUsers().filter((user) => !user.isTeller);
 }
 
+function getUsersProfile() {
+  return [...this.users.keys()].map((socketID) => {
+    return { ...this.users.get(socketID).getProfile(), socketID };
+  });
+}
+
 const methodGroup = {
   addUser,
   removeUser,
@@ -45,6 +51,7 @@ const methodGroup = {
   getUsers,
   getTeller,
   getGuessers,
+  getUsersProfile,
 };
 
 export default methodGroup;
