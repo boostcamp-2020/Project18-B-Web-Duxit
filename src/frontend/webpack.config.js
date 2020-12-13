@@ -23,6 +23,7 @@ module.exports = (webpackEnv) => {
         '@resources': path.resolve(__dirname, 'resources'),
         '@utils': path.resolve(__dirname, 'utils'),
         '@type': path.resolve(__dirname, 'type'),
+        '@socket': path.resolve(__dirname, 'socket'),
       },
     },
     output: {
