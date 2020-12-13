@@ -13,7 +13,6 @@ export default class Game {
       unusedCards: [],
       topic: '',
       turn: 0,
-      firstDiscussionUser: false,
     };
 
     methodGroups.forEach((methodGroup) => this.addMethods(methodGroup));
@@ -23,20 +22,6 @@ export default class Game {
     Object.entries(methodGroup).forEach(([methodName, method]) => {
       this[methodName] = method;
     });
-  }
-
-  toggleFirstDiscussionUser() {
-    this.status = {
-      ...this.status,
-      firstDiscussionUser: true,
-    };
-  }
-
-  initFirstDiscussionUser() {
-    this.status = {
-      ...this.status,
-      firstDiscussionUser: false,
-    };
   }
 
   setEndTime(timeUnit) {
