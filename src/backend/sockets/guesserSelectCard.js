@@ -41,7 +41,7 @@ export const forceGuesserSelect = ({ unsubmittedUsers, users, endTime }) => {
     const otherUsers = users.filter(
       ({ socketID: guesserID }) => guesserID !== socketID,
     );
-    const { cardID } = user.selectCardFromUser({ teller: false });
+    const { cardID } = user.forceSubmitCard({ teller: false });
     emit({
       socketID,
       name: 'guesser select card',

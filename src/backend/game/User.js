@@ -96,11 +96,13 @@ class User {
     };
   }
 
-  selectCardFromUser({ teller = true }) {
+  forceSubmitCard() {
     const cardID = generateRandom.pickOneFromArray(this.cards);
     this.submittedCard = cardID;
-    return teller ? { cardID, topic: TOPIC[cardID] } : { cardID };
+    // TODO: 뽑은 카드를 리스트에서 지워야 함
   }
+
+  forceVoteCard() {}
 }
 
 export default User;

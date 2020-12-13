@@ -19,9 +19,8 @@ function startGame() {
     user.initOnStart({ turnID: index });
   });
 
-  this.setState(GAME_STATE.TELLER);
   this.updateUnusedCards(generateRandom.cards(CARD.DECK));
-  this.setEndTime(TIME.WAIT_TELLER_SELECT);
+  // this.setEndTime(TIME.WAIT_TELLER_SELECT);
 }
 
 function endWaitingScene() {

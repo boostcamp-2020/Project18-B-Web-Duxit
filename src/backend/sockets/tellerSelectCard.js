@@ -11,13 +11,9 @@ function onSendTellerDecision({ cardID, topic }) {
   if (!cardID || !topic) return;
 
   user.submitCard(cardID);
-  game.setEndTime(TIME.WAIT_GUESSER_SELECT);
-  socket.emit('teller select card', { cardID, topic, endTime: game.endTime });
-  socket
-    .in(game.roomID)
-    .emit('teller decision', { topic, endTime: game.endTime });
+  game.endTellerScene();
 
-  game.startGuesserSelect(topic);
+  // game.startGuesserSelect(topic);
 }
 
 function onSendTellerPicking({ cardID }) {
@@ -30,7 +26,7 @@ function onSendTellerPicking({ cardID }) {
 }
 
 export const forceTellerSelect = ({ teller, users, endTime }) => {
-  const { cardID, topic } = teller.selectCardFromUser({ teller: true });
+  const { cardID, topic } = teller.forceSubmitCard({ teller: true });
   users.forEach((user) => {
     const { socketID } = user;
     const isTeller = socketID === teller.socketID;
