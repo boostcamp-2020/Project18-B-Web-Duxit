@@ -1,6 +1,6 @@
 import common from './common';
 import user from './user';
-import waiting from './waiting';
+import waiting from './waitingScene';
 
 const methodGroups = [common, user, waiting];
 

@@ -52,33 +52,50 @@ const isPossibleStartGame = ({ users }) => {
   return isAllReady && isValidSize;
 };
 
-function onReadyPlayer({ isReady }) {
+const deleteGameStartTimeout = (roomID) => {
+  if (!timeoutMap.has(roomID)) return false;
+
+  const timeout = timeoutMap.get(roomID);
+  clearTimeout(timeout);
+  timeoutMap.delete(roomID);
+  return true;
+};
+
+// 사용자가 레디를 눌렀을 때 or 레디를 풀었을 때
+function onReadyChange({ isReady }) {
   const socket = this;
   const { game } = socket;
   const { users, roomID } = game;
+
+  // 플레이어의 레디 상태를 변경
   users.get(socket.id).setReady(isReady);
   socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
 
   const validationToStart = isPossibleStartGame({ users });
+  // 모든 플레이어가 레디 상태일 때
   if (validationToStart) {
+    // 모든 플레이어에게 전부 준비 상태임을 알림
     socket.in(roomID).emit('all ready', {});
     socket.emit('all ready', {});
+
+    // 게임 시작을 위한 타이머 설정
     const timeout = setTimeout(() => {
       game.startGame();
+      game.startTellerScene();
       if (timeoutMap.has(game.roomID)) timeoutMap.delete(game.roomID);
     }, TIME.WAIT_GAME_START);
     timeoutMap.set(roomID, timeout);
-  } else if (timeoutMap.has(roomID)) {
+  }
+  // 한명이라도 레디 하지 않은 경우, 타이머 중지 시도
+  else if (deleteGameStartTimeout()) {
+    // 실제로 타이머가 중지 되었을 경우 플레이어들에게 알림
     socket.in(roomID).emit('game start aborted', {});
     socket.emit('game start aborted', {});
-    const timeout = timeoutMap.get(roomID);
-    clearTimeout(timeout);
-    timeoutMap.delete(roomID);
   }
 }
 
 export default function onWaitingRoom(socket) {
   socket.on('join player', onJoinPlayer);
   socket.on('update player', onUpdatePlayer);
-  socket.on('ready player', onReadyPlayer);
+  socket.on('ready player', onReadyChange);
 }

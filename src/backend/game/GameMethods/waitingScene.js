@@ -22,7 +22,6 @@ function startGame() {
   this.setState(GAME_STATE.TELLER);
   this.updateUnusedCards(generateRandom.cards(CARD.DECK));
   this.setEndTime(TIME.WAIT_TELLER_SELECT);
-  this.startRound();
 }
 
 const methodGroup = { isEnterable, updateUserProfile, startGame };

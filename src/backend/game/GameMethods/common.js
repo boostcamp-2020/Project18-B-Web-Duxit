@@ -36,8 +36,6 @@ function startRound() {
     user.initOnRound(params);
     emit({ socketID: user.socketID, name: 'get round data', params });
   });
-
-  this.waitTellerSelect(tellerID);
 }
 
 const methodGroup = { getState, setState, startRound };
