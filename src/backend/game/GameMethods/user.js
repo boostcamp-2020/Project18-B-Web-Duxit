@@ -1,6 +1,6 @@
 import generateRandom from '@utils/generateRandom';
 import GameList from '@game/GameList';
-import User from './User';
+import User from '@game/User';
 
 function addUser({ socketID }) {
   const nickname = generateRandom.nickname();
