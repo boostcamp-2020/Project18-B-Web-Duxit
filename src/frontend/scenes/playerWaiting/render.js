@@ -1,20 +1,17 @@
-import ProgressBarObject from '@engine/ProgressBarObject';
 import TextObject from '@engine/TextObject';
-import TEXT from '@utils/text';
 import PlayerManager from '@utils/PlayerManager';
+import SceneManager from '@utils/SceneManager';
+import TEXT from '@utils/text';
 
-const renderPlayerWaiting = ({ ProgressBar, endTime }) => {
-  const newProgressBar = new ProgressBarObject();
-  newProgressBar.createElement();
-
+const renderPlayerWaiting = ({ endTime }) => {
   const isTeller = PlayerManager.isTeller();
   const tellerDuck = PlayerManager.getTeller().duck;
   tellerDuck.setVisibility(true, isTeller);
 
   if (isTeller) {
-    newProgressBar.attachToRoot();
-    newProgressBar.setTime(endTime);
-    newProgressBar.start();
+    const { ProgressBar } = SceneManager.sharedComponents;
+    ProgressBar.setTime(endTime);
+    ProgressBar.start();
   }
 
   const HelpText = new TextObject();
@@ -22,8 +19,7 @@ const renderPlayerWaiting = ({ ProgressBar, endTime }) => {
   HelpText.setContent(TEXT.WAIT_PLAYER_SELECT);
   HelpText.attachToRoot();
 
-  const arrayToBeRemoved = [HelpText, newProgressBar];
-  if (ProgressBar) arrayToBeRemoved.push(ProgressBar);
+  const arrayToBeRemoved = [HelpText];
 
   return {
     arrayToBeRemoved,

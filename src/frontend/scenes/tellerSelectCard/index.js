@@ -1,7 +1,6 @@
 import TIME from '@type/time';
 import CardManager from '@utils/CardManager';
 import renderTellerSelect from './render';
-import setupTellerSelectSocket from './socket';
 
 const TellerSelectCard = class {
   constructor({ cards, endTime }) {
@@ -14,7 +13,6 @@ const TellerSelectCard = class {
     const { endTime } = this;
     const { arrayToBeRemoved = [] } = renderTellerSelect({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
-    setupTellerSelectSocket();
   }
 
   wrapup() {
