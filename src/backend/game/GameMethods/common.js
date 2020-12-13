@@ -1,5 +1,4 @@
 import { PLAYER, CARD, TIME } from '@utils/number';
-import GAME_STATE from '@utils/gameState';
 import { emit } from '@socket';
 
 function getState() {
@@ -23,6 +22,7 @@ function startRound() {
   } = this;
 
   const isFirstTurn = turn === 1;
+  // TODO: teller 순서 섞기
   const teller = [...users.values()][turn % users.size];
   const { socketID: tellerID } = teller;
   const requiredCardCount = isFirstTurn ? CARD.HAND : 1;
