@@ -1,5 +1,4 @@
 import generateRandom from '@utils/generateRandom';
-import TOPIC from '@utils/cardTopic.json';
 
 class User {
   constructor({ socketID, nickname, color }) {

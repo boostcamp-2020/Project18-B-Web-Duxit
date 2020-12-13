@@ -11,8 +11,6 @@ function onSendTellerDecision({ cardID, topic }) {
   game.status.topic = topic;
   user.submitCard(cardID);
   game.endTellerScene();
-
-  // game.startGuesserSelect(topic);
 }
 
 function onSendTellerPicking({ cardID }) {
