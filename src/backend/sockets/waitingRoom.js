@@ -31,15 +31,15 @@ function onJoinPlayer({ roomID }) {
 // 플레이어가 오리색이나 닉네임을 바꿨을 때
 function onUpdatePlayer(updatedUserProfile = {}) {
   const socket = this;
-  const { user, game } = socket;
+  const { game } = socket;
   const { nickname, color } = updatedUserProfile;
-  user.nickname = nickname ?? user.nickname;
-  user.color = color ?? user.color;
 
   const userProfile = { nickname, color, socketID: socket.id };
-
   game.updateUserProfile(userProfile);
+
+  // Record Log
   logger.info(`nickname ip:${socket.handshake.address} nickname:${nickname}`);
+  // Send updated user profile to players
   socket.in(game.roomID).emit('update player', userProfile);
   socket.emit('update player', userProfile);
 }

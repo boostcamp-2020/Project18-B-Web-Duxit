@@ -35,7 +35,7 @@ export default class Game {
       user.initOnStart({ turnID: index });
     });
 
-    this.updateState(GAME_STATE.TELLER);
+    this.setState(GAME_STATE.TELLER);
     this.updateUnusedCards(generateRandom.cards(CARD.DECK));
     this.setEndTime(TIME.WAIT_TELLER_SELECT);
     this.startNewRound();
@@ -137,7 +137,7 @@ export default class Game {
 
   startGuesserSelect(topic) {
     this.updateTopic(topic);
-    this.updateState(GAME_STATE.GUESSER);
+    this.setState(GAME_STATE.GUESSER);
     this.waitGuesserSelect();
   }
 
@@ -150,7 +150,7 @@ export default class Game {
           ({ submittedCard }) => submittedCard === null,
         );
         forceGuesserSelect({ unsubmittedUsers, users, endTime: this.endTime });
-        this.updateState(GAME_STATE.DISCUSSION);
+        this.setState(GAME_STATE.DISCUSSION);
       }
     }, TIME.WAIT_GUESSER_SELECT);
   }

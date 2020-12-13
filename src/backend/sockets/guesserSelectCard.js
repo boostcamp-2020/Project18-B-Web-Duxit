@@ -28,7 +28,7 @@ function onSendGuesserDecision({ cardID }) {
   );
 
   if (submittedUsers.length === users.length) {
-    game.updateState(GAME_STATE.DISCUSSION);
+    game.setState(GAME_STATE.DISCUSSION);
     setTimeout(() => {
       emitGetAllDecisions({ users });
     }, TIME.DELAY_GET_ALL_DECISIONS);
