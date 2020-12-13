@@ -10,7 +10,7 @@ const setupTellerSelectSocket = () => {
     CardManager.updateTopic(topic);
     CardManager.addSubmittedCardCount();
     CardManager.selectCard(cardID);
-    SceneManager.renderNextScene(new PlayerWaiting({ endTime }));
+    SceneManager.renderNextScene(new PlayerWaiting(endTime));
     SceneManager.updateCurrentSceneType(PLAYER_WAITING);
   };
 
