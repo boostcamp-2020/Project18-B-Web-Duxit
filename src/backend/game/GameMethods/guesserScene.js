@@ -5,7 +5,9 @@ import { emit } from '@socket';
 function startGuesserScene() {
   this.setState(GAME_STATE.GUESSER);
   this.setEndTime(TIME.WAIT_DISCUSSION);
-  setTimeout(this.endGuesserSelect, TIME.WAIT_GUESSER_SELECT);
+  setTimeout(() => {
+    this.endGuesserScene();
+  }, TIME.WAIT_GUESSER_SELECT);
 }
 
 function emitGuesserSubmit(guesser) {

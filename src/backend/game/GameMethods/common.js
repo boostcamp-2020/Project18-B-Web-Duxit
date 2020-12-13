@@ -25,21 +25,24 @@ function startRound() {
   const users = this.getUsers();
 
   this.status.turn += 1;
-  const tellerTurnID = this.status.turn % users.size;
+  const tellerTurnID = this.status.turn % users.length;
   users.forEach((user) => {
-    if (tellerTurnID === user.TurnID) user.setTeller(true);
+    if (tellerTurnID === user.turnID) user.setTeller(true);
     else user.setTeller(false);
   });
 
   this.dealCards();
-  const params = {
+  const baseParams = {
     tellerID: this.getTeller().socketID,
     endTime: this.endTime,
   };
 
-  emit({ users, name: 'get round data', params });
-
   users.forEach((user) => {
+    emit({
+      socketID: user.socketID,
+      name: 'get round data',
+      params: { ...baseParams, cards: user.cards },
+    });
     user.initOnRound();
   });
 }

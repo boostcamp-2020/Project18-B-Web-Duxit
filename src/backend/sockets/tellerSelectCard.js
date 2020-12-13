@@ -8,6 +8,7 @@ function onSendTellerDecision({ cardID, topic }) {
   if (game.status.state !== GAME_STATE.TELLER) return;
   if (!cardID || !topic) return;
 
+  game.status.topic = topic;
   user.submitCard(cardID);
   game.endTellerScene();
 
@@ -17,6 +18,10 @@ function onSendTellerDecision({ cardID, topic }) {
 function onSendTellerPicking({ cardID }) {
   const socket = this;
   const { game, user } = socket;
+
+  if (!game || !user) return;
+  if (game.status.state !== GAME_STATE.TELLER) return;
+
   const cardPosition = user.cards.findIndex(
     (userCardID) => userCardID === cardID,
   );
