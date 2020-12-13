@@ -17,7 +17,7 @@ const ProgressBarObject = class extends GameObject {
 
   finish() {
     if (this.callback) this.callback();
-    this.instance.style.display = 'none';
+    this.addClass('hide');
   }
 
   createElement() {
@@ -41,6 +41,7 @@ const ProgressBarObject = class extends GameObject {
   }
 
   start() {
+    this.removeClass('hide');
     const [progressBar, timeText] = this.getProgessBar();
     const { endTime } = this;
     const progressBarTimer = setInterval(() => {
