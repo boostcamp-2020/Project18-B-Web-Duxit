@@ -1,8 +1,18 @@
+import PlayerManager from '@utils/PlayerManager';
 import renderScoreboard from './render';
 
 const Scoreboard = class {
+  constructor({ winnerID } = {}) {
+    this.winnerID = winnerID;
+  }
+
   render() {
-    const { arrayToBeRemoved } = renderScoreboard();
+    const players = PlayerManager.getPlayers();
+
+    const { arrayToBeRemoved } = renderScoreboard({
+      players,
+      winnerID: this.winnerID,
+    });
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 

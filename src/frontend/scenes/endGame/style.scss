@@ -29,8 +29,36 @@
   }
 }
 
+.end-grid-item {
+  flex-basis: 0;
+  margin-bottom: 0.5em;
+}
+.end-grid-item:not(.end-grid-winner) {
+  flex-grow: 1;
+}
+.end-grid-item.end-grid-winner {
+  flex-grow: 1.5;
+  > div {
+    padding-top: 25%;
+
+    filter: drop-shadow(0 0 10px $main-color);
+    transform: scale(1.5);
+    transform-origin: bottom;
+  }
+}
+
 .end-ducks {
   align-items: flex-end;
+}
+
+.end-nicknames {
+  align-items: center;
+  font-size: x-large;
+}
+
+.end-scores {
+  align-items: center;
+  font-size: xxx-large;
 }
 
 .end-actions-wrapper {
