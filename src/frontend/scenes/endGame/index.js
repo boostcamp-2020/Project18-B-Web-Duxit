@@ -1,7 +1,7 @@
 import PlayerManager from '@utils/PlayerManager';
 import renderScoreboard from './render';
 
-const Scoreboard = class {
+const EndGame = class {
   constructor({ winnerID } = {}) {
     this.winnerID = winnerID;
   }
@@ -23,4 +23,4 @@ const Scoreboard = class {
   }
 };
 
-export default Scoreboard;
+export default EndGame;
