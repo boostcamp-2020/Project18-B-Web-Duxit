@@ -5,7 +5,7 @@ import { emit } from '@socket';
 function startDiscussionScene() {
   this.setState(GAME_STATE.DISCUSSION);
   setTimeout(() => {
-    this.endDiscussionScene();
+    this.endDiscussionScene(false);
   }, TIME.DELAY_GET_ALL_DECISIONS + TIME.WAIT_DISCUSSION);
 }
 
@@ -24,6 +24,7 @@ function endDiscussionScene(skipped) {
   if (this.getState() !== GAME_STATE.DISCUSSION) return;
 
   this.emitDiscussionEnd(skipped);
+  this.startVoteScene();
 }
 
 const methodGroup = {
