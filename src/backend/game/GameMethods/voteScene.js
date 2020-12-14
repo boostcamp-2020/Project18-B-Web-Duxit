@@ -2,6 +2,7 @@ import { PLAYER, CARD, TIME } from '@utils/number';
 import GAME_STATE from '@utils/gameState';
 import generateRandom from '@utils/generateRandom';
 import { emit } from '@socket';
+import getScoreMap from '@utils/calcScore';
 
 function startVoteScene() {
   this.setState(GAME_STATE.VOTE);
@@ -27,16 +28,34 @@ function forceGuesserVote() {
   });
 }
 
+function emitEndVote() {
+  const scoreMap = getScoreMap(this);
+  const players = this.getUsers().map((user) => ({
+    socketID: user.socketID,
+    submittedCardID: user.submittedCard,
+    votedCardID: user.votedCard,
+    ...scoreMap.get(user.socketID),
+  }));
+
+  emit({
+    users: this.getUsers(),
+    name: 'end vote',
+    params: { players },
+  });
+}
+
 function endVoteScene() {
   if (this.getState() !== GAME_STATE.VOTE) return;
 
   this.forceGuesserVote();
-  this.startVoteResultScene();
+  this.emitEndVote();
+  this.startResultScene();
 }
 
 const methodGroup = {
   startVoteScene,
   forceGuesserVote,
+  emitEndVote,
   endVoteScene,
 };
 
