@@ -26,5 +26,6 @@ export default class Game {
     const currentTime = new Date().getTime();
     const newTargetTime = new Date(currentTime + timeUnit);
     this.endTime = newTargetTime;
+    return this.endTime;
   }
 }
