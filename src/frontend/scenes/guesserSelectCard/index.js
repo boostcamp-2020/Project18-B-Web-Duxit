@@ -3,6 +3,7 @@ import renderGuesserSelect from './render';
 const GuesserSelectCard = class {
   constructor({ endTime }) {
     this.endTime = endTime;
+    this.passingTimerClear = true;
   }
 
   render() {
