@@ -6,7 +6,8 @@ const GAME_STATE = {
   DISCUSSION: 4,
   VOTE: 5,
   RESULT: 6,
-  END: 7,
+  SCORE: 7,
+  END: 8,
 };
 
 export default GAME_STATE;
