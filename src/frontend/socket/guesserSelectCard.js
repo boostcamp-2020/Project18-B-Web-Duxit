@@ -2,24 +2,22 @@ import socket from '@utils/socket';
 import CardManager from '@utils/CardManager';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
-import { PLAYER_WAITING, GUESSER_SELECT_CARD } from '@type/scene';
 import PlayerWaiting from '@scenes/playerWaiting';
+import GuesserWaiting from '@scenes/guesserWaiting';
 
 const setupGuesserSelectCard = () => {
   const onGuesserSelectCard = ({ cardID }) => {
-    if (SceneManager.currentSceneType !== GUESSER_SELECT_CARD) return;
+    if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
     CardManager.addSubmittedCardCount();
     CardManager.selectCard(cardID);
-    // SceneManager.renderNextScene(new PlayerWaiting({ ProgressBar }));
     SceneManager.renderNextScene(new PlayerWaiting());
-    SceneManager.updateCurrentSceneType(PLAYER_WAITING);
 
     const myDuck = PlayerManager.getCurrentPlayer().duck;
     myDuck.setVisibility(true, true);
   };
 
   const onOtherGuesserSelectCard = () => {
-    if (SceneManager.currentSceneType !== GUESSER_SELECT_CARD) return;
+    if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
     CardManager.addSubmittedCardCount();
   };
 

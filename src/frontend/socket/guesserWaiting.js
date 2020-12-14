@@ -1,20 +1,19 @@
 import socket from '@utils/socket';
 import SceneManager from '@utils/SceneManager';
 import CardManager from '@utils/CardManager';
-import { GUESSER_WAITING, GUESSER_SELECT_CARD } from '@type/scene';
-import GuesserSelectCard from '../scenes/guesserSelectCard';
+import GuesserSelectCard from '@scenes/guesserSelectCard';
+import GuesserWaiting from '@scenes/guesserWaiting';
 
 const setupGuesserWaiting = () => {
   const onTellerSelectCard = ({ topic, endTime }) => {
-    if (SceneManager.currentSceneType !== GUESSER_WAITING) return;
+    if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
     CardManager.updateTopic(topic);
     CardManager.addSubmittedCardCount();
     SceneManager.renderNextScene(new GuesserSelectCard({ endTime }));
-    SceneManager.updateCurrentSceneType(GUESSER_SELECT_CARD);
   };
 
   const onTellerPicking = ({ cardPosition }) => {
-    if (SceneManager.currentSceneType !== GUESSER_WAITING) return;
+    if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
     const GuesserWaitingScene = SceneManager.currentScene;
     const { cards } = GuesserWaitingScene;
     cards.forEach((card) => card.hoverMoveDownCallback());

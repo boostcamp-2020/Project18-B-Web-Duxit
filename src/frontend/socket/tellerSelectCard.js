@@ -1,17 +1,16 @@
 import socket from '@utils/socket';
 import SceneManager from '@utils/SceneManager';
 import CardManager from '@utils/CardManager';
-import { TELLER_SELECT_CARD, PLAYER_WAITING } from '@type/scene';
 import PlayerWaiting from '@scenes/playerWaiting';
+import TellerSelectCard from '@scenes/tellerSelectCard';
 
 const setupTellerSelectSocket = () => {
   const onTellerSelectCard = ({ cardID, topic, endTime }) => {
-    if (SceneManager.currentSceneType !== TELLER_SELECT_CARD) return;
+    if (!SceneManager.isCurrentScene(TellerSelectCard)) return;
     CardManager.updateTopic(topic);
     CardManager.addSubmittedCardCount();
     CardManager.selectCard(cardID);
     SceneManager.renderNextScene(new PlayerWaiting(endTime));
-    SceneManager.updateCurrentSceneType(PLAYER_WAITING);
   };
 
   socket.on('teller select card', onTellerSelectCard);
