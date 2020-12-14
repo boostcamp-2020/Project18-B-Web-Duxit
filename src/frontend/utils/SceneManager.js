@@ -1,5 +1,6 @@
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
+import GuesserSelectCard from '@scenes/guesserSelectCard';
 import { $id } from '@utils/dom';
 import PlayerManager from '@utils/PlayerManager';
 import TIME from '@type/time';
@@ -39,7 +40,10 @@ const SceneManager = {
     let wrapupInterval = TIME.NONE_INTERVAL;
     this.hideAllDucks();
 
-    if (ProgressBar.progressBarTimer) ProgressBar.clear();
+    if (ProgressBar.progressBarTimer && !this.currentScene.passingTimerClear) {
+      ProgressBar.clear();
+    }
+
     if (this.currentScene) {
       this.currentScene.wrapup();
       wrapupInterval = this.currentScene.wrapupInterval || TIME.NONE_INTERVAL;
