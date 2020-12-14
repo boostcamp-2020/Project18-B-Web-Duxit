@@ -32,7 +32,7 @@ const generateRandom = {
   pickOneFromArray: (array: Array<number>) => {
     return array[Math.floor(Math.random() * array.length)];
   },
-  suffleArray: (array: Array<number>) => {
+  shuffleArray: (array: Array<number>) => {
     let j, x, i; 
     for (i = array.length; i; i -= 1) { 
         j = Math.floor(Math.random() * i); 

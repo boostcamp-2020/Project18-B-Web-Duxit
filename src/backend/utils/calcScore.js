@@ -29,7 +29,7 @@ const mapScore = (correctScore, bonusScore) => ({ correctScore, bonusScore });
 
 const getScoreMap = (game) => {
   const scoreMap = new Map();
-  const users = game.getUserArray();
+  const users = game.getUsers();
   const [teller] = users.filter((user) => user.isTeller);
   const guessers = users.filter((user) => !user.isTeller);
 

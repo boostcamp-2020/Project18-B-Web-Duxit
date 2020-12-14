@@ -1,5 +1,4 @@
 import generateRandom from '@utils/generateRandom';
-import TOPIC from '@utils/cardTopic.json';
 
 class User {
   constructor({ socketID, nickname, color }) {
@@ -21,13 +20,15 @@ class User {
     this.score = 0;
   }
 
-  initOnRound({ tellerID = '', cards = [] } = {}) {
+  initOnRound() {
     this.submittedCard = null;
     this.votedCard = null;
     this.isReady = false;
-    this.isTeller = this.socketID === tellerID;
-    this.cards = cards;
     this.isSkip = false;
+  }
+
+  setTeller(boolean) {
+    this.isTeller = boolean;
   }
 
   setReady(isReady) {
@@ -96,11 +97,13 @@ class User {
     };
   }
 
-  selectCardFromUser({ teller = true }) {
+  forceSubmitCard() {
     const cardID = generateRandom.pickOneFromArray(this.cards);
     this.submittedCard = cardID;
-    return teller ? { cardID, topic: TOPIC[cardID] } : { cardID };
+    // TODO: 뽑은 카드를 리스트에서 지워야 함
   }
+
+  forceVoteCard() {}
 }
 
 export default User;
