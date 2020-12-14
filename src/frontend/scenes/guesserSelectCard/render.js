@@ -1,6 +1,6 @@
 import TextObject from '@engine/TextObject';
-import ProgressBarObject from '@engine/ProgressBarObject';
 import CardManager from '@utils/CardManager';
+import SceneManager from '@utils/SceneManager';
 import { createCards } from '@utils/card';
 import { onClickCard } from '@utils/modal';
 import { SELECT_CARD, GUESSER_SELECT_CARD } from '@type/scene';
@@ -14,9 +14,7 @@ const renderGuesserSelect = ({ endTime }) => {
   TopicText.attachToRoot();
   TopicText.setContent(topic);
 
-  const ProgressBar = new ProgressBarObject();
-  ProgressBar.createElement();
-  ProgressBar.attachToRoot();
+  const { ProgressBar } = SceneManager.sharedComponents;
   ProgressBar.setTime(endTime);
   ProgressBar.start();
 
@@ -41,7 +39,6 @@ const renderGuesserSelect = ({ endTime }) => {
 
   return {
     arrayToBeRemoved,
-    ProgressBar,
   };
 };
 

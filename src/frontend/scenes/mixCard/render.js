@@ -69,10 +69,9 @@ const mixCards = async (Cards) => {
 const renderMixCard = () => {
   const Cards = CardManager.submittedCards;
   mixCards(Cards);
-  const arrayToBeRemoved = [];
 
   return {
-    arrayToBeRemoved,
+    arrayToBeRemoved: [],
   };
 };
 

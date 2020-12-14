@@ -2,22 +2,23 @@ import socket from '@utils/socket';
 import CardManager from '@utils/CardManager';
 import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
-import PlayerWaiting from '../playerWaiting';
+import PlayerWaiting from '@scenes/playerWaiting';
+import GuesserWaiting from '@scenes/guesserWaiting';
 
-const setupGuesserSelectCard = ({ ProgressBar, scene }) => {
+const setupGuesserSelectCard = () => {
   const onGuesserSelectCard = ({ cardID }) => {
+    if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
     CardManager.addSubmittedCardCount();
     CardManager.selectCard(cardID);
-    SceneManager.renderNextScene(new PlayerWaiting({ ProgressBar }));
+    SceneManager.renderNextScene(new PlayerWaiting());
 
     const myDuck = PlayerManager.getCurrentPlayer().duck;
     myDuck.setVisibility(true, true);
   };
 
   const onOtherGuesserSelectCard = () => {
-    if (SceneManager.currentScene === scene) {
-      CardManager.addSubmittedCardCount();
-    }
+    if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
+    CardManager.addSubmittedCardCount();
   };
 
   socket.on('guesser select card', onGuesserSelectCard);

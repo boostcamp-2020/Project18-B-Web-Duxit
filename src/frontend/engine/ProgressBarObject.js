@@ -17,7 +17,7 @@ const ProgressBarObject = class extends GameObject {
 
   finish() {
     if (this.callback) this.callback();
-    this.instance.style.display = 'none';
+    this.addClass('hide');
   }
 
   createElement() {
@@ -41,6 +41,7 @@ const ProgressBarObject = class extends GameObject {
   }
 
   start() {
+    this.removeClass('hide');
     const [progressBar, timeText] = this.getProgessBar();
     const { endTime } = this;
     const progressBarTimer = setInterval(() => {
@@ -49,7 +50,6 @@ const ProgressBarObject = class extends GameObject {
       progressBar.style.width = `${widthSize}%`;
       if (widthSize < 30) progressBar.style.backgroundColor = RED;
       else if (widthSize < 60) progressBar.style.backgroundColor = YELLOW;
-      console.log(widthSize);
       timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 

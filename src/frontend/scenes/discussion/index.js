@@ -1,6 +1,5 @@
 import './discussion.scss';
 import renderDiscussion from './render';
-import setupDiscussion from './socket';
 
 const Discussion = class {
   constructor({ endTime }) {
@@ -9,9 +8,8 @@ const Discussion = class {
 
   render() {
     const { endTime } = this;
-    const { arrayToBeRemoved = [], SkipText } = renderDiscussion({ endTime });
+    const { arrayToBeRemoved = [] } = renderDiscussion({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
-    setupDiscussion({ SkipText });
   }
 
   wrapup() {

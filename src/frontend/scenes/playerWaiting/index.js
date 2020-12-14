@@ -1,23 +1,20 @@
 import './style.scss';
 import CardManager from '@utils/CardManager';
 import renderPlayerWaiting from './render';
-import setupPlayerWaiting from './socket';
 
 const PlayerWaiting = class {
-  constructor({ ProgressBar, endTime }) {
-    this.endTime = endTime;
-    this.ProgressBar = ProgressBar;
+  constructor(endTime) {
+    this.endTime = endTime || null;
     this.ducks = new Map();
 
     Array.from({ length: CardManager.beforeSubmittedCount }, () =>
       CardManager.dropNewCard(),
     );
-    setupPlayerWaiting();
   }
 
   render() {
-    const { ProgressBar, endTime } = this;
-    const { arrayToBeRemoved } = renderPlayerWaiting({ ProgressBar, endTime });
+    const { endTime } = this;
+    const { arrayToBeRemoved } = renderPlayerWaiting({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
