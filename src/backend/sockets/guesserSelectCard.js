@@ -14,7 +14,7 @@ function onSendGuesserDecision({ cardID }) {
   const { game, user } = socket;
 
   if (!game || !user) return;
-  if (game.status.state !== GAME_STATE.GUESSER) return;
+  if (game.getState() !== GAME_STATE.GUESSER) return;
 
   user.submitCard(cardID);
   game.emitGuesserSubmit(user);
