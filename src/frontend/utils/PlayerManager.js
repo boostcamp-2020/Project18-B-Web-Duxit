@@ -89,14 +89,6 @@ const PlayerManager = class extends Map {
   isTeller() {
     return this.currentPlayerID === this.tellerID;
   }
-
-  getPlayerBySubmittedCard(cardID) {
-    return [...this.map].find((player) => player.sumbittedCardID === cardID);
-  }
-
-  getPlayersByVotedCard(cardID) {
-    return [...this.map].filter((player) => player.votedCardID === cardID);
-  }
 };
 
 export default new PlayerManager();
