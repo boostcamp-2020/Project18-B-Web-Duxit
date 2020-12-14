@@ -20,7 +20,6 @@ function emitEndResult() {
 function endResultScene() {
   if (this.getState() !== GAME_STATE.RESULT) return;
 
-  this.forceGuesserVote();
   this.emitEndResult();
   this.startScoreBoardScene();
 }
