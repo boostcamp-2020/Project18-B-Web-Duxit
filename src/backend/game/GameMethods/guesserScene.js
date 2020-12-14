@@ -48,7 +48,7 @@ function emitGetAllDecisions() {
     name: 'get all decisions',
     params: {
       cards: suffledCardIDs,
-      endTime: this.setEndTime(
+      endTime: this.getEndTime(
         TIME.DELAY_GET_ALL_DECISIONS + TIME.WAIT_DISCUSSION,
       ),
     },

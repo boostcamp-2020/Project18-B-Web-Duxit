@@ -20,10 +20,12 @@ function forceTellerSelect() {
 }
 
 function emitTellerDecision() {
+  const endTime = this.getEndTime(TIME.WAIT_GUESSER_SELECT);
+
   emit({
     users: this.getGuessers(),
     name: 'teller decision',
-    params: { topic: this.status.topic, endTime: this.endTime },
+    params: { topic: this.status.topic, endTime },
   });
 
   const teller = this.getTeller();
@@ -33,7 +35,7 @@ function emitTellerDecision() {
     params: {
       cardID: teller.submittedCard,
       topic: this.status.topic,
-      endTime: this.endTime,
+      endTime,
     },
   });
 }
@@ -41,7 +43,6 @@ function emitTellerDecision() {
 function endTellerScene() {
   if (this.getState() !== GAME_STATE.TELLER) return;
 
-  this.setEndTime(TIME.WAIT_GUESSER_SELECT);
   this.forceTellerSelect();
   this.emitTellerDecision();
   this.startGuesserScene();

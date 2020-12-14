@@ -15,7 +15,7 @@ function emitDiscussionEnd(skipped) {
     name: 'end discussion',
     params: {
       skipped,
-      endTime: this.setEndTime(TIME.SKIP_DISCUSSION + TIME.WAIT_VOTE),
+      endTime: this.getEndTime(TIME.SKIP_DISCUSSION + TIME.WAIT_VOTE),
     },
   });
 }

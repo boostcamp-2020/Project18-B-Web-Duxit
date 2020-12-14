@@ -22,8 +22,6 @@ function startGame() {
   // 게임에 사용할 카드 섞어서 세팅하기
   this.status.unusedCards = generateRandom.cards(CARD.DECK);
   this.dealCards(CARD.HAND - 1);
-
-  this.setEndTime(TIME.WAIT_TELLER_SELECT);
 }
 
 function endWaitingScene() {
