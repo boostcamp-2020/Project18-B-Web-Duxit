@@ -1,3 +1,4 @@
+import DuckObject from '@engine/DuckObject';
 import DuckCursorObject from '@engine/DuckCursorObject';
 
 const Player = class {
@@ -18,6 +19,10 @@ const Player = class {
     this.isCurrentPlayer = isCurrentPlayer;
     this.isReady = isReady;
     this.duck = new DuckCursorObject({ isReady, color });
+  }
+
+  makeDuck(options = {}) {
+    return new DuckObject({ color: this.color, ...options });
   }
 
   update(params) {
