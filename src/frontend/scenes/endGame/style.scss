@@ -41,6 +41,7 @@
   > div {
     padding-top: 25%;
 
+    animation: emphasizeDuck 1s cubic-bezier(0.19, 1, 0.22, 1);
     filter: drop-shadow(0 0 10px $main-color);
     transform: scale(1.5);
     transform-origin: bottom;
@@ -66,5 +67,14 @@
   align-self: flex-end;
   > * {
     margin-left: 1em;
+  }
+}
+
+@keyframes emphasizeDuck {
+  5% {
+    transform: rotateZ(-5deg) scale(2.5);
+  }
+  90% {
+    transform: scale(1.4);
   }
 }
