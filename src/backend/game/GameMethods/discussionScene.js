@@ -4,28 +4,31 @@ import { emit } from '@socket';
 
 function startDiscussionScene() {
   this.setState(GAME_STATE.DISCUSSION);
+  setTimeout(() => {
+    this.endDiscussionScene();
+  }, TIME.DELAY_GET_ALL_DECISIONS + TIME.WAIT_DISCUSSION);
 }
 
-function forceGuesserVote() {
-  if (this.getState() !== GAME_STATE.DISCUSSION) return;
-
-  const unvotedUsers = this.getGuessers().filter(
-    ({ votedCard }) => votedCard === null,
-  );
-
-  unvotedUsers.forEach((user) => {
-    user.forceVoteCard();
-    // this.emitGuesserVote(user);
+function emitDiscussionEnd(skipped) {
+  emit({
+    users: this.getUsers(),
+    name: 'end discussion',
+    params: {
+      skipped,
+      endTime: this.setEndTime(TIME.SKIP_DISCUSSION + TIME.WAIT_VOTE),
+    },
   });
 }
 
-function endDiscussionScene() {
-  this.forceGuesserVote();
+function endDiscussionScene(skipped) {
+  if (this.getState() !== GAME_STATE.DISCUSSION) return;
+
+  this.emitDiscussionEnd(skipped);
 }
 
 const methodGroup = {
   startDiscussionScene,
-  forceGuesserVote,
+  emitDiscussionEnd,
   endDiscussionScene,
 };
 
