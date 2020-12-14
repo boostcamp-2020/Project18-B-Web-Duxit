@@ -40,6 +40,9 @@ const TEXT = {
   VOTE: {
     TITLE: '자신이 생각하는 이야기꾼의 카드에 투표해주세요!',
   },
+  VOTE_RESULT: {
+    TITLE: '카드를 선택한 이유에 대해 대화를 나눠보세요',
+  },
 };
 
 export const GET_IMAGE_PATH = (cardID) => {
