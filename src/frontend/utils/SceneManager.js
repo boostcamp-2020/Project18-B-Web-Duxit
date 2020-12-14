@@ -4,13 +4,11 @@ import { $id } from '@utils/dom';
 import PlayerManager from '@utils/PlayerManager';
 import TIME from '@type/time';
 import TEXT from '@utils/text';
-import { WAITING_ROOM } from '@type/scene';
 
 const root = $id('root');
 
 const SceneManager = {
   currentScene: null,
-  currentSceneType: WAITING_ROOM,
   sharedComponents: [],
 
   initializeComponents() {
@@ -34,10 +32,6 @@ const SceneManager = {
       SkipText,
       ProgressBar,
     };
-  },
-
-  updateCurrentSceneType(sceneType) {
-    this.currentSceneType = sceneType;
   },
 
   renderNextScene(scene, ...args) {
