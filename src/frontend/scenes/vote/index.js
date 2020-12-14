@@ -1,4 +1,3 @@
-import './vote.scss';
 import renderVote from './render';
 
 const Vote = class {
