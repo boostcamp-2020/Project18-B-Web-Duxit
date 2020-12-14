@@ -97,6 +97,10 @@ module.exports = (webpackEnv) => {
             publicPath: 'assets',
           },
         },
+        {
+          test: /\.html$/i,
+          use: 'raw-loader',
+        },
       ],
     },
     ...(isEnvDevelopment
