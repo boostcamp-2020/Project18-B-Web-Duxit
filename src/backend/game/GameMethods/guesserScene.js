@@ -5,7 +5,6 @@ import generateRandom from '@utils/generateRandom';
 
 function startGuesserScene() {
   this.setState(GAME_STATE.GUESSER);
-  this.setEndTime(TIME.WAIT_DISCUSSION);
   setTimeout(() => {
     this.endGuesserScene();
   }, TIME.WAIT_GUESSER_SELECT);
@@ -19,22 +18,17 @@ function emitGuesserSubmit(guesser) {
   emit({
     socketID: guesser.socketID,
     name: 'guesser select card',
-    params: { cardID: guesser.submittedCard, endTime: this.endTime },
+    params: { cardID: guesser.submittedCard },
   });
 
   emit({
     users: otherUsers,
     name: 'other guesser decision',
-    params: {
-      playerID: guesser.socketID,
-      endTime: this.endTime,
-    },
+    params: { playerID: guesser.socketID },
   });
 }
 
 function forceGuesserSelect() {
-  if (this.getState() !== GAME_STATE.GUESSER) return;
-
   const unsubmittedUsers = this.getUsers().filter(
     ({ submittedCard }) => submittedCard === null,
   );
@@ -49,10 +43,21 @@ function emitGetAllDecisions() {
   const users = this.getUsers();
   const submittedCardIDs = users.map((user) => user.submittedCard);
   const suffledCardIDs = generateRandom.shuffleArray(submittedCardIDs);
-  emit({ users, name: 'get all decisions', params: { cards: suffledCardIDs } });
+  emit({
+    users,
+    name: 'get all decisions',
+    params: {
+      cards: suffledCardIDs,
+      endTime: this.setEndTime(
+        TIME.DELAY_GET_ALL_DECISIONS + TIME.WAIT_DISCUSSION,
+      ),
+    },
+  });
 }
 
 function endGuesserScene() {
+  if (this.getState() !== GAME_STATE.GUESSER) return;
+
   this.forceGuesserSelect();
   setTimeout(() => {
     this.emitGetAllDecisions();
