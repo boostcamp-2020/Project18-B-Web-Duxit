@@ -1,5 +1,14 @@
 import GAME_STATE from '@utils/gameState';
 
+const isAllSubmitted = (game) => {
+  const users = game.getUsers();
+  const submittedUsers = users.filter(
+    ({ submittedCard }) => submittedCard !== null,
+  );
+
+  return submittedUsers.length === users.length;
+};
+
 function onSendGuesserDecision({ cardID }) {
   const socket = this;
   const { game, user } = socket;
@@ -10,12 +19,7 @@ function onSendGuesserDecision({ cardID }) {
   user.submitCard(cardID);
   game.emitGuesserSubmit(user);
 
-  const users = game.getUsers();
-  const submittedUsers = users.filter(
-    ({ submittedCard }) => submittedCard !== null,
-  );
-
-  if (submittedUsers.length === users.length) {
+  if (isAllSubmitted(game)) {
     game.endGuesserScene();
   }
 }
