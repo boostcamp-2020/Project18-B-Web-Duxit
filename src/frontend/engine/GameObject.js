@@ -102,6 +102,14 @@ const GameObject = class {
     this.instance.innerHTML = html;
   }
 
+  getObjectsByIds(...ids) {
+    return ids.map((id) => {
+      const object = new GameObject();
+      object.instance = this.instance.querySelector(`#${id}`);
+      return object;
+    });
+  }
+
   transform() {
     this.instance.style.transform = `${this.rotateStyle} ${this.originStyle}`;
   }
