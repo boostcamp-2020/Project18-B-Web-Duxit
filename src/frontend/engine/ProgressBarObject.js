@@ -17,6 +17,10 @@ const ProgressBarObject = class extends GameObject {
 
   finish() {
     if (this.callback) this.callback();
+    clearInterval(this.progressBarTimer);
+    clearTimeout(this.timeOutlManager);
+    this.progressBarTimer = null;
+    this.timeOutlManager = null;
     this.addClass('hide');
   }
 
@@ -44,7 +48,7 @@ const ProgressBarObject = class extends GameObject {
     this.removeClass('hide');
     const [progressBar, timeText] = this.getProgessBar();
     const { endTime } = this;
-    const progressBarTimer = setInterval(() => {
+    this.progressBarTimer = setInterval(() => {
       const remainTime = endTime - new Date().getTime();
       const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
@@ -53,11 +57,13 @@ const ProgressBarObject = class extends GameObject {
       timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 
-    const intervalManager = setTimeout(() => {
-      clearInterval(progressBarTimer);
-      clearTimeout(intervalManager);
+    this.timeOutManager = setTimeout(() => {
       this.finish();
     }, this.time);
+  }
+
+  clear() {
+    if (this.progressBarTimer) this.finish();
   }
 
   remove() {
