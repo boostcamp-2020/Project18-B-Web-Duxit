@@ -49,7 +49,9 @@ function endScoreBoardScene() {
 
   if (isGameOver(this)) {
     this.emitGameEnd();
-    this.startGameEndScene();
+
+    // WaitingScene 시작
+    this.setState(GAME_STATE.WAITING);
   } else {
     this.startTellerScene();
   }
