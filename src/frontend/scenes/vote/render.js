@@ -11,7 +11,7 @@ const renderDiscussion = ({ endTime }) => {
   const { ProgressBar } = SceneManager.sharedComponents;
   const cards = CardManager.submittedCards;
 
-  const { color } = PlayerManager.getCurrentPlayer();
+  const { color, submittedCardID } = PlayerManager.getCurrentPlayer();
   const DuckStamp = new DuckObject({ width: 30, color });
   DuckStamp.render();
   DuckStamp.instance.style.borderColor = color;
@@ -21,6 +21,7 @@ const renderDiscussion = ({ endTime }) => {
 
   if (!PlayerManager.isTeller()) {
     cards.forEach((card) => {
+      if (card.cardID === submittedCardID) return;
       card.addClass(['card-glow-gold-hover', 'hover-larger']);
       card.addClickHandler((event) =>
         sendVoteResult({ cardID: card.cardID, DuckStamp, event }),
