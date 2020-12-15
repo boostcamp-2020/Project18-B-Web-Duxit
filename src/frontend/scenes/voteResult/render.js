@@ -7,7 +7,7 @@ import PlayerManager from '@utils/PlayerManager';
 import GameObject from '@engine/GameObject';
 
 const DIFF_Y_POSITION_STAMP = 14;
-const DIFF_Y_POSITION_NAME = -15;
+const DIFF_Y_POSITION_NAME = -18;
 const ORIGIN_STAMP = [50, 0];
 const ORIGIN_NAME = [50, 0];
 const WIDTH_STAMP_DUCK = 40;
@@ -28,7 +28,7 @@ const renderVoteResult = () => {
     stampContainer.attachToRoot();
 
     const nameContainer = new GameObject({
-      position: [cardX, cardY - DIFF_Y_POSITION_NAME],
+      position: [cardX, cardY + DIFF_Y_POSITION_NAME],
       origin: ORIGIN_NAME,
     });
     nameContainer.addClass('name-wrapper');

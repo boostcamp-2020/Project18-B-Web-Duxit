@@ -3,7 +3,8 @@ import NUMBER from '@type/number';
 import CardManager from '@utils/CardManager';
 import CARD_POSITION from '@type/cardPosition.json';
 import { MIX_CARD } from '@type/scene';
-import socket from '@utils/socket';
+import SceneManager from '@utils/SceneManager';
+import Discussion from '@scenes/discussion';
 
 const stackCards = async ({ Cards, position }) => {
   const promises = Cards.map(async (card) => {
@@ -54,7 +55,11 @@ const flipCards = async (Cards) => {
   });
 };
 
-const mixCards = async (Cards) => {
+const onStartDiscussion = ({ endTime }) => {
+  SceneManager.renderNextScene(new Discussion({ endTime }));
+};
+
+const mixCards = async ({ Cards, endTime }) => {
   const cardCount = NUMBER[Cards.length];
   const position = CARD_POSITION[MIX_CARD];
   const spreadXPosition = position.SPREAD_X[cardCount];
@@ -63,12 +68,12 @@ const mixCards = async (Cards) => {
   await shuffleCards({ Cards, position });
   await spreadCards({ Cards, position, spreadXPosition });
   await flipCards(Cards);
-  socket.emit('mix card end');
+  onStartDiscussion({ endTime });
 };
 
-const renderMixCard = () => {
+const renderMixCard = ({ endTime }) => {
   const Cards = CardManager.submittedCards;
-  mixCards(Cards);
+  mixCards({ Cards, endTime });
 
   return {
     arrayToBeRemoved: [],
