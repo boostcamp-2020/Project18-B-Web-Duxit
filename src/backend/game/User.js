@@ -5,12 +5,15 @@ class User {
     this.socketID = socketID;
     this.nickname = nickname;
     this.color = color;
+
+    this.isTeller = false;
+
     this.turnID = 0;
+    this.score = 0;
+    this.cards = [];
+
     this.submittedCard = null;
     this.votedCard = null;
-    this.isTeller = false;
-    this.cards = [];
-    this.score = 0;
     this.isReady = false;
     this.isSkip = false;
   }
@@ -18,6 +21,7 @@ class User {
   initOnStart({ turnID } = {}) {
     this.turnID = turnID;
     this.score = 0;
+    this.cards = [];
   }
 
   initOnRound() {
@@ -52,6 +56,9 @@ class User {
   }
 
   voteCard(cardID) {
+    // 악성 유저가 있을까봐 자기 카드 선택하는거 방지
+    if (cardID === this.submittedCard) return;
+
     this.votedCard = cardID;
   }
 

@@ -1,15 +1,5 @@
 @import '@utils/variable';
 
-.discussion-helper-text {
-  @include helper-text-white-background;
-  @include absolute-center-x;
-  z-index: $z-index-layouts;
-  top: 70%;
-  font-size: x-large;
-  text-align: center;
-  white-space: nowrap;
-}
-
 .discussion-action-wrapper {
   @include flex-column;
   position: absolute;

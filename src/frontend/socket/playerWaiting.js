@@ -16,7 +16,7 @@ const setupPlayerWaiting = () => {
   const onGetAllDecisions = ({ cards, endTime }) => {
     if (!SceneManager.isCurrentScene(PlayerWaiting)) return;
     CardManager.updateCardInformation(cards);
-    SceneManager.renderNextScene(new MixCard({ endTime }));
+    SceneManager.renderNextScene(new MixCard(endTime));
   };
 
   socket.on('other guesser decision', onOtherGuesserSelectCard);
