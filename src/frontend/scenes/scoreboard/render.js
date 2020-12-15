@@ -1,17 +1,16 @@
 import './style.scss';
 import GameObject from '@engine/GameObject';
-import DuckObject from '@engine/DuckObject';
 import TextObject from '@engine/TextObject';
 import { ROOT, BACKGROUND } from '@utils/dom';
 import stonePosition from '@type/stonePosition.json';
 import template from './template.html';
 
-const defineRenderRow = (TableBody) => ({
-  nickname,
-  color,
-  isTeller,
-  score: { current, correct, bonus },
-} = {}) => {
+const defineRenderRow = (TableBody) => (player) => {
+  const {
+    nickname,
+    isTeller,
+    score: { current, correct, bonus },
+  } = player;
   const TableRow = new GameObject({
     classes: ['scoreboard-table-row'],
     parent: TableBody,
@@ -20,8 +19,7 @@ const defineRenderRow = (TableBody) => ({
     classes: ['scoreboard-table-player'],
     parent: TableRow,
   });
-  const DuckIcon = new DuckObject({
-    color,
+  const DuckIcon = player.makeDuck({
     width: 60,
     parent: PlayerInfoWrapper,
   });
@@ -51,11 +49,13 @@ const renderRow = (TableBody, players) => {
 const makeRandom = (x) => Math.random() * 5 + x - 2.5;
 
 const yellowDuckyJumpsOverTheLazyStone = (players) =>
-  players.map(({ color, score: { current, correct, bonus } } = {}) => {
+  players.map((player) => {
+    const {
+      score: { current, correct, bonus },
+    } = player;
     const currentStone = stonePosition[current];
     const currentPosition = currentStone.map(makeRandom);
-    const duck = new DuckObject({
-      color,
+    const duck = player.makeDuck({
       width: 50,
       classes: ['movable'],
       position: currentPosition,
