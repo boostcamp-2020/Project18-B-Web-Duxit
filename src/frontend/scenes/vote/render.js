@@ -7,7 +7,7 @@ import DuckObject from '@engine/DuckObject';
 import PlayerManager from '@utils/PlayerManager';
 import { sendVoteResult } from './events';
 
-const renderDiscussion = ({ endTime }) => {
+const renderVote = ({ endTime }) => {
   const { ProgressBar } = SceneManager.sharedComponents;
   const cards = CardManager.submittedCards;
 
@@ -37,11 +37,11 @@ const renderDiscussion = ({ endTime }) => {
   HelpText.setContent(TEXT.VOTE.TITLE);
   HelpText.attachToRoot();
 
-  const arrayToBeRemoved = [DuckStamp];
+  const arrayToBeRemoved = [DuckStamp, HelpText];
 
   return {
     arrayToBeRemoved,
   };
 };
 
-export default renderDiscussion;
+export default renderVote;
