@@ -1,17 +1,5 @@
 @import '@utils/common';
 
-.discussion-helper-text {
-  @include helper-text-white-background;
-  position: absolute;
-  z-index: $z-index-layouts;
-  top: 70%;
-  left: 50%;
-  font-size: x-large;
-  text-align: center;
-  transform: translateX(-50%);
-  white-space: nowrap;
-}
-
 .discussion-action-wrapper {
   position: absolute;
   z-index: $z-index-layouts;

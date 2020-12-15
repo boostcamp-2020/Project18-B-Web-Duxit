@@ -18,6 +18,7 @@ const renderVoteResult = () => {
   const players = PlayerManager.getPlayers();
 
   const containers = cards.reduce((prev, card) => {
+    card.removeClass('card-glow-gold-hover');
     const { position, cardID } = card;
     const [cardX, cardY] = position;
     const stampContainer = new GameObject({
@@ -49,7 +50,7 @@ const renderVoteResult = () => {
     const { nameContainer } = containers[submittedCardID];
     const nameDuck = new DuckObject({ color, width: WIDTH_NAME_DUCK });
     const nicknameText = new TextObject();
-    nameDuck.addClass('duck-stamp');
+    nameDuck.addClass(['duck-stamp', 'result-duck']);
     nameDuck.attachToObject(nameContainer);
     nicknameText.setContent(nickname);
     nicknameText.addClass('nickname-text');
@@ -63,7 +64,7 @@ const renderVoteResult = () => {
 
     const { stampContainer } = containers[votedCardID];
     const stampDuck = new DuckObject({ color, width: WIDTH_STAMP_DUCK });
-    stampDuck.addClass('duck-stamp');
+    stampDuck.addClass(['duck-stamp', 'result-duck']);
     stampDuck.attachToObject(stampContainer);
     return [...prev, nameDuck, stampDuck, nicknameText, nameContainer];
   }, []);
