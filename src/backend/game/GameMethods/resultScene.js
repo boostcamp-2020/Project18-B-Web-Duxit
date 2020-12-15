@@ -13,7 +13,7 @@ function emitEndResult() {
   emit({
     users: this.getUsers(),
     name: 'end vote result',
-    params: { round: this.turn },
+    params: { round: this.status.turn },
   });
 }
 
