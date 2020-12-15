@@ -50,9 +50,8 @@ const renderVoteResult = () => {
     const { nameContainer } = containers[submittedCardID];
     const nameDuck = new DuckObject({ color, width: WIDTH_NAME_DUCK });
     const nicknameText = new TextObject();
-    nameDuck.addClass('duck-stamp');
+    nameDuck.addClass(['duck-stamp', 'result-duck']);
     nameDuck.attachToObject(nameContainer);
-    nameDuck.instance.style.borderColor = color;
     nicknameText.setContent(nickname);
     nicknameText.addClass('nickname-text');
     nicknameText.attachToObject(nameContainer);
@@ -65,9 +64,8 @@ const renderVoteResult = () => {
 
     const { stampContainer } = containers[votedCardID];
     const stampDuck = new DuckObject({ color, width: WIDTH_STAMP_DUCK });
-    stampDuck.addClass('duck-stamp');
+    stampDuck.addClass(['duck-stamp', 'result-duck']);
     stampDuck.attachToObject(stampContainer);
-    stampDuck.instance.style.borderColor = color;
     return [...prev, nameDuck, stampDuck, nicknameText, nameContainer];
   }, []);
 
