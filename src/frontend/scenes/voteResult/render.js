@@ -18,6 +18,7 @@ const renderVoteResult = () => {
   const players = PlayerManager.getPlayers();
 
   const containers = cards.reduce((prev, card) => {
+    card.removeClass('card-glow-gold-hover');
     const { position, cardID } = card;
     const [cardX, cardY] = position;
     const stampContainer = new GameObject({
