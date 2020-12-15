@@ -71,7 +71,7 @@ const yellowDuckyJumpsOverTheLazyStone = (players) =>
     });
     BACKGROUND.appendChild(duck.instance);
 
-    const jumpCount = correct + bonus;
+    const jumpCount = correct + bonus + 1;
     const jumpTiming = (index) => 1000 + 500 * index;
     [...Array(jumpCount)].forEach((_, index) => {
       const nextPosition = Math.min(30, current + index);
@@ -82,7 +82,7 @@ const yellowDuckyJumpsOverTheLazyStone = (players) =>
     return duck;
   });
 
-const animateBackground = (players, totalAnimationTime) => {
+const animateBackground = (players) => {
   setTimeout(() => {
     ROOT.style.transform = 'scale(0.6)';
     const ducks = yellowDuckyJumpsOverTheLazyStone(players);
@@ -95,7 +95,7 @@ const animateBackground = (players, totalAnimationTime) => {
           duck.delete();
         }, 1000);
       });
-    }, totalAnimationTime - 2000);
+    }, 8000);
     // }
   }, 2000);
 };
@@ -122,19 +122,12 @@ const renderScoreboardLayout = ({
     '#scoreboard-table-body',
   );
 
-  // const playersWithScore = players.map((player) => ({
-  //   ...player,
-  //   ...scoreData.find((data) => data.socketID === player.socketID),
-  // }));
-  const totalAnimationTime = getTotalAnimationTime(players);
-
   renderRow(TableBody, players);
-  animateBackground(players, totalAnimationTime);
+  animateBackground(players);
 
   const arrayToBeRemoved = [Background];
   return {
     arrayToBeRemoved,
-    totalAnimationTime,
   };
 };
 
