@@ -23,6 +23,7 @@ const GameObject = class {
   } = {}) {
     this.createElement();
     this.animationFrame = null;
+    this.animationTimeout = null;
     this.originStyle = '';
     this.rotateStyle = '';
 
@@ -121,7 +122,10 @@ const GameObject = class {
   move(x = 0, y = 0, duration = TIME.DEFAULT_TRANSITION) {
     return new Promise((resolve) => {
       let animationFinished = false;
-      setTimeout(() => {
+
+      if (this.animationTimeout) clearTimeout(this.animationTimeout);
+
+      this.animationTimeout = setTimeout(() => {
         this.instance.style.top = makeUnitString(y, '%');
         this.instance.style.left = makeUnitString(x, '%');
         this.animationFrame = null;
@@ -170,7 +174,7 @@ const GameObject = class {
         this.instance.style.left = makeUnitString(newX, '%');
         this.instance.style.top = makeUnitString(newY, '%');
 
-        requestAnimationFrame(animateFunction);
+        this.animationFrame = requestAnimationFrame(animateFunction);
       };
 
       this.animationFrame = requestAnimationFrame(animateFunction);
