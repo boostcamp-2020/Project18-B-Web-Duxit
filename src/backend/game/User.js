@@ -58,6 +58,8 @@ class User {
   voteCard(cardID) {
     // 악성 유저가 있을까봐 자기 카드 선택하는거 방지
     if (cardID === this.submittedCard) return;
+    // 텔러가 vote 못하게 막기
+    if (this.isTeller) return;
 
     this.votedCard = cardID;
   }
