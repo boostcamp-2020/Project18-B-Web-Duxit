@@ -24,6 +24,12 @@ export const onClickCard = ({
     const modalInput = new InputObject({ parent: Modal });
     modalInput.addClass('modal-input');
     paramsOfHandler.input = modalInput;
+    modalInput.instance.focus();
+    modalInput.setAttributes({
+      maxlength: 25,
+      autocomplete: 'off',
+      required: true,
+    });
   }
 
   const cancelButton = new ButtonObject({ parent: Modal });
