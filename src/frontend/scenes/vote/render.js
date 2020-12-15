@@ -1,4 +1,4 @@
-import './vote.scss';
+import './style.scss';
 import TextObject from '@engine/TextObject';
 import SceneManager from '@utils/SceneManager';
 import CardManager from '@utils/CardManager';

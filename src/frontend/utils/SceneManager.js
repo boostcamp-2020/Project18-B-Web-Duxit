@@ -1,3 +1,4 @@
+import './common.scss';
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import { $id } from '@utils/dom';

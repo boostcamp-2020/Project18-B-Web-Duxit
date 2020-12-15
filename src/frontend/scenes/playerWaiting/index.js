@@ -1,4 +1,3 @@
-import './style.scss';
 import CardManager from '@utils/CardManager';
 import renderPlayerWaiting from './render';
 

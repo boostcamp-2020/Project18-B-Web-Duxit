@@ -1,3 +1,4 @@
+import './style.scss';
 import TextObject from '@engine/TextObject';
 import PlayerManager from '@utils/PlayerManager';
 import SceneManager from '@utils/SceneManager';

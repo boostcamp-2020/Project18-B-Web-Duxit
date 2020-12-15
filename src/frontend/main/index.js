@@ -1,4 +1,4 @@
-import './index.scss';
+import './main.scss';
 import requestHandler from '@utils/requestHandler';
 import { $id } from '@utils/dom';
 

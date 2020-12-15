@@ -1,15 +1,12 @@
-@import '@utils/common';
+@import '@utils/variable';
 
 .waiting-header {
-  position: absolute;
+  @include flex-column;
+  @include absolute-center-x;
   z-index: $z-index-layouts;
   top: 0;
-  left: 50%;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 2rem;
-  transform: translateX(-50%);
 }
 
 .waiting-nickname-help {
@@ -33,7 +30,7 @@
   border: 0;
   margin: 0 1rem;
   background-color: $main-color;
-  border-radius: 2em;
+  border-radius: $medium-radius;
   box-shadow: $button-shadow;
   font-size: x-large;
   text-align: center;
@@ -69,13 +66,12 @@
 }
 
 .color-picker-wrapper {
+  @include flex-column;
   position: absolute;
   top: 100%;
-  display: flex;
-  flex-direction: column;
   padding: 1em;
   background-color: #e0e0e0aa;
-  border-radius: 1em;
+  border-radius: $small-radius;
   div {
     display: flex;
   }
@@ -84,8 +80,9 @@
 .color-sample-button {
   flex: 25%;
   box-shadow: $button-shadow;
-  outline: 1px $gray-color solid;
+  outline: $gray-border;
 }
+
 .color-sample-button::before {
   display: block;
   padding-top: 100%;
@@ -96,7 +93,7 @@
   padding: 0.5em;
   margin-left: 1em;
   background-color: $white-color;
-  border-radius: 1em;
+  border-radius: $small-radius;
 }
 
 .color-white {
@@ -113,13 +110,10 @@
 }
 
 .waiting-action-wrapper {
-  position: absolute;
+  @include flex-column;
+  @include absolute-center-y;
   z-index: $z-index-layouts;
-  top: 50%;
   right: 1rem;
-  display: flex;
-  flex-direction: column;
-  transform: translateY(-50%);
   > * {
     margin: 0.5em 0;
   }

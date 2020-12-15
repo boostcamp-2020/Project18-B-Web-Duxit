@@ -1,4 +1,4 @@
-import './voteResult.scss';
+import './style.scss';
 import TextObject from '@engine/TextObject';
 import CardManager from '@utils/CardManager';
 import TEXT from '@utils/text';

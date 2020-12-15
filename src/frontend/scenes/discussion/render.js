@@ -1,3 +1,4 @@
+import './style.scss';
 import ButtonObject from '@engine/ButtonObject';
 import TextObject from '@engine/TextObject';
 import GameObject from '@engine/GameObject';
