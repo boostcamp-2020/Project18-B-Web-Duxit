@@ -37,6 +37,10 @@ input:not(:checked) ~ form {
 
 .code-form {
   text-align: center;
+  > div {
+    display: flex;
+    align-items: center;
+  }
   .code-input {
     width: 16em;
     padding: 1em 2em;
