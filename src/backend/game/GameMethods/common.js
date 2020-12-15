@@ -27,15 +27,21 @@ function dealCards(count = 1) {
   });
 }
 
+const setUserTeller = (users, tellerTurnID) => {
+  users.forEach((user) => {
+    if (tellerTurnID === user.turnID) user.setTeller(true);
+    else user.setTeller(false);
+  });
+};
+
 function startRound() {
   const users = this.getUsers();
 
   this.status.turn += 1;
   const tellerTurnID = this.status.turn % users.length;
-  users.forEach((user) => {
-    if (tellerTurnID === user.turnID) user.setTeller(true);
-    else user.setTeller(false);
-  });
+  setUserTeller(users, tellerTurnID);
+
+  this.topic = '';
 
   this.dealCards();
 
