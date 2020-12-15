@@ -22,7 +22,7 @@ const renderVote = ({ endTime }) => {
   if (!PlayerManager.isTeller()) {
     cards.forEach((card) => {
       if (card.cardID === submittedCardID) return;
-      card.addClass(['card-glow-gold-hover', 'hover-larger']);
+      card.addClass('card-glow-gold-hover');
       card.addClickHandler((event) =>
         sendVoteResult({ cardID: card.cardID, DuckStamp, event }),
       );
