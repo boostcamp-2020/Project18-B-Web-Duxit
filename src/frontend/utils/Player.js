@@ -52,7 +52,7 @@ const Player = class {
   updateScore(score) {
     const { correctScore: correct, bonusScore: bonus } = score;
     this.score = {
-      ...this.score.current,
+      ...this.score,
       correct,
       bonus,
     };
