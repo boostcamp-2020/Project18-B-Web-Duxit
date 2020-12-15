@@ -2,26 +2,31 @@ import PlayerManager from '@utils/PlayerManager';
 import renderScoreboard from './render';
 
 const Scoreboard = class {
-  constructor(
-    params = {
-      round: 0,
-    },
-  ) {
-    this.params = params;
+  constructor({ round = 0 } = {}) {
+    this.round = round;
     this.animationTimeout = null;
+    this.players = PlayerManager.getPlayers();
   }
 
   render() {
-    const players = PlayerManager.getPlayers();
-
     const { arrayToBeRemoved } = renderScoreboard({
-      ...this.params,
-      players,
+      round: this.round,
+      players: this.players,
     });
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
   wrapup() {
+    PlayerManager.forEach((player, socketID) => {
+      PlayerManager.set(socketID, {
+        ...player,
+        score: {
+          ...player.score,
+          current:
+            player.score.current + player.score.correct + player.score.bonus,
+        },
+      });
+    });
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
