@@ -1,4 +1,4 @@
-import './waitingRoom.scss';
+import './style.scss';
 import ButtonObject from '@engine/ButtonObject';
 import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';

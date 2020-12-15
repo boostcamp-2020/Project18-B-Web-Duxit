@@ -1,24 +1,21 @@
-@import '@utils/common';
+@import '@utils/variable';
 
 .discussion-helper-text {
   @include helper-text-white-background;
-  position: absolute;
+  @include absolute-center-x;
   z-index: $z-index-layouts;
   top: 70%;
-  left: 50%;
   font-size: x-large;
   text-align: center;
-  transform: translateX(-50%);
   white-space: nowrap;
 }
 
 .discussion-action-wrapper {
+  @include flex-column;
   position: absolute;
   z-index: $z-index-layouts;
   top: 85%;
   right: 1rem;
-  display: flex;
-  flex-direction: column;
   transform: translateY(-50%);
   > * {
     margin: 0.5em 0;
@@ -71,12 +68,10 @@
 }
 
 .discussion-skip-text {
-  position: absolute;
+  @include absolute-center-x;
   z-index: $z-index-layouts;
   top: 70%;
-  left: 50%;
   font-size: xx-large;
   font-weight: bolder;
-  transform: translate(-50%, -50%);
   white-space: nowrap;
 }

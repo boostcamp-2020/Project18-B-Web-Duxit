@@ -1,0 +1,71 @@
+// z-index
+$z-index-tab: 10;
+$z-index-layouts: 4;
+$z-index-modal: 5;
+$z-index-progress-bar: 30;
+$z-index-mini-duck: 15;
+
+// width
+$left-size: 200px;
+$right-size: 330px;
+
+// color
+$main-color: #ffd600;
+$main-clicked-color: #ffab00;
+$white-color: #fff;
+$gray-color: #ddd;
+$black-color: #000;
+$red-color: #ff2617;
+$progress-color: #3ed78d;
+$green-color: #3ed78d;
+
+// shadow
+$button-shadow: 1px 8px 9px rgba(0, 0, 0, 0.1);
+$glow-color-gold: 0 0 36px 5px rgba(235, 222, 76, 1);
+
+// border
+$gray-border: 1px solid $gray-color;
+$small-radius: 1em;
+$medium-radius: 2em;
+
+// mixin
+@mixin helper-text-white-background {
+  padding: 0.5em;
+  background-color: #fffa;
+  border-radius: $small-radius;
+  box-shadow: 0 0 4em 1em $white-color;
+}
+
+@mixin button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1em 2em;
+  border-radius: $medium-radius;
+  box-shadow: $button-shadow;
+  cursor: pointer;
+  font-size: large;
+  text-align: center;
+}
+
+@mixin card-glow-hover {
+  transition: box-shadow 0.5s ease;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin absolute-center-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin absolute-center-y {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

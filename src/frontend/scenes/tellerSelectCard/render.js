@@ -1,4 +1,4 @@
-import './tellerSelectCard.scss';
+import './style.scss';
 import TextObject from '@engine/TextObject';
 import TEXT from '@utils/text';
 import { SELECT_CARD, TELLER_SELECT_CARD } from '@type/scene';

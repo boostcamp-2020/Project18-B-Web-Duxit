@@ -1,4 +1,3 @@
-import './discussion.scss';
 import renderDiscussion from './render';
 
 const Discussion = class {

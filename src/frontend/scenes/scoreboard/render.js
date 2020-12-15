@@ -1,9 +1,9 @@
+import './style.scss';
 import GameObject from '@engine/GameObject';
 import DuckObject from '@engine/DuckObject';
 import TextObject from '@engine/TextObject';
 import { ROOT, BACKGROUND } from '@utils/dom';
 import stonePosition from '@type/stonePosition.json';
-import './style.scss';
 import template from './template.html';
 
 const defineRenderRow = (TableBody) => ({

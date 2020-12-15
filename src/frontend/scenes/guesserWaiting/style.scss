@@ -1,0 +1,13 @@
+@import '@utils/variable';
+
+.teller-duck-wrapper {
+  @include absolute-center-x;
+  top: 12%;
+}
+
+.teller-cards-wrapper {
+  @include absolute-center-x;
+  top: 18%;
+  width: 100%;
+  height: 100%;
+}
