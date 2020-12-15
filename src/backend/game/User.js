@@ -100,10 +100,11 @@ class User {
   forceSubmitCard() {
     const cardID = generateRandom.pickOneFromArray(this.cards);
     this.submittedCard = cardID;
-    // TODO: 뽑은 카드를 리스트에서 지워야 함
+    // 뽑은 카드를 리스트에서 지움
+    this.cards = this.cards.filter((card) => card !== cardID);
   }
 
-  forceVoteCard() {}
+  // forceVoteCard는 다른 플레이어들의 정보가 필요하기 때문에 voteScene에 작성
 }
 
 export default User;

@@ -1,21 +1,25 @@
 import GAME_STATE from '@utils/gameState';
 
-function onSendGuesserDecision({ cardID }) {
-  const socket = this;
-  const { game, user } = socket;
-
-  if (!game || !user) return;
-  if (game.status.state !== GAME_STATE.GUESSER) return;
-
-  user.submitCard(cardID);
-  game.emitGuesserSubmit(user);
-
+const isAllSubmitted = (game) => {
   const users = game.getUsers();
   const submittedUsers = users.filter(
     ({ submittedCard }) => submittedCard !== null,
   );
 
-  if (submittedUsers.length === users.length) {
+  return submittedUsers.length === users.length;
+};
+
+function onSendGuesserDecision({ cardID }) {
+  const socket = this;
+  const { game, user } = socket;
+
+  if (!game || !user) return;
+  if (game.getState() !== GAME_STATE.GUESSER) return;
+
+  user.submitCard(cardID);
+  game.emitGuesserSubmit(user);
+
+  if (isAllSubmitted(game)) {
     game.endGuesserScene();
   }
 }

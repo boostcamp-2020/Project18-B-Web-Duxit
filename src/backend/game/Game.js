@@ -5,7 +5,6 @@ export default class Game {
   constructor(roomID) {
     this.roomID = roomID;
     this.users = new Map();
-    this.endTime = null;
     this.status = {
       state: GAME_STATE.WAITING,
       unusedCards: [],
@@ -20,11 +19,5 @@ export default class Game {
     Object.entries(methodGroup).forEach(([methodName, method]) => {
       this[methodName] = method;
     });
-  }
-
-  setEndTime(timeUnit) {
-    const currentTime = new Date().getTime();
-    const newTargetTime = new Date(currentTime + timeUnit);
-    this.endTime = newTargetTime;
   }
 }

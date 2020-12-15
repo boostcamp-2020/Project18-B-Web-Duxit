@@ -62,4 +62,4 @@ const getScoreMap = (game) => {
   return scoreMap;
 };
 
-export { getScoreMap };
+export default getScoreMap;

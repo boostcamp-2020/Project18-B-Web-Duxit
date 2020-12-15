@@ -3,7 +3,7 @@ import { PLAYER, CARD, TIME } from '@utils/number';
 import generateRandom from '@utils/generateRandom';
 
 function isEnterable() {
-  if (this.status.state !== GAME_STATE.WAITING || this.users.size >= PLAYER.MAX)
+  if (this.getState() !== GAME_STATE.WAITING || this.users.size >= PLAYER.MAX)
     return false;
   return true;
 }
@@ -22,8 +22,6 @@ function startGame() {
   // 게임에 사용할 카드 섞어서 세팅하기
   this.status.unusedCards = generateRandom.cards(CARD.DECK);
   this.dealCards(CARD.HAND - 1);
-
-  this.setEndTime(TIME.WAIT_TELLER_SELECT);
 }
 
 function endWaitingScene() {

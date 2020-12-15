@@ -1,4 +1,5 @@
 import { emit } from '@socket';
+import { PLAYER, CARD, TIME } from '@utils/number';
 
 function getState() {
   return this.status.state;
@@ -10,6 +11,11 @@ function setState(state) {
     return;
   }
   this.status.state = state;
+}
+
+function getEndTime(timeUnit) {
+  const currentTime = new Date().getTime();
+  return new Date(currentTime + timeUnit);
 }
 
 function dealCards(count = 1) {
@@ -32,21 +38,21 @@ function startRound() {
   });
 
   this.dealCards();
-  const baseParams = {
-    tellerID: this.getTeller().socketID,
-    endTime: this.endTime,
-  };
 
   users.forEach((user) => {
     emit({
       socketID: user.socketID,
       name: 'get round data',
-      params: { ...baseParams, cards: user.cards },
+      params: {
+        tellerID: this.getTeller().socketID,
+        cards: user.cards,
+        endTime: this.getEndTime(TIME.WAIT_TELLER_SELECT),
+      },
     });
     user.initOnRound();
   });
 }
 
-const methodGroup = { getState, setState, dealCards, startRound };
+const methodGroup = { getState, setState, getEndTime, dealCards, startRound };
 
 export default methodGroup;

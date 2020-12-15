@@ -5,7 +5,7 @@ function onSendTellerDecision({ cardID, topic }) {
   const { game, user } = socket;
 
   if (!game || !user) return;
-  if (game.status.state !== GAME_STATE.TELLER) return;
+  if (game.getState() !== GAME_STATE.TELLER) return;
   if (!cardID || !topic) return;
 
   game.status.topic = topic;
@@ -18,7 +18,7 @@ function onSendTellerPicking({ cardID }) {
   const { game, user } = socket;
 
   if (!game || !user) return;
-  if (game.status.state !== GAME_STATE.TELLER) return;
+  if (game.getState() !== GAME_STATE.TELLER) return;
 
   const cardPosition = user.cards.findIndex(
     (userCardID) => userCardID === cardID,
