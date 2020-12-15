@@ -13,6 +13,18 @@ const isGameOver = (game) => {
   return false;
 };
 
+// 가장 높은 스코어를 가진 유저의 socketID를 리턴
+const getWinner = (users) => {
+  // 가장 높은 스코어를 찾음
+  const highestScore = Math.max(...users.map((user) => user.score));
+
+  // 가장 높은 스코어를 가진 플레이어들를 찾음
+  const winUsers = users.filter((user) => user.score === highestScore);
+
+  // 어레이가 아닌 하나의 플레이어만 보내줌 (공동 우승 없음)
+  return winUsers[0];
+};
+
 function startScoreBoardScene() {
   this.setState(GAME_STATE.SCORE);
   this.emitRoundScore();
