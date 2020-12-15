@@ -22,13 +22,12 @@ function startScoreBoardScene() {
   }, TIME.WAIT_SCORE_BOARD);
 }
 
-function emitRoundScore() {
+function emitGameEnd() {
   emit({
     users: this.getUsers(),
-    name: 'get round score',
+    name: 'game end',
     params: {
-      round: this.turn,
-      isGameOver: isGameOver(this),
+      winnerID: getWinner().socketID,
     },
   });
 }
@@ -37,6 +36,7 @@ function endScoreBoardScene() {
   if (this.getState() !== GAME_STATE.SCORE) return;
 
   if (isGameOver(this)) {
+    this.emitGameEnd();
     this.startGameEndScene();
   } else {
     this.startTellerScene();
@@ -45,7 +45,7 @@ function endScoreBoardScene() {
 
 const methodGroup = {
   startScoreBoardScene,
-  emitRoundScore,
+  emitGameEnd,
   endScoreBoardScene,
 };
 
