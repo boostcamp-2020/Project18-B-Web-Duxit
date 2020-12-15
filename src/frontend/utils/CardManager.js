@@ -10,6 +10,7 @@ const CardManager = class {
     this.topic = null;
     this.submittedCards = [];
     this.beforeSubmittedCount = 0;
+    this.votedCard = null;
   }
 
   initailizeMyCards(cards) {
@@ -22,6 +23,10 @@ const CardManager = class {
 
   selectCard(selectedCard) {
     this.selectedCard = selectedCard;
+  }
+
+  voteCard(votedCard) {
+    this.votedCard = votedCard;
   }
 
   removeSelectedCard() {

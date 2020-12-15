@@ -37,6 +37,9 @@ const TEXT = {
     WARNING: '한 번 Skip을 누르면 취소할 수 없어요! 신중하게 선택하세요!',
     SKIP: '모든 유저가 스킵했으므로 잠시 후 투표로 넘어갑니다.',
   },
+  VOTE: {
+    TITLE: '자신이 생각하는 이야기꾼의 카드에 투표해주세요!',
+  },
 };
 
 export const GET_IMAGE_PATH = (cardID) => {

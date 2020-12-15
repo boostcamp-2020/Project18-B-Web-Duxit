@@ -1,6 +1,5 @@
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
-import GuesserSelectCard from '@scenes/guesserSelectCard';
 import { $id } from '@utils/dom';
 import PlayerManager from '@utils/PlayerManager';
 import TIME from '@type/time';
