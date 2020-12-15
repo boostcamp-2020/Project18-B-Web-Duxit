@@ -16,6 +16,7 @@ function exitRoom() {
   } else {
     // READY 상태일때 나가면 답이 없음
     socket.in(roomID).emit('game terminated', {})
+    game.setState(GAME_STATE.ERROR)
   }
 
   game.removeUser({ socketID: socket.id });
