@@ -17,16 +17,8 @@ const Scoreboard = class {
   }
 
   wrapup() {
-    PlayerManager.forEach((player, socketID) => {
-      PlayerManager.set(socketID, {
-        ...player,
-        score: {
-          ...player.score,
-          current:
-            player.score.current + player.score.correct + player.score.bonus,
-        },
-      });
-    });
+    PlayerManager.updateCurrentScore();
+    console.log(PlayerManager.getPlayers());
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });

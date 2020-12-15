@@ -53,6 +53,17 @@ const PlayerManager = class extends Map {
     this.set({ ...playerParams, socketID: this.currentPlayerID });
   }
 
+  updateCurrentScore() {
+    this.forEach((player) => {
+      const { score } = player;
+      const { current, correct, bonus } = score;
+      this.set({
+        ...player,
+        score: { current: current + correct + bonus, correct: 0, bonus: 0 },
+      });
+    });
+  }
+
   delete(socketID) {
     if (!this.has(socketID)) return false;
 
