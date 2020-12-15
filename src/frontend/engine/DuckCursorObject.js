@@ -1,21 +1,8 @@
 import socket from '@utils/socket';
 import { $id } from '@utils/dom';
+import { calcAbsolutePosFromRoot } from '@utils/calculate';
 import TIME from '@type/time';
 import DuckObejct from './DuckObject';
-
-const calcPosition = (event) => {
-  const { clientX: cursorX, clientY: cursorY, currentTarget } = event;
-  const {
-    x: rootX,
-    y: rootY,
-    width,
-    height,
-  } = currentTarget.getBoundingClientRect();
-  const x = ((cursorX - rootX) / width) * 100;
-  const y = ((cursorY - rootY) / height) * 100;
-
-  return { x, y };
-};
 
 class DuckCursorObject extends DuckObejct {
   constructor({ isReady, ...props }) {
@@ -42,11 +29,11 @@ class DuckCursorObject extends DuckObejct {
 
   makeFollowMouse(event) {
     if (this.throttling) {
-      this.lastPosition = calcPosition(event);
+      this.lastPosition = calcAbsolutePosFromRoot(event);
       return;
     }
     this.throttling = true;
-    this.moveToMouse(calcPosition(event));
+    this.moveToMouse(calcAbsolutePosFromRoot(event));
     setTimeout(() => {
       this.throttling = false;
       if (this.lastPosition) {

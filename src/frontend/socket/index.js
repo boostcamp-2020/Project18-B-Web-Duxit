@@ -6,6 +6,8 @@ import setupPlayerWaiting from './playerWaiting';
 import setupMixCard from './mixCard';
 import setupDiscussion from './discussion';
 import setupEndGameSocket from './endGame';
+import setupVote from './vote';
+import setupVoteResult from './voteResult';
 
 const SocketManager = {
   initializeSocketOn() {
@@ -17,6 +19,8 @@ const SocketManager = {
     setupMixCard();
     setupDiscussion();
     setupEndGameSocket();
+    setupVote();
+    setupVoteResult();
   },
 };
 

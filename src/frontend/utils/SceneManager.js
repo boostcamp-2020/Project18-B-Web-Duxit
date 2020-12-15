@@ -35,8 +35,13 @@ const SceneManager = {
   },
 
   renderNextScene(scene, ...args) {
+    const { ProgressBar } = this.sharedComponents;
     let wrapupInterval = TIME.NONE_INTERVAL;
     this.hideAllDucks();
+
+    if (ProgressBar.progressBarTimer && !this.currentScene.passingTimerClear) {
+      ProgressBar.clear();
+    }
 
     if (this.currentScene) {
       this.currentScene.wrapup();

@@ -53,6 +53,18 @@ html {
   box-shadow: 0 0 4em 1em $white-color;
 }
 
+.helper-text {
+  @include helper-text-white-background;
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 25%;
+  left: 50%;
+  font-size: x-large;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
 @mixin button {
   display: flex;
   flex-direction: row;
@@ -120,6 +132,7 @@ html {
   @include card-glow-hover;
   &:hover {
     box-shadow: $glow-color-gold;
+    cursor: pointer;
   }
 }
 
