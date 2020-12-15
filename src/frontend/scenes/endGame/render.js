@@ -2,6 +2,7 @@ import './style.scss';
 import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';
 import template from './template.html';
+import { redirectToLobby, renderWaitingScene } from './events';
 
 const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (
   player,
@@ -47,6 +48,8 @@ const renderScoreboardLayout = ({ players, winnerID } = {}) => {
   players.forEach(
     renderPlayerGrid(rowDucks, rowNicknames, rowScores, winnerID),
   );
+  buttonGoMain.addEventListener(redirectToLobby);
+  buttonRestart.addEventListener(renderWaitingScene);
 
   const arrayToBeRemoved = [Background];
   return {
