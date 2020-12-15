@@ -1,5 +1,5 @@
 import { emit } from '@socket';
-import { PLAYER, CARD, TIME } from '@utils/number';
+import { TIME } from '@utils/number';
 
 function getState() {
   return this.status.state;

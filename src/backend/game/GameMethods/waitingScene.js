@@ -1,5 +1,5 @@
 import GAME_STATE from '@utils/gameState';
-import { PLAYER, CARD, TIME } from '@utils/number';
+import { PLAYER, CARD } from '@utils/number';
 import generateRandom from '@utils/generateRandom';
 
 function isEnterable() {

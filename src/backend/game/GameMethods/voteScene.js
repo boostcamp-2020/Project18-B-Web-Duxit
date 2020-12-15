@@ -1,4 +1,4 @@
-import { PLAYER, CARD, TIME } from '@utils/number';
+import { TIME } from '@utils/number';
 import GAME_STATE from '@utils/gameState';
 import generateRandom from '@utils/generateRandom';
 import { emit } from '@socket';

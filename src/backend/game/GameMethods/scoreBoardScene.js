@@ -1,4 +1,4 @@
-import { PLAYER, CARD, TIME, SCORE } from '@utils/number';
+import { TIME, SCORE } from '@utils/number';
 import GAME_STATE from '@utils/gameState';
 import { emit } from '@socket';
 
