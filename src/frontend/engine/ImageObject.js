@@ -8,6 +8,7 @@ const ImageObject = class extends GameObject {
 
   createElement() {
     const element = document.createElement('img');
+    element.setAttribute('draggable', false);
     this.setElement(element);
   }
 
