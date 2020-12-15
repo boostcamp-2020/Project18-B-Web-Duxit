@@ -8,6 +8,7 @@ const GAME_STATE = {
   RESULT: 6,
   SCORE: 7,
   END: 8,
+  ERROR: 9,
 };
 
 export default GAME_STATE;
