@@ -5,8 +5,6 @@ const Scoreboard = class {
   constructor(
     params = {
       round: 0,
-      scoreData: [],
-      isGameOver: true,
     },
   ) {
     this.params = params;
