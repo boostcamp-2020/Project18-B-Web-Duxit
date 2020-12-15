@@ -51,6 +51,7 @@ const renderVoteResult = () => {
     const nicknameText = new TextObject();
     nameDuck.addClass('duck-stamp');
     nameDuck.attachToObject(nameContainer);
+    nameDuck.instance.style.borderColor = color;
     nicknameText.setContent(nickname);
     nicknameText.addClass('nickname-text');
     nicknameText.attachToObject(nameContainer);
@@ -65,6 +66,7 @@ const renderVoteResult = () => {
     const stampDuck = new DuckObject({ color, width: WIDTH_STAMP_DUCK });
     stampDuck.addClass('duck-stamp');
     stampDuck.attachToObject(stampContainer);
+    stampDuck.instance.style.borderColor = color;
     return [...prev, nameDuck, stampDuck, nicknameText, nameContainer];
   }, []);
 
