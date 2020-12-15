@@ -27,7 +27,6 @@ const getWinner = (users) => {
 
 function startScoreBoardScene() {
   this.setState(GAME_STATE.SCORE);
-  this.emitRoundScore();
 
   setTimeout(() => {
     this.endScoreBoardScene();
