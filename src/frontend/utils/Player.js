@@ -50,8 +50,8 @@ const Player = class {
   }
 
   updateScore(score) {
-    const { correctScore: correct, bonusScore: bonus, totalScore } = score;
-    const total = this.score.total + totalScore;
+    const { correctScore: correct, bonusScore: bonus } = score;
+    const total = this.score.total + correct + bonus;
     this.score = {
       correct,
       bonus,
