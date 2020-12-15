@@ -18,7 +18,6 @@ const Scoreboard = class {
 
   wrapup() {
     PlayerManager.updateCurrentScore();
-    console.log(PlayerManager.getPlayers());
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
