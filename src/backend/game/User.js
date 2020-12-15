@@ -56,6 +56,12 @@ class User {
   }
 
   voteCard(cardID) {
+    // 악성 유저가 있을까봐 자기 카드 선택하는거 방지
+    if (cardID === this.submittedCard) {
+      this.votedCard = null;
+      return;
+    }
+
     this.votedCard = cardID;
   }
 
