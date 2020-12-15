@@ -5,6 +5,7 @@ import setupGuesserSelectCard from './guesserSelectCard';
 import setupPlayerWaiting from './playerWaiting';
 import setupMixCard from './mixCard';
 import setupDiscussion from './discussion';
+import setupEndGameSocket from './endGame';
 import setupVote from './vote';
 import setupVoteResult from './voteResult';
 
@@ -17,6 +18,7 @@ const SocketManager = {
     setupPlayerWaiting();
     setupMixCard();
     setupDiscussion();
+    setupEndGameSocket();
     setupVote();
     setupVoteResult();
   },

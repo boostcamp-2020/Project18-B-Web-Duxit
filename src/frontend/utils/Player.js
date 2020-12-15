@@ -1,3 +1,4 @@
+import DuckObject from '@engine/DuckObject';
 import DuckCursorObject from '@engine/DuckCursorObject';
 
 const Player = class {
@@ -23,6 +24,10 @@ const Player = class {
     this.duck = new DuckCursorObject({ isReady, color });
     this.votedCardID = null;
     this.submittedCardID = null;
+  }
+
+  makeDuck(options = {}) {
+    return new DuckObject({ color: this.color, ...options });
   }
 
   update(params) {
