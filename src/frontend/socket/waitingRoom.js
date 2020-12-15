@@ -4,14 +4,18 @@ import SceneManager from '@utils/SceneManager';
 import CardManager from '@utils/CardManager';
 import TellerSelectCard from '@scenes/tellerSelectCard';
 import GuesserWaiting from '@scenes/guesserWaiting';
+import WaitingRoom from '@scenes/waitingRoom';
 
-const setupWaitingRoomSocket = ({ AllReadyText }) => {
+const setupWaitingRoomSocket = () => {
   const onEnterRoom = ({ nickname, players }) => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.initialize(players);
     PlayerManager.updateCurrentPlayer({ nickname });
   };
 
   const onAllReady = () => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
+    const { AllReadyText } = SceneManager.sharedComponents;
     AllReadyText.removeClass('hide');
     AllReadyText.instance.animate(
       [
@@ -26,24 +30,30 @@ const setupWaitingRoomSocket = ({ AllReadyText }) => {
   };
 
   const onGameStartAborted = () => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
+    const { AllReadyText } = SceneManager.sharedComponents;
     AllReadyText.addClass('hide');
     // TODO: 게임 시작 취소됐다는 메시지 띄워줘야됨~~
   };
 
   const onUpdatePlayer = ({ socketID, nickname, color }) => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.set({ socketID, nickname, color });
   };
 
   const onExitPlayer = ({ socketID }) => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.delete(socketID);
   };
 
   const onReadyPlayer = ({ playerID, isReady }) => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     const player = PlayerManager.get(playerID);
     if (player) player.setReady(isReady);
   };
 
   const onGetRoundData = ({ tellerID, cards, endTime }) => {
+    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.setTellerID(tellerID);
     CardManager.initailizeMyCards(cards);
     const { isTeller } = PlayerManager.getCurrentPlayer();

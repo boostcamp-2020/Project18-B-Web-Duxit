@@ -1,21 +1,19 @@
+import SceneManager from '@utils/SceneManager';
 import PlayerManager from '@utils/PlayerManager';
 import { shouldUseBlack } from '@utils/hexColor';
 import renderWaitingRoom from './render';
-import setupWaitingRoomSocket from './socket';
 
 const WaitingRoom = class {
   constructor(roomID) {
     this.roomID = roomID;
     this.ducks = new Map();
     this.duckMoveEvent = null;
-
   }
 
   render() {
     const {
       arrayToBeRemoved,
       NicknameInput,
-      AllReadyText,
       ColorButton,
       RandomColorButton,
       ColorInput,
@@ -25,12 +23,13 @@ const WaitingRoom = class {
     this.ColorButton = ColorButton;
     this.RandomColorButton = RandomColorButton;
     this.ColorInput = ColorInput;
-    setupWaitingRoomSocket({ AllReadyText });
-
     PlayerManager.onUpdate.push(this.onUpdate.bind(this));
   }
 
   wrapup() {
+    const { AllReadyText } = SceneManager.sharedComponents;
+    AllReadyText.delete();
+
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });

@@ -1,14 +1,13 @@
-import ProgressBarObject from '@engine/ProgressBarObject';
 import ButtonObject from '@engine/ButtonObject';
 import TextObject from '@engine/TextObject';
 import GameObject from '@engine/GameObject';
+import SceneManager from '@utils/SceneManager';
 import TEXT from '@utils/text';
 import { clickSkip, mouseOverSkip, mouseOutSkip, initTeller } from './events';
 
 const renderDiscussion = ({ endTime }) => {
-  const ProgressBar = new ProgressBarObject();
-  ProgressBar.createElement();
-  ProgressBar.attachToRoot();
+  const { ProgressBar } = SceneManager.sharedComponents;
+
   ProgressBar.setTime(endTime);
   ProgressBar.start();
 
@@ -38,26 +37,17 @@ const renderDiscussion = ({ endTime }) => {
   SkipButton.instance.addEventListener('mouseover', mouseOverSkip);
   SkipButton.instance.addEventListener('mouseout', mouseOutSkip);
 
-  const SkipText = new TextObject();
-  SkipText.addClass('discussion-skip-text');
-  SkipText.addClass('hide');
-  SkipText.setContent(TEXT.DISCUSSION.SKIP);
-  SkipText.attachToRoot();
-
   initTeller();
   const arrayToBeRemoved = [
-    ProgressBar,
     HelpText,
     ActionWrapper,
     WarningTextBox,
     WarningText,
     SkipButton,
-    SkipText,
   ];
 
   return {
     arrayToBeRemoved,
-    SkipText,
   };
 };
 

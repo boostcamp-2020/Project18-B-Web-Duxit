@@ -1,16 +1,15 @@
 import renderGuesserSelect from './render';
-import setupGuesserSelectCard from './socket';
 
 const GuesserSelectCard = class {
   constructor({ endTime }) {
     this.endTime = endTime;
+    this.passingTimerClear = true;
   }
 
   render() {
     const { endTime } = this;
-    const { arrayToBeRemoved, ProgressBar } = renderGuesserSelect({ endTime });
+    const { arrayToBeRemoved } = renderGuesserSelect({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
-    setupGuesserSelectCard({ ProgressBar, scene: this });
   }
 
   wrapup() {

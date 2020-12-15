@@ -1,12 +1,12 @@
 import './guesserWaiting.scss';
 import TextObject from '@engine/TextObject';
-import ProgressBarObject from '@engine/ProgressBarObject';
 import DuckObject from '@engine/DuckObject';
+import PlayerManager from '@utils/PlayerManager';
+import SceneManager from '@utils/SceneManager';
 import TEXT from '@utils/text';
-import TIME from '@type/time';
 import { createCards } from '@utils/card';
 import { GUESSER_WAITING } from '@type/scene';
-import PlayerManager from '@utils/PlayerManager';
+import TIME from '@type/time';
 
 const renderGuesserWaiting = ({ endTime }) => {
   const NotifyingTellerText = new TextObject();
@@ -16,9 +16,7 @@ const renderGuesserWaiting = ({ endTime }) => {
   NotifyingTellerText.move(50, 100, 0);
   NotifyingTellerText.move(50, 70, TIME.ONE_SECOND);
 
-  const ProgressBar = new ProgressBarObject();
-  ProgressBar.createElement();
-  ProgressBar.attachToRoot();
+  const { ProgressBar } = SceneManager.sharedComponents;
   ProgressBar.setTime(endTime);
   ProgressBar.start();
 
@@ -42,7 +40,6 @@ const renderGuesserWaiting = ({ endTime }) => {
 
   const arrayToBeRemoved = [
     NotifyingTellerText,
-    ProgressBar,
     TellerDuck,
     CardsWrapper,
     ...cards,

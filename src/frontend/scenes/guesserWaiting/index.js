@@ -1,5 +1,4 @@
 import renderGuesserWaiting from './render';
-import setupGuesserWaiting from './socket';
 
 const GuesserWaiting = class {
   constructor({ endTime }) {
@@ -11,7 +10,6 @@ const GuesserWaiting = class {
     const { arrayToBeRemoved = [], cards } = renderGuesserWaiting({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
     this.cards = cards;
-    setupGuesserWaiting();
   }
 
   wrapup() {

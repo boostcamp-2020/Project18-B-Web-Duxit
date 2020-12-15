@@ -10,6 +10,8 @@ const CardManager = class {
     this.topic = null;
     this.submittedCards = [];
     this.beforeSubmittedCount = 0;
+    this.votedCard = null;
+    // selectedCard와 votedCard는 Player로 옮김. 지울 예정
   }
 
   initailizeMyCards(cards) {
@@ -22,6 +24,10 @@ const CardManager = class {
 
   selectCard(selectedCard) {
     this.selectedCard = selectedCard;
+  }
+
+  voteCard(votedCard) {
+    this.votedCard = votedCard;
   }
 
   removeSelectedCard() {

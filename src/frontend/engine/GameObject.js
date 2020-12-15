@@ -102,6 +102,14 @@ const GameObject = class {
     this.instance.innerHTML = html;
   }
 
+  getObjectsByIds(...ids) {
+    return ids.map((id) => {
+      const object = new GameObject();
+      object.instance = this.instance.querySelector(`#${id}`);
+      return object;
+    });
+  }
+
   transform() {
     this.instance.style.transform = `${this.rotateStyle} ${this.originStyle}`;
   }
@@ -112,6 +120,15 @@ const GameObject = class {
 
   move(x = 0, y = 0, duration = TIME.DEFAULT_TRANSITION) {
     return new Promise((resolve) => {
+      let animationFinished = false;
+      setTimeout(() => {
+        this.instance.style.top = makeUnitString(y, '%');
+        this.instance.style.left = makeUnitString(x, '%');
+        this.animationFrame = null;
+        animationFinished = true;
+        resolve();
+      }, duration);
+
       this.position = [x, y];
       const xString = makeUnitString(x, '%');
       const yString = makeUnitString(y, '%');
@@ -136,13 +153,14 @@ const GameObject = class {
       const animateFunction = (timestamp) => {
         if (!start) start = timestamp;
         const elapsed = timestamp - start;
-        if (elapsed > miliseconds) {
-          this.instance.style.top = yString;
-          this.instance.style.left = xString;
-          this.animationFrame = null;
-          resolve();
-          return;
-        }
+        if (animationFinished) return;
+        // if (elapsed > miliseconds) {
+        //   this.instance.style.top = yString;
+        //   this.instance.style.left = xString;
+        //   this.animationFrame = null;
+        //   resolve();
+        //   return;
+        // }
         const newY =
           initialY + (targetY - initialY) * easeOutCubic(elapsed / miliseconds);
         const newX =
@@ -167,6 +185,15 @@ const GameObject = class {
     rollClockwise = Math.random() < 0.5 ? 1 : -1,
   ) {
     return new Promise((resolve) => {
+      let animationFinished = false;
+      setTimeout(() => {
+        this.instance.style.top = makeUnitString(y, '%');
+        this.instance.style.left = makeUnitString(x, '%');
+        // this.instance.style.transform = `rotateZ(0deg) ${this.originStyle}`;
+        this.animationFrame = null;
+        animationFinished = true;
+        resolve();
+      }, duration);
       // TODO: move()와 겹치는 부분들 refactor...
       this.position = [x, y];
       const xString = makeUnitString(x, '%');
@@ -191,13 +218,14 @@ const GameObject = class {
       const animateFunction = (timestamp) => {
         if (!start) start = timestamp;
         const elapsed = timestamp - start;
-        if (elapsed > duration) {
-          this.instance.style.top = yString;
-          this.instance.style.left = xString;
-          this.animationFrame = null;
-          resolve();
-          return;
-        }
+        if (animationFinished) return;
+        // if (elapsed > duration) {
+        //   this.instance.style.top = yString;
+        //   this.instance.style.left = xString;
+        //   this.animationFrame = null;
+        //   resolve();
+        //   return;
+        // }
         const newY = initialY + (targetY - initialY) * (elapsed / duration);
         const newX = initialX + (targetX - initialX) * (elapsed / duration);
         this.angle += rollClockwise * rollCount * 4 * (elapsed / duration);

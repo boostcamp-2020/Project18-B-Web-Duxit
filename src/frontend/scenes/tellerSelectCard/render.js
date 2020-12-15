@@ -1,11 +1,11 @@
 import './tellerSelectCard.scss';
 import TextObject from '@engine/TextObject';
-import ProgressBarObject from '@engine/ProgressBarObject';
 import TEXT from '@utils/text';
 import { SELECT_CARD, TELLER_SELECT_CARD } from '@type/scene';
 import { createCards } from '@utils/card';
 import CardManager from '@utils/CardManager';
 import { onClickCard } from '@utils/modal';
+import SceneManager from '@utils/SceneManager';
 import { sendTellerdecision } from './events';
 
 const renderTellerSelect = ({ endTime }) => {
@@ -15,9 +15,7 @@ const renderTellerSelect = ({ endTime }) => {
   NotifyingTellerText.attachToRoot();
   NotifyingTellerText.setContent(tellerText);
 
-  const ProgressBar = new ProgressBarObject();
-  ProgressBar.createElement();
-  ProgressBar.attachToRoot();
+  const { ProgressBar } = SceneManager.sharedComponents;
   ProgressBar.setTime(endTime);
   ProgressBar.start();
 
@@ -38,12 +36,7 @@ const renderTellerSelect = ({ endTime }) => {
     );
   });
 
-  const arrayToBeRemoved = [
-    NotifyingTellerText,
-    ProgressBar,
-    CardsWrapper,
-    ...cards,
-  ];
+  const arrayToBeRemoved = [NotifyingTellerText, CardsWrapper, ...cards];
 
   return {
     arrayToBeRemoved,
