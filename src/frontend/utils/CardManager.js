@@ -11,6 +11,7 @@ const CardManager = class {
     this.submittedCards = [];
     this.beforeSubmittedCount = 0;
     this.votedCard = null;
+    // selectedCard와 votedCard는 Player로 옮김. 지울 예정
   }
 
   initailizeMyCards(cards) {

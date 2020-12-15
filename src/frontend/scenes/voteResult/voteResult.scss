@@ -1,0 +1,34 @@
+$z-index-mini-duck: 15;
+
+.stamp-wrapper {
+  position: absolute;
+  z-index: $z-index-mini-duck;
+  display: inline-flex;
+  max-width: 150px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.name-wrapper {
+  position: absolute;
+  z-index: $z-index-mini-duck;
+  display: flex;
+  width: 190px;
+  align-items: center;
+  justify-content: center;
+}
+
+.duck-stamp {
+  box-sizing: border-box;
+  padding: 3px;
+  border-radius: 100%;
+}
+
+.nickname-text {
+  padding: 3px;
+  font-weight: 600;
+}
+
+.vote-result-text {
+  top: 80% !important;
+}
