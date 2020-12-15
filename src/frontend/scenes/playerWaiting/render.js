@@ -3,12 +3,15 @@ import TextObject from '@engine/TextObject';
 import PlayerManager from '@utils/PlayerManager';
 import SceneManager from '@utils/SceneManager';
 import TEXT from '@utils/text';
+import { $qs } from '@utils/dom';
 
 const renderPlayerWaiting = ({ endTime }) => {
   const isTeller = PlayerManager.isTeller();
   const tellerDuck = PlayerManager.getTeller().duck;
   tellerDuck.setVisibility(true, isTeller);
-
+  if ($qs('.modal')) {
+    $qs('.modal').remove();
+  }
   if (isTeller) {
     const { ProgressBar } = SceneManager.sharedComponents;
     ProgressBar.setTime(endTime);
