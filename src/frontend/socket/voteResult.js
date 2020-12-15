@@ -1,6 +1,6 @@
 import socket from '@utils/socket';
 import SceneManager from '@utils/SceneManager';
-import Scoreboard from '@scenes/Scoreboard';
+import Scoreboard from '@scenes/scoreboard';
 
 const setupVoteResult = () => {
   const onEndVoteResult = ({ round }) => {
