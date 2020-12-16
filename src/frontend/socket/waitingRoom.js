@@ -55,7 +55,7 @@ const setupWaitingRoomSocket = () => {
   const onGetRoundData = ({ tellerID, cards, endTime }) => {
     if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.setTellerID(tellerID);
-    CardManager.initailizeMyCards(cards);
+    CardManager.initializeMyCards(cards);
     const { isTeller } = PlayerManager.getCurrentPlayer();
     const nextScene = isTeller
       ? new TellerSelectCard({ cards, endTime })
