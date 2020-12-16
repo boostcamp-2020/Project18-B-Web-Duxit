@@ -3,42 +3,31 @@ import LeftTab from '../../game/LeftTab';
 import renderScoreboard from './render';
 
 const Scoreboard = class {
-  constructor(
-    params = {
-      round: 0,
-      scoreData: [],
-      isGameOver: true,
-    },
-  ) {
-    this.params = params;
-    this.animationTimeout = null;
+  constructor({ round = 0 } = {}) {
+    this.round = round;
+    this.players = PlayerManager.getPlayers();
   }
 
   render() {
-    const players = PlayerManager.getPlayers();
-    LeftTab.updateScore(players);
-
-    const { arrayToBeRemoved, totalAnimationTime } = renderScoreboard({
-      ...this.params,
-      players,
+    const { arrayToBeRemoved } = renderScoreboard({
+      round: this.round,
+      players: this.players,
     });
+    // LeftTab.updateScore(players);
     this.arrayToBeRemoved = arrayToBeRemoved;
-    this.animationTimeout = setTimeout(
-      this.afterAnimation.bind(this),
-      totalAnimationTime,
-    );
-  }
-
-  afterAnimation() {
-    this.animationTimeout = null;
-    // socket.emit('scoreboard animation ends');
   }
 
   wrapup() {
-    if (this.animationTimeout) {
-      this.afterAnimation();
-      clearTimeout(this.animationTimeout);
-    }
+    PlayerManager.forEach((player, socketID) => {
+      PlayerManager.set(socketID, {
+        ...player,
+        score: {
+          ...player.score,
+          current:
+            player.score.current + player.score.correct + player.score.bonus,
+        },
+      });
+    });
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });

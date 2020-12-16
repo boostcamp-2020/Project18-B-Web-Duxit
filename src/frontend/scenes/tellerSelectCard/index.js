@@ -1,4 +1,3 @@
-import TIME from '@type/time';
 import CardManager from '@utils/CardManager';
 import renderTellerSelect from './render';
 
@@ -6,7 +5,6 @@ const TellerSelectCard = class {
   constructor({ cards, endTime }) {
     this.cards = cards;
     this.endTime = endTime;
-    this.wrapupInterval = TIME.WRAP_UP.TELLER_SELECT;
   }
 
   render() {

@@ -10,9 +10,7 @@ const defineRenderRow = (TableBody) => ({
   nickname,
   color,
   isTeller,
-  correctScore,
-  bonusScore,
-  totalScore,
+  score: { current, correct, bonus },
 } = {}) => {
   const TableRow = new GameObject({
     classes: ['scoreboard-table-row'],
@@ -35,15 +33,15 @@ const defineRenderRow = (TableBody) => ({
   const CorrectScoreObject = new TextObject({
     classes: ['scoreboard-table-score'],
     parent: TableRow,
-  }).setContent(`+${correctScore}`);
+  }).setContent(`+${correct}`);
   const BonusScoreObject = new TextObject({
     classes: ['scoreboard-table-score'],
     parent: TableRow,
-  }).setContent(`+${bonusScore}`);
+  }).setContent(`+${bonus}`);
   const TotalScoreObject = new TextObject({
     classes: ['scoreboard-table-score'],
     parent: TableRow,
-  }).setContent(`${totalScore}`);
+  }).setContent(`${current + correct + bonus}`);
 };
 
 const renderRow = (TableBody, players) => {
@@ -52,7 +50,7 @@ const renderRow = (TableBody, players) => {
 
 const getMaximumScoreDifference = (players) =>
   players.reduce(
-    (max, player) => Math.max(max, player.totalScore - player.score),
+    (max, player) => Math.max(max, player.score.correct + player.score.bonus),
     0,
   );
 
@@ -62,50 +60,51 @@ const getTotalAnimationTime = (players) => {
 };
 
 const yellowDuckyJumpsOverTheLazyStone = (players) =>
-  players.map(({ color, score: currentScore = 0, totalScore } = {}) => {
+  players.map(({ color, score: { current, correct, bonus } } = {}) => {
     const duck = new DuckObject({
       color,
       width: 50,
       classes: ['movable'],
-      position: stonePosition[currentScore],
+      position: stonePosition[current],
       origin: [50, 90],
       depth: 10,
     });
     BACKGROUND.appendChild(duck.instance);
 
-    const jumpCount = totalScore - currentScore + 1;
+    const jumpCount = correct + bonus + 1;
     const jumpTiming = (index) => 1000 + 500 * index;
     [...Array(jumpCount)].forEach((_, index) => {
+      const nextPosition = Math.min(30, current + index);
       setTimeout(() => {
-        duck.jump(...stonePosition[currentScore + index], 500);
+        duck.jump(...stonePosition[nextPosition], 500);
       }, jumpTiming(index));
     });
     return duck;
   });
 
-const animateBackground = (players, totalAnimationTime, isGameOver) => {
+const animateBackground = (players) => {
   setTimeout(() => {
     ROOT.style.transform = 'scale(0.6)';
     const ducks = yellowDuckyJumpsOverTheLazyStone(players);
-    if (!isGameOver) {
-      setTimeout(() => {
-        ROOT.style.transform = null;
-        ducks.forEach((duck) => {
-          duck.setDepth(0);
-          setTimeout(() => {
-            duck.delete();
-          }, 1000);
-        });
-      }, totalAnimationTime - 2000);
-    }
+    // if (!isGameOver) {
+    setTimeout(() => {
+      ROOT.style.transform = null;
+      ducks.forEach((duck) => {
+        duck.setDepth(0);
+        setTimeout(() => {
+          duck.delete();
+        }, 1000);
+      });
+    }, 8000);
+    // }
   }, 2000);
 };
 
 const renderScoreboardLayout = ({
   round,
   players,
-  scoreData,
-  isGameOver,
+  // scoreData,
+  // isGameOver,
 } = {}) => {
   const templateWrapper = document.createElement('div');
   templateWrapper.innerHTML = template;
@@ -123,19 +122,12 @@ const renderScoreboardLayout = ({
     '#scoreboard-table-body',
   );
 
-  const playersWithScore = players.map((player) => ({
-    ...player,
-    ...scoreData.find((data) => data.socketID === player.socketID),
-  }));
-  const totalAnimationTime = getTotalAnimationTime(playersWithScore);
-
-  renderRow(TableBody, playersWithScore);
-  animateBackground(playersWithScore, totalAnimationTime, isGameOver);
+  renderRow(TableBody, players);
+  animateBackground(players);
 
   const arrayToBeRemoved = [Background];
   return {
     arrayToBeRemoved,
-    totalAnimationTime,
   };
 };
 

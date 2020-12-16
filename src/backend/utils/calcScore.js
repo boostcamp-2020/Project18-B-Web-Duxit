@@ -37,7 +37,7 @@ const getScoreMap = (game) => {
   // [다 맞추거나 아무도 못 맞춤]인지 [한명이라도 맞춤]인지 확인
   const tellerWin = isTellerWin(guessers, teller.submittedCard);
   // 보너스B, 보너스C 점수 할당
-  const [bonusB, bonusC] = tellerWin ? [0, 2] : [3, 0];
+  const [bonusB, bonusC] = tellerWin ? [3, 0] : [0, 2];
 
   // teller = {correct: 0, bonus: 보너스B 점수}
   scoreMap.set(teller.socketID, mapScore(0, bonusB));
