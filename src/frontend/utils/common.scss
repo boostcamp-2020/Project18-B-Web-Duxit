@@ -1,8 +1,8 @@
 @import url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css');
 @import '@utils/variable';
 
-$guide-cover-url: '../resources/bookcover.jpg';
-
+$guide-cover-url: '@resources/bookcover.jpg';
+$guide-page-url: '@resources/page.jpg';
 html,
 body,
 input,
@@ -131,7 +131,8 @@ video {
   min-height: 100%;
   max-height: 100%;
   padding: 2rem;
-  background-color: $white-color;
+  background: url($guide-page-url);
+  background-size: cover;
   border-radius: 5px;
   box-shadow: 5px 5px 15px #333;
   font-size: 1.2rem;
@@ -151,26 +152,32 @@ video {
   animation-name: flipGuide;
   background: url($guide-cover-url);
   background-size: cover;
+  overflow-y: auto;
 }
 
 .guide-right-page-wrapper {
   @include guide-page;
+  overflow-y: auto;
 }
 
 @keyframes flipGuide {
   0% {
     background: url($guide-cover-url);
+    background-size: cover;
     transform: rotateY(0);
     transform-origin: top left;
   }
   20% {
     background: url($guide-cover-url);
+    background-size: cover;
   }
   30% {
-    background: $white-color;
+    background: url($guide-page-url);
+    background-size: cover;
   }
   100% {
-    background: $white-color;
+    background: url($guide-page-url);
+    background-size: cover;
     transform: rotateY(-180deg);
     transform-origin: top left;
   }
