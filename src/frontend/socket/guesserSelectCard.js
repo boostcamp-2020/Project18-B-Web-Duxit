@@ -8,17 +8,15 @@ import GuesserSelectCard from '@scenes/guesserSelectCard';
 const setupGuesserSelectCard = () => {
   const onGuesserSelectCard = ({ cardID }) => {
     if (!SceneManager.isCurrentScene(GuesserSelectCard)) return;
-    CardManager.addSubmittedCardCount();
+    const currentPlayer = PlayerManager.getCurrentPlayer();
     CardManager.selectCard(cardID);
+    SceneManager.addBeforeSubmittingPlayers(currentPlayer.socketID);
     SceneManager.renderNextScene(new PlayerWaiting());
-
-    const myDuck = PlayerManager.getCurrentPlayer().duck;
-    myDuck.setVisibility(true, true);
   };
 
-  const onOtherGuesserSelectCard = () => {
+  const onOtherGuesserSelectCard = ({ playerID }) => {
     if (!SceneManager.isCurrentScene(GuesserSelectCard)) return;
-    CardManager.addSubmittedCardCount();
+    CardManager.addBeforeSubmittingPlayers(playerID);
   };
 
   socket.on('guesser select card', onGuesserSelectCard);

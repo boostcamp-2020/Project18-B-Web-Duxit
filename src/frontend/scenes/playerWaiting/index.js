@@ -1,4 +1,5 @@
 import CardManager from '@utils/CardManager';
+import SceneManager from '@utils/SceneManager';
 import renderPlayerWaiting from './render';
 
 const PlayerWaiting = class {
@@ -6,7 +7,7 @@ const PlayerWaiting = class {
     this.endTime = endTime || null;
     this.ducks = new Map();
 
-    Array.from({ length: CardManager.beforeSubmittedCount }, () =>
+    SceneManager.beforeSubmittingPlayers.forEach(() =>
       CardManager.dropNewCard(),
     );
   }
