@@ -18,6 +18,10 @@ const deleteOtherPeer = (socketID) => {
   }
 };
 
+const isConnectedToVoiceChat = () => {
+  return myPeerJSClient && myAudioStream;
+};
+
 // 내가 보이스 채팅 접속
 function activateVoiceChat() {
   myPeerJSClient = new Peer(socket.id);
@@ -46,21 +50,28 @@ function deactivateVoiceChat() {
   myAudioStream.getTracks().forEach((track) => {
     track.stop();
   });
+
+  peerMap.forEach((_, socketID) => {
+    deleteOtherPeer(socketID);
+  });
 }
 
 // 연결된 유저가 보이스 채팅 접속을 끊었을 때
 socket.on('voice disconnected', ({ socketID }) => {
+  if (!isConnectedToVoiceChat()) return;
+
   deleteOtherPeer(socketID);
 });
 
 socket.on('another voice connected', ({ socketID }) => {
-  if (myPeerJSClient && myAudioStream)
-    connectToNewUser({
-      peer: myPeerJSClient,
-      socketID,
-      stream: myAudioStream,
-      peerMap,
-    });
+  if (!isConnectedToVoiceChat()) return;
+
+  connectToNewUser({
+    peer: myPeerJSClient,
+    socketID,
+    stream: myAudioStream,
+    peerMap,
+  });
 });
 
 export { activateVoiceChat, deactivateVoiceChat };
