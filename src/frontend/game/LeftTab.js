@@ -2,7 +2,7 @@ import './left.scss';
 import { $id } from '@utils/dom';
 import DuckLeftTabObject from '@engine/DuckLeftTabObject';
 import PlayerManager from '@utils/PlayerManager';
-import { activateVoiceChat, deactivateVoiceChat } from '@utils/voiceChat';
+import { activateVoiceChat, deactivateVoiceChat } from './voiceChat';
 
 const createDuck = (duckInfo) => {
   const { socketID, color, nickname } = duckInfo;
