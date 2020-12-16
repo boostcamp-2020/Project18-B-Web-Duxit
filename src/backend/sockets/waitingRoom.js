@@ -86,6 +86,7 @@ function onReadyChange({ isReady }) {
   // 한명이라도 레디 하지 않은 경우, 이미 레디 상태였는지 확인
   else if (game.getState() === GAME_STATE.READY) {
     deleteGameStartTimeout(roomID);
+    game.setState(GAME_STATE.WAITING);
     // 실제로 타이머가 중지 되었을 경우 플레이어들에게 알림
     socket.in(roomID).emit('game start aborted', {});
     socket.emit('game start aborted', {});
