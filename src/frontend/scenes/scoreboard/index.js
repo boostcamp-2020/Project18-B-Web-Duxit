@@ -1,10 +1,10 @@
 import PlayerManager from '@utils/PlayerManager';
+import LeftTab from '../../game/LeftTab';
 import renderScoreboard from './render';
 
 const Scoreboard = class {
   constructor({ round = 0 } = {}) {
     this.round = round;
-    this.animationTimeout = null;
     this.players = PlayerManager.getPlayers();
   }
 
@@ -18,6 +18,7 @@ const Scoreboard = class {
 
   wrapup() {
     PlayerManager.updateCurrentScore();
+    LeftTab.updateScore(this.players);
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
