@@ -10,6 +10,12 @@ import TIME from '@type/time';
 import './LeftTab';
 import './background';
 
+const ALERT_MESSAGE = {
+  1: '존재하지 않는 코드입니다. 오타가 있는지 확인해보세요! 😢',
+  2: '빈 자리가 없어 입장할 수 없습니다. 😭',
+  3: '게임이 이미 시작되었어요! 🤭',
+};
+
 const scrollToBottom = (component) => {
   const scrollOption = {
     top: component.scrollHeight,
@@ -76,9 +82,10 @@ const initialize = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomID = urlParams.get('room');
   const config = { method: 'GET', uri: `/rooms/${roomID}` };
-  const { success } = await requestHandler(config);
+  const { success, CODE } = await requestHandler(config);
+
   if (!success) {
-    window.alert('올바르지 않은 코드입니다.');
+    window.alert(ALERT_MESSAGE[CODE]);
     window.location.href = '/';
     return;
   }
