@@ -8,6 +8,7 @@ label,
 button {
   all: unset;
   overflow: hidden;
+  user-select: none;
 }
 
 * {
