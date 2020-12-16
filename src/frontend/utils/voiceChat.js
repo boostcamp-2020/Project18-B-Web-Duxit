@@ -8,7 +8,10 @@ const videoGrid = document.getElementById('video-grid');
 
 const peers = {};
 
+const peerMap = new Map();
+
 function addVideoStream(mediaConnection) {
+  console.log('media', mediaConnection.peer);
   const video = document.createElement('video');
 
   mediaConnection.on('stream', (stream) => {
@@ -53,8 +56,9 @@ const getAudioStream = () =>
     audio: true,
   });
 
+// 내가 보이스 채팅 접속
 function activateVoiceChat() {
-  myPeer = new Peer();
+  myPeer = new Peer(socket.id);
   myPeer.on('open', async (id) => {
     peerID = id;
     try {
@@ -68,11 +72,13 @@ function activateVoiceChat() {
   });
 }
 
+// 내가 보이스 채팅 접속을 끊었을 때
 function deactivateVoiceChat() {
   socket.emit('player disconnect voice', { id: peerID });
   myPeer.destroy();
 }
 
+// 연결된 유저가 보이스 채팅 접속을 끊었을 때
 socket.on('voice disconnected', (userId) => {
   if (peers[userId]) peers[userId].close();
 });

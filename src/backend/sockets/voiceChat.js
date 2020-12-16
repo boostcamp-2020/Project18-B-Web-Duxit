@@ -1,6 +1,9 @@
 function onConnectVoice(id) {
   const socket = this;
   const { game } = socket;
+
+  if (!game) return;
+
   socket.in(game.roomID).emit('another voice connected', id);
 
   socket.on('disconnect', () => {
@@ -11,6 +14,9 @@ function onConnectVoice(id) {
 function onDisconnectVoice(id) {
   const socket = this;
   const { game } = socket;
+
+  if (!game) return;
+
   socket.in(game.roomID).emit('voice disconnected', id);
 }
 
