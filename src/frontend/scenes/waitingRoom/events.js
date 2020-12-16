@@ -2,6 +2,7 @@ import socket from '@utils/socket';
 import PlayerManager from '@utils/PlayerManager';
 import { testHexColorString } from '@utils/hexColor';
 import { $qs } from '@utils/dom';
+import TIME from '@type/time';
 
 export const redirectToLobby = () => {
   window.location.href = '/';
@@ -19,7 +20,7 @@ export const copyGameCode = (e) => {
   copyNotice.classList.add('copy-notice-animate');
   setTimeout(() => {
     copyNotice.classList.remove('copy-notice-animate');
-  }, 2000);
+  }, TIME.TWO_SECONDS);
 };
 
 export const changeNickname = (NicknameInput) => {
