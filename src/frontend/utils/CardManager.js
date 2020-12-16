@@ -9,7 +9,7 @@ const CardManager = class {
     this.selectedCard = null;
     this.topic = null;
     this.submittedCards = [];
-    this.beforeSubmittedCount = 0;
+    this.beforeSubmittingPlayers = [];
     this.votedCard = null;
     // selectedCard와 votedCard는 Player로 옮김. 지울 예정
   }
@@ -17,7 +17,7 @@ const CardManager = class {
   initializeMyCards(cards) {
     this.myCards = cards;
     this.submittedCards = [];
-    this.beforeSubmittedCount = 0;
+    this.beforeSubmittingPlayers = [];
     this.selectedCard = null;
     this.votedCard = null;
     this.topic = null;
@@ -43,8 +43,8 @@ const CardManager = class {
     this.topic = topic;
   }
 
-  addSubmittedCardCount() {
-    this.beforeSubmittedCount += 1;
+  addBeforeSubmittingPlayers(playerID) {
+    this.beforeSubmittingPlayers = [...this.beforeSubmittingPlayers, playerID];
   }
 
   addSubmittedCard(cardObject) {
