@@ -51,6 +51,10 @@ class User {
     this.nickname = nickname;
   }
 
+  addScore(score) {
+    this.score += score;
+  }
+
   submitCard(cardID) {
     this.submittedCard = cardID;
 

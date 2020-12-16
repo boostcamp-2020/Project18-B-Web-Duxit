@@ -15,13 +15,13 @@ class DuckObject extends GameObject {
   }
 
   setHat(boolean) {
-    const hatElement = this.getChildrenNode('.duck-hat');
+    const hatElement = this.getChildrenNode('[data-hat="teller"]');
     const display = boolean ? 'block' : 'none';
     hatElement.style.display = display;
   }
 
   setCrown(boolean) {
-    const crownElement = this.getChildrenNode('.duck-crown');
+    const crownElement = this.getChildrenNode('[data-hat="crown"]');
     const display = boolean ? 'block' : 'none';
     crownElement.style.display = display;
   }

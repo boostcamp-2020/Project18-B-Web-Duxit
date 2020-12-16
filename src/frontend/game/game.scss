@@ -217,17 +217,6 @@
   font-weight: 700;
 }
 
-.guide-content-wrapper {
-  @include modal-mixin;
-  top: 50%;
-  left: 50%;
-  width: 80%;
-  min-height: 50%;
-  padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 1rem;
-}
-
 .modal-close {
   @include button;
   @include modal-mixin;

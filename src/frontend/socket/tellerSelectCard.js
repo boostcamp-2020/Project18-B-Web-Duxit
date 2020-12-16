@@ -3,13 +3,14 @@ import SceneManager from '@utils/SceneManager';
 import CardManager from '@utils/CardManager';
 import PlayerWaiting from '@scenes/playerWaiting';
 import TellerSelectCard from '@scenes/tellerSelectCard';
+import PlayerManager from '@utils/PlayerManager';
 
 const setupTellerSelectSocket = () => {
   const onTellerSelectCard = ({ cardID, topic, endTime }) => {
     if (!SceneManager.isCurrentScene(TellerSelectCard)) return;
     CardManager.updateTopic(topic);
-    CardManager.addSubmittedCardCount();
     CardManager.selectCard(cardID);
+    SceneManager.addBeforeSubmittingPlayers(PlayerManager.tellerID);
     SceneManager.renderNextScene(new PlayerWaiting(endTime));
   };
 

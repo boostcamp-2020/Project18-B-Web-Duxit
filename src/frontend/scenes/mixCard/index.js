@@ -3,6 +3,7 @@ import renderMixCard from './render';
 const MixCard = class {
   constructor(endTime) {
     this.endTime = endTime;
+    this.bMaintainDucks = true;
   }
 
   render() {

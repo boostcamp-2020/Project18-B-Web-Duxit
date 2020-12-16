@@ -22,7 +22,7 @@ export const Duck = ({ color = '#efff00', width = '50' }) => {
 
 export const DuckHat = ({ width = '40' }) => {
   return `
-    <svg class="duck-hat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 110.58" width=${width} style="display:none">
+    <svg data-hat="teller" class="duck-hat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 110.58" width=${width} style="display:none">
         <defs>
         <style>
         .cls-a{fill:#cbd467;stroke:#000;}.cls-a,.cls-d{stroke-miterlimit:10;stroke-width:3px;}.cls-b{fill:#201c1d;}.cls-c{fill:#df8e14;}.cls-d{fill:#f3f2f9;stroke:#161616;}.cls-e{fill:none;}</style>
@@ -33,7 +33,7 @@ export const DuckHat = ({ width = '40' }) => {
 
 export const DuckCrown = ({ width = '40' }) => {
   return `
-    <svg class="duck-crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 186.37 94.4" width=${width} style="display:none">
+    <svg data-hat="crown" class="duck-hat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 186.37 94.4" width=${width} style="display:none">
         <defs>
         <style>.c-1{fill:#f7f123;}.c-1,.c-2,.c-3,.c-4,.c-5{stroke:#000;}.c-1,.c-2,.c-3,.c-4,.c-5,.c-6{stroke-miterlimit:10;}.c-1,.c-2{stroke-width:2px;}.c-2{fill:#eace06;}.c-3{fill:#ed1c24;}.c-3,.c-4,.c-5{stroke-width:0.5px;}.c-4{fill:#009245;}.c-5{fill:#2e3192;}.c-6{fill:#ef810a;stroke:#0c0c0c;}</style>
         </defs>

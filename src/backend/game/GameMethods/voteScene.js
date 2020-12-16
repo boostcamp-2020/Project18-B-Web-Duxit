@@ -33,12 +33,17 @@ function forceGuesserVote() {
 
 function emitEndVote() {
   const scoreMap = getScoreMap(this);
-  const players = this.getUsers().map((user) => ({
-    socketID: user.socketID,
-    submittedCardID: user.submittedCard,
-    votedCardID: user.votedCard,
-    ...scoreMap.get(user.socketID),
-  }));
+  const players = this.getUsers().map((user) => {
+    const { correctScore, bonusScore } = scoreMap.get(user.socketID);
+    user.addScore(correctScore + bonusScore);
+    return {
+      socketID: user.socketID,
+      submittedCardID: user.submittedCard,
+      votedCardID: user.votedCard,
+      correctScore,
+      bonusScore,
+    };
+  });
 
   emit({
     users: this.getUsers(),
