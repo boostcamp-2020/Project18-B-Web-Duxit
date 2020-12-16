@@ -4,27 +4,35 @@ import Peer from 'peerjs';
 let myPeer = null;
 let peerID = null;
 
-const videoGrid = document.getElementById('video-grid');
+const audioContainer = document.getElementById('voice-chat-audio-container');
 
 const peers = {};
 
 const peerMap = new Map();
 
-function addVideoStream(mediaConnection) {
-  console.log('media', mediaConnection.peer);
-  const video = document.createElement('video');
+function addAudioStream(mediaConnection) {
+  const socketID = mediaConnection.peer;
+
+  if (peerMap.has(socketID)) return;
+
+  const audioElement = document.createElement('audio');
 
   mediaConnection.on('stream', (stream) => {
     // eslint-disable-next-line no-param-reassign
-    video.srcObject = stream;
-    video.addEventListener('loadedmetadata', () => {
-      video.play();
+    audioElement.srcObject = stream;
+    audioElement.addEventListener('loadedmetadata', () => {
+      audioElement.play();
     });
-    videoGrid.append(video);
+    audioContainer.append(audioElement);
   });
 
   mediaConnection.on('close', () => {
-    video.remove();
+    audioElement.remove();
+  });
+
+  peerMap.set(socketID, {
+    mediaConnection,
+    audioElement,
   });
 }
 
@@ -32,7 +40,7 @@ function addVideoStream(mediaConnection) {
 // 다른 사람에게 mediaConnection 요청을 보냄
 function connectToNewUser(userId, stream) {
   const mediaConnection = myPeer.call(userId, stream);
-  addVideoStream(mediaConnection);
+  addAudioStream(mediaConnection);
 
   peers[userId] = mediaConnection;
 }
@@ -42,9 +50,10 @@ function setAnswerBehavior(stream) {
   myPeer.on('call', (mediaConnection) => {
     // 다른 사람의 요청에 answer를 날림
     mediaConnection.answer(stream);
-    addVideoStream(mediaConnection);
+    addAudioStream(mediaConnection);
   });
 
+  // 계속 소켓 on 쌓일거 같은데?
   socket.on('another voice connected', (userId) => {
     connectToNewUser(userId, stream);
   });
@@ -75,6 +84,7 @@ function activateVoiceChat() {
 // 내가 보이스 채팅 접속을 끊었을 때
 function deactivateVoiceChat() {
   socket.emit('player disconnect voice', { id: peerID });
+  socket.removeAllListeners('another voice connected');
   myPeer.destroy();
 }
 
