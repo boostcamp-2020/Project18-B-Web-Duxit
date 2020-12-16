@@ -167,7 +167,7 @@ const renderWaitingRoom = (roomID = '') => {
 
   const CopyNotice = new TextObject({
     origin: [50, 50],
-    position: [50, 50],
+    position: [91, 88],
   });
   CopyNotice.setContent('코드가 복사되었습니다.');
   CopyNotice.addClass(['copy-notice']);
