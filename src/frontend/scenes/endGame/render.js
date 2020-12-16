@@ -12,6 +12,7 @@ const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (
     classes: ['end-grid-item', isWinner && 'end-grid-winner'].filter(Boolean),
     parent: rowDucks,
   });
+  if (isWinner) Duck.setCrown(true);
   const Nickname = new TextObject({
     classes: ['end-grid-item', isWinner && 'end-grid-winner'].filter(Boolean),
     parent: rowNicknames,
