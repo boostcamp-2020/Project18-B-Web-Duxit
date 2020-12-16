@@ -3,6 +3,7 @@ import renderDiscussion from './render';
 const Discussion = class {
   constructor({ endTime }) {
     this.endTime = endTime;
+    this.bMaintainDucks = true;
   }
 
   render() {

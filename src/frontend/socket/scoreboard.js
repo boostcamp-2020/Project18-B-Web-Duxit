@@ -16,6 +16,7 @@ const onTellerSelect = ({ tellerID, cards, endTime }) => {
   if (!SceneManager.isCurrentScene(Scoreboard)) return;
   PlayerManager.setTellerID(tellerID);
   CardManager.initializeMyCards(cards);
+  SceneManager.initializeSubmiitingPlayers();
   const { isTeller } = PlayerManager.getCurrentPlayer();
   const nextScene = isTeller
     ? new TellerSelectCard({ cards, endTime })

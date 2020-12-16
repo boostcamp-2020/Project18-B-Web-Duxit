@@ -3,12 +3,13 @@ import SceneManager from '@utils/SceneManager';
 import CardManager from '@utils/CardManager';
 import GuesserSelectCard from '@scenes/guesserSelectCard';
 import GuesserWaiting from '@scenes/guesserWaiting';
+import PlayerManager from '@utils/PlayerManager';
 
 const setupGuesserWaiting = () => {
   const onTellerSelectCard = ({ topic, endTime }) => {
     if (!SceneManager.isCurrentScene(GuesserWaiting)) return;
     CardManager.updateTopic(topic);
-    CardManager.addSubmittedCardCount();
+    SceneManager.addBeforeSubmittingPlayers(PlayerManager.tellerID);
     SceneManager.renderNextScene(new GuesserSelectCard({ endTime }));
   };
 

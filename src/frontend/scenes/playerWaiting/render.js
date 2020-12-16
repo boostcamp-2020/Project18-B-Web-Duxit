@@ -6,8 +6,13 @@ import TEXT from '@utils/text';
 
 const renderPlayerWaiting = ({ endTime }) => {
   const isTeller = PlayerManager.isTeller();
-  const tellerDuck = PlayerManager.getTeller().duck;
-  tellerDuck.setVisibility(true, isTeller);
+  const currentPlayer = PlayerManager.getCurrentPlayer();
+
+  SceneManager.beforeSubmittingPlayers.forEach((playerID) => {
+    const bMyDuck = playerID === currentPlayer.socketID;
+    const { duck } = PlayerManager.get(playerID);
+    duck.setVisibility(true, bMyDuck);
+  });
 
   if (isTeller) {
     const { ProgressBar } = SceneManager.sharedComponents;
