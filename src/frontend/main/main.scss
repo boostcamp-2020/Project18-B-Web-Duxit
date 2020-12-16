@@ -2,7 +2,7 @@
 @import '@utils/common';
 
 input:checked ~ label {
-  display: none;
+  display: none !important;
 }
 
 input:not(:checked) ~ form {
@@ -32,6 +32,7 @@ input:not(:checked) ~ form {
     padding: 1em;
     margin: 1em;
     background-color: $main-color;
+    cursor: pointer;
   }
 }
 
