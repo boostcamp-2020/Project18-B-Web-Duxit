@@ -1,4 +1,4 @@
-import { Duck, DuckHat } from '@utils/duck';
+import { Duck, DuckHat, DuckCrown } from '@utils/duck';
 import GameObject from './GameObject';
 
 class DuckObject extends GameObject {
@@ -6,7 +6,6 @@ class DuckObject extends GameObject {
     super(rest);
     this.color = color;
     this.width = width;
-    this.hat = false;
     this.render();
   }
 
@@ -21,11 +20,18 @@ class DuckObject extends GameObject {
     hatElement.style.display = display;
   }
 
+  setCrown(boolean) {
+    const crownElement = this.getChildrenNode('.duck-crown');
+    const display = boolean ? 'block' : 'none';
+    crownElement.style.display = display;
+  }
+
   generateDuckHTML() {
     const { color, width } = this;
     return `
-      <div>
+      <div class="duck-container">
         ${DuckHat({ width: (width / 11) * 9 })}
+        ${DuckCrown({ width: (width / 11) * 9 })}
         ${Duck({ color, width })}
       </div>
     `;

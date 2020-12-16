@@ -2,6 +2,7 @@ import './style.scss';
 import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';
 import template from './template.html';
+import { redirectToLobby, renderWaitingScene } from './events';
 
 const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (
   player,
@@ -12,6 +13,7 @@ const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (
     classes: ['end-grid-item', isWinner && 'end-grid-winner'].filter(Boolean),
     parent: rowDucks,
   });
+  if (isWinner) Duck.setCrown(true);
   const Nickname = new TextObject({
     classes: ['end-grid-item', isWinner && 'end-grid-winner'].filter(Boolean),
     parent: rowNicknames,
@@ -47,6 +49,8 @@ const renderScoreboardLayout = ({ players, winnerID } = {}) => {
   players.forEach(
     renderPlayerGrid(rowDucks, rowNicknames, rowScores, winnerID),
   );
+  buttonGoMain.addEventListener(redirectToLobby);
+  buttonRestart.addEventListener(renderWaitingScene);
 
   const arrayToBeRemoved = [Background];
   return {
