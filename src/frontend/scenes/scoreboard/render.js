@@ -1,17 +1,16 @@
 import './style.scss';
 import GameObject from '@engine/GameObject';
-import DuckObject from '@engine/DuckObject';
 import TextObject from '@engine/TextObject';
 import { ROOT, BACKGROUND } from '@utils/dom';
 import stonePosition from '@type/stonePosition.json';
 import template from './template.html';
 
-const defineRenderRow = (TableBody) => ({
-  nickname,
-  color,
-  isTeller,
-  score: { current, correct, bonus },
-} = {}) => {
+const defineRenderRow = (TableBody) => (player) => {
+  const {
+    nickname,
+    isTeller,
+    score: { current, correct, bonus },
+  } = player;
   const TableRow = new GameObject({
     classes: ['scoreboard-table-row'],
     parent: TableBody,
@@ -20,8 +19,7 @@ const defineRenderRow = (TableBody) => ({
     classes: ['scoreboard-table-player'],
     parent: TableRow,
   });
-  const DuckIcon = new DuckObject({
-    color,
+  const DuckIcon = player.makeDuck({
     width: 60,
     parent: PlayerInfoWrapper,
   });
@@ -48,24 +46,19 @@ const renderRow = (TableBody, players) => {
   players.forEach(defineRenderRow(TableBody));
 };
 
-const getMaximumScoreDifference = (players) =>
-  players.reduce(
-    (max, player) => Math.max(max, player.score.correct + player.score.bonus),
-    0,
-  );
-
-const getTotalAnimationTime = (players) => {
-  const maxJumpCount = getMaximumScoreDifference(players) + 1;
-  return 4000 + maxJumpCount * 500;
-};
+const makeRandom = (x) => Math.random() * 5 + x - 2.5;
 
 const yellowDuckyJumpsOverTheLazyStone = (players) =>
-  players.map(({ color, score: { current, correct, bonus } } = {}) => {
-    const duck = new DuckObject({
-      color,
+  players.map((player) => {
+    const {
+      score: { current, correct, bonus },
+    } = player;
+    const currentStone = stonePosition[current];
+    const currentPosition = currentStone.map(makeRandom);
+    const duck = player.makeDuck({
       width: 50,
       classes: ['movable'],
-      position: stonePosition[current],
+      position: currentPosition,
       origin: [50, 90],
       depth: 10,
     });
@@ -74,9 +67,10 @@ const yellowDuckyJumpsOverTheLazyStone = (players) =>
     const jumpCount = correct + bonus + 1;
     const jumpTiming = (index) => 1000 + 500 * index;
     [...Array(jumpCount)].forEach((_, index) => {
-      const nextPosition = Math.min(30, current + index);
+      const nextStone = Math.min(30, current + index);
       setTimeout(() => {
-        duck.jump(...stonePosition[nextPosition], 500);
+        const nextPosition = stonePosition[nextStone].map(makeRandom);
+        duck.jump(...nextPosition, 500);
       }, jumpTiming(index));
     });
     return duck;

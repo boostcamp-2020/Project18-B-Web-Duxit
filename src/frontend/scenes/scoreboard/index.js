@@ -13,21 +13,12 @@ const Scoreboard = class {
       round: this.round,
       players: this.players,
     });
-    // LeftTab.updateScore(players);
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
   wrapup() {
-    PlayerManager.forEach((player, socketID) => {
-      PlayerManager.set(socketID, {
-        ...player,
-        score: {
-          ...player.score,
-          current:
-            player.score.current + player.score.correct + player.score.bonus,
-        },
-      });
-    });
+    PlayerManager.updateCurrentScore();
+    LeftTab.updateScore(this.players);
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });
