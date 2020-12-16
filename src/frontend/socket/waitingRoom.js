@@ -8,7 +8,7 @@ import WaitingRoom from '@scenes/waitingRoom';
 
 const setupWaitingRoomSocket = () => {
   const onEnterRoom = ({ nickname, players }) => {
-    if (!SceneManager.isCurrentScene(WaitingRoom)) return;
+    // if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.initialize(players);
     PlayerManager.updateCurrentPlayer({ nickname });
   };

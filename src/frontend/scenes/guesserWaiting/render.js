@@ -1,4 +1,4 @@
-import './guesserWaiting.scss';
+import './style.scss';
 import TextObject from '@engine/TextObject';
 import DuckObject from '@engine/DuckObject';
 import PlayerManager from '@utils/PlayerManager';

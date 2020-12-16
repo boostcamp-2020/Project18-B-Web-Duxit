@@ -1,5 +1,5 @@
 import { emit } from '@socket';
-import { PLAYER, CARD, TIME } from '@utils/number';
+import { TIME } from '@utils/number';
 
 function getState() {
   return this.status.state;
@@ -27,15 +27,21 @@ function dealCards(count = 1) {
   });
 }
 
+const setUserTeller = (users, tellerTurnID) => {
+  users.forEach((user) => {
+    if (tellerTurnID === user.turnID) user.setTeller(true);
+    else user.setTeller(false);
+  });
+};
+
 function startRound() {
   const users = this.getUsers();
 
   this.status.turn += 1;
   const tellerTurnID = this.status.turn % users.length;
-  users.forEach((user) => {
-    if (tellerTurnID === user.turnID) user.setTeller(true);
-    else user.setTeller(false);
-  });
+  setUserTeller(users, tellerTurnID);
+
+  this.topic = '';
 
   this.dealCards();
 

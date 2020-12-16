@@ -1,4 +1,4 @@
-import { PLAYER, CARD, TIME } from '@utils/number';
+import { TIME } from '@utils/number';
 import GAME_STATE from '@utils/gameState';
 import { emit } from '@socket';
 
@@ -13,7 +13,7 @@ function emitEndResult() {
   emit({
     users: this.getUsers(),
     name: 'end vote result',
-    params: {},
+    params: { round: this.status.turn },
   });
 }
 

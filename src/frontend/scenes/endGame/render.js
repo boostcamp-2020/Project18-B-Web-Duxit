@@ -1,6 +1,6 @@
+import './style.scss';
 import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';
-import './style.scss';
 import template from './template.html';
 
 const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (

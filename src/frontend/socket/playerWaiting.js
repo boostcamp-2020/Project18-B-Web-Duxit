@@ -13,10 +13,10 @@ const setupPlayerWaiting = () => {
     guesserDuck.setVisibility(true);
   };
 
-  const onGetAllDecisions = ({ cards }) => {
+  const onGetAllDecisions = ({ cards, endTime }) => {
     if (!SceneManager.isCurrentScene(PlayerWaiting)) return;
     CardManager.updateCardInformation(cards);
-    SceneManager.renderNextScene(new MixCard());
+    SceneManager.renderNextScene(new MixCard(endTime));
   };
 
   socket.on('other guesser decision', onOtherGuesserSelectCard);

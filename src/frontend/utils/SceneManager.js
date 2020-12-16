@@ -1,3 +1,4 @@
+import './common.scss';
 import TextObject from '@engine/TextObject';
 import ProgressBarObject from '@engine/ProgressBarObject';
 import { $id } from '@utils/dom';
@@ -39,11 +40,8 @@ const SceneManager = {
     let wrapupInterval = TIME.NONE_INTERVAL;
     this.hideAllDucks();
 
-    if (ProgressBar.progressBarTimer && !this.currentScene.passingTimerClear) {
-      ProgressBar.clear();
-    }
-
     if (this.currentScene) {
+      if (!this.currentScene.passingTimerClear) ProgressBar.clear();
       this.currentScene.wrapup();
       wrapupInterval = this.currentScene.wrapupInterval || TIME.NONE_INTERVAL;
     }

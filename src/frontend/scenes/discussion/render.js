@@ -1,3 +1,4 @@
+import './style.scss';
 import ButtonObject from '@engine/ButtonObject';
 import TextObject from '@engine/TextObject';
 import GameObject from '@engine/GameObject';
@@ -12,7 +13,7 @@ const renderDiscussion = ({ endTime }) => {
   ProgressBar.start();
 
   const HelpText = new TextObject();
-  HelpText.addClass('discussion-helper-text');
+  HelpText.addClass('helper-text');
   HelpText.setContent(TEXT.DISCUSSION.TITLE);
   HelpText.attachToRoot();
 

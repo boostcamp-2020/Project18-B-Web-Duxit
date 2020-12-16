@@ -1,8 +1,13 @@
 import renderMixCard from './render';
 
 const MixCard = class {
+  constructor(endTime) {
+    this.endTime = endTime;
+  }
+
   render() {
-    const { arrayToBeRemoved = [] } = renderMixCard();
+    const { endTime } = this;
+    const { arrayToBeRemoved = [] } = renderMixCard({ endTime });
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 

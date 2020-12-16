@@ -17,4 +17,9 @@ export const TIME = {
   SKIP_DISCUSSION: 3000,
   WAIT_VOTE: 20000,
   WAIT_RESULT: 20000,
+  WAIT_SCORE_BOARD: 10000,
+};
+
+export const SCORE = {
+  WIN_SCORE: 30,
 };

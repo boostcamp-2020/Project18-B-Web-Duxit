@@ -1,13 +1,11 @@
-@import '@utils/common';
+@import '@utils/variable';
 
 .player-waiting-helper-text {
   @include helper-text-white-background;
-  position: absolute;
+  @include absolute-center-x;
   z-index: $z-index-layouts;
   top: 40%;
-  left: 50%;
   font-size: x-large;
   text-align: center;
-  transform: translateX(-50%);
   white-space: nowrap;
 }

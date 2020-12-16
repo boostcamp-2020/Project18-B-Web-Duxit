@@ -35,6 +35,12 @@ class LeftTab {
     } else this.addDuck(playerInfo);
   }
 
+  updateScore(players) {
+    players.forEach(({ socketID, score }) => {
+      this.findDuck(socketID).setScore(score);
+    });
+  }
+
   deletePlayer(playerInfo) {
     const deletedPlayer = this.findDuck(playerInfo.socketID);
     const playerWrapper = $id('participants-wrapper');
