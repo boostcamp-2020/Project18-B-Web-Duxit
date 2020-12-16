@@ -1,4 +1,5 @@
 import PlayerManager from '@utils/PlayerManager';
+import LeftTab from '../../game/LeftTab';
 import renderScoreboard from './render';
 
 const Scoreboard = class {
@@ -15,6 +16,7 @@ const Scoreboard = class {
 
   render() {
     const players = PlayerManager.getPlayers();
+    LeftTab.updateScore(players);
 
     const { arrayToBeRemoved, totalAnimationTime } = renderScoreboard({
       ...this.params,
