@@ -34,11 +34,12 @@ function startScoreBoardScene() {
 }
 
 function emitGameEnd() {
+  const users = this.getUsers();
   emit({
-    users: this.getUsers(),
+    users,
     name: 'game end',
     params: {
-      winnerID: getWinner().socketID,
+      winnerID: getWinner(users).socketID,
     },
   });
 }
