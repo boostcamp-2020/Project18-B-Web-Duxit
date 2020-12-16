@@ -66,7 +66,6 @@ const deleteGameStartTimeout = (roomID) => {
 function onReadyChange({ isReady }) {
   const socket = this;
   const { user, game } = socket;
-  const { users, roomID } = game;
 
   if (!user || !game) return;
   if (
@@ -74,6 +73,8 @@ function onReadyChange({ isReady }) {
     game.getState() !== GAME_STATE.READY
   )
     return;
+
+  const { users, roomID } = game;
 
   // 플레이어의 레디 상태를 변경
   users.get(socket.id).setReady(isReady);
