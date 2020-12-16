@@ -1,14 +1,14 @@
 const GAME_STATE = {
-  WAITING: 0,
-  READY: 1,
-  TELLER: 2,
-  GUESSER: 3,
-  DISCUSSION: 4,
-  VOTE: 5,
-  RESULT: 6,
-  SCORE: 7,
-  END: 8,
-  ERROR: 9,
+  WAITING: 200,
+  READY: 201,
+  TELLER: 202,
+  GUESSER: 203,
+  DISCUSSION: 204,
+  VOTE: 205,
+  RESULT: 206,
+  SCORE: 207,
+  END: 208,
+  ERROR: 100,
 };
 
 export default GAME_STATE;
