@@ -1,7 +1,7 @@
 @import url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css');
 @import '@utils/variable';
 
-$guide-cover-url: 'https://cdn.pixabay.com/photo/2015/09/23/10/33/old-953394_960_720.jpg';
+$guide-cover-url: '../resources/bookcover.jpg';
 
 html,
 body,
@@ -121,7 +121,7 @@ video {
   min-height: 60%;
   padding: 1rem;
   border-radius: 1rem;
-  perspective: 1000px;
+  perspective: 2000px;
   transform: translate(-50%, -50%);
 }
 
@@ -131,7 +131,7 @@ video {
   min-height: 100%;
   max-height: 100%;
   padding: 1rem;
-  background-color: rgb(255, 255, 255);
+  background-color: $white-color;
   border-radius: 5px;
   box-shadow: 5px 5px 15px #333;
   font-size: 1.2rem;
@@ -139,8 +139,8 @@ video {
 }
 
 @mixin animation-setting {
-  animation-delay: 3s;
-  animation-duration: 2s;
+  animation-delay: 0.5s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
@@ -150,6 +150,7 @@ video {
   z-index: 10;
   animation-name: flipGuide;
   background: url($guide-cover-url);
+  background-size: cover;
 }
 
 .guide-right-page-wrapper {
@@ -166,10 +167,10 @@ video {
     background: url($guide-cover-url);
   }
   30% {
-    background: rgb(255, 255, 255);
+    background: $white-color;
   }
   100% {
-    background: rgb(255, 255, 255);
+    background: $white-color;
     transform: rotateY(-180deg);
     transform-origin: top left;
   }

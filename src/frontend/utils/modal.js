@@ -80,13 +80,13 @@ export const onClickGuide = async () => {
   guideContentLeftText.addClass('guide-left-content');
   guideContentLeftText.setContent(TEXT.GUIDE.CONTENT_LEFT);
 
-  await guideContentWrapper.move(50, 50, 1500);
-  await guideContentWrapper.move(70, 50, 1500);
-
   const closeButton = new ButtonObject({ parent: Modal });
   closeButton.addClass('modal-close');
-  closeButton.setContent('계속하기');
+  closeButton.setContent('닫기');
   closeButton.addClickHandler(() => {
     Modal.delete();
   });
+
+  await guideContentWrapper.move(50, 50, 500);
+  await guideContentWrapper.move(70, 50, 500);
 };
