@@ -39,7 +39,7 @@
 .end-grid-item.end-grid-winner {
   flex-grow: 1.5;
   > div {
-    padding-top: 25%;
+    margin-top: 25%;
 
     animation: emphasizeDuck 1s cubic-bezier(0.19, 1, 0.22, 1);
     filter: drop-shadow(0 0 10px $main-color);

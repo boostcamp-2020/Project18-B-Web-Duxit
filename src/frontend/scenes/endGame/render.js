@@ -7,7 +7,11 @@ import { redirectToLobby, renderWaitingScene } from './events';
 const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (
   player,
 ) => {
-  const { socketID, nickname, score } = player;
+  const {
+    socketID,
+    nickname,
+    score: { current: currentScore },
+  } = player;
   const isWinner = winnerID === socketID;
   const Duck = player.makeDuck({
     classes: ['end-grid-item', isWinner && 'end-grid-winner'].filter(Boolean),
@@ -21,7 +25,7 @@ const renderPlayerGrid = (rowDucks, rowNicknames, rowScores, winnerID) => (
   const Score = new TextObject({
     classes: ['end-grid-item', isWinner && 'end-grid-winner'].filter(Boolean),
     parent: rowScores,
-  }).setContent(score);
+  }).setContent(currentScore);
 };
 
 const renderScoreboardLayout = ({ players, winnerID } = {}) => {
@@ -37,20 +41,20 @@ const renderScoreboardLayout = ({ players, winnerID } = {}) => {
     rowNicknames,
     rowScores,
     buttonGoMain,
-    buttonRestart,
+    // buttonRestart,
   ] = Background.getObjectsByIds(
     'end-ducks',
     'end-nicknames',
     'end-scores',
     'end-button-go-main',
-    'end-button-restart',
+    // 'end-button-restart',
   );
 
   players.forEach(
     renderPlayerGrid(rowDucks, rowNicknames, rowScores, winnerID),
   );
-  buttonGoMain.addEventListener(redirectToLobby);
-  buttonRestart.addEventListener(renderWaitingScene);
+  buttonGoMain.instance.addEventListener('click', redirectToLobby);
+  // buttonRestart.instance.addEventListener('click', renderWaitingScene);
 
   const arrayToBeRemoved = [Background];
   return {
