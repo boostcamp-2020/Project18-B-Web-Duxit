@@ -8,6 +8,14 @@ function isEnterable() {
   return true;
 }
 
+function isFull() {
+  return this.users.size >= PLAYER.MAX;
+}
+
+function isAlreadyStart() {
+  return this.getState() !== GAME_STATE.WAITING;
+}
+
 function updateUserProfile({ socketID, nickname, color }) {
   const user = this.getUser(socketID);
   if (color) user.setColor(color);
@@ -38,6 +46,8 @@ function endWaitingScene() {
 
 const methodGroup = {
   isEnterable,
+  isFull,
+  isAlreadyStart,
   updateUserProfile,
   startGame,
   endWaitingScene,
