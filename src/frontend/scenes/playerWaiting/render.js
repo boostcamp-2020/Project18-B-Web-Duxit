@@ -3,6 +3,7 @@ import TextObject from '@engine/TextObject';
 import PlayerManager from '@utils/PlayerManager';
 import SceneManager from '@utils/SceneManager';
 import TEXT from '@utils/text';
+import { $qs } from '@utils/dom';
 
 const renderPlayerWaiting = ({ endTime }) => {
   const isTeller = PlayerManager.isTeller();
@@ -13,6 +14,11 @@ const renderPlayerWaiting = ({ endTime }) => {
     const { duck } = PlayerManager.get(playerID);
     duck.setVisibility(true, bMyDuck);
   });
+
+  const modal = $qs('.modal');
+  if (modal) {
+    modal.remove();
+  }
 
   if (isTeller) {
     const { ProgressBar } = SceneManager.sharedComponents;
