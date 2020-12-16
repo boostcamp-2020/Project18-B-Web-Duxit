@@ -53,8 +53,8 @@ const renderScoreboardLayout = ({ players, winnerID } = {}) => {
   players.forEach(
     renderPlayerGrid(rowDucks, rowNicknames, rowScores, winnerID),
   );
-  buttonGoMain.addEventListener(redirectToLobby);
-  buttonRestart.addEventListener(renderWaitingScene);
+  buttonGoMain.instance.addEventListener('click', redirectToLobby);
+  buttonRestart.instance.addEventListener('click', renderWaitingScene);
 
   const arrayToBeRemoved = [Background];
   return {
