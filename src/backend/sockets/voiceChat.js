@@ -4,11 +4,8 @@ function onConnectVoice() {
 
   if (!game) return;
 
-  socket.in(game.roomID).emit('another voice connected', socket.id);
-
-  socket.on('disconnect', () => {
-    console.log('disconnect event');
-    socket.in(game.roomID).emit('voice disconnected', socket.id);
+  socket.in(game.roomID).emit('another voice connected', {
+    socketID: socket.id,
   });
 }
 
@@ -18,7 +15,9 @@ function onDisconnectVoice() {
 
   if (!game) return;
 
-  socket.in(game.roomID).emit('voice disconnected', socket.id);
+  socket.in(game.roomID).emit('voice disconnected', {
+    socketID: socket.id,
+  });
 }
 
 export default function onVoiceChat(socket) {

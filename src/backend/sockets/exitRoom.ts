@@ -13,6 +13,7 @@ function exitRoom() {
 
   if (game.getState() === GAME_STATE.WAITING) {
     socket.in(roomID).emit('exit player', passedData);
+    socket.in(roomID).emit('voice disconnected', passedData);
   } else {
     // READY 상태일때 나가면 답이 없음
     socket.in(roomID).emit('game terminated', {})

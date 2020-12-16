@@ -49,7 +49,7 @@ function setAnswerBehavior(stream) {
   });
 
   // 계속 소켓 on 쌓일거 같은데?
-  socket.on('another voice connected', (socketID) => {
+  socket.on('another voice connected', ({ socketID }) => {
     connectToNewUser(socketID, stream);
   });
 }
@@ -83,7 +83,7 @@ function deactivateVoiceChat() {
 }
 
 // 연결된 유저가 보이스 채팅 접속을 끊었을 때
-socket.on('voice disconnected', (socketID) => {
+socket.on('voice disconnected', ({ socketID }) => {
   if (peerMap.has(socketID)) {
     peerMap.get(socketID).mediaConnection.close();
     peerMap.delete(socketID);
