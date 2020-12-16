@@ -16,7 +16,7 @@ const setupGuesserSelectCard = () => {
 
   const onOtherGuesserSelectCard = ({ playerID }) => {
     if (!SceneManager.isCurrentScene(GuesserSelectCard)) return;
-    CardManager.addBeforeSubmittingPlayers(playerID);
+    SceneManager.addBeforeSubmittingPlayers(playerID);
   };
 
   socket.on('guesser select card', onGuesserSelectCard);
