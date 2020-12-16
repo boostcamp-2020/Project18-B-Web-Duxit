@@ -53,6 +53,9 @@ class User {
 
   submitCard(cardID) {
     this.submittedCard = cardID;
+
+    // 뽑은 카드를 리스트에서 지움
+    this.cards = this.cards.filter((card) => card !== cardID);
   }
 
   voteCard(cardID) {
@@ -108,9 +111,7 @@ class User {
 
   forceSubmitCard() {
     const cardID = generateRandom.pickOneFromArray(this.cards);
-    this.submittedCard = cardID;
-    // 뽑은 카드를 리스트에서 지움
-    this.cards = this.cards.filter((card) => card !== cardID);
+    this.submitCard(cardID);
   }
 
   // forceVoteCard는 다른 플레이어들의 정보가 필요하기 때문에 voteScene에 작성
