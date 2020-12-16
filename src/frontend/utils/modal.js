@@ -51,24 +51,48 @@ export const onClickCard = ({
   okButton.addClickHandler(() => submitEvent(paramsOfHandler));
 };
 
-export const onClickGuide = () => {
+export const onClickGuide = async () => {
   const Modal = new ModalObject();
 
   const modalTitle = new TextObject({ parent: Modal });
   modalTitle.setContent('사용 설명서');
   modalTitle.addClass('modal-title');
 
-  const guideContentWrapper = new GameObject({ parent: Modal });
+  const guideContentWrapper = new GameObject({
+    parent: Modal,
+    origin: [50, 50],
+    position: [50, -50],
+  });
   guideContentWrapper.addClass('guide-content-wrapper');
+  const guideLeftPageWrapper = new GameObject({
+    parent: guideContentWrapper,
+  });
+  guideLeftPageWrapper.addClass('guide-left-page-wrapper');
 
-  const guideContentText = new TextObject({ parent: guideContentWrapper });
-  guideContentText.addClass('guide-content');
-  guideContentText.setContent(TEXT.GUIDE.CONTENT);
+  const guideRightPageWrapper = new GameObject({
+    parent: guideContentWrapper,
+  });
+  guideRightPageWrapper.addClass('guide-right-page-wrapper');
+
+  const guideContentRightText = new TextObject({
+    parent: guideRightPageWrapper,
+  });
+  guideContentRightText.addClass('guide-right-content');
+  guideContentRightText.setContent(TEXT.GUIDE.CONTENT_RIGHT);
+
+  const guideContentLeftText = new TextObject({
+    parent: guideLeftPageWrapper,
+  });
+  guideContentLeftText.addClass('guide-left-content');
+  guideContentLeftText.setContent(TEXT.GUIDE.CONTENT_LEFT);
 
   const closeButton = new ButtonObject({ parent: Modal });
   closeButton.addClass('modal-close');
-  closeButton.setContent('계속하기');
+  closeButton.setContent('닫기');
   closeButton.addClickHandler(() => {
     Modal.delete();
   });
+
+  await guideContentWrapper.move(50, 50, 500);
+  await guideContentWrapper.move(70, 50, 500);
 };
