@@ -1,0 +1,14 @@
+{
+    "NOT_FOUND" : {
+        "CODE": 1,
+        "MESSAGE": "해당 게임은 존재하지 않는 게임입니다."
+    },
+    "FULL" : {
+        "CODE": 2,
+        "MESSAGE": "해당 게임의 정원이 모두 찼습니다."
+    },
+    "ALREADY_START" : {
+        "CODE": 3,
+        "MESSAGE": "해당 게임은 이미 시작된 게임입니다."
+    }
+}
