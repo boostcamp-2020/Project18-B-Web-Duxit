@@ -23,6 +23,7 @@ function connectToNewUser(userId, stream) {
   // 내가 다른 사람의 mediaConnection을 받아오는 부분!
   const mediaConnection = myPeer.call(userId, stream);
   const video = document.createElement('video');
+  video.dataset.peerId = userId;
   // peer.call 또는 call event의 callback은 MediaConnection 객체를 제공한다.
   // MediaConnection은 스스로 stream event를 emit한다.
   // stream event의 callback은 다른 peer의 video/audio stream을 포함한다.
@@ -37,7 +38,7 @@ function connectToNewUser(userId, stream) {
 }
 
 function connectionHandler(stream) {
-  addVideoStream(myVideo, stream);
+  // addVideoStream(myVideo, stream);
   // 내가 다른 사람의 mediaConnection을 받았을 때
   myPeer.on('call', (mediaConnection) => {
     // 다른 사람의 콜에 answer를 날림
