@@ -156,3 +156,31 @@
   transform: translate(-50%, -50%);
   white-space: nowrap;
 }
+
+.copy-notice {
+  position: absolute;
+  z-index: $z-index-layouts;
+  width: fit-content;
+  padding: 1.2rem;
+  background-color: rgba(221, 221, 221, 0.5);
+  border-radius: 0.5rem;
+  opacity: 0;
+}
+
+.copy-notice-animate {
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-name: fade-out;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

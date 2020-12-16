@@ -165,6 +165,14 @@ const renderWaitingRoom = (roomID = '') => {
   CopyIcon.setSvg(Svg.copy);
   CopyIcon.attachToObject(GameCodeCopyButton);
 
+  const CopyNotice = new TextObject({
+    origin: [50, 50],
+    position: [91, 88],
+  });
+  CopyNotice.setContent('코드가 복사되었습니다.');
+  CopyNotice.addClass(['copy-notice']);
+  CopyNotice.attachToRoot();
+
   const arrayToBeRemoved = [Header, ActionWrapper, GameCodeWrapper];
 
   return {
@@ -173,6 +181,7 @@ const renderWaitingRoom = (roomID = '') => {
     ColorButton,
     RandomColorButton,
     ColorInput,
+    CopyNotice,
   };
 };
 
