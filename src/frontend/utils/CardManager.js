@@ -14,8 +14,13 @@ const CardManager = class {
     // selectedCard와 votedCard는 Player로 옮김. 지울 예정
   }
 
-  initailizeMyCards(cards) {
+  initializeMyCards(cards) {
     this.myCards = cards;
+    this.submittedCards = [];
+    this.beforeSubmittedCount = 0;
+    this.selectedCard = null;
+    this.votedCard = null;
+    this.topic = null;
   }
 
   addMyCard(card) {
