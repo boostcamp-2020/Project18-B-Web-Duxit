@@ -137,6 +137,7 @@ video {
   box-shadow: 5px 5px 15px #333;
   font-size: 1.2rem;
   line-height: 1.5;
+  overflow-y: auto;
 }
 
 @mixin animation-setting {
@@ -152,12 +153,10 @@ video {
   animation-name: flipGuide;
   background: url($guide-cover-url);
   background-size: cover;
-  overflow-y: auto;
 }
 
 .guide-right-page-wrapper {
   @include guide-page;
-  overflow-y: auto;
 }
 
 @keyframes flipGuide {
