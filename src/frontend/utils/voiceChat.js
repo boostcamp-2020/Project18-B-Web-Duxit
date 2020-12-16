@@ -1,51 +1,45 @@
 import socket from '@utils/socket';
 import Peer from 'peerjs';
 
-let myPeer;
+let myPeer = null;
+let peerID = null;
 
 const videoGrid = document.getElementById('video-grid');
 
 const peers = {};
 
-function addVideoStream(video, stream) {
-  video.srcObject = stream;
-  video.addEventListener('loadedmetadata', () => {
-    video.play();
-  });
-  videoGrid.append(video);
-}
-
-function connectToNewUser(userId, stream) {
-  // userId를 가진 peer에게 call을 보내고 media connection을 return 받는다.
-  // media connection은 local voice 또는 local video를 뜻한다.
-  // 내가 다른 사람의 mediaConnection을 받아오는 부분!
-  const mediaConnection = myPeer.call(userId, stream);
+function addVideoStream(mediaConnection) {
   const video = document.createElement('video');
-  // peer.call 또는 call event의 callback은 MediaConnection 객체를 제공한다.
-  // MediaConnection은 스스로 stream event를 emit한다.
-  // stream event의 callback은 다른 peer의 video/audio stream을 포함한다.
-  mediaConnection.on('stream', (userVideoStream) => {
-    addVideoStream(video, userVideoStream);
+
+  mediaConnection.on('stream', (stream) => {
+    // eslint-disable-next-line no-param-reassign
+    video.srcObject = stream;
+    video.addEventListener('loadedmetadata', () => {
+      video.play();
+    });
+    videoGrid.append(video);
   });
+
   mediaConnection.on('close', () => {
     video.remove();
   });
+}
+
+// socket을 통해 다른 사람이 접속한걸 받았을 때
+// 다른 사람에게 mediaConnection 요청을 보냄
+function connectToNewUser(userId, stream) {
+  const mediaConnection = myPeer.call(userId, stream);
+  addVideoStream(mediaConnection);
 
   peers[userId] = mediaConnection;
 }
 
-// 내가 다른 사람의 mediaConnection을 받았을 때
+// 내가 다른 사람의 mediaConnection 요청을 받았을 때
 function setAnswerBehavior(stream) {
   myPeer.on('call', (mediaConnection) => {
-    // 다른 사람의 콜에 answer를 날림
+    // 다른 사람의 요청에 answer를 날림
     mediaConnection.answer(stream);
-    const video = document.createElement('video');
-    video.dataset.id = 'i-called';
-    // answer를 받고 나면 stream 이벤트를 받을 수 있음.
-    // stream이벤트를 통해 remote의 stream을 받아옴
-    mediaConnection.on('stream', (userVideoStream) => {
-      addVideoStream(video, userVideoStream);
-    });
+    addVideoStream(mediaConnection);
   });
 
   socket.on('another voice connected', (userId) => {
@@ -62,6 +56,7 @@ const getAudioStream = () =>
 function activateVoiceChat() {
   myPeer = new Peer();
   myPeer.on('open', async (id) => {
+    peerID = id;
     try {
       const stream = await getAudioStream();
       setAnswerBehavior(stream);
@@ -73,7 +68,10 @@ function activateVoiceChat() {
   });
 }
 
-function deactivateVoiceChat() {}
+function deactivateVoiceChat() {
+  socket.emit('player disconnect voice', { id: peerID });
+  myPeer.destroy();
+}
 
 socket.on('voice disconnected', (userId) => {
   if (peers[userId]) peers[userId].close();
