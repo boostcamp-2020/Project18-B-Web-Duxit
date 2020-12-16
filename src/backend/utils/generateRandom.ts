@@ -26,7 +26,7 @@ const generateRandom = {
     return randomString;
   },
   cards: (count: number) =>
-    Array.from({ length: +process.env.CARD_COUNT! }, (value, index) => index)
+    Array.from({ length: +process.env.CARD_COUNT! - 1 }, (value, index) => index + 1)
       .sort(sortByRandom)
       .slice(0, count),
   pickOneFromArray: (array: Array<number>) => {
