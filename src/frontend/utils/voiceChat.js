@@ -2,6 +2,7 @@ import socket from '@utils/socket';
 import Peer from 'peerjs';
 
 let myPeer = null;
+let myStream = null;
 
 const audioContainer = document.getElementById('voice-chat-audio-container');
 
@@ -49,6 +50,7 @@ function setAnswerBehavior(stream) {
   });
 
   // 계속 소켓 on 쌓일거 같은데?
+  // 여기에 위치해야 하는 코드가 아닌데?
   socket.on('another voice connected', ({ socketID }) => {
     connectToNewUser(socketID, stream);
   });
@@ -56,7 +58,6 @@ function setAnswerBehavior(stream) {
 
 const getAudioStream = () =>
   navigator.mediaDevices.getUserMedia({
-    video: false,
     audio: true,
   });
 
@@ -65,8 +66,8 @@ function activateVoiceChat() {
   myPeer = new Peer(socket.id);
   myPeer.on('open', async () => {
     try {
-      const stream = await getAudioStream();
-      setAnswerBehavior(stream);
+      myStream = await getAudioStream();
+      setAnswerBehavior(myStream);
     } catch (err) {
       console.log('Get Media error: ', err);
     }
@@ -80,6 +81,9 @@ function deactivateVoiceChat() {
   socket.emit('player disconnect voice');
   socket.removeAllListeners('another voice connected');
   myPeer.destroy();
+  myStream.getTracks().forEach((track) => {
+    track.stop();
+  });
 }
 
 // 연결된 유저가 보이스 채팅 접속을 끊었을 때
