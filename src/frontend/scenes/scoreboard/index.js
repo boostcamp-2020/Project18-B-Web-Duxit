@@ -16,8 +16,8 @@ const Scoreboard = class {
 
   render() {
     const players = PlayerManager.getPlayers();
+    LeftTab.updateScore(players);
 
-    LeftTab.updateDuck(players);
     const { arrayToBeRemoved, totalAnimationTime } = renderScoreboard({
       ...this.params,
       players,

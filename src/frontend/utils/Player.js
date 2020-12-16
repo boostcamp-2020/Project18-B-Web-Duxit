@@ -16,7 +16,7 @@ const Player = class {
     this.score = {
       correct: 0,
       bonus: 0,
-      total: 0,
+      current: 0,
     };
     this.isTeller = isTeller;
     this.isCurrentPlayer = isCurrentPlayer;
@@ -51,11 +51,11 @@ const Player = class {
 
   updateScore(score) {
     const { correctScore: correct, bonusScore: bonus } = score;
-    const total = this.score.total + correct + bonus;
+    const current = this.score.current + correct + bonus;
     this.score = {
       correct,
       bonus,
-      total,
+      current,
     };
   }
 

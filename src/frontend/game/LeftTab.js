@@ -36,9 +36,9 @@ class LeftTab {
   }
 
   updateScore(players) {
-    players.forEach(({ socketID, score }) =>
-      this.findDuck(socketID).updateScore(score),
-    );
+    players.forEach(({ socketID, score }) => {
+      this.findDuck(socketID).setScore(score);
+    });
   }
 
   deletePlayer(playerInfo) {

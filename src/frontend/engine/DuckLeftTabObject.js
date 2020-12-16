@@ -43,10 +43,10 @@ class DuckLeftTabObject extends DuckObject {
     this.setColor(color);
   }
 
-  updateScore(score) {
-    const { total } = score;
+  setScore(score) {
+    const { current } = score;
     const scoreElement = this.getChildrenNode('.duck-score');
-    scoreElement.innerText = total;
+    scoreElement.innerText = current;
   }
 }
 
