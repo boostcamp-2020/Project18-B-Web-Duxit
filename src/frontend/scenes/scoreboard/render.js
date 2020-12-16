@@ -1,8 +1,9 @@
 import './style.scss';
 import GameObject from '@engine/GameObject';
 import TextObject from '@engine/TextObject';
-import { ROOT, BACKGROUND } from '@utils/dom';
+import { ROOT, BACKGROUND, $qs } from '@utils/dom';
 import stonePosition from '@type/stonePosition.json';
+import CardManager from '@utils/CardManager';
 import template from './template.html';
 
 const defineRenderRow = (TableBody) => (player) => {
@@ -100,6 +101,7 @@ const renderScoreboardLayout = ({
   // scoreData,
   // isGameOver,
 } = {}) => {
+  const cards = CardManager.submittedCards;
   const templateWrapper = document.createElement('div');
   templateWrapper.innerHTML = template;
 
@@ -119,7 +121,9 @@ const renderScoreboardLayout = ({
   renderRow(TableBody, players);
   animateBackground(players);
 
-  const arrayToBeRemoved = [Background];
+  const topicText = $qs('.topic-text');
+  topicText.remove();
+  const arrayToBeRemoved = [...cards, Background];
   return {
     arrayToBeRemoved,
   };
