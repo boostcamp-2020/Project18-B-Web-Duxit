@@ -8,8 +8,10 @@ import GameObject from '@engine/GameObject';
 
 const DIFF_Y_POSITION_STAMP = 14;
 const DIFF_Y_POSITION_NAME = -18;
+const DIFF_Y_POSITION_SCORE = -19;
 const ORIGIN_STAMP = [50, 0];
 const ORIGIN_NAME = [50, 0];
+const ORIGIN_SCORE = [50, 0];
 const WIDTH_STAMP_DUCK = 40;
 const WIDTH_NAME_DUCK = 25;
 
@@ -35,17 +37,31 @@ const renderVoteResult = () => {
     nameContainer.addClass('name-wrapper');
     nameContainer.attachToRoot();
 
+    const scoreContainer = new GameObject({
+      position: [cardX, cardY + DIFF_Y_POSITION_SCORE],
+      origin: ORIGIN_SCORE,
+    });
+    scoreContainer.addClass('score-wrapper');
+    scoreContainer.attachToRoot();
     return {
       ...prev,
       [cardID]: {
         stampContainer,
         nameContainer,
+        scoreContainer,
       },
     };
   }, {});
 
   const voteResultObjects = players.reduce((prev, player) => {
-    const { color, votedCardID, submittedCardID, nickname, isTeller } = player;
+    const {
+      color,
+      votedCardID,
+      submittedCardID,
+      nickname,
+      isTeller,
+      score,
+    } = player;
 
     const { nameContainer } = containers[submittedCardID];
     const nameDuck = new DuckObject({ color, width: WIDTH_NAME_DUCK });
@@ -55,6 +71,16 @@ const renderVoteResult = () => {
     nicknameText.setContent(nickname);
     nicknameText.addClass('nickname-text');
     nicknameText.attachToObject(nameContainer);
+
+    const { scoreContainer } = containers[submittedCardID];
+    const correctScore = new TextObject();
+    if (score.correct) correctScore.setContent(`+ ${score.correct}`);
+    correctScore.attachToObject(scoreContainer);
+    correctScore.addClass('correct-score');
+    const bonusScore = new TextObject();
+    if (score.bonus) bonusScore.setContent(`+ ${score.bonus}`);
+    bonusScore.attachToObject(scoreContainer);
+    bonusScore.addClass('bonus-score');
 
     if (isTeller) {
       const tellerCard = cards.find((card) => card.cardID === submittedCardID);
@@ -66,6 +92,7 @@ const renderVoteResult = () => {
     const stampDuck = new DuckObject({ color, width: WIDTH_STAMP_DUCK });
     stampDuck.addClass(['duck-stamp', 'result-duck']);
     stampDuck.attachToObject(stampContainer);
+
     return [...prev, nameDuck, stampDuck, nicknameText, nameContainer];
   }, []);
 

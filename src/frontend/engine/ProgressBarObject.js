@@ -2,10 +2,17 @@ import { $create, $id } from '@utils/dom';
 import TIME from '@type/time';
 import GameObject from './GameObject';
 
-const RED = '#d82e21';
-const YELLOW = '#ffd600';
+const RED_COLOR = '#d82e21';
+const YELLOW_COLOR = '#ffd600';
+const GREEN_COLOR = '#3ed78d';
 
 const ProgressBarObject = class extends GameObject {
+  constructor() {
+    super();
+    this.timerStack = [];
+    this.timeManagerStack = [];
+  }
+
   setTime(endTime) {
     this.endTime = new Date(endTime).getTime();
     this.time = this.endTime - new Date().getTime();
@@ -15,12 +22,17 @@ const ProgressBarObject = class extends GameObject {
     this.callback = callback;
   }
 
-  finish() {
+  clear() {
     if (this.callback) this.callback();
-    clearInterval(this.progressBarTimer);
-    clearTimeout(this.timeOutlManager);
-    this.progressBarTimer = null;
-    this.timeOutlManager = null;
+    while (this.timerStack.length > 0) {
+      const timer = this.timerStack.pop();
+      const timeManager = this.timeManagerStack.pop();
+      clearInterval(timer);
+      clearTimeout(timeManager);
+    }
+    const [progressBar] = this.getProgessBar();
+    progressBar.style.width = '100%';
+    progressBar.style.backgroundColor = GREEN_COLOR;
     this.addClass('hide');
   }
 
@@ -48,22 +60,21 @@ const ProgressBarObject = class extends GameObject {
     this.removeClass('hide');
     const [progressBar, timeText] = this.getProgessBar();
     const { endTime } = this;
-    this.progressBarTimer = setInterval(() => {
+    const timer = setInterval(() => {
       const remainTime = endTime - new Date().getTime();
       const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
-      if (widthSize < 30) progressBar.style.backgroundColor = RED;
-      else if (widthSize < 60) progressBar.style.backgroundColor = YELLOW;
+      if (widthSize < 30) progressBar.style.backgroundColor = RED_COLOR;
+      else if (widthSize < 60) progressBar.style.backgroundColor = YELLOW_COLOR;
       timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 
-    this.timeOutManager = setTimeout(() => {
-      this.finish();
+    const timeManager = setTimeout(() => {
+      this.clear();
     }, this.time);
-  }
 
-  clear() {
-    if (this.progressBarTimer) this.finish();
+    this.timerStack.push(timer);
+    this.timeManagerStack.push(timeManager);
   }
 
   remove() {
