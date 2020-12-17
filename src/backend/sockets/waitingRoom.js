@@ -33,6 +33,10 @@ function onJoinPlayer({ roomID }) {
 function onUpdatePlayer(updatedUserProfile = {}) {
   const socket = this;
   const { user, game } = socket;
+
+  if (!user || !game) return;
+  if (game.getState() !== GAME_STATE.WAITING) return;
+
   game.updateUserProfile({ ...updatedUserProfile, socketID: socket.id });
   const { nickname, color } = user.getProfile();
   const userProfile = { nickname, color, socketID: socket.id };
@@ -61,7 +65,15 @@ const deleteGameStartTimeout = (roomID) => {
 // 사용자가 레디를 눌렀을 때 or 레디를 풀었을 때
 function onReadyChange({ isReady }) {
   const socket = this;
-  const { game } = socket;
+  const { user, game } = socket;
+
+  if (!user || !game) return;
+  if (
+    game.getState() !== GAME_STATE.WAITING &&
+    game.getState() !== GAME_STATE.READY
+  )
+    return;
+
   const { users, roomID } = game;
 
   // 플레이어의 레디 상태를 변경

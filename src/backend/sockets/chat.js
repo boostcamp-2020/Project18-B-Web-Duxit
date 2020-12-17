@@ -2,11 +2,11 @@ import logger from '@utils/winston';
 
 function onSendChat({ message }) {
   const socket = this;
-  const { game } = socket;
+  const { game, user } = socket;
 
-  if (!game) return;
+  if (!user || !game) return;
 
-  const { nickname } = game.getUser(socket.id).getProfile();
+  const { nickname } = user.getProfile();
   logger.info(`chat ip:${socket.handshake.address} msg:${message}`);
   socket.in(game.roomID).emit('send chat', { message, nickname });
 }
