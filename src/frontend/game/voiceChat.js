@@ -51,7 +51,7 @@ const deactivateVoiceChat = () => {
     track.stop();
   });
 
-  peerMap.forEach((_, socketID) => {
+  [...peerMap.keys()].forEach((socketID) => {
     deleteOtherPeer(socketID);
   });
 };
