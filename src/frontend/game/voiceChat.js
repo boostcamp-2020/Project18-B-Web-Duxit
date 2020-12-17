@@ -4,19 +4,15 @@ import {
   getAudioStream,
   setAnswerBehavior,
   connectToNewUser,
+  peerMap,
+  deleteOtherPeer,
+  closeVoiceButton,
+  transformVoiceButton,
+  putBackVoiceButton,
 } from '@utils/voiceChatUtil';
 
 let myPeerJSClient = null;
 let myAudioStream = null;
-
-const peerMap = new Map();
-
-const deleteOtherPeer = (socketID) => {
-  if (peerMap.has(socketID)) {
-    peerMap.get(socketID).mediaConnection.close();
-    peerMap.delete(socketID);
-  }
-};
 
 const isConnectedToVoiceChat = () => {
   return myPeerJSClient && myAudioStream;
@@ -28,10 +24,11 @@ const activateVoiceChat = () => {
   myPeerJSClient.on('open', async () => {
     try {
       // 마이크 연결
+      closeVoiceButton();
       myAudioStream = await getAudioStream();
+      transformVoiceButton();
       setAnswerBehavior({
         stream: myAudioStream,
-        peerMap,
         peer: myPeerJSClient,
       });
     } catch (err) {
@@ -54,6 +51,8 @@ const deactivateVoiceChat = () => {
   [...peerMap.keys()].forEach((socketID) => {
     deleteOtherPeer(socketID);
   });
+
+  putBackVoiceButton();
 };
 
 // 연결된 유저가 보이스 채팅 접속을 끊었을 때
@@ -70,7 +69,6 @@ socket.on('another voice connected', ({ socketID }) => {
     peer: myPeerJSClient,
     socketID,
     stream: myAudioStream,
-    peerMap,
   });
 });
 

@@ -32,6 +32,10 @@
   font-weight: 700;
 }
 
+.microphone-controller-exit {
+  background-color: $red-color;
+}
+
 .participants-wrapper {
   @include flex-column;
   height: 100%;
