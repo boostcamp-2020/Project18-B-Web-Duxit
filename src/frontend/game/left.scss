@@ -50,18 +50,28 @@
   }
 }
 
+@mixin duck-badge {
+  position: absolute;
+  padding: 0.3rem 0.5rem;
+  background-color: $gray-color;
+  border-radius: 1rem;
+}
+
 .duck-image {
   position: relative;
   width: 80%;
   height: fit-content;
   margin: 0 auto 4%;
   .duck-score {
-    position: absolute;
+    @include duck-badge;
     top: 50%;
     left: 20%;
-    padding: 0.3rem 0.5rem;
-    background-color: $gray-color;
-    border-radius: 1rem;
+  }
+  .duck-speaker {
+    @include duck-badge;
+    top: 35%;
+    left: 70%;
+    cursor: pointer;
   }
 }
 
