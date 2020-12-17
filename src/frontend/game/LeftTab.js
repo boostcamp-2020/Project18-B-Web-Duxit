@@ -44,7 +44,7 @@ class LeftTab {
   updateDuck(playerInfo) {
     const updatedDuck = this.findDuck(playerInfo.socketID);
     if (updatedDuck) {
-      updatedDuck.setHat(playerInfo.isTeller);
+      updatedDuck.setHat(playerInfo.bTeller);
       updatedDuck.update(playerInfo);
     } else this.addDuck(playerInfo);
   }

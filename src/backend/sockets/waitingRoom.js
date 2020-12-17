@@ -51,9 +51,9 @@ function onUpdatePlayer(updatedUserProfile = {}) {
 const timeoutMap = new Map();
 
 const isPossibleStartGame = ({ users }) => {
-  const isAllReady = [...users].every(([, user]) => user.bReady);
-  const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
-  return isAllReady && isValidSize;
+  const bAllReady = [...users].every(([, user]) => user.bReady);
+  const bValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
+  return bAllReady && bValidSize;
 };
 
 const deleteGameStartTimeout = (roomID) => {

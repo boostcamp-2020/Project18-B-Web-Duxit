@@ -26,17 +26,13 @@ const addAudioStream = ({ mediaConnection, peerMap }) => {
   });
 };
 
-// socket을 통해 다른 사람이 접속한걸 받았을 때
-// 다른 사람에게 mediaConnection 요청을 보냄
 const connectToNewUser = ({ peer, socketID, stream, peerMap }) => {
   const mediaConnection = peer.call(socketID, stream);
   addAudioStream({ mediaConnection, peerMap });
 };
 
-// 내가 다른 사람의 mediaConnection 요청을 받았을 때
 const setAnswerBehavior = ({ stream, peerMap, peer }) => {
   peer.on('call', (mediaConnection) => {
-    // 다른 사람의 요청에 answer를 날림
     mediaConnection.answer(stream);
     addAudioStream({ mediaConnection, peerMap });
   });

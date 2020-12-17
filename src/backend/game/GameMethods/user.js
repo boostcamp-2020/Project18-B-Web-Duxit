@@ -28,12 +28,12 @@ function getUsers() {
 }
 
 function getTeller() {
-  const [teller] = this.getUsers().filter((user) => user.isTeller);
+  const [teller] = this.getUsers().filter((user) => user.bTeller);
   return teller;
 }
 
 function getGuessers() {
-  return this.getUsers().filter((user) => !user.isTeller);
+  return this.getUsers().filter((user) => !user.bTeller);
 }
 
 function getUsersProfile() {

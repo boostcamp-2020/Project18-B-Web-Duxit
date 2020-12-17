@@ -56,8 +56,8 @@ const setupWaitingRoomSocket = () => {
     if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.setTellerID(tellerID);
     CardManager.initializeMyCards(cards);
-    const { isTeller } = PlayerManager.getCurrentPlayer();
-    const nextScene = isTeller
+    const { bTeller } = PlayerManager.getCurrentPlayer();
+    const nextScene = bTeller
       ? new TellerSelectCard({ cards, endTime })
       : new GuesserWaiting({ endTime });
     SceneManager.renderNextScene(nextScene);

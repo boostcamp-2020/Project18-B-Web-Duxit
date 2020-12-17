@@ -6,7 +6,7 @@ const Player = class {
     socketID,
     nickname,
     color,
-    isTeller = false,
+    bTeller = false,
     isCurrentPlayer = false,
     bReady = false,
   } = {}) {
@@ -18,7 +18,7 @@ const Player = class {
       bonus: 0,
       current: 0,
     };
-    this.isTeller = isTeller;
+    this.bTeller = bTeller;
     this.isCurrentPlayer = isCurrentPlayer;
     this.bReady = bReady;
     this.duck = new DuckCursorObject({ bReady, color });
