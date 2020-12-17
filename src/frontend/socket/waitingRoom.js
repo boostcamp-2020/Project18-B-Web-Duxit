@@ -46,10 +46,10 @@ const setupWaitingRoomSocket = () => {
     PlayerManager.delete(socketID);
   };
 
-  const onReadyPlayer = ({ playerID, isReady }) => {
+  const onReadyPlayer = ({ playerID, bReady }) => {
     if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     const player = PlayerManager.get(playerID);
-    if (player) player.setReady(isReady);
+    if (player) player.setReady(bReady);
   };
 
   const onGetRoundData = ({ tellerID, cards, endTime }) => {

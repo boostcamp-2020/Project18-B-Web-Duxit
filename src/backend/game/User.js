@@ -14,8 +14,8 @@ class User {
 
     this.submittedCard = null;
     this.votedCard = null;
-    this.isReady = false;
-    this.isSkip = false;
+    this.bReady = false;
+    this.bSkip = false;
   }
 
   initOnStart({ turnID } = {}) {
@@ -27,20 +27,20 @@ class User {
   initOnRound() {
     this.submittedCard = null;
     this.votedCard = null;
-    this.isReady = false;
-    this.isSkip = false;
+    this.bReady = false;
+    this.bSkip = false;
   }
 
   setTeller(boolean) {
     this.isTeller = boolean;
   }
 
-  setReady(isReady) {
-    this.isReady = isReady;
+  setReady(bReady) {
+    this.bReady = bReady;
   }
 
   setSkip() {
-    this.isSkip = true;
+    this.bSkip = true;
   }
 
   setColor(color) {
@@ -86,7 +86,7 @@ class User {
       isTeller,
       cards,
       score,
-      isReady,
+      bReady,
     } = this;
 
     return {
@@ -99,17 +99,17 @@ class User {
       isTeller,
       cards,
       score,
-      isReady,
+      bReady,
     };
   }
 
   getProfile() {
-    const { nickname, color, score, isReady } = this;
+    const { nickname, color, score, bReady } = this;
     return {
       nickname,
       color,
       score,
-      isReady,
+      bReady,
     };
   }
 

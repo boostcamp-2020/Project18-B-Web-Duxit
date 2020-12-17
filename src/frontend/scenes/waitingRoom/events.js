@@ -34,15 +34,15 @@ export const changeNickname = (NicknameInput) => {
 
 export const toggleReady = ({ target }) => {
   const currentPlayer = PlayerManager.getCurrentPlayer();
-  const { isReady } = currentPlayer;
-  const nextStatus = !isReady;
+  const { bReady } = currentPlayer;
+  const nextStatus = !bReady;
 
   target.innerText = nextStatus ? '준비 해제' : '준비 완료';
   target.classList.toggle('button-primary');
   target.classList.toggle('button-primary-clicked');
 
   PlayerManager.getCurrentPlayer().setReady(nextStatus);
-  socket.emit('ready player', { isReady: nextStatus });
+  socket.emit('ready player', { bReady: nextStatus });
 };
 
 export const changeColor = ({ target }) => {

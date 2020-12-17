@@ -51,7 +51,7 @@ function onUpdatePlayer(updatedUserProfile = {}) {
 const timeoutMap = new Map();
 
 const isPossibleStartGame = ({ users }) => {
-  const isAllReady = [...users].every(([, user]) => user.isReady);
+  const isAllReady = [...users].every(([, user]) => user.bReady);
   const isValidSize = users.size >= PLAYER.MIN && users.size <= PLAYER.MAX;
   return isAllReady && isValidSize;
 };
@@ -63,7 +63,7 @@ const deleteGameStartTimeout = (roomID) => {
 };
 
 // 사용자가 레디를 눌렀을 때 or 레디를 풀었을 때
-function onReadyChange({ isReady }) {
+function onReadyChange({ bReady }) {
   const socket = this;
   const { user, game } = socket;
 
@@ -77,8 +77,8 @@ function onReadyChange({ isReady }) {
   const { users, roomID } = game;
 
   // 플레이어의 레디 상태를 변경
-  users.get(socket.id).setReady(isReady);
-  socket.in(roomID).emit('ready player', { playerID: socket.id, isReady });
+  users.get(socket.id).setReady(bReady);
+  socket.in(roomID).emit('ready player', { playerID: socket.id, bReady });
 
   const validationToStart = isPossibleStartGame({ users });
   // 모든 플레이어가 레디 상태일 때

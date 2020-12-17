@@ -8,7 +8,7 @@ const Player = class {
     color,
     isTeller = false,
     isCurrentPlayer = false,
-    isReady = false,
+    bReady = false,
   } = {}) {
     this.socketID = socketID;
     this.nickname = nickname;
@@ -20,8 +20,8 @@ const Player = class {
     };
     this.isTeller = isTeller;
     this.isCurrentPlayer = isCurrentPlayer;
-    this.isReady = isReady;
-    this.duck = new DuckCursorObject({ isReady, color });
+    this.bReady = bReady;
+    this.duck = new DuckCursorObject({ bReady, color });
     this.votedCardID = null;
     this.submittedCardID = null;
   }
@@ -44,8 +44,8 @@ const Player = class {
   }
 
   setReady(value) {
-    if (this.isReady === value) return;
-    this.isReady = value;
+    if (this.bReady === value) return;
+    this.bReady = value;
     this.duck.setVisibility(value, this.isCurrentPlayer);
   }
 
