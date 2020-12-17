@@ -2,7 +2,7 @@ import './left.scss';
 import { $id } from '@utils/dom';
 import DuckLeftTabObject from '@engine/DuckLeftTabObject';
 import PlayerManager from '@utils/PlayerManager';
-import initVoiceChat from '@utils/voiceChat';
+import { activateVoiceChat, deactivateVoiceChat } from './voiceChat';
 
 const createDuck = (duckInfo) => {
   const { socketID, color, nickname } = duckInfo;
@@ -13,14 +13,28 @@ const createDuck = (duckInfo) => {
 class LeftTab {
   constructor() {
     this.ducks = [];
+    this.voiceActive = false;
     PlayerManager.onInitialize.push(this.initializePlayers.bind(this));
     PlayerManager.onUpdate.push(this.updateDuck.bind(this));
     PlayerManager.onDelete.push(this.deletePlayer.bind(this));
+    $id('microphone-controller').addEventListener(
+      'click',
+      this.toggleVoiceChat,
+    );
   }
 
   initializePlayers() {
     this.render();
-    initVoiceChat();
+  }
+
+  toggleVoiceChat() {
+    if (this.voiceActive) {
+      this.voiceActive = false;
+      deactivateVoiceChat();
+    } else {
+      this.voiceActive = true;
+      activateVoiceChat();
+    }
   }
 
   findDuck(socketID) {

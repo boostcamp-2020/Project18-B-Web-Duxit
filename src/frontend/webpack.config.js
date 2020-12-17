@@ -44,7 +44,7 @@ module.exports = (webpackEnv) => {
         chunks: ['game'],
         favicon: 'logo.png',
       }),
-      isEnvProduction && new CleanWebpackPlugin(),
+      new CleanWebpackPlugin(),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: '[name].css',
@@ -93,7 +93,7 @@ module.exports = (webpackEnv) => {
           test: /\.(png|jpe?g|gif)$/i,
           loader: 'file-loader',
           options: {
-            outputPath: '/assets',
+            outputPath: 'assets',
             publicPath: '/assets',
           },
         },
