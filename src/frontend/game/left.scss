@@ -32,6 +32,10 @@
   font-weight: 700;
 }
 
+.microphone-controller-exit {
+  background-color: $red-color;
+}
+
 .participants-wrapper {
   @include flex-column;
   height: 100%;
@@ -62,6 +66,24 @@
     padding: 0.3rem 0.5rem;
     background-color: $gray-color;
     border-radius: 1rem;
+  }
+
+  .duck-speaker {
+    position: absolute;
+    top: 0%;
+    left: 45%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    visibility: hidden;
+  }
+  .duck-speaker-active {
+    content: url('@resources/speaker-active.png');
+    visibility: visible;
+  }
+  .duck-speaker-deactive {
+    content: url('@resources/speaker-deactive.png');
+    visibility: visible;
   }
 }
 

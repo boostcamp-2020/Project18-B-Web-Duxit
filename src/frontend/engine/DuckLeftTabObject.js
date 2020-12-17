@@ -12,6 +12,7 @@ class DuckLeftTabObject extends DuckObject {
     this.hatWidth = 45;
 
     this.addClass('left-duck-wrapper');
+    this.instance.dataset.socketId = this.socketID;
     this.render();
   }
 
@@ -32,6 +33,7 @@ class DuckLeftTabObject extends DuckObject {
           ${DuckHat({ width: hatWidth })}
           ${Duck({ color, width: duckWidth })}
           <span class="duck-score">${score}</span>
+          <img alt="speaker button" class="duck-speaker"/>
         </div>
         <span class="duck-nickname">${nickname}</span>
     `;
