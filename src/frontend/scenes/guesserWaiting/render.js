@@ -34,9 +34,7 @@ const renderGuesserWaiting = ({ endTime }) => {
 
   const { CardsWrapper, cards } = createCards(GUESSER_WAITING);
   CardsWrapper.attachToRoot();
-  cards.forEach((card) => {
-    card.setAnimateMove(false);
-  });
+  cards.forEach((card) => card.setAnimateMove(false));
 
   const arrayToBeRemoved = [
     NotifyingTellerText,
