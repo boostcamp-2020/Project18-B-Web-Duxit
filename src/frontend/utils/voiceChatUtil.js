@@ -70,6 +70,8 @@ const addAudioStream = ({ mediaConnection }) => {
 const connectToNewUser = ({ peer, socketID, stream }) => {
   const mediaConnection = peer.call(socketID, stream);
   addAudioStream({ mediaConnection, peerMap });
+  const se = new Audio(joinSound);
+  se.play();
 };
 
 // 내가 다른 사람의 mediaConnection 요청을 받았을 때

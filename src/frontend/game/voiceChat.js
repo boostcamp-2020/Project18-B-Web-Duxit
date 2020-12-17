@@ -1,5 +1,6 @@
 import socket from '@utils/socket';
 import Peer from 'peerjs';
+import leftSound from '@resources/left.mp3';
 import {
   getAudioStream,
   setAnswerBehavior,
@@ -58,6 +59,9 @@ const deactivateVoiceChat = () => {
 // 연결된 유저가 보이스 채팅 접속을 끊었을 때
 socket.on('voice disconnected', ({ socketID }) => {
   if (!isConnectedToVoiceChat()) return;
+
+  const se = new Audio(leftSound);
+  se.play();
 
   deleteOtherPeer(socketID);
 });
