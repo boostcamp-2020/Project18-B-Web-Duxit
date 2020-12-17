@@ -50,28 +50,36 @@
   }
 }
 
-@mixin duck-badge {
-  position: absolute;
-  padding: 0.3rem 0.5rem;
-  background-color: $gray-color;
-  border-radius: 1rem;
-}
-
 .duck-image {
   position: relative;
   width: 80%;
   height: fit-content;
   margin: 0 auto 4%;
   .duck-score {
-    @include duck-badge;
+    position: absolute;
     top: 50%;
     left: 20%;
+    padding: 0.3rem 0.5rem;
+    background-color: $gray-color;
+    border-radius: 1rem;
   }
+
   .duck-speaker {
-    @include duck-badge;
-    top: 35%;
-    left: 70%;
+    position: absolute;
+    top: 0%;
+    left: 45%;
+    width: 100px;
+    height: 100px;
     cursor: pointer;
+    visibility: hidden;
+  }
+  .duck-speaker-active {
+    content: url('@resources/speaker-active.png');
+    visibility: visible;
+  }
+  .duck-speaker-deactive {
+    content: url('@resources/speaker-deactive.png');
+    visibility: visible;
   }
 }
 

@@ -33,7 +33,7 @@ class DuckLeftTabObject extends DuckObject {
           ${DuckHat({ width: hatWidth })}
           ${Duck({ color, width: duckWidth })}
           <span class="duck-score">${score}</span>
-          <span class="duck-speaker">off</span>
+          <img alt="speaker button" class="duck-speaker"/>
         </div>
         <span class="duck-nickname">${nickname}</span>
     `;
