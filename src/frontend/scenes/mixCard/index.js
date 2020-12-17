@@ -12,7 +12,7 @@ const MixCard = class {
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
-  wrapup() {
+  wrapUp() {
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });

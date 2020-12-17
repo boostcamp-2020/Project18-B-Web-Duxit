@@ -9,7 +9,7 @@ import template from './template.html';
 const defineRenderRow = (TableBody) => (player) => {
   const {
     nickname,
-    isTeller,
+    bTeller,
     score: { current, correct, bonus },
   } = player;
   const TableRow = new GameObject({
@@ -24,7 +24,7 @@ const defineRenderRow = (TableBody) => (player) => {
     width: 60,
     parent: PlayerInfoWrapper,
   });
-  DuckIcon.setHat(isTeller);
+  DuckIcon.setHat(bTeller);
   const NicknameObject = new TextObject({
     parent: PlayerInfoWrapper,
   }).setContent(nickname);
@@ -47,7 +47,12 @@ const renderRow = (TableBody, players) => {
   players.forEach(defineRenderRow(TableBody));
 };
 
-const makeRandom = (x) => Math.random() * 5 + x - 2.5;
+const makeXRandom = (x) => {
+  return Math.random() * 5 + x - 2.5;
+};
+const makeYRandom = (y) => {
+  return Math.random() * 2 + y - 1;
+};
 
 const yellowDuckyJumpsOverTheLazyStone = (players) =>
   players.map((player) => {
@@ -55,7 +60,9 @@ const yellowDuckyJumpsOverTheLazyStone = (players) =>
       score: { current, correct, bonus },
     } = player;
     const currentStone = stonePosition[current];
-    const currentPosition = currentStone.map(makeRandom);
+    const currentXPosition = makeXRandom(currentStone[0]);
+    const currentYPosition = makeYRandom(currentStone[1]);
+    const currentPosition = [currentXPosition, currentYPosition];
     const duck = player.makeDuck({
       width: 50,
       classes: ['movable'],
@@ -70,7 +77,9 @@ const yellowDuckyJumpsOverTheLazyStone = (players) =>
     [...Array(jumpCount)].forEach((_, index) => {
       const nextStone = Math.min(30, current + index);
       setTimeout(() => {
-        const nextPosition = stonePosition[nextStone].map(makeRandom);
+        const nextXPosition = makeXRandom(stonePosition[nextStone][0]);
+        const nextYPosition = makeYRandom(stonePosition[nextStone][1]);
+        const nextPosition = [nextXPosition, nextYPosition];
         duck.jump(...nextPosition, 500);
       }, jumpTiming(index));
     });

@@ -20,9 +20,7 @@ const stackCards = async ({ Cards, position }) => {
 };
 
 const rotateCards = ({ Cards }) => {
-  Cards.forEach((card) => {
-    card.rotate(NUMBER.ZERO, NUMBER.ZERO);
-  });
+  Cards.forEach((card) => card.rotate(NUMBER.ZERO, NUMBER.ZERO));
 };
 
 const shuffleCard = async ({ card, position, zindex = NUMBER.MAX_Z_INDEX }) => {

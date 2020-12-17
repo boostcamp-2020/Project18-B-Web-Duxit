@@ -6,7 +6,7 @@ import TEXT from '@utils/text';
 import { $qs } from '@utils/dom';
 
 const renderPlayerWaiting = ({ endTime }) => {
-  const isTeller = PlayerManager.isTeller();
+  const bTeller = PlayerManager.isTeller();
   const currentPlayer = PlayerManager.getCurrentPlayer();
 
   SceneManager.beforeSubmittingPlayers.forEach((playerID) => {
@@ -20,7 +20,7 @@ const renderPlayerWaiting = ({ endTime }) => {
     modal.remove();
   }
 
-  if (isTeller) {
+  if (bTeller) {
     const { ProgressBar } = SceneManager.sharedComponents;
     ProgressBar.setTime(endTime);
     ProgressBar.start();

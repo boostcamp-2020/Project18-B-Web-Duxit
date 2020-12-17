@@ -1,10 +1,11 @@
 import './style.scss';
-import TextObject from '@engine/TextObject';
-import CardManager from '@utils/CardManager';
-import TEXT from '@utils/text';
-import DuckObject from '@engine/DuckObject';
-import PlayerManager from '@utils/PlayerManager';
 import GameObject from '@engine/GameObject';
+import TextObject from '@engine/TextObject';
+import DuckObject from '@engine/DuckObject';
+import CardManager from '@utils/CardManager';
+import PlayerManager from '@utils/PlayerManager';
+import SceneManager from '@utils/SceneManager';
+import TEXT from '@utils/text';
 
 const DIFF_Y_POSITION_STAMP = 14;
 const DIFF_Y_POSITION_NAME = -18;
@@ -15,7 +16,11 @@ const ORIGIN_SCORE = [50, 0];
 const WIDTH_STAMP_DUCK = 40;
 const WIDTH_NAME_DUCK = 25;
 
-const renderVoteResult = () => {
+const renderVoteResult = (endTime) => {
+  const { ProgressBar } = SceneManager.sharedComponents;
+  ProgressBar.setTime(endTime);
+  ProgressBar.start();
+
   const cards = CardManager.submittedCards;
   const players = PlayerManager.getPlayers();
 
@@ -59,7 +64,7 @@ const renderVoteResult = () => {
       votedCardID,
       submittedCardID,
       nickname,
-      isTeller,
+      bTeller,
       score,
     } = player;
 
@@ -82,7 +87,7 @@ const renderVoteResult = () => {
     bonusScore.attachToObject(scoreContainer);
     bonusScore.addClass('bonus-score');
 
-    if (isTeller) {
+    if (bTeller) {
       const tellerCard = cards.find((card) => card.cardID === submittedCardID);
       tellerCard.addClass('card-glow-gold');
       return [...prev, nameDuck, nicknameText, nameContainer];

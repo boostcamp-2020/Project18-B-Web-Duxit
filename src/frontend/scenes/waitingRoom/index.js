@@ -26,7 +26,7 @@ const WaitingRoom = class {
     PlayerManager.onUpdate.push(this.onUpdate.bind(this));
   }
 
-  wrapup() {
+  wrapUp() {
     const { AllReadyText } = SceneManager.sharedComponents;
     AllReadyText.delete();
 

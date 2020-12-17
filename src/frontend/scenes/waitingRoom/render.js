@@ -145,7 +145,7 @@ const renderWaitingRoom = (roomID = '') => {
   ButtonReady.setContent('준비 완료');
   ButtonReady.addClass('button-primary');
   ButtonReady.attachToObject(ActionWrapper);
-  ButtonReady.instance.dataset.data = JSON.stringify({ isReady: false });
+  ButtonReady.instance.dataset.data = JSON.stringify({ bReady: false });
   ButtonReady.addClickHandler(toggleReady);
 
   const GameCodeWrapper = new ButtonObject();

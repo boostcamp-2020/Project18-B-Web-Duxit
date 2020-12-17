@@ -30,8 +30,8 @@ const mapScore = (correctScore, bonusScore) => ({ correctScore, bonusScore });
 const getScoreMap = (game) => {
   const scoreMap = new Map();
   const users = game.getUsers();
-  const [teller] = users.filter((user) => user.isTeller);
-  const guessers = users.filter((user) => !user.isTeller);
+  const [teller] = users.filter((user) => user.bTeller);
+  const guessers = users.filter((user) => !user.bTeller);
 
   // Teller
   // [다 맞추거나 아무도 못 맞춤]인지 [한명이라도 맞춤]인지 확인

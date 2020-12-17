@@ -42,7 +42,7 @@ const SceneManager = {
 
     if (this.currentScene) {
       if (!this.currentScene.passingTimerClear) ProgressBar.clear();
-      this.currentScene.wrapup();
+      this.currentScene.wrapUp();
       wrapupInterval = this.currentScene.wrapupInterval || TIME.NONE_INTERVAL;
     }
     if (!scene.bMaintainDucks) this.hideAllDucks();

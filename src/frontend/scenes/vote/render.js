@@ -9,6 +9,9 @@ import { sendVoteResult } from './events';
 
 const renderVote = ({ endTime }) => {
   const { ProgressBar } = SceneManager.sharedComponents;
+  ProgressBar.setTime(endTime);
+  ProgressBar.start();
+
   const cards = CardManager.submittedCards;
 
   const { color, submittedCardID } = PlayerManager.getCurrentPlayer();
@@ -28,9 +31,6 @@ const renderVote = ({ endTime }) => {
       );
     });
   }
-
-  ProgressBar.setTime(endTime);
-  ProgressBar.start();
 
   const HelpText = new TextObject();
   HelpText.addClass('helper-text');

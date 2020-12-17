@@ -20,13 +20,10 @@ function forceGuesserVote() {
 
   unvotedUsers.forEach((user) => {
     const { submittedCard } = user;
-
-    // 자기 카드를 뺀 나머지 카드만 골라냄
     const voteableCards = submittedCards.filter(
       (card) => card !== submittedCard,
     );
 
-    // 랜덤 하게 투표
     user.voteCard(generateRandom.pickOneFromArray(voteableCards));
   });
 }
@@ -45,10 +42,11 @@ function emitEndVote() {
     };
   });
 
+  const endTime = this.getEndTime(TIME.WAIT_RESULT);
   emit({
     users: this.getUsers(),
     name: 'end vote',
-    params: { players },
+    params: { players, endTime },
   });
 }
 

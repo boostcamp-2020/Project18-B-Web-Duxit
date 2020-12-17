@@ -46,18 +46,18 @@ const setupWaitingRoomSocket = () => {
     PlayerManager.delete(socketID);
   };
 
-  const onReadyPlayer = ({ playerID, isReady }) => {
+  const onReadyPlayer = ({ playerID, bReady }) => {
     if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     const player = PlayerManager.get(playerID);
-    if (player) player.setReady(isReady);
+    if (player) player.setReady(bReady);
   };
 
   const onGetRoundData = ({ tellerID, cards, endTime }) => {
     if (!SceneManager.isCurrentScene(WaitingRoom)) return;
     PlayerManager.setTellerID(tellerID);
     CardManager.initializeMyCards(cards);
-    const { isTeller } = PlayerManager.getCurrentPlayer();
-    const nextScene = isTeller
+    const { bTeller } = PlayerManager.getCurrentPlayer();
+    const nextScene = bTeller
       ? new TellerSelectCard({ cards, endTime })
       : new GuesserWaiting({ endTime });
     SceneManager.renderNextScene(nextScene);

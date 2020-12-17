@@ -5,7 +5,7 @@ import TIME from '@type/time';
 import DuckObejct from './DuckObject';
 
 class DuckCursorObject extends DuckObejct {
-  constructor({ isReady, ...props }) {
+  constructor({ bReady, ...props }) {
     super(props);
     this.addClass('cursor-duck-wrapper');
     this.setOriginCenter();
@@ -16,7 +16,7 @@ class DuckCursorObject extends DuckObejct {
     this.mouseHandler = this.makeFollowMouse.bind(this);
     this.width = 100;
     this.render();
-    this.setVisibility(isReady);
+    this.setVisibility(bReady);
   }
 
   addMouseMoveEvent() {

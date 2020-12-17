@@ -46,9 +46,9 @@ const CardManager = class {
   }
 
   updateCardInformation(cardIDs) {
-    this.submittedCards.forEach((card, idx) => {
-      card.setCardInformation(cardIDs[idx]);
-    });
+    this.submittedCards.forEach((card, idx) =>
+      card.setCardInformation(cardIDs[idx]),
+    );
   }
 
   liftSelectedCardUp() {

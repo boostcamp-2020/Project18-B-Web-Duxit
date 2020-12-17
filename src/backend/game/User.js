@@ -6,7 +6,7 @@ class User {
     this.nickname = nickname;
     this.color = color;
 
-    this.isTeller = false;
+    this.bTeller = false;
 
     this.turnID = 0;
     this.score = 0;
@@ -14,8 +14,8 @@ class User {
 
     this.submittedCard = null;
     this.votedCard = null;
-    this.isReady = false;
-    this.isSkip = false;
+    this.bReady = false;
+    this.bSkip = false;
   }
 
   initOnStart({ turnID } = {}) {
@@ -27,20 +27,20 @@ class User {
   initOnRound() {
     this.submittedCard = null;
     this.votedCard = null;
-    this.isReady = false;
-    this.isSkip = false;
+    this.bReady = false;
+    this.bSkip = false;
   }
 
   setTeller(boolean) {
-    this.isTeller = boolean;
+    this.bTeller = boolean;
   }
 
-  setReady(isReady) {
-    this.isReady = isReady;
+  setReady(bReady) {
+    this.bReady = bReady;
   }
 
   setSkip() {
-    this.isSkip = true;
+    this.bSkip = true;
   }
 
   setColor(color) {
@@ -57,16 +57,12 @@ class User {
 
   submitCard(cardID) {
     this.submittedCard = cardID;
-
-    // 뽑은 카드를 리스트에서 지움
     this.cards = this.cards.filter((card) => card !== cardID);
   }
 
   voteCard(cardID) {
-    // 악성 유저가 있을까봐 자기 카드 선택하는거 방지
     if (cardID === this.submittedCard) return;
-    // 텔러가 vote 못하게 막기
-    if (this.isTeller) return;
+    if (this.bTeller) return;
 
     this.votedCard = cardID;
   }
@@ -83,10 +79,10 @@ class User {
       turnID,
       submittedCard,
       votedCard,
-      isTeller,
+      bTeller,
       cards,
       score,
-      isReady,
+      bReady,
     } = this;
 
     return {
@@ -96,20 +92,20 @@ class User {
       turnID,
       submittedCard,
       votedCard,
-      isTeller,
+      bTeller,
       cards,
       score,
-      isReady,
+      bReady,
     };
   }
 
   getProfile() {
-    const { nickname, color, score, isReady } = this;
+    const { nickname, color, score, bReady } = this;
     return {
       nickname,
       color,
       score,
-      isReady,
+      bReady,
     };
   }
 
