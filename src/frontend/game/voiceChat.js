@@ -23,7 +23,7 @@ const isConnectedToVoiceChat = () => {
 };
 
 // 내가 보이스 채팅 접속
-function activateVoiceChat() {
+const activateVoiceChat = () => {
   myPeerJSClient = new Peer(socket.id);
   myPeerJSClient.on('open', async () => {
     try {
@@ -40,10 +40,10 @@ function activateVoiceChat() {
 
     socket.emit('player connect voice');
   });
-}
+};
 
 // 내가 보이스 채팅 접속을 끊었을 때
-function deactivateVoiceChat() {
+const deactivateVoiceChat = () => {
   socket.emit('player disconnect voice');
   myPeerJSClient.destroy();
   myPeerJSClient = null;
@@ -54,7 +54,7 @@ function deactivateVoiceChat() {
   peerMap.forEach((_, socketID) => {
     deleteOtherPeer(socketID);
   });
-}
+};
 
 // 연결된 유저가 보이스 채팅 접속을 끊었을 때
 socket.on('voice disconnected', ({ socketID }) => {
