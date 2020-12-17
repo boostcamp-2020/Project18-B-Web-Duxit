@@ -1,8 +1,8 @@
 @import '@utils/variable';
 @import '@utils/common';
 
-input:checked ~ label {
-  display: none !important;
+input:checked ~ .main-button {
+  display: none;
 }
 
 input:not(:checked) ~ form {
