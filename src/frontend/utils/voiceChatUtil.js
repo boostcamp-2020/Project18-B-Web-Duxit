@@ -1,4 +1,6 @@
 import { $id, $qs } from '@utils/dom';
+import joinSound from '@resources/joined.mp3';
+import leftSound from '@resources/left.mp3';
 
 const peerMap = new Map();
 const audioContainer = $id('voice-chat-audio-container');
@@ -87,6 +89,8 @@ const getAudioStream = () =>
 const closeVoiceButton = () => {
   const voiceButton = getVoiceButton();
   voiceButton.disabled = true;
+  const se = new Audio(joinSound);
+  se.play();
 };
 
 const transformVoiceButton = () => {
@@ -102,6 +106,8 @@ const putBackVoiceButton = () => {
   const voiceButtonSpan = voiceButton.querySelector('span');
   voiceButtonSpan.innerText = '음성 채팅 참여';
   voiceButton.classList.remove('microphone-controller-exit');
+  const se = new Audio(leftSound);
+  se.play();
 };
 
 const removeDuckSpeaker = (socketID) => {
