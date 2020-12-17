@@ -26,7 +26,8 @@ export const copyGameCode = (e) => {
 export const changeNickname = (NicknameInput) => {
   const newNickname = NicknameInput.instance.value;
   if (!newNickname || newNickname.length > 12) {
-    // 이전 닉네임으로 되돌아가는 기능 추가해야 함
+    const { nickname } = PlayerManager.getCurrentPlayer();
+    NicknameInput.setValue(nickname);
     return;
   }
   socket.emit('update player', { nickname: newNickname });
@@ -34,15 +35,15 @@ export const changeNickname = (NicknameInput) => {
 
 export const toggleReady = ({ target }) => {
   const currentPlayer = PlayerManager.getCurrentPlayer();
-  const { isReady } = currentPlayer;
-  const nextStatus = !isReady;
+  const { bReady } = currentPlayer;
+  const nextStatus = !bReady;
 
   target.innerText = nextStatus ? '준비 해제' : '준비 완료';
   target.classList.toggle('button-primary');
   target.classList.toggle('button-primary-clicked');
 
   PlayerManager.getCurrentPlayer().setReady(nextStatus);
-  socket.emit('ready player', { isReady: nextStatus });
+  socket.emit('ready player', { bReady: nextStatus });
 };
 
 export const changeColor = ({ target }) => {

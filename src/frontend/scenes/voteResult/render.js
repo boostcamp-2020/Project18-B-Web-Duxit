@@ -64,7 +64,7 @@ const renderVoteResult = (endTime) => {
       votedCardID,
       submittedCardID,
       nickname,
-      isTeller,
+      bTeller,
       score,
     } = player;
 
@@ -87,7 +87,7 @@ const renderVoteResult = (endTime) => {
     bonusScore.attachToObject(scoreContainer);
     bonusScore.addClass('bonus-score');
 
-    if (isTeller) {
+    if (bTeller) {
       const tellerCard = cards.find((card) => card.cardID === submittedCardID);
       tellerCard.addClass('card-glow-gold');
       return [...prev, nameDuck, nicknameText, nameContainer];

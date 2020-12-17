@@ -21,7 +21,7 @@ const renderGuesserWaiting = ({ endTime }) => {
   ProgressBar.start();
 
   PlayerManager.getPlayers().forEach((player) =>
-    player.duck.setVisibility(!player.isTeller, player.isCurrentPlayer),
+    player.duck.setVisibility(!player.bTeller, player.isCurrentPlayer),
   );
 
   const tellerColor = PlayerManager.getTeller().color;
@@ -34,9 +34,7 @@ const renderGuesserWaiting = ({ endTime }) => {
 
   const { CardsWrapper, cards } = createCards(GUESSER_WAITING);
   CardsWrapper.attachToRoot();
-  cards.forEach((card) => {
-    card.setAnimateMove(false);
-  });
+  cards.forEach((card) => card.setAnimateMove(false));
 
   const arrayToBeRemoved = [
     NotifyingTellerText,

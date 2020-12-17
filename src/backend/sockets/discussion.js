@@ -5,11 +5,7 @@ function onSkipPlayer() {
   if (!user || !game) return;
 
   user.setSkip();
-
-  // 모든 유저가 스킵을 눌렀을 경우
-  if (game.getUsers().every((u) => u.isSkip)) {
-    game.endDiscussionScene(true);
-  }
+  if (game.getUsers().every((u) => u.bSkip)) game.endDiscussionScene(true);
 }
 
 export default function onDiscussion(socket) {

@@ -23,10 +23,10 @@ const PlayerManager = class extends Map {
   setTellerID(tellerID = '') {
     this.tellerID = tellerID;
     this.forEach((player) => {
-      const isTeller = player.socketID === tellerID;
+      const bTeller = player.socketID === tellerID;
       this.set({
         ...player,
-        isTeller,
+        bTeller,
       });
     });
   }
@@ -94,7 +94,7 @@ const PlayerManager = class extends Map {
 
   getTeller() {
     if (this.tellerID) return this.get(this.tellerID);
-    return [...this.map].find((player) => player.isTeller) || null;
+    return [...this.map].find((player) => player.bTeller) || null;
   }
 
   isTeller() {

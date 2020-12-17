@@ -5,6 +5,8 @@ import GameObject from './GameObject';
 const RED_COLOR = '#d82e21';
 const YELLOW_COLOR = '#ffd600';
 const GREEN_COLOR = '#3ed78d';
+const SMALL_WIDTH = 30;
+const MID_WIDTH = 60;
 
 const ProgressBarObject = class extends GameObject {
   constructor() {
@@ -64,8 +66,11 @@ const ProgressBarObject = class extends GameObject {
       const remainTime = endTime - new Date().getTime();
       const widthSize = (remainTime / this.time) * 100;
       progressBar.style.width = `${widthSize}%`;
-      if (widthSize < 30) progressBar.style.backgroundColor = RED_COLOR;
-      else if (widthSize < 60) progressBar.style.backgroundColor = YELLOW_COLOR;
+      if (widthSize < SMALL_WIDTH) {
+        progressBar.style.backgroundColor = RED_COLOR;
+      } else if (widthSize < MID_WIDTH) {
+        progressBar.style.backgroundColor = YELLOW_COLOR;
+      }
       timeText.innerText = (remainTime / 1000).toFixed(0);
     }, TIME.HALF_SECOND);
 

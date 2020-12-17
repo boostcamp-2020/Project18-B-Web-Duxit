@@ -28,10 +28,7 @@ function dealCards(count = 1) {
 }
 
 const setUserTeller = (users, tellerTurnID) => {
-  users.forEach((user) => {
-    if (tellerTurnID === user.turnID) user.setTeller(true);
-    else user.setTeller(false);
-  });
+  users.forEach((user) => user.setTeller(tellerTurnID === user.turnID));
 };
 
 function startRound() {

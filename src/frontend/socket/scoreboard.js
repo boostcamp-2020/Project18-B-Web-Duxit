@@ -17,8 +17,8 @@ const onTellerSelect = ({ tellerID, cards, endTime }) => {
   PlayerManager.setTellerID(tellerID);
   CardManager.initializeMyCards(cards);
   SceneManager.initializeSubmiitingPlayers();
-  const { isTeller } = PlayerManager.getCurrentPlayer();
-  const nextScene = isTeller
+  const { bTeller } = PlayerManager.getCurrentPlayer();
+  const nextScene = bTeller
     ? new TellerSelectCard({ cards, endTime })
     : new GuesserWaiting({ endTime });
   SceneManager.renderNextScene(nextScene);

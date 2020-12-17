@@ -16,7 +16,7 @@ const Scoreboard = class {
     this.arrayToBeRemoved = arrayToBeRemoved;
   }
 
-  wrapup() {
+  wrapUp() {
     PlayerManager.updateCurrentScore();
     LeftTab.updateScore(this.players);
     this.arrayToBeRemoved.forEach((gameObject) => {

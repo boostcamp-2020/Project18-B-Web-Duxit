@@ -6,6 +6,7 @@ import ImageObject from './ImageObject';
 const getFacingStyle = (isUp) => (isUp ? 'rotateY(0deg)' : 'rotateY(180deg)');
 const deg2rad = (deg) => (deg * Math.PI) / 180;
 const MOVE_PERCENT = 10;
+const HIGH_DEPTH = 7;
 
 const CardObject = class extends GameObject {
   constructor({
@@ -73,7 +74,7 @@ const CardObject = class extends GameObject {
     return () => {
       const movedX = this.fixedX + Math.sin(deg2rad(this.angle)) * MOVE_PERCENT;
       const movedY = this.fixedY - Math.cos(deg2rad(this.angle)) * MOVE_PERCENT;
-      this.setDepth('7');
+      this.setDepth(HIGH_DEPTH);
       this.move(movedX, movedY);
 
       if (this.tellerCard)

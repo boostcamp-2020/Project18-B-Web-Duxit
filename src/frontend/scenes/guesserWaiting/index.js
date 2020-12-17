@@ -12,7 +12,7 @@ const GuesserWaiting = class {
     this.cards = cards;
   }
 
-  wrapup() {
+  wrapUp() {
     this.arrayToBeRemoved.forEach((gameObject) => {
       gameObject.delete();
     });

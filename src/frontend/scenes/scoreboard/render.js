@@ -9,7 +9,7 @@ import template from './template.html';
 const defineRenderRow = (TableBody) => (player) => {
   const {
     nickname,
-    isTeller,
+    bTeller,
     score: { current, correct, bonus },
   } = player;
   const TableRow = new GameObject({
@@ -24,7 +24,7 @@ const defineRenderRow = (TableBody) => (player) => {
     width: 60,
     parent: PlayerInfoWrapper,
   });
-  DuckIcon.setHat(isTeller);
+  DuckIcon.setHat(bTeller);
   const NicknameObject = new TextObject({
     parent: PlayerInfoWrapper,
   }).setContent(nickname);
