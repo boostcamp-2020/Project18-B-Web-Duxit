@@ -42,6 +42,8 @@
     margin-top: 25%;
 
     animation: emphasizeDuck 1s cubic-bezier(0.19, 1, 0.22, 1);
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
     filter: drop-shadow(0 0 10px $main-color);
     transform: scale(1.5);
     transform-origin: bottom;
@@ -71,10 +73,19 @@
 }
 
 @keyframes emphasizeDuck {
-  5% {
-    transform: rotateZ(-5deg) scale(2.5);
+  20% {
+    transform: rotateZ(0) scale(1.5);
   }
-  90% {
-    transform: scale(1.4);
+  40% {
+    transform: rotateZ(-8deg) scale(2) translate(0, -20%);
+  }
+  60% {
+    transform: rotateZ(0) scale(1.5);
+  }
+  80% {
+    transform: rotateZ(8deg) scale(2) translate(0, -20%);
+  }
+  100% {
+    transform: rotateZ(0) scale(1.5);
   }
 }
