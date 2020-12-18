@@ -4,12 +4,14 @@
 <img src="https://i.imgur.com/RNtI3ZD.jpg" width=500>
 </p>
 
-[![GitHub stars](https://img.shields.io/github/stars/boostcamp-2020/Project18-B-Web-Duxit.svg?style=social&label=Star)](https://github.com/boostcamp-2020/Project18-B-Web-Duxit) *DUXIT은 여러분의 ⭐️ 스타⭐️ 를 먹고 삽니다.*
+[![GitHub stars](https://img.shields.io/github/stars/boostcamp-2020/Project18-B-Web-Duxit.svg?style=social&label=Star)](https://github.com/boostcamp-2020/Project18-B-Web-Duxit) *DUXIT은 여러분의 ⭐️ 스타⭐️ 를 먹고 삽니다.*<br>
 
+> 이슈 PR 언제나 환영입니다. 🙌
 
 ## 공개 주소 ✨
 
-데모를 보고 싶다면? [DuXit.ga](http://duxit.ga/)
+배포 URL : https://duxit.ga/<br>
+데모 영상 : https://bit.ly/duxit-데모영상
 
 ## Team. YAHTZEE 🎲
 
@@ -26,10 +28,10 @@
 
 | division        | stack                             |
 | --------------- | --------------------------------- |
-| Web             | babel, webpack                    |
-| Front-end       | Vanilla JS, TypeScript, socket-io, Scss |
-| Back-end        | Node.js, winston , socket-io      |
-| Production      | forever, nginx, NCP               |
+| Web             | Webpack, Babel, WebRTC   |
+| Front-end       | Vanilla JS, socket-io, Scss |
+| Back-end        | Node.js, TypeScript, winston , socket-io |
+| Production      | forever, nginx, NCP, GitHub-Actions |
 | Code Management | Git, GitHub                       |
 | Formatting      | eslint, stylelint, prettier       |
 
