@@ -1,0 +1,65 @@
+# GitHub Actions 공식 documentation: https://docs.github.com/en/free-pro-team/actions
+# ssh에 shell script 실행하기: https://github.com/fifsky/ssh-action/blob/master/entrypoint.sh
+
+name: Deploy master branch
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-16.04
+    env:
+      DEPLOY_SCRIPT: shell.sh
+      DEPLOY_KEY: deploy_key
+    steps:
+      - name: Make deploy script
+        run: |
+          cat << EOF > $DEPLOY_SCRIPT
+          echo "=== pull master branch ==="
+          cd ${{ secrets.SSH_WORKING_DIRECTORY }}/src
+          git checkout master
+          git fetch origin master
+          BE_DIFF=$(git diff HEAD..origin/master --name-only -- src/backend | wc -l)
+          FE_DIFF=$(git diff HEAD..origin/master --name-only -- src/frontend | wc -l)
+          git pull origin master
+
+          if [ $BE_DIFF -ne 0 ] ; then
+            echo "=== build backend ==="
+            cd backend
+            npm ci || exit 1
+            npm run build || exit 1
+            echo "=== restart backend server ==="
+            forever stopall
+            forever start ./dist/app.js
+            cd ..
+          fi
+
+          if [ $FE_DIFF -ne 0 ] ; then
+            echo "=== build frontend ==="
+            cd frontend
+            npm ci || exit 1
+            npm run build || exit 1
+            echo "=== update nginx serve files ==="
+            # rm -rf ${{ secrets.NGINX_DIRECTORY }}
+            sudo cp -r ./dist/* ${{ secrets.NGINX_DIRECTORY }}
+            cd ..
+          fi
+          
+          echo "=== All done🚀 ==="
+          EOF
+
+      - name: Setting ssh agent and key
+        run: |
+          echo "${{ secrets.PRIVATE_KEY }}" > $DEPLOY_KEY
+          chmod 600 $DEPLOY_KEY
+
+      - name: Run script on ssh
+        run: ssh -i $DEPLOY_KEY -o StrictHostKeyChecking=no ${{ secrets.SSH_ORIGIN }} < $DEPLOY_SCRIPT
+
+      - name: Cleanup
+        if: ${{ always() }}
+        run: |
+          rm -f $DEPLOY_SCRIPT
+          rm -f $DEPLOY_KEY

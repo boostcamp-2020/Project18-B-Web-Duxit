@@ -1,0 +1,73 @@
+@import '@utils/variable';
+
+.stamp-wrapper {
+  position: absolute;
+  z-index: $z-index-mini-duck;
+  display: inline-flex;
+  max-width: 150px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.name-wrapper {
+  position: absolute;
+  z-index: $z-index-mini-duck;
+  display: flex;
+  width: 190px;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-wrapper {
+  position: absolute;
+  z-index: $z-index-mini-duck;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 0;
+}
+
+.correct-score {
+  animation: slotMachine 2s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.bonus-score {
+  animation: slotMachine 2s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes slotMachine {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -20px);
+  }
+}
+
+.duck-stamp {
+  box-sizing: border-box;
+  padding: 3px;
+  border-radius: 100%;
+}
+
+.result-duck {
+  border: 0;
+}
+
+.nickname-text {
+  padding: 3px;
+  font-weight: 600;
+}
+
+.vote-result-text {
+  top: 80% !important;
+}

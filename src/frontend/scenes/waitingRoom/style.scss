@@ -1,0 +1,186 @@
+@import '@utils/variable';
+
+.waiting-header {
+  @include flex-column;
+  @include absolute-center-x;
+  z-index: $z-index-layouts;
+  top: 0;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.waiting-nickname-help {
+  font-size: large;
+  font-weight: 600;
+  user-select: none;
+}
+
+.cursor-duck-wrapper {
+  position: absolute;
+}
+
+.waiting-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
+.waiting-nickname-input {
+  width: 16em;
+  border: 0;
+  margin: 0 1rem;
+  background-color: $main-color;
+  border-radius: $medium-radius;
+  box-shadow: $button-shadow;
+  font-size: x-large;
+  text-align: center;
+}
+
+.refresh-button {
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  background-color: $main-color;
+  border-radius: 100%;
+  box-shadow: $button-shadow;
+  cursor: pointer;
+  svg {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  &.refresh-button-small {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.color-button-wrapper {
+  position: relative;
+}
+
+.color-button-wrapper:not(:hover) .color-picker-wrapper {
+  display: none;
+}
+
+.color-picker-wrapper {
+  @include flex-column;
+  position: absolute;
+  top: 100%;
+  padding: 1em;
+  background-color: #e0e0e0aa;
+  border-radius: $small-radius;
+  div {
+    display: flex;
+  }
+}
+
+.color-sample-button {
+  flex: 25%;
+  box-shadow: $button-shadow;
+  outline: $gray-border;
+}
+
+.color-sample-button::before {
+  display: block;
+  padding-top: 100%;
+  content: '';
+}
+
+.waiting-color-input {
+  padding: 0.5em;
+  margin-left: 1em;
+  background-color: $white-color;
+  border-radius: $small-radius;
+}
+
+.color-white {
+  fill: $white-color;
+}
+
+.input-state-invalid {
+  color: $red-color;
+}
+
+.color-sample-grid {
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.waiting-action-wrapper {
+  @include flex-column;
+  @include absolute-center-y;
+  z-index: $z-index-layouts;
+  right: 1rem;
+  > * {
+    margin: 0.5em 0;
+  }
+}
+
+.waiting-game-code-wrapper {
+  position: absolute;
+  z-index: $z-index-layouts;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  overflow: visible;
+  flex-direction: row;
+  align-items: center;
+  font-size: x-large;
+  > * {
+    margin: 0 0.5rem;
+  }
+}
+
+.waiting-code-icon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  background-color: $main-color;
+  border-radius: 100%;
+  box-shadow: $button-shadow;
+  cursor: pointer;
+}
+
+.waiting-text-all-ready {
+  position: absolute;
+  z-index: $z-index-layouts;
+  top: 70%;
+  left: 50%;
+  font-size: xx-large;
+  font-weight: bolder;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.copy-notice {
+  position: absolute;
+  z-index: $z-index-layouts;
+  width: fit-content;
+  padding: 1.2rem;
+  background-color: rgba(221, 221, 221, 0.5);
+  border-radius: 0.5rem;
+  opacity: 0;
+}
+
+.copy-notice-animate {
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-name: fade-out;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,36 +1,23 @@
-import User from './User';
+import GAME_STATE from '@utils/gameState';
+import methodGroups from './GameMethods';
 
 export default class Game {
   constructor(roomID) {
     this.roomID = roomID;
     this.users = new Map();
     this.status = {
-      isPlaying: false,
+      state: GAME_STATE.WAITING,
       unusedCards: [],
       topic: '',
       turn: 0,
     };
+
+    methodGroups.forEach((methodGroup) => this.addMethods(methodGroup));
   }
 
-  getRoomID() {
-    return this.roomID;
-  }
-
-  isPlaying() {
-    return this.status.isPlaying;
-  }
-
-  addUser({ socketID, nickname, color }) {
-    const user = new User({ socketID, nickname, color });
-    this.users.set(socketID, user);
-  }
-
-  findUserInfo(socketID) {
-    const user = this.users.get(socketID);
-    return user ? user.getUserProfile() : false;
-  }
-
-  findUserInfoAll(socketID) {
-    return this.users.get(socketID).getUserInfo() || null;
+  addMethods(methodGroup) {
+    Object.entries(methodGroup).forEach(([methodName, method]) => {
+      this[methodName] = method;
+    });
   }
 }

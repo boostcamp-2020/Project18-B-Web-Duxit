@@ -1,74 +1,59 @@
-import './waitingRoom.scss';
-import ButtonObject from '@engine/ButtonObject';
-import GameObject from '@engine/GameObject';
-import TextObject from '@engine/TextObject';
-import InputObject from '@engine/InputObject';
-import SvgObject from '@engine/SvgObject';
-import Svg from '@utils/svg';
-import socket from '@utils/socket';
-import { copyGameCode, redirectToLobby } from './events';
+import SceneManager from '@utils/SceneManager';
+import PlayerManager from '@utils/PlayerManager';
+import { shouldUseBlack } from '@utils/hexColor';
+import renderWaitingRoom from './render';
 
-export const renderWaitingRoom = (roomID = '') => {
-  const Header = new GameObject();
-  Header.toggleClass('waiting-header');
-  Header.attachToRoot();
+const WaitingRoom = class {
+  constructor(roomID) {
+    this.roomID = roomID;
+    this.ducks = new Map();
+    this.duckMoveEvent = null;
+  }
 
-  const NicknameHelpText = new TextObject();
-  NicknameHelpText.setContent('게임에 참여할 닉네임을 정해주세요');
-  NicknameHelpText.setClass('waiting-nickname-help');
-  NicknameHelpText.attachToObject(Header);
+  render() {
+    const {
+      arrayToBeRemoved,
+      NicknameInput,
+      ColorButton,
+      RandomColorButton,
+      ColorInput,
+    } = renderWaitingRoom(this.roomID);
+    this.arrayToBeRemoved = arrayToBeRemoved;
+    this.NicknameInput = NicknameInput;
+    this.ColorButton = ColorButton;
+    this.RandomColorButton = RandomColorButton;
+    this.ColorInput = ColorInput;
+    PlayerManager.onUpdate.push(this.onUpdate.bind(this));
+  }
 
-  const InputWrapper = new GameObject();
-  InputWrapper.setClass('waiting-input-wrapper');
-  InputWrapper.attachToObject(Header);
+  wrapUp() {
+    const { AllReadyText } = SceneManager.sharedComponents;
+    AllReadyText.delete();
 
-  const NicknameInput = new InputObject();
-  NicknameInput.toggleClass('waiting-nickname-input');
-  NicknameInput.attachToObject(InputWrapper);
+    this.arrayToBeRemoved.forEach((gameObject) => {
+      gameObject.delete();
+    });
+  }
 
-  const RefreshButton = new ButtonObject();
-  RefreshButton.setClass('refresh-button');
-  RefreshButton.attachToObject(InputWrapper);
+  onUpdate({ socketID, color, nickname }) {
+    if (socketID === PlayerManager.currentPlayerID) {
+      if (nickname) this.NicknameInput.setValue(nickname);
+      if (color) this.updateColorButtons(color);
+    }
+  }
 
-  const RefreshIcon = new SvgObject();
-  RefreshIcon.setInnerHtml(Svg.refresh);
-  RefreshIcon.attachToObject(RefreshButton);
-
-  const ActionWrapper = new GameObject();
-  ActionWrapper.toggleClass('waiting-action-wrapper');
-  ActionWrapper.attachToRoot();
-
-  const ButtonReturnToLobby = new ButtonObject();
-  ButtonReturnToLobby.setContent('로비로 돌아가기');
-  ButtonReturnToLobby.setClass('button-cancel');
-  ButtonReturnToLobby.attachToObject(ActionWrapper);
-  ButtonReturnToLobby.addClickHandler(redirectToLobby);
-
-  const ButtonReady = new ButtonObject();
-  ButtonReady.setContent('준비 완료');
-  ButtonReady.setClass('button-primary');
-  ButtonReady.attachToObject(ActionWrapper);
-
-  const GameCodeWrapper = new ButtonObject();
-  GameCodeWrapper.setClass('waiting-game-code-wrapper');
-  GameCodeWrapper.attachToRoot();
-  GameCodeWrapper.addClickHandler(copyGameCode);
-
-  const GameCodeText = new TextObject();
-  GameCodeText.setContent(roomID);
-  GameCodeText.attachToObject(GameCodeWrapper);
-
-  const GameCodeCopyButton = new GameObject();
-  GameCodeCopyButton.setClass('waiting-code-icon');
-  GameCodeCopyButton.attachToObject(GameCodeWrapper);
-
-  const CopyIcon = new SvgObject();
-  CopyIcon.setInnerHtml(Svg.copy);
-  CopyIcon.attachToObject(GameCodeCopyButton);
-
-  return {
-    NicknameInput,
-  };
+  updateColorButtons(color) {
+    this.ColorButton.instance.style.backgroundColor = color;
+    this.RandomColorButton.instance.style.backgroundColor = color;
+    this.ColorInput.setValue(color);
+    if (shouldUseBlack(color)) {
+      this.ColorButton.removeClass('color-white');
+      this.RandomColorButton.removeClass('color-white');
+    } else {
+      this.ColorButton.addClass('color-white');
+      this.RandomColorButton.addClass('color-white');
+    }
+  }
 };
 
-export const setupWaitingRoomSocket = () => {};
+export default WaitingRoom;

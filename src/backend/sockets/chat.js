@@ -1,9 +1,16 @@
-import Games from '@game/Games';
+import logger from '@utils/winston';
 
-export const onSendChat = (socket, { message }) => {
-  const roomID = Games.findRoomID(socket.id);
-  if (!roomID) return;
+function onSendChat({ message }) {
+  const socket = this;
+  const { game, user } = socket;
 
-  const { nickname } = Games.findUserInfo(socket.id);
-  socket.in(roomID).emit('send chat', { message, nickname });
-};
+  if (!user || !game) return;
+
+  const { nickname } = user.getProfile();
+  logger.info(`chat ip:${socket.handshake.address} msg:${message}`);
+  socket.in(game.roomID).emit('send chat', { message, nickname });
+}
+
+export default function onChat(socket) {
+  socket.on('send chat', onSendChat);
+}

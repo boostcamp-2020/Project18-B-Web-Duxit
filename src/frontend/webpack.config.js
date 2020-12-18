@@ -22,6 +22,8 @@ module.exports = (webpackEnv) => {
         '@scenes': path.resolve(__dirname, 'scenes'),
         '@resources': path.resolve(__dirname, 'resources'),
         '@utils': path.resolve(__dirname, 'utils'),
+        '@type': path.resolve(__dirname, 'type'),
+        '@socket': path.resolve(__dirname, 'socket'),
       },
     },
     output: {
@@ -34,13 +36,15 @@ module.exports = (webpackEnv) => {
         filename: 'index.html',
         template: path.resolve(__dirname, './main/index.html'),
         chunks: ['main'],
+        favicon: 'logo.png',
       }),
       new HtmlWebpackPlugin({
         filename: 'game/index.html',
         template: path.resolve(__dirname, './game/game.html'),
         chunks: ['game'],
+        favicon: 'logo.png',
       }),
-      isEnvProduction && new CleanWebpackPlugin(),
+      new CleanWebpackPlugin(),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: '[name].css',
@@ -86,12 +90,16 @@ module.exports = (webpackEnv) => {
           ],
         },
         {
-          test: /\.(png|jpe?g|gif)$/i,
+          test: /\.(png|jpe?g|gif|mp3)$/i,
           loader: 'file-loader',
           options: {
             outputPath: 'assets',
-            publicPath: 'assets',
+            publicPath: '/assets',
           },
+        },
+        {
+          test: /\.html$/i,
+          use: 'raw-loader',
         },
       ],
     },

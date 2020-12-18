@@ -1,37 +1,96 @@
-@import '../utils/common';
-
-$left-size: 200px;
-$right-size: 330px;
+@import '@utils/variable';
 
 .game-layout {
   display: flex;
 
   .left-tab {
+    @include flex-column;
+    z-index: $z-index-tab;
+    overflow: auto;
     height: 100vh;
     flex-basis: $left-size;
     flex-shrink: 0;
-    background-color: #abc;
+    padding: 1.3rem 1rem;
+    border-right: $gray-border;
+    background-color: $white-color;
   }
 
   .right-tab {
-    display: flex;
+    @include flex-column;
+    z-index: $z-index-tab;
     height: 100vh;
     flex-basis: $right-size;
-    flex-direction: column;
     flex-shrink: 0;
     margin-left: auto;
     background-color: $white-color;
   }
 
-  .main {
+  .background {
     position: relative;
     width: 100%;
+    height: 100vh;
+    background: center/cover url('../resources/background.png') no-repeat;
+  }
+
+  .main {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $white-color;
+    transition: transform 1s;
   }
 }
 
-.chat-send-button {
-  padding: 0.5em !important;
+.stone {
+  position: absolute;
+  width: 100px;
+  text-align: center;
+
+  img {
+    width: 100%;
+    filter: drop-shadow(0 8px 10px #eeea);
+  }
+
+  .stone-text {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    font-size: large;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+  }
 }
+
+// WAITING ROOM
+
+.progress-bar-wrapper {
+  position: absolute;
+  z-index: $z-index-progress-bar;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 1.5rem;
+  background-color: $gray-color;
+  .progress-bar {
+    position: relative;
+    width: 100%;
+    background-color: $progress-color;
+    transition: width 1s;
+  }
+}
+
+.time-text {
+  padding: 0.5rem;
+  color: $white-color;
+  line-height: 1.5rem;
+}
+
+// RIGHT - TAB
 
 .chat-message-log {
   flex-grow: 1;
@@ -50,8 +109,7 @@ $right-size: 330px;
 }
 
 .chat-other-player {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   align-items: flex-start;
   margin: 0.5rem 2rem 0.5rem 1rem;
 
@@ -61,8 +119,7 @@ $right-size: 330px;
 }
 
 .chat-mine {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   align-items: flex-end;
   margin: 0.5rem 1rem 0.5rem 2rem;
 
@@ -76,8 +133,99 @@ $right-size: 330px;
 }
 
 .chat-message {
-  padding: 0.3em;
+  padding: 0.5em 0.6em;
   border-radius: 0.5em;
-  font-size: larger;
+  font-size: medium;
   word-break: break-word;
+}
+
+.chat-send-button {
+  padding: 0.5em !important;
+}
+
+// Modal
+
+.modal {
+  position: absolute;
+  z-index: $z-index-modal;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px) brightness(70%);
+  transition: opacity 0.5s ease-in;
+}
+
+@mixin modal-mixin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.modal-title {
+  @include modal-mixin;
+  top: 11%;
+  left: 50%;
+  width: 100%;
+  color: $white-color;
+  font-size: 2.1rem;
+  font-weight: 700;
+  text-align: center;
+  user-select: none;
+}
+
+.modal-card {
+  @include modal-mixin;
+  top: 43%;
+  left: 50%;
+}
+
+.modal-ok-button {
+  @include button;
+  @include modal-mixin;
+  top: 88%;
+  left: 40%;
+  background-color: $main-color;
+}
+
+.modal-cancel-button {
+  @include button;
+  @include modal-mixin;
+  top: 88%;
+  left: 60%;
+  background-color: $gray-color;
+}
+
+.modal-input {
+  @include modal-mixin;
+  top: 77%;
+  left: 50%;
+  width: 16em;
+  padding: 1rem;
+  border: 0;
+  background-color: $main-color;
+  border-radius: $medium-radius;
+  box-shadow: $button-shadow;
+  font-size: x-large;
+  text-align: center;
+}
+
+.topic-text {
+  @include button;
+  @include absolute-center-x;
+  top: 15%;
+  width: 40%;
+  background-color: $main-color;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  @include button;
+  @include modal-mixin;
+  top: 90%;
+  left: 50%;
+  background-color: $main-color;
+}
+
+.guide-content {
+  font-size: 1.5rem;
+  line-height: 2.5rem;
 }

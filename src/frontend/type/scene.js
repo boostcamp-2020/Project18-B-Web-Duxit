@@ -1,0 +1,10 @@
+export const WAITING_ROOM = 'WAITING_ROOM';
+export const TELLER_SELECT_CARD = 'TELLER_SELECT_CARD';
+export const GUESSER_WAITING = 'GUESSER_WAITING';
+export const GUESSER_SELECT_CARD = 'GUESSER_SELECT_CARD';
+export const PLAYER_WAITING = 'PLAYER_WAITING';
+export const SELECT_CARD = 'SELECT_CARD';
+export const MIX_CARD = 'MIX_CARD';
+export const DISCUSSION = 'DISCUSSION';
+export const VOTE = 'VOTE';
+export const VOTE_RESULT = 'VOTE_RESULT';

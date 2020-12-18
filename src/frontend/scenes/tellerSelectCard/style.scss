@@ -1,0 +1,17 @@
+.notify-teller {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 100%;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 3rem;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  &.other {
+    top: 60%;
+    width: 100%;
+    font-size: 2.3rem;
+    line-height: 3rem;
+  }
+}

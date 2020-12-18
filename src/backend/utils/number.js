@@ -1,0 +1,25 @@
+export const PLAYER = {
+  MIN: 3,
+  MAX: 6,
+};
+
+export const CARD = {
+  DECK: 84,
+  HAND: 6,
+};
+
+export const TIME = {
+  WAIT_GAME_START: 5000,
+  WAIT_TELLER_SELECT: 60000,
+  WAIT_GUESSER_SELECT: 60000,
+  DELAY_GET_ALL_DECISIONS: 5000,
+  WAIT_DISCUSSION: 60000,
+  SKIP_DISCUSSION: 3000,
+  WAIT_VOTE: 10000,
+  WAIT_RESULT: 15000,
+  WAIT_SCORE_BOARD: 10000,
+};
+
+export const SCORE = {
+  WIN_SCORE: 30,
+};

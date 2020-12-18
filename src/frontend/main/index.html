@@ -3,8 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Page Title</title>
+    <title>DUXIT : 덕싯 한판 하실래요?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="http://duxit.ga/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://duxit.ga/favicon.ico" type="image/x-icon">
+    <meta property="og:title" content="DUXIT : 덕싯">
+    <meta property="og:url" content="http://duxit.ga">
+    <meta property="og:description" content="웹 기반 스토리텔링 보드게임 덕싯에서 서로의 마음을 들여다 봅니다.">
   </head>
   <body>
     <div class="main-wrapper">
@@ -15,11 +20,14 @@
         <form class="code-form" id="enter-room">
           <div>
             <input
+              id="code-input"
               name="code-input"
               class="code-input"
               required="true"
               type="text"
               placeholder="공유받은 코드를 입력해주세요."
+              autocomplete="off"
+              maxlength="5"
             />
             <button type="submit" class="main-button enter">입장</button>
           </div>

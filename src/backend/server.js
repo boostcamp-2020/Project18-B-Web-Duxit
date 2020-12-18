@@ -2,16 +2,14 @@
  * Module dependencies.
  */
 
-import dotenv from 'dotenv';
 import debugModule from 'debug';
+import fs from 'fs';
 import http from 'http';
+import https from 'https';
 import socketIO from './sockets';
 import createApplication from './app';
 
 const debug = debugModule('backend:server');
-
-// dotenv
-dotenv.config();
 
 /**
  * Normalize a port into a number, string, or false.
@@ -78,17 +76,36 @@ const app = createApplication();
 
 const normalizedPort = normalize(process.env.PORT || '3000');
 app.set('port', normalizedPort);
+let server;
 
-/**
- * Create HTTP server.
- */
-const server = http.createServer(app);
+if (process.env.NODE_ENV === 'development') {
+  /**
+   * Create HTTP server.
+   */
+  server = http.createServer(app);
+} else if (process.env.NODE_ENV === 'production') {
+  /**
+   * Create HTTPS server.
+   */
+  const domain = process.env.DOMAIN_NAME;
+  const privateKey = fs.readFileSync(
+    `/etc/letsencrypt/live/${domain}/privkey.pem`,
+    'utf8',
+  );
+  const certificate = fs.readFileSync(
+    `/etc/letsencrypt/live/${domain}/fullchain.pem`,
+    'utf8',
+  );
+  const credentials = { key: privateKey, cert: certificate };
+
+  server = https.createServer(credentials, app);
+}
+
 socketIO.attach(server, {
   cors: {
     origin: [process.env.FRONTEND_ORIGIN],
   },
 });
-
 /**
  * Listen on provided port, on all network interfaces.
  */

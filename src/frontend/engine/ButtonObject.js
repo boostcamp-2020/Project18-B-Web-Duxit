@@ -1,8 +1,9 @@
+import { $create } from '@utils/dom';
 import TextObject from './TextObject';
 
 const ButtonObject = class extends TextObject {
   createElement() {
-    const element = document.createElement('button');
+    const element = $create('button');
     this.setElement(element);
   }
 

@@ -10,6 +10,11 @@ module.exports = {
   ],
   "rules": {
     "order/properties-alphabetical-order": null,
-    "prettier/prettier": true,
+    "prettier/prettier": [
+      true, 
+      {
+        "endOfLine":"auto"
+      }
+    ],
   }
 }

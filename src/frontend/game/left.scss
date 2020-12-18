@@ -1,0 +1,93 @@
+@import '@utils/variable';
+
+.left-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  .left-title-text {
+    margin-right: 5px;
+    font-size: larger;
+    font-weight: 800;
+  }
+  .left-title-number {
+    display: flex;
+    width: 1.6rem;
+    height: 1.6rem;
+    align-items: center;
+    justify-content: center;
+    background-color: $main-color;
+    border-radius: 100%;
+  }
+}
+
+.microphone-controller {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-top: auto;
+  background-color: $green-color;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.microphone-controller-exit {
+  background-color: $red-color;
+}
+
+.participants-wrapper {
+  @include flex-column;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.left-duck-wrapper {
+  width: 100%;
+  height: 15%;
+  margin-bottom: 8%;
+  text-align: center;
+  .duck-nickname {
+    font-weight: 600;
+    line-height: 10%;
+  }
+}
+
+.duck-image {
+  position: relative;
+  width: 80%;
+  height: fit-content;
+  margin: 0 auto 4%;
+  .duck-score {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    padding: 0.3rem 0.5rem;
+    background-color: $gray-color;
+    border-radius: 1rem;
+  }
+
+  .duck-speaker {
+    position: absolute;
+    top: 0%;
+    left: 45%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    visibility: hidden;
+  }
+  .duck-speaker-active {
+    content: url('@resources/speaker-active.png');
+    visibility: visible;
+  }
+  .duck-speaker-deactive {
+    content: url('@resources/speaker-deactive.png');
+    visibility: visible;
+  }
+}
+
+.duck-hat {
+  @include absolute-center-x;
+  top: -26%;
+}
