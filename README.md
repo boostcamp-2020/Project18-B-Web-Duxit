@@ -1,5 +1,6 @@
 # DUXIT : 웹 기반 스토리텔링 보드게임 🃏
 
+
 <p align="center">
 <img src="https://i.imgur.com/RNtI3ZD.jpg" width=500>
 </p>
@@ -10,10 +11,12 @@
 <span style="font-weight:600">DUXIT은 여러분의 ⭐️ 스타⭐️ 를 먹고 삽니다.</span>
 </p>
 
+> 이슈 PR 언제나 환영입니다. 🙌
 
 ## 공개 주소 ✨
 
-데모를 보고 싶다면? [DuXit.ga](http://duxit.ga/)
+배포 URL : https://duxit.ga/<br>
+데모 영상 : https://bit.ly/duxit-데모영상
 
 ## DUXIT은 어떤 게임인가요? 🐥
 - DUXIT은 스토리텔링 보드게임 DIXIT을 웹으로 옮긴 온라인 게임입니다.
@@ -37,10 +40,10 @@
 
 | division        | stack                             |
 | --------------- | --------------------------------- |
-| Web             | ![Babel](https://img.shields.io/badge/babel-v7.12.3-yellow?logo=babel) ![Webpack](https://img.shields.io/badge/webpack-v5.6.0-skyblue?logo=webpack)                    |
-| Front-end       | ![Javascript](https://img.shields.io/badge/javascript-ES6-yellow?logo=javascript) ![TypeScript](https://img.shields.io/badge/TypeScript-v4.1.2-blue?logo=TypeScript) ![Sass](https://img.shields.io/badge/Sass-v1.29.0-pink?logo=Sass) ![socket.io](https://img.shields.io/badge/socket.io-v3.0.3-white?logo=socket.io)  |
-| Back-end        | ![NodeJS](https://img.shields.io/badge/node.js-v12.18-green?logo=node.js) ![Express](https://img.shields.io/badge/Express-v4.16.1-9cf?logo=express) ![winston](https://img.shields.io/badge/winston-v3.3.3-beige?logo=winston) ![socket.io](https://img.shields.io/badge/socket.io-v3.0.3-white?logo=socket.io)      |
-| Production      | ![Forever](https://img.shields.io/badge/forever-v3.0.4-blue?logo=forever) ![NginX](https://img.shields.io/badge/NginX-v1.18.0-green?logo=NginX) ![Naver Cloud Platform](https://img.shields.io/badge/Naver_Cloud_Platform-compact_server-9cf&color=brightgreen)               |
-| Code Management | ![Git](https://img.shields.io/badge/Git-v2.27.0-red?logo=Git) ![github](https://img.shields.io/badge/github-gray?logo=github)                      |
+| Web             | ![Babel](https://img.shields.io/badge/babel-v7.12.3-yellow?logo=babel) ![Webpack](https://img.shields.io/badge/webpack-v5.6.0-skyblue?logo=webpack)  ![peerJS](https://img.shields.io/badge/peerjs-v1.3.1-skyblue?logo=webrtc) ![socket.io](https://img.shields.io/badge/socket.io-v3.0.3-white?logo=socket.io)                  |
+| Front-end       | ![Javascript](https://img.shields.io/badge/javascript-ES6-yellow?logo=javascript) ![Sass](https://img.shields.io/badge/Sass-v1.29.0-pink?logo=Sass)  |
+| Back-end        | ![NodeJS](https://img.shields.io/badge/node.js-v12.18-green?logo=node.js) ![Express](https://img.shields.io/badge/Express-v4.16.1-9cf?logo=express) ![TypeScript](https://img.shields.io/badge/TypeScript-v4.1.2-blue?logo=TypeScript) ![winston](https://img.shields.io/badge/winston-v3.3.3-beige?logo=winston)     |
+| Production      | ![Forever](https://img.shields.io/badge/forever-v3.0.4-blue?logo=forever) ![NginX](https://img.shields.io/badge/NginX-v1.18.0-green?logo=NginX) ![Naver Cloud Platform](https://img.shields.io/badge/NCP-compact_server-9cf&color=brightgreen) ![Git](https://img.shields.io/badge/GitHub_Actions-purple?logo=github)              |
+| Code Management | ![Git](https://img.shields.io/badge/Git-v2.27.0-red?logo=Git) ![github](https://img.shields.io/badge/GitHub-gray?logo=github)                      |
 | Formatting      | ![eslint](https://img.shields.io/badge/eslint-v7.2.0-purple?logo=eslint)   ![stylelint](https://img.shields.io/badge/stylelint-v13.8.0-navy?logo=stylelint) ![prettier](https://img.shields.io/badge/prettier-v2.1.2-yellow?logo=prettier)       |
 
