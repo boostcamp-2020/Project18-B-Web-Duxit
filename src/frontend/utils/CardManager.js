@@ -46,6 +46,21 @@ const CardManager = class {
   }
 
   updateCardInformation(cardIDs) {
+    const cardQuantityDifference = cardIDs.length - this.submittedCards.length;
+
+    if (cardQuantityDifference > 0) {
+      Array.from({ length: cardQuantityDifference }).forEach(() =>
+        this.dropNewCard(),
+      );
+    }
+
+    if (cardQuantityDifference < 0) {
+      this.submittedCards
+        .slice(0, -cardQuantityDifference)
+        .forEach((card) => card.delete());
+      this.submittedCards = this.submittedCards.slice(-cardQuantityDifference);
+    }
+
     this.submittedCards.forEach((card, idx) =>
       card.setCardInformation(cardIDs[idx]),
     );
